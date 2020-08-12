@@ -12,6 +12,10 @@
             Summits on the Air, SOTA and the SOTA Logo are trademarks of the Programme.
           </p>
 
+          <p>
+            The source code of SOTLAS is available on <a href="https://github.com/manuelkasper/sotlas-frontend"><font-awesome-icon :icon="['fab', 'github']" size="lg" /> GitHub</a>.
+          </p>
+
           <p>Data sourced from:
             <ul>
               <li><a href="https://www.sotadata.org.uk">SOTA Database</a></li>
