@@ -1,4 +1,6 @@
-# sotlas
+# SOTLAS
+
+This is the Vue.js based frontend for SOTLAS (https://sotl.as), an interactive atlas of summits for the [Summits On The Air](https://www.sota.org.uk/) amateur radio program.
 
 ## Project setup
 ```
