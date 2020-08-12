@@ -1,0 +1,347 @@
+Country	Code
+Afghanistan	AF
+African Italy	IT
+Agalega & St. Brandon	MU
+Aland Islands	AX
+Alaska	US
+Albania	AL
+Algeria	DZ
+American Samoa	AS
+Amsterdam & St. Paul Is.	TF
+Andaman & Nicobar Is.	IN
+Andorra	AD
+Angola	AO
+Anguilla	AI
+Annobon Island	GQ
+Antarctica	AQ
+Antigua & Barbuda	AG
+Argentina	AR
+Armenia	AM
+Aruba	AW
+Ascension Island	SH
+Asiatic Russia	RU
+Asiatic Turkey	TR
+Austral Islands	PF
+Australia	AU
+Austria	AT
+Aves Island	VE
+Azerbaijan	AZ
+Azores	PT
+Bahamas	BS
+Bahrain	BH
+Baker & Howland Islands	US
+Balearic Islands	ES
+Banaba Island	KI
+Bangladesh	BD
+Barbados	BB
+Bear Island	NO
+Belarus	BY
+Belgium	BE
+Belize	BZ
+Benin	BJ
+Bermuda	BM
+Bhutan	BT
+Bolivia	BO
+Bonaire	NL
+Bosnia-Herzegovina	BA
+Botswana	BW
+Bouvet	BV
+Brazil	BR
+British Virgin Islands	VG
+Brunei Darussalam	BN
+Bulgaria	BG
+Burkina Faso	BF
+Burundi	BI
+Cambodia	KH
+Cameroon	CM
+Canada	CA
+Canary Islands	ES
+Cape Verde	CV
+Cayman Islands	KY
+Central African Republic	CF
+Central Kiribati	KI
+Ceuta & Melilla	ES
+Chad	TD
+Chagos Islands	GB
+Chatham Islands	NZ
+Chesterfield Islands	NC
+Chile	CL
+China	CN
+Christmas Island	CX
+Clipperton Island	FR
+Cocos (Keeling) Islands	CC
+Cocos Island	CR
+Colombia	CO
+Comoros	KM
+Conway Reef	FJ
+Corsica	FR
+Costa Rica	CR
+Cote d'Ivoire	CI
+Crete	GR
+Croatia	HR
+Crozet Island	FR
+Cuba	CU
+Curacao	CW
+Cyprus	CY
+Czech Republic	CZ
+Dem. Rep. of the Congo	CD
+Denmark	DK
+Desecheo Island	PR
+Djibouti	DJ
+Dodecanese	GR
+Dominica	DM
+Dominican Republic	DO
+DPR of Korea	KP
+Ducie Island	PN
+East Malaysia	MY
+Easter Island	CL
+Eastern Kiribati	KI
+Ecuador	EC
+Egypt	EG
+El Salvador	SV
+England	GB-ENG
+Equatorial Guinea	GQ
+Eritrea	ER
+Estonia	EE
+Ethiopia	ET
+European Russia	RU
+European Turkey	TR
+Falkland Islands	FK
+Faroe Islands	FO
+Fed. Rep. of Germany	DE
+Fernando de Noronha	BR
+Fiji	FJ
+Finland	FI
+France	FR
+Franz Josef Land	RU
+French Guiana	GF
+French Polynesia	PF
+Gabon	GA
+Galapagos Islands	EC
+Georgia	GE
+Ghana	GH
+Gibraltar	GI
+Glorioso Islands	FR
+Greece	GR
+Greenland	GL
+Grenada	GD
+Guadeloupe	GP
+Guam	GU
+Guantanamo Bay	US
+Guatemala	GT
+Guernsey	GG
+Guinea	GN
+Guinea-Bissau	GW
+Guyana	GY
+Haiti	HT
+Hawaii	US
+Heard Island	HM
+Honduras	HN
+Hong Kong	HK
+Hungary	HU
+Iceland	IS
+India	IN
+Indonesia	ID
+Iran	IR
+Iraq	IQ
+Ireland	IE
+Isle of Man	IM
+Israel	IL
+Italy	IT
+ITU HQ	
+Jamaica	JM
+Jan Mayen	NO
+Japan	JP
+Jersey	JE
+Johnston Island	US
+Jordan	JO
+Juan de Nova, Europa	FR
+Juan Fernandez Islands	CL
+Kaliningrad	RU
+Kazakhstan	KZ
+Kenya	KE
+Kerguelen Islands	TF
+Kermadec Islands	NZ
+Kure Island	US
+Kuwait	KW
+Kyrgyzstan	KG
+Lakshadweep Islands	IN
+Laos	LA
+Latvia	LV
+Lebanon	LB
+Lesotho	LS
+Liberia	LR
+Libya	LY
+Liechtenstein	LI
+Lithuania	LT
+Lord Howe Island	AU
+Luxembourg	LU
+Macao	MO
+Macquarie Island	AU
+Madagascar	MG
+Madeira Islands	PT
+Malawi	MW
+Maldives	MV
+Mali	ML
+Malpelo Island	CO
+Malta	MT
+Mariana Islands	GU
+Market Reef	
+Marquesas Islands	PF
+Marshall Islands	MH
+Martinique	MQ
+Mauritania	MR
+Mauritius	MU
+Mayotte	YT
+Mellish Reef	AU
+Mexico	MX
+Micronesia	FM
+Midway Island	US
+Minami Torishima	JA
+Moldova	MD
+Monaco	MC
+Mongolia	MN
+Montenegro	ME
+Montserrat	MS
+Morocco	MA
+Mount Athos	GR
+Mozambique	MZ
+Myanmar	MM
+N.Z. Subantarctic Is.	NZ
+Namibia	NA
+Nauru	NR
+Navassa Island	US
+Nepal	NP
+Netherlands	NL
+New Caledonia	NC
+New Zealand	NZ
+Nicaragua	NI
+Niger	NE
+Nigeria	NG
+Niue	NU
+Norfolk Island	NF
+North Cook Islands	CK
+North Macedonia	MK
+Northern Ireland	GB-NIR
+Norway	NO
+Ogasawara	JA
+Oman	OM
+Pakistan	PK
+Palau	PW
+Palestine	PS
+Palmyra & Jarvis Islands	US
+Panama	PA
+Papua New Guinea	PG
+Paraguay	PY
+Peru	PE
+Peter 1 Island	NO
+Philippines	PH
+Pitcairn Island	GB
+Poland	PL
+Portugal	PT
+Pr. Edward & Marion Is.	ZA
+Pratas Island	TW
+Puerto Rico	PR
+Qatar	QA
+Republic of Korea	KR
+Republic of Kosovo	XK
+Republic of South Sudan	SS
+Republic of the Congo	CG
+Reunion Island	FR
+Revillagigedo	MX
+Rodriguez Island	MU
+Romania	RO
+Rotuma Island	FJ
+Rwanda	RW
+Saba & St. Eustatius	NL
+Sable Island	CA
+Samoa	WS
+San Andres & Providencia	CO
+San Felix & San Ambrosio	CL
+San Marino	SM
+Sao Tome & Principe	ST
+Sardinia	IT
+Saudi Arabia	SA
+Scarborough Reef	
+Scotland	GB-SCT
+Senegal	SN
+Serbia	RS
+Seychelles	SC
+Shetland Islands	GB
+Sicily	IT
+Sierra Leone	SL
+Singapore	SG
+Sint Maarten	SX
+Slovak Republic	SK
+Slovenia	SI
+Solomon Islands	SB
+Somalia	SO
+South Africa	ZA
+South Cook Islands	CK
+South Georgia Island	GS
+South Orkney Islands	AQ
+South Sandwich Islands	GS
+South Shetland Islands	AQ
+Sov Mil Order of Malta	
+Spain	ES
+Spratly Islands	
+Sri Lanka	LK
+St. Barthelemy	FR
+St. Helena	SH
+St. Kitts & Nevis	KN
+St. Lucia	LC
+St. Martin	
+St. Paul Island	US
+St. Peter & St. Paul	BR
+St. Pierre & Miquelon	FR
+St. Vincent	VC
+Sudan	SD
+Suriname	SR
+Svalbard	NO
+Swains Island	AS
+Swaziland	SZ
+Sweden	SE
+Switzerland	CH
+Syria	SY
+Taiwan	TW
+Tajikistan	TJ
+Tanzania	TZ
+Temotu Province	SB
+Thailand	TH
+The Gambia	GM
+Timor - Leste	TL
+Togo	TG
+Tokelau Islands	TK
+Tonga	TO
+Trindade & Martim Vaz	BR
+Trinidad & Tobago	TT
+Tristan da Cunha & Gough	SH
+Tromelin Island	FR
+Tunisia	TN
+Turkmenistan	TM
+Turks & Caicos Islands	TC
+Tuvalu	TV
+Uganda	UG
+UK Base Areas on Cyprus	GB
+Ukraine	UA
+United Arab Emirates	AE
+United Nations HQ	UN
+United States	US
+Uruguay	UY
+US Virgin Islands	VI
+Uzbekistan	UZ
+Vanuatu	VU
+Vatican City	VA
+Venezuela	VE
+Vienna Intl Ctr	
+Vietnam	VN
+Wake Island	US
+Wales	GB-WLS
+Wallis & Futuna Islands	WF
+West Malaysia	MY
+Western Kiribati	KI
+Western Sahara	EH
+Willis Island	AU
+Yemen	YE
+Zambia	ZM
+Zimbabwe	ZW

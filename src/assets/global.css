@@ -1,0 +1,160 @@
+.nowrap {
+  white-space: nowrap;
+}
+.section {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.hero-body {
+  margin-top: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+.title.is-6 {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+.subdued {
+  font-size: 0.8em;
+  color: #7a7a7a;
+}
+.subtitle {
+  margin-top: 0.2em;
+  line-height: 1.5em;
+}
+.clickable {
+  cursor: pointer;
+}
+.auto-width .table {
+  width: auto !important;
+}
+.th-wrap .is-invisible {
+  display: none;
+}
+.message-body .icon svg {
+  height: 2.5rem;
+}
+@media (max-width: 768px) {
+  .message {
+    font-size: 0.75rem;
+  }
+  .message-body {
+    padding: 0.5em;
+  }
+  .message-body .icon {
+    height: 1.25rem;
+    width: 1.5rem;
+  }
+  .message-body .icon svg {
+    height: 1rem;
+  }
+  .message-body .media-left {
+    margin-right: 0.3rem;
+  }
+  .section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .level-left + .level-right {
+    margin-top: 1rem;
+  }
+  .level:not(:last-child) {
+    margin-bottom: 1rem !important;
+  }
+  .title.is-4 {
+    font-size: 1.25rem;
+  }
+  .title:not(:last-child).is-4 {
+    margin-bottom: 0.75rem !important;
+  }
+}
+@media (max-width: 1023px) {
+  /* Leave enough space so user can press outside menu to dismiss */
+  .dropdown.is-mobile-modal .dropdown-menu {
+    width: calc(100vw - 120px);
+  }
+}
+.hero-head {
+  background-color: #ddd;
+}
+.hero .navbar-item.is-active {
+  background-color: whitesmoke !important;
+}
+.hero-body {
+  padding-top: 0.75rem;
+}
+h4 > .icon {
+  margin-left: 0.3rem;
+  margin-right: 0.7rem;
+  opacity: 0.5;
+  vertical-align: top;
+}
+.date-small {
+  font-size: 80%;
+  color: #777;
+  margin-right: 0.3em;
+  min-width: 2em;
+  display: inline-block;
+}
+.time-weekday {
+  font-size: 80%;
+  color: #777;
+  margin-left: 0.3em;
+}
+@media (min-width: 769px) {
+  .table .tag {
+    vertical-align: top;
+    position: relative;
+    top: 0.15em;
+  }
+}
+.fp.unknown {
+  background-color: #ddd;
+}
+hr {
+  margin: 0.75rem 0;
+}
+
+.action-button {
+  font-weight: normal;
+}
+@media (max-width: 768px) {
+  .action-button {
+    margin-left: 0.5rem;
+    float: right;
+  }
+}
+@media (min-width: 768px) {
+  .action-button {
+    margin-left: 1rem;
+    display: inline-block;
+  }
+  .action-button button {
+    vertical-align: baseline;
+  }
+}
+.modal-card {
+  max-height: calc(90vh - 80px);
+}
+.modal-card-head {
+  padding: 15px 30px 15px 15px;
+}
+.modal-card-foot {
+  justify-content: flex-end;
+}
+
+/* Fix to keep Iceland flag from appearing in pagination buttons */
+.pagination .icon.is {
+  background-image: none;
+}
+
+/* Fix for scale text selection */
+.mapboxgl-ctrl-scale {
+  user-select: none;
+}
+
+/* Fix Buefy bug */
+@media screen and (max-width: 1023px) {
+  .dropdown.is-mobile-modal>.dropdown-menu>.dropdown-content>div>a {
+    padding: 1rem 1.5rem;
+  }
+}
