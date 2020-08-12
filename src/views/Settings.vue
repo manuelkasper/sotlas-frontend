@@ -22,6 +22,12 @@
           <b-field label="Alert default comments">
             <b-input v-model="alertDefaultComments" type="text" maxlength="60" />
           </b-field>
+          <b-field label="QRZ.com login">
+            <b-input v-model="qrzUsername" class="userpass" type="text" placeholder="Username" />
+          </b-field>
+          <b-field message="If you supply your QRZ.com login, callsign information (name, QTH etc.) will be shown on detail pages. The login information will only be stored locally in your browser.">
+            <b-input v-model="qrzPassword" class="userpass" type="password" placeholder="Password" />
+          </b-field>
         </div>
       </section>
     </template>
@@ -38,6 +44,23 @@ export default {
   mixins: [mapstyle, prefs],
   mounted () {
     document.title = 'Settings - SOTLAS'
+  },
+  methods: {
+    getPreference (prefName, attribute) {
+      let prefs = this.getPrefs(prefName)
+      if (prefs) {
+        return prefs[attribute]
+      }
+      return ''
+    },
+    setPreference (prefName, attribute, value) {
+      let prefs = this.getPrefs(prefName)
+      if (!prefs) {
+        prefs = {}
+      }
+      prefs[attribute] = value
+      this.setPrefs(prefName, prefs)
+    }
   },
   computed: {
     mapServerSelect: {
@@ -59,38 +82,42 @@ export default {
     },
     spotDefaultComments: {
       get () {
-        let prefs = this.getPrefs('spotPrefs')
-        if (prefs) {
-          return prefs.defaultComments
-        }
-        return ''
+        return this.getPreference('spotPrefs', 'defaultComments')
       },
-      set (newSpotDefaultComments) {
-        let prefs = this.getPrefs('spotPrefs')
-        if (!prefs) {
-          prefs = {}
-        }
-        prefs.defaultComments = newSpotDefaultComments
-        this.setPrefs('spotPrefs', prefs)
+      set (newValue) {
+        return this.setPreference('spotPrefs', 'defaultComments', newValue)
       }
     },
     alertDefaultComments: {
       get () {
-        let prefs = this.getPrefs('editAlertPrefs')
-        if (prefs) {
-          return prefs.defaultComments
-        }
-        return ''
+        return this.getPreference('editAlertPrefs', 'defaultComments')
       },
-      set (newSpotDefaultComments) {
-        let prefs = this.getPrefs('editAlertPrefs')
-        if (!prefs) {
-          prefs = {}
-        }
-        prefs.defaultComments = newSpotDefaultComments
-        this.setPrefs('editAlertPrefs', prefs)
+      set (newValue) {
+        return this.setPreference('editAlertPrefs', 'defaultComments', newValue)
+      }
+    },
+    qrzUsername: {
+      get () {
+        return this.getPreference('qrzLogin', 'qrzUsername')
+      },
+      set (newValue) {
+        return this.setPreference('qrzLogin', 'qrzUsername', newValue)
+      }
+    },
+    qrzPassword: {
+      get () {
+        return this.getPreference('qrzLogin', 'qrzPassword')
+      },
+      set (newValue) {
+        return this.setPreference('qrzLogin', 'qrzPassword', newValue)
       }
     }
   }
 }
 </script>
+
+<style scoped>
+.userpass {
+  max-width: 20em;
+}
+</style>
