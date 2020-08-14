@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#sotlas",
-    "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-brands-svg-icons": "^5.11.2",
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/pro-regular-svg-icons": "^5.11.2",
     "@fortawesome/pro-solid-svg-icons": "^5.11.2",
     "@fortawesome/vue-fontawesome": "^0.1.7",
