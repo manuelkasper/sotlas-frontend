@@ -45,7 +45,7 @@
     "vue-mapbox": "github:manuelkasper/vue-mapbox#fix-layer-remove",
     "vue-match-media": "^1.0.3",
     "vue-native-websocket": "^2.0.13",
-    "vue-router": "^3.1.3",
+    "vue-router": "^3.3.4",
     "vuedraggable": "^2.23.2",
     "vuex": "^3.1.1"
   },
