@@ -33,8 +33,11 @@
         </b-field>
       </b-field>
 
-      <b-field label="Frequency-Mode(s)" :message="freqModeMessage">
+      <b-field label="Frequency-Mode(s)">
         <b-taginput v-model="freqMode" ref="freqMode" autocomplete rounded :data="freqModeSuggestions" :confirm-key-codes="[9,13,32,188]" @typing="updateFreqModeSuggestions" @input="onFreqModeInput" @blur="onFreqModeBlur" @keydown.native="onFreqModeKeyDown" append-to-body />
+        <template slot="message">
+          Format: <em>freq-mode, ...</em> (e.g. <em>7.030-cw, 14.250-ssb</em>)
+        </template>
       </b-field>
 
       <b-field label="Comments">
@@ -117,9 +120,6 @@ export default {
       } else {
         return ''
       }
-    },
-    freqModeMessage () {
-      return 'Format: <em>freq-mode, ...</em> (e.g. <em>7.030-cw, 14.250-ssb</em>)'
     },
     isInputValid () {
       return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) && this.summit !== null && this.isSummitValid(this.summit) && this.date && /^\d\d:\d\d$/.test(this.time) && this.freqMode.length > 0 && (this.freqMode.join(', ').length <= 40 || this.freqMode.join(',').length <= 40)
