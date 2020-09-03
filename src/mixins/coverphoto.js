@@ -11,7 +11,8 @@ export default {
           return {
             src: this.photoSrc(coverPhoto, 'thumb'),
             mediaLink: this.photoSrc(coverPhoto, 'large'),
-            attribution: coverPhoto.author
+            attribution: coverPhoto.author,
+            photo: coverPhoto
           }
         }
       }
