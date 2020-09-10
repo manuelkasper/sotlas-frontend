@@ -1,5 +1,5 @@
 <template>
-  <MglMap v-if="(mapCenter || bounds) && mapStyle" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :dragPan="dragPanEnabled" :dragRotate="false" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
+  <MglMap v-if="(mapCenter || bounds) && mapStyle" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
     <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
     <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
     <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" />
@@ -53,13 +53,6 @@ export default {
     },
     showInactiveSummits () {
       this.showHideInactiveSummits()
-    },
-    dragPanEnabled () {
-      if (this.dragPanEnabled) {
-        this.map.dragPan.enable()
-      } else {
-        this.map.dragPan.disable()
-      }
     }
   },
   computed: {
@@ -83,9 +76,6 @@ export default {
         }
         return true
       })
-    },
-    dragPanEnabled () {
-      return (!this.$mq.mobile || this.isEnlarged)
     },
     fitBoundsOptions () {
       return { padding: { left: 60, top: 40, right: 60, bottom: 40 }, maxZoom: 12 }
@@ -144,6 +134,25 @@ export default {
         this.infoCoordinates = {
           latitude: e.lngLat.lat,
           longitude: e.lngLat.lng
+        }
+      })
+
+      // Workaround to let users scroll page on mobile devices without inadvertently
+      // panning the map, while still being able to pan it with two fingers
+      // See also: https://github.com/mapbox/mapbox-gl-js/issues/2618
+      this.map.on('touchstart', (e) => {
+        if (!this.$mq.mobile || this.isEnlarged) {
+          return
+        }
+
+        let oe = e.originalEvent
+        if (oe && 'touches' in oe) {
+          if (oe.touches.length > 1) {
+            oe.stopImmediatePropagation()
+            this.map.dragPan.enable()
+          } else {
+            this.map.dragPan.disable()
+          }
         }
       })
       this.showHideInactiveSummits()
