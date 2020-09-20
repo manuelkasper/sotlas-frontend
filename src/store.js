@@ -33,7 +33,9 @@ const store = new Vuex.Store({
     myActivatedSummits: null,
     myChasedSummits: null,
     myActivatedSummitsThisYear: null,
-    homeQth: null
+    homeQth: null,
+    spotPage: 1,
+    alertPage: 1
   },
   mutations: {
     SOCKET_ONOPEN (state, event) {
@@ -100,6 +102,12 @@ const store = new Vuex.Store({
     },
     setHomeQth (state, newHomeQth) {
       state.homeQth = newHomeQth
+    },
+    setSpotPage (state, newSpotPage) {
+      state.spotPage = newSpotPage
+    },
+    setAlertPage (state, newAlertPage) {
+      state.alertPage = newAlertPage
     }
   },
   actions: {

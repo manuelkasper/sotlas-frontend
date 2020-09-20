@@ -13,7 +13,7 @@
         </SpotCard>
       </template>
     </CardPagination>
-    <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :row-class="rowClass">
+    <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :current-page.sync="curPage" :row-class="rowClass">
       <template slot-scope="props">
         <b-table-column field="timeStamp" class="timestamp" label="Time" sortable>
           <span v-html="formatTimeDay(props.row.timeStamp)" />
@@ -135,6 +135,14 @@ export default {
           return 0
         }
       })
+    },
+    curPage: {
+      get () {
+        return this.$store.state.spotPage
+      },
+      set (val) {
+        this.$store.commit('setSpotPage', val)
+      }
     }
   },
   methods: {

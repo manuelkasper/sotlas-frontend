@@ -131,7 +131,7 @@ export default {
     formatDateTimeRelative (date) {
       let dmoment = moment.utc(date)
       let dateFormatted
-      if (dmoment.diff(moment.utc()) < 6 * 86400 * 1000) {
+      if (dmoment.diff(moment.utc(), 'days') < 7) {
         dateFormatted = dmoment.format('ddd')
       } else {
         if (dmoment.isSame(moment.utc(), 'year')) {

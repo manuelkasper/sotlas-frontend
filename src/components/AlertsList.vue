@@ -17,7 +17,7 @@
       </template>
     </CardPagination>
     <p v-else-if="!$mq.desktop && cardAlerts.length === 0">No matching alerts found.</p>
-    <b-table v-else default-sort="dateActivated" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :row-class="rowClass">
+    <b-table v-else default-sort="dateActivated" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :current-page.sync="curPage" :row-class="rowClass">
       <template slot-scope="props">
         <b-table-column field="dateActivated" class="timestamp" label="Date/Time" sortable>
           <span v-html="formatDateTimeRelative(props.row.dateActivated)" />
@@ -136,10 +136,11 @@ export default {
       return (!prevRow || !moment.utc(prevRow.dateActivated).isSame(moment.utc(row.dateActivated), 'day'))
     },
     rowClass (row, index) {
-      if (index === 0 || index === this.data.length) {
+      let realIndex = (this.curPage - 1) * this.perPage + index
+      if (index === 0 || realIndex === 0 || realIndex === this.data.length) {
         return ''
       }
-      if (!moment.utc(this.data[index - 1].dateActivated).isSame(moment.utc(row.dateActivated), 'day')) {
+      if (!moment.utc(this.data[realIndex - 1].dateActivated).isSame(moment.utc(row.dateActivated), 'day')) {
         return 'date-change'
       } else {
         return ''
@@ -194,6 +195,14 @@ export default {
           return 0
         }
       })
+    },
+    curPage: {
+      get () {
+        return this.$store.state.alertPage
+      },
+      set (val) {
+        this.$store.commit('setAlertPage', val)
+      }
     }
   },
   data () {
