@@ -9,7 +9,7 @@
             <FilterInput v-model="filter" ref="filter" v-debounce:500ms="onFilterChanged" />
           </b-field>
 
-          <b-table class="auto-width" :narrowed="true" :striped="true" :data="activators" :loading="loading" paginated backend-pagination :total="total" :per-page="perPage" @page-change="onPageChange" backend-sorting :default-sort="[sortField, sortDirection]" @sort="onSort" :mobile-cards="false">
+          <b-table class="auto-width" :narrowed="true" :striped="true" :data="activators" :loading="loading" paginated backend-pagination :total="total" :per-page="perPage" :current-page.sync="curPage" backend-sorting :default-sort="[sortField, sortDirection]" @sort="onSort" :mobile-cards="false">
             <template slot-scope="props">
               <b-table-column field="callsign" label="Callsign" class="nowrap" sortable>
                 <CountryFlag :country="country(props.row.callsign)" class="flag" />
@@ -58,21 +58,17 @@ export default {
   mixins: [utils, prefs],
   prefs: {
     key: 'activatorsPrefs',
-    props: ['perPage']
+    props: ['perPage', 'filter']
   },
   methods: {
     loadData () {
       this.loading = true
-      axios.get('https://api.sotl.as/activators/search', { params: { q: this.filter, skip: (this.page - 1) * this.perPage, limit: this.perPage, sort: this.sortField, sortDirection: this.sortDirection } })
+      axios.get('https://api.sotl.as/activators/search', { params: { q: this.filter, skip: (this.curPage - 1) * this.perPage, limit: this.perPage, sort: this.sortField, sortDirection: this.sortDirection } })
         .then(response => {
           this.activators = response.data.activators
           this.total = response.data.total
           this.loading = false
         })
-    },
-    onPageChange (page) {
-      this.page = page
-      this.loadData()
     },
     onSort (field, direction) {
       this.sortField = field
@@ -91,6 +87,17 @@ export default {
       this.loadData()
     }
   },
+  computed: {
+    curPage: {
+      get () {
+        return this.$store.state.activatorPage
+      },
+      set (val) {
+        this.$store.commit('setActivatorPage', val)
+        this.loadData()
+      }
+    }
+  },
   mounted () {
     document.title = 'Activators - SOTLAS'
     this.loadData()
@@ -99,7 +106,6 @@ export default {
     return {
       activators: [],
       filter: '',
-      page: 1,
       perPage: 15,
       perPageOptions: [10, 15, 20, 30, 50, 100],
       loading: false,
