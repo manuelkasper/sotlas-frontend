@@ -36,7 +36,6 @@ export default {
   opacity: 0.5;
 }
 .author, .details {
-  display: inline-block;
   margin-left: 0.5em;
 }
 </style>
