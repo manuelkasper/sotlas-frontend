@@ -2,7 +2,7 @@
   <b-modal :active.sync="modalActive" :can-cancel="['escape', 'outside']" has-modal-card>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title"><span v-if="activationDetails"><router-link :to="makeActivatorLink(activationDetails.OwnCallsign)">{{ activationDetails.OwnCallsign }}</router-link> on <router-link :to="makeSummitLink(summitCode)">{{ activationDetails.Summit }}</router-link>, <span class="activation-date">{{ niceActivationDate }}</span></span></p>
+        <p class="modal-card-title"><span v-if="activationDetails"><router-link :to="makeActivatorLinkUserId(activationDetails.UserID)">{{ activationDetails.OwnCallsign }}</router-link> on <router-link :to="makeSummitLink(summitCode)">{{ activationDetails.Summit }}</router-link>, <span class="activation-date">{{ niceActivationDate }}</span></span></p>
         <button class="delete" aria-label="close" @click="modalActive = false"></button>
       </header>
       <section class="modal-card-body">
