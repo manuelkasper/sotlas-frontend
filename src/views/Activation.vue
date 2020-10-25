@@ -1,7 +1,7 @@
 <template>
   <PageLayout>
     <template v-slot:title>Activation</template>
-    <template v-if="activationDetails" v-slot:subtitle><router-link :to="makeActivatorLink(activationDetails.OwnCallsign)">{{ activationDetails.OwnCallsign }}</router-link> on <router-link :to="makeSummitLink(summitCode)">{{ activationDetails.Summit }}</router-link>, <span class="activation-date">{{ niceActivationDate }}</span></template>
+    <template v-if="activationDetails" v-slot:subtitle><router-link :to="makeActivatorLinkUserId(activationDetails.UserID)">{{ activationDetails.OwnCallsign }}</router-link> on <router-link :to="makeSummitLink(summitCode)">{{ activationDetails.Summit }}</router-link>, <span class="activation-date">{{ niceActivationDate }}</span></template>
 
     <template>
       <section class="section">

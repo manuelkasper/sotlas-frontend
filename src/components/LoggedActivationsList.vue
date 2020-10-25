@@ -6,7 +6,7 @@
           {{ props.row.activationDate | formatActivationDate }}
         </b-table-column>
         <b-table-column field="ownCallsign" label="Activator" sortable>
-          <router-link :to="makeActivatorLink(props.row.ownCallsign.toUpperCase())">{{ props.row.ownCallsign.toUpperCase() }}</router-link>
+          <router-link :to="makeActivatorLinkUserId(props.row.userId)">{{ props.row.ownCallsign.toUpperCase() }}</router-link>
         </b-table-column>
         <b-table-column field="qsos" label="QSOs" sortable numeric>
           <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>

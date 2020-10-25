@@ -153,6 +153,9 @@ export default {
       })
       return '/activators/' + longestPart
     },
+    makeActivatorLinkUserId (userId) {
+      return '/activators/' + userId
+    },
     makeSummitLink (summitCode) {
       return '/summits/' + summitCode
     },

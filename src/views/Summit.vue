@@ -54,7 +54,7 @@
             <div>Locator: <span class="locator">{{ locator }}</span></div>
             <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">First activation:
-              <span v-for="(callsign, index) in firstActivations.callsigns" :key="callsign"><router-link :to="makeActivatorLink(callsign)"><strong>{{ callsign }}</strong></router-link>{{ index !== firstActivations.callsigns.length - 1 ? ' & ' : '' }}</span>
+              <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><router-link :to="makeActivatorLinkUserId(activator.userId)"><strong>{{ activator.callsign }}</strong></router-link>{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
             <SummitAttributes :attributes="summit.attributes" />
@@ -173,10 +173,13 @@ export default {
       let firstActivationDate = this.activations[this.activations.length - 1].activationDate
       let firstActivationCallsigns = []
       for (let i = this.activations.length - 1; i >= 0 && this.activations[i].activationDate === firstActivationDate; i--) {
-        firstActivationCallsigns.push(this.activations[i].ownCallsign)
+        firstActivationCallsigns.push({
+          callsign: this.activations[i].ownCallsign,
+          userId: this.activations[i].userId
+        })
       }
-      firstActivationCallsigns.sort()
-      return { callsigns: firstActivationCallsigns, date: firstActivationDate }
+      firstActivationCallsigns.sort((a, b) => (a.callsign > b.callsign) ? 1 : -1)
+      return { activators: firstActivationCallsigns, date: firstActivationDate }
     },
     region () {
       let regionCode = this.summitCode.substring(this.summitCode.indexOf('/') + 1, this.summitCode.indexOf('-'))
