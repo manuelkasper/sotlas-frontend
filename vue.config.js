@@ -5,7 +5,7 @@ const gitRevisionPlugin = new GitRevisionPlugin()
 
 module.exports = {
   productionSourceMap: false,
-  transpileDependencies: ['vue-mapbox'],
+  transpileDependencies: ['vue-lazy-youtube-video', 'vue-mapbox'],
   configureWebpack: {
     plugins: [
       gitRevisionPlugin,
