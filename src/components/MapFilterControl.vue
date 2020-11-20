@@ -46,7 +46,7 @@
           <b-checkbox v-model="activatedByEnabled" size="is-small">Activated by</b-checkbox>
         </b-field>
         <b-field grouped>
-          <b-input v-model="activatedBy" class="callsign" placeholder="Callsign" size="is-small" :disabled="!activatedByEnabled" />
+          <b-input v-model="activatedBy" class="callsign" placeholder="Callsign, Callsign, ..." size="is-small" :disabled="!activatedByEnabled" />
           <b-button v-if="myCallsign" class="control" size="is-small" @click="activatedBy = myCallsign" :disabled="!activatedByEnabled">Me</b-button>
           <b-checkbox v-model="activatedByThisYear" size="is-small">This year</b-checkbox>
         </b-field>
@@ -56,7 +56,7 @@
           <b-checkbox v-model="notActivatedByEnabled" size="is-small">Not activated by</b-checkbox>
         </b-field>
         <b-field grouped>
-          <b-input v-model="notActivatedBy" class="callsign" placeholder="Callsign" size="is-small" :disabled="!notActivatedByEnabled" />
+          <b-input v-model="notActivatedBy" class="callsign" placeholder="Callsign, Callsign, ..." size="is-small" :disabled="!notActivatedByEnabled" />
           <b-button v-if="myCallsign" class="control" size="is-small" @click="notActivatedBy = myCallsign" :disabled="!notActivatedByEnabled">Me</b-button>
           <b-checkbox v-model="notActivatedByThisYear" size="is-small">This year</b-checkbox>
         </b-field>
@@ -233,19 +233,43 @@ export default {
         return null
       }
 
+      let callsigns = this[paramField].trim().split(/\s*,\s*/)
+
       this.filterLoadingCount++
-      return this.loadActivations(this[paramField].toUpperCase().trim())
-        .then(activations => {
+      return Promise.all(callsigns.map(callsign => {
+        return this.loadActivations(callsign.toUpperCase())
+      }))
+        .then(allActivations => {
           this.filterLoadingCount--
+          let summitCodes
+
+          allActivations.forEach(activations => {
+            // Filter for this year if necessary
+            if (this[paramField + 'ThisYear']) {
+              let now = moment.utc()
+              activations = activations.filter(activation => {
+                return moment.utc(activation.date).isSame(now, 'year')
+              })
+            }
+
+            let curSummitCodes = new Set(activations.map(activation => activation.summit.code))
+
+            if (summitCodes === undefined) {
+              summitCodes = curSummitCodes
+            } else {
+              // activatedBy: calculate intersection
+              // notActivatedBy: calculate union
+              if (paramField.startsWith('not')) {
+                summitCodes = new Set([...summitCodes, ...curSummitCodes])
+              } else {
+                summitCodes = new Set([...summitCodes].filter(x => curSummitCodes.has(x)))
+              }
+            }
+          })
+
           let filter = filterTemplate
-          if (this[paramField + 'ThisYear']) {
-            let now = moment.utc()
-            activations = activations.filter(activation => {
-              return moment.utc(activation.date).isSame(now, 'year')
-            })
-          }
-          activations.forEach(activation => {
-            filter.push(activation.summit.code)
+          summitCodes.forEach(summitCode => {
+            filter.push(summitCode)
           })
           return filter
         })
