@@ -143,6 +143,7 @@ export default {
       if (this.$mq.mobile) {
         this.map.on('touchstart', (e) => {
           if (this.isEnlarged) {
+            this.map.dragPan.enable()
             return
           }
 
