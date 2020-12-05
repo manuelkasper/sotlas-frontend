@@ -140,21 +140,23 @@ export default {
       // Workaround to let users scroll page on mobile devices without inadvertently
       // panning the map, while still being able to pan it with two fingers
       // See also: https://github.com/mapbox/mapbox-gl-js/issues/2618
-      this.map.on('touchstart', (e) => {
-        if (!this.$mq.mobile || this.isEnlarged) {
-          return
-        }
-
-        let oe = e.originalEvent
-        if (oe && 'touches' in oe) {
-          if (oe.touches.length > 1) {
-            oe.stopImmediatePropagation()
-            this.map.dragPan.enable()
-          } else {
-            this.map.dragPan.disable()
+      if (this.$mq.mobile) {
+        this.map.on('touchstart', (e) => {
+          if (this.isEnlarged) {
+            return
           }
-        }
-      })
+
+          let oe = e.originalEvent
+          if (oe && 'touches' in oe) {
+            if (oe.touches.length > 1) {
+              oe.stopImmediatePropagation()
+              this.map.dragPan.enable()
+            } else {
+              this.map.dragPan.disable()
+            }
+          }
+        })
+      }
       this.showHideInactiveSummits()
       this.highlightCurrentSummit()
     },
