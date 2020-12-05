@@ -157,6 +157,7 @@ export default {
             }
           }
         })
+        this.map.dragPan.disable()
       }
       this.showHideInactiveSummits()
       this.highlightCurrentSummit()
