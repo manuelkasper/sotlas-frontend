@@ -21,7 +21,7 @@
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas",
     "@mapbox/togeojson": "^0.16.0",
     "@tmcw/togeojson": "^3.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "buefy": "^0.8.20",
     "cheap-ruler": "^2.5.1",
     "core-js": "^2.6.11",
