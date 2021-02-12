@@ -56,7 +56,7 @@ export default {
     swipeOptions () {
       return {
         bgOpacity: 0.85,
-        loop: false,
+        loop: true,
         history: false,
         closeOnScroll: false
       }
