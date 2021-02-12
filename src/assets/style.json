@@ -1561,7 +1561,7 @@
       "source-layer": "transportation",
       "minzoom": 12,
       "maxzoom": 24,
-      "filter": ["==", "class", "cable_car"],
+      "filter": ["==", "class", "aerialway"],
       "layout": {"visibility": "visible", "line-cap": "round"},
       "paint": {
         "line-color": "rgba(153, 153, 153, 1)",
@@ -1575,7 +1575,7 @@
       "source-layer": "transportation",
       "minzoom": 12,
       "maxzoom": 24,
-      "filter": ["==", "class", "cable_car"],
+      "filter": ["==", "class", "aerialway"],
       "layout": {"visibility": "visible", "line-cap": "round"},
       "paint": {
         "line-color": "hsl(0, 0%, 60%)",
