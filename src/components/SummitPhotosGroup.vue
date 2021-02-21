@@ -5,6 +5,7 @@
       <span v-else>{{ title }}</span>
     </div>
     <PictureSwipe ref="pictureSwipe" class="photos" :items="swipeItems" :options="swipeOptions" @mouseoverPicture="mouseoverPicture" @mouseleavePicture="mouseleavePicture" @editPicture="onEditPicture" @deletePicture="onDeletePicture" @movePicture="onMovePicture" />
+    <b-button v-if="waypointPhotos.length > 0 && !$mq.mobile" class="waypoints-button" icon-left="file-download" size="is-small" @click="downloadWaypoints">Photo waypoints (.gpx)</b-button>
   </div>
 </template>
 
@@ -13,13 +14,15 @@ import PictureSwipe from './PictureSwipe.vue'
 import utils from '../mixins/utils.js'
 import photos from '../mixins/photos.js'
 import moment from 'moment'
+import togpx from 'togpx'
 
 export default {
   name: 'SummitPhotosGroup',
   props: {
     photos: Array,
     title: String,
-    titleLink: String
+    titleLink: String,
+    summit: Object
   },
   components: {
     PictureSwipe
@@ -60,6 +63,11 @@ export default {
         history: false,
         closeOnScroll: false
       }
+    },
+    waypointPhotos () {
+      return this.photos.filter(photo => {
+        return (photo.coordinates && (!photo.positioningError || photo.positioningError <= 100))
+      })
     }
   },
   methods: {
@@ -120,6 +128,37 @@ export default {
       let filenames = this.photos.map(photo => photo.filename)
       filenames.splice(newIndex, 0, filenames.splice(oldIndex, 1)[0])
       this.$emit('reorderPhotos', filenames)
+    },
+    downloadWaypoints () {
+      let features = this.waypointPhotos.map(photo => {
+        let feature = {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [photo.coordinates.longitude, photo.coordinates.latitude]
+          }
+        }
+        if (photo.title) {
+          feature.properties = {
+            'name': photo.title
+          }
+        }
+        return feature
+      })
+
+      let gpx = togpx({
+        'type': 'FeatureCollection',
+        'features': features
+      })
+      let blob = new Blob([gpx], { type: 'application/gpx+xml' })
+      let url = window.URL.createObjectURL(blob)
+      let link = document.createElement('a')
+      link.download = 'photos-' + this.summit.code.replace('/', '_') + '-' + this.title + '.gpx'
+      link.href = url
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
     }
   }
 }
@@ -166,5 +205,8 @@ export default {
 }
 .photo-group-title a:hover {
   color: #3273dc;
+}
+.waypoints-button {
+  margin-bottom: 0.75rem;
 }
 </style>

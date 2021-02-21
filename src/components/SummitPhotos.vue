@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="group in groups" :key="group.key">
-      <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos" />
+      <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos" />
     </div>
     <b-modal :active.sync="isEditorActive" has-modal-card trap-focus aria-role="dialog" aria-modal>
       <EditPhoto v-if="editingPhoto" :photo="editingPhoto" :summitCode="summit.code" @photoEdited="$emit('photoEdited')" />
