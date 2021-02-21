@@ -1,7 +1,7 @@
 <template>
   <PageLayout>
     <template v-slot:title><CountryFlag v-if="country" :country="country" class="flag" />{{ callsign }}</template>
-    <template v-slot:title-right><a :href="'https://www.qrz.com/db/' + callsign" target="_blank"><img class="qrzlogo" src="../assets/qrzcom.png" />QRZ.com</a></template>
+    <template v-slot:title-right><CallDatabaseButton :callsign="callsign" /></template>
     <template v-slot:subtitle>
       <div v-if="activator" class="subtitle is-size-7-mobile">
         <div class="activator-info">
@@ -123,6 +123,7 @@ import MiniMap from '../components/MiniMap.vue'
 import ActivationCharts from '../components/ActivationCharts.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 import CountryFlag from '../components/CountryFlag.vue'
+import CallDatabaseButton from '../components/CallDatabaseButton.vue'
 
 export default {
   name: 'Activator',
@@ -131,7 +132,7 @@ export default {
   },
   delayScroll: true,
   components: {
-    PageLayout, ActivationsList, SpotsList, RBNSpotsList, AlertsList, LiveFeedIndicator, FilterInput, MiniMap, ActivationCharts, LoadingSpinner, CountryFlag
+    PageLayout, ActivationsList, SpotsList, RBNSpotsList, AlertsList, LiveFeedIndicator, FilterInput, MiniMap, ActivationCharts, LoadingSpinner, CountryFlag, CallDatabaseButton
   },
   mixins: [utils, api],
   computed: {
@@ -409,11 +410,6 @@ export default {
 </script>
 
 <style scoped>
-.qrzlogo {
-  width: 1.5em;
-  vertical-align: middle;
-  margin-right: 0.4em;
-}
 .b-table >>> .level {
   padding-bottom: 0;
 }
