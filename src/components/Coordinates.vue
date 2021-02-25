@@ -130,6 +130,12 @@ export default {
           }
         },
         {
+          name: 'Bing Maps',
+          url: () => {
+            return `https://www.bing.com/maps?cp=${this.latitude}~${this.longitude}&lvl=15&style=s&v=2`
+          }
+        },
+        {
           name: 'OpenStreetMap',
           url: () => {
             return `https://www.openstreetmap.org/?mlat=${this.latitude}&mlon=${this.longitude}&zoom=16`
