@@ -366,7 +366,7 @@ export default {
 }
 .mapbox-gl-filter-container .filter-container {
   display: none;
-  padding: 0 0.5em 0.5em 0;
+  padding: 0 0.5em 0.5em 0.5em;
   display: inline-block;
 }
 .mapbox-gl-filter-container button {

@@ -20,6 +20,26 @@ if (altitudeUnits !== 'ft' && altitudeUnits !== 'm') {
   }
 }
 
+let mapType = localStorage.getItem('mapType')
+if (mapType !== 'openmaptiles' && mapType !== 'swisstopo') {
+  mapType = 'openmaptiles'
+}
+
+let mapOptions = {
+  regions: false,
+  contours: true,
+  hillshading: true,
+  difficulty: true,
+  spots: false,
+  inactive: false
+}
+let mapOptionsSettings = localStorage.getItem('mapOptions')
+if (mapOptionsSettings) {
+  try {
+    mapOptions = JSON.parse(mapOptionsSettings)
+  } catch (e) {}
+}
+
 const store = new Vuex.Store({
   state: {
     socket: {
@@ -36,7 +56,9 @@ const store = new Vuex.Store({
     homeQth: null,
     spotPage: 1,
     alertPage: 1,
-    activatorPage: 1
+    activatorPage: 1,
+    mapType,
+    mapOptions
   },
   mutations: {
     SOCKET_ONOPEN (state, event) {
@@ -83,7 +105,7 @@ const store = new Vuex.Store({
       state.altitudeUnits = newAltitudeUnits
       localStorage.setItem('altitudeUnits', newAltitudeUnits)
 
-      // Force a reload now to avoid problems with map layer visibility changing etc.
+      // Force a reload now to avoid problems with layers added by draw etc.
       window.location.reload()
     },
     updateSpot (state, spot) {
@@ -112,6 +134,17 @@ const store = new Vuex.Store({
     },
     setActivatorPage (state, newActivatorPage) {
       state.activatorPage = newActivatorPage
+    },
+    setMapType (state, newMapType) {
+      state.mapType = newMapType
+      localStorage.setItem('mapType', newMapType)
+
+      // Force a reload now to avoid problems with layers added by draw etc.
+      window.location.reload()
+    },
+    setMapOption (state, mutation) {
+      state.mapOptions[mutation.option] = mutation.value
+      localStorage.setItem('mapOptions', JSON.stringify(state.mapOptions))
     }
   },
   actions: {

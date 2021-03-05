@@ -158,6 +158,12 @@ export default {
       if (this.routes.length !== 0) {
         this.persistentRoutes = this.routes
       }
+    },
+    mapOptions: {
+      handler (newValue) {
+        this.updateLayers(this.map)
+      },
+      deep: true
     }
   },
   computed: {
@@ -182,6 +188,9 @@ export default {
       } else {
         return null
       }
+    },
+    mapOptions () {
+      return this.$store.state.mapOptions
     }
   },
   methods: {
@@ -198,6 +207,8 @@ export default {
           this.map.getCanvas().style.cursor = ''
         })
       })
+
+      this.updateLayers(this.map)
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -220,6 +231,7 @@ export default {
       if (features.length === 0) {
         // User probably clicked outside any features; close any controls
         this.$refs.filterControl.close()
+        this.$refs.optionsControl.close()
         if (!this.summit) {
           this.persistentRoutes = []
         }

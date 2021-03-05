@@ -51,8 +51,11 @@ export default {
         this.highlightCurrentSummit()
       }
     },
-    showInactiveSummits () {
-      this.showHideInactiveSummits()
+    mapOptions: {
+      handler (newValue) {
+        this.updateLayers(this.map)
+      },
+      deep: true
     }
   },
   computed: {
@@ -79,22 +82,17 @@ export default {
     },
     fitBoundsOptions () {
       return { padding: { left: 60, top: 40, right: 60, bottom: 40 }, maxZoom: 12 }
+    },
+    mapOptions () {
+      // Filter user map options; we don't need regions and spots here
+      let mapOptions = { ...this.$store.state.mapOptions }
+      mapOptions.spots = false
+      mapOptions.regions = false
+      mapOptions.inactive = this.showInactiveSummits
+      return mapOptions
     }
   },
   methods: {
-    showHideInactiveSummits () {
-      if (!this.map) {
-        return
-      }
-
-      if (this.showInactiveSummits) {
-        this.map.setLayoutProperty('summits_inactive_names', 'visibility', 'visible')
-        this.map.setLayoutProperty('summits_inactive_circles', 'visibility', 'visible')
-      } else {
-        this.map.setLayoutProperty('summits_inactive_names', 'visibility', 'none')
-        this.map.setLayoutProperty('summits_inactive_circles', 'visibility', 'none')
-      }
-    },
     highlightCurrentSummit () {
       if (!this.map || !this.summit || !this.summit.code) {
         return
@@ -123,12 +121,7 @@ export default {
       this.map.setFilter('summits_inactive_circles', this.filter)
       this.map.setFilter('summits_inactive_names', this.filter)
 
-      this.map.setLayoutProperty('contour', 'visibility', 'visible')
-      this.map.setLayoutProperty('contour_index', 'visibility', 'visible')
-      this.map.setLayoutProperty('contour_label', 'visibility', 'visible')
-      this.map.setLayoutProperty('hillshading', 'visibility', 'visible')
-
-      this.updateDifficultyLayer()
+      this.updateLayers(this.map)
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -159,7 +152,6 @@ export default {
         })
         this.map.dragPan.disable()
       }
-      this.showHideInactiveSummits()
       this.highlightCurrentSummit()
     },
     onMapClicked (event) {
@@ -204,24 +196,6 @@ export default {
       if (this.map) {
         this.zoomWarningVisible = (this.map.getZoom() < 3) && this.zoomWarning
       }
-    },
-    updateDifficultyLayer () {
-      if (!this.map) {
-        return
-      }
-
-      // Glean main map difficulty visibility setting
-      let mapOptions
-      try {
-        mapOptions = JSON.parse(localStorage.getItem('mapOptions'))
-        if (mapOptions && mapOptions.difficulty === false) {
-          this.map.setLayoutProperty('road_path_pedestrian_sac', 'visibility', 'none')
-          this.map.setLayoutProperty('road_path_pedestrian_sac_label', 'visibility', 'none')
-        } else {
-          this.map.setLayoutProperty('road_path_pedestrian_sac', 'visibility', 'visible')
-          this.map.setLayoutProperty('road_path_pedestrian_sac_label', 'visibility', 'visible')
-        }
-      } catch (e) {}
     },
     resize () {
       this.$nextTick(() => {

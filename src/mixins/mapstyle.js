@@ -20,6 +20,8 @@ export default {
           }
         })
     }
+
+    this.initialMapOptions = { ...this.mapOptions }
   },
   computed: {
     mapStyle () {
@@ -27,16 +29,30 @@ export default {
         return null
       }
 
-      let style = require('../assets/style.json')
+      let style = require('../assets/' + this.$store.state.mapType + '.json')
+      style = JSON.parse(JSON.stringify(style))
+
+      // Show/hide layers according to map options for initial render to save time
+      style.layers.forEach(layer => {
+        if (layer.metadata && layer.metadata['sotlas-map-option']) {
+          if (this.initialMapOptions[layer.metadata['sotlas-map-option']]) {
+            layer.layout.visibility = 'visible'
+          } else {
+            layer.layout.visibility = 'none'
+          }
+        }
+      })
 
       // Patch map server
       Object.values(style.sources).forEach(source => {
-        source.url = source.url.replace('{mapServer}', this.mapServer)
+        if (source.url) {
+          source.url = source.url.replace('{mapServer}', this.mapServer)
+        }
       })
       style.glyphs = style.glyphs.replace('{mapServer}', this.mapServer)
 
       // Patch units
-      if (this.$store.state.altitudeUnits === 'ft') {
+      if (this.$store.state.altitudeUnits === 'ft' && this.$store.state.mapType === 'openmaptiles') {
         style.layers.forEach(layer => {
           if (layer.id === 'contour_label') {
             layer.layout['text-field'] = ['to-string', ['round', ['*', ['get', 'height'], 3.28084]]]
@@ -51,13 +67,33 @@ export default {
       return style
     }
   },
+  methods: {
+    updateLayers (map) {
+      if (!map) {
+        return
+      }
+
+      // Show/hide layers according to map options
+      map.getStyle().layers.forEach(layer => {
+        if (layer.metadata && layer.metadata['sotlas-map-option']) {
+          if (this.mapOptions[layer.metadata['sotlas-map-option']]) {
+            map.setLayoutProperty(layer.id, 'visibility', 'visible')
+          } else {
+            map.setLayoutProperty(layer.id, 'visibility', 'none')
+          }
+        }
+      })
+    }
+  },
   data () {
     return {
       mapServer: null,
       mapServers: {
         'eu': 'Europe (Switzerland)',
         'us': 'US (California)'
-      }
+      },
+      mapTypes: { 'openmaptiles': 'OpenMapTiles', 'swisstopo': 'swisstopo' },
+      initialMapOptions: null
     }
   }
 }
