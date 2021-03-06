@@ -21,7 +21,7 @@ if (altitudeUnits !== 'ft' && altitudeUnits !== 'm') {
 }
 
 let mapType = localStorage.getItem('mapType')
-if (mapType !== 'openmaptiles' && mapType !== 'swisstopo' && mapType !== 'swisstopo_raster') {
+if (!mapType) {
   mapType = 'openmaptiles'
 }
 

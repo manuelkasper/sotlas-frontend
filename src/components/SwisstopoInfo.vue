@@ -1,15 +1,15 @@
 <template>
-  <b-modal :active.sync="active" :on-cancel="cancelInfo">
+  <b-modal :active.sync="active" :on-cancel="cancelInfo" :can-cancel="false">
     <div class="box content">
       <div class="has-text-centered">
         <span class="fp ch flag"></span>
       </div>
       <h3>swisstopo-Karte jetzt verfügbar</h3>
       <p>Auf SOTLAS kann man nun auch die moderne swisstopo Vektor-Karte nutzen. Einfach den Kartentyp umstellen, fertig!</p>
-      <div class="has-text-centered">
+      <div class="has-text-centered is-hidden-mobile">
         <img class="swisstopo-info" src="../assets/swisstopo-info.png" />
       </div>
-      <div class="is-hidden-mobile">
+      <div>
         <h5>Weitere Funktionen:</h5>
         <ul>
           <li>Skitourenrouten</li>
@@ -18,8 +18,13 @@
           <li>Wildschutzgebiete</li>
         </ul>
       </div>
-      <div class="has-text-centered">
-        <b-button type="is-info" size="is-medium" @click="cancelInfo">OK, cool!</b-button>
+      <div class="action-buttons">
+        <div class="has-text-centered">
+          <b-button type="is-info" size="is-medium" @click="switchMap">Jetzt umstellen</b-button>
+        </div>
+        <div class="has-text-centered">
+          <b-button size="is-medium" @click="cancelInfo">OK, cool!</b-button>
+        </div>
       </div>
     </div>
   </b-modal>
@@ -45,6 +50,10 @@ export default {
     cancelInfo () {
       this.active = false
       localStorage.setItem('swisstopoInfoShown', true)
+    },
+    switchMap () {
+      this.cancelInfo()
+      this.$store.commit('setMapType', 'swisstopo')
     }
   },
   data () {
@@ -61,9 +70,13 @@ export default {
   max-height: calc(100vh - 80px);
 }
 .button {
-  margin-top: 1rem;
-  min-width: 20rem;
+  margin: 0.4rem 0.5rem 0.4rem 0.5rem;
+  width: 100%;
+  max-width: 20rem;
   text-align: center;
+}
+.action-buttons {
+  margin-top: 0.75rem;
 }
 .flag {
   font-size: 3rem;

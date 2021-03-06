@@ -29,7 +29,7 @@ export default {
         return null
       }
 
-      let style = require('../assets/' + this.$store.state.mapType + '.json')
+      let style = require('../assets/' + this.mapType + '.json')
       style = JSON.parse(JSON.stringify(style))
 
       // Show/hide layers according to map options for initial render to save time
@@ -52,7 +52,7 @@ export default {
       style.glyphs = style.glyphs.replace('{mapServer}', this.mapServer)
 
       // Patch units
-      if (this.$store.state.altitudeUnits === 'ft' && this.$store.state.mapType === 'openmaptiles') {
+      if (this.$store.state.altitudeUnits === 'ft' && this.mapType === 'openmaptiles') {
         style.layers.forEach(layer => {
           if (layer.id === 'contour_label') {
             layer.layout['text-field'] = ['to-string', ['round', ['*', ['get', 'height'], 3.28084]]]
@@ -65,6 +65,13 @@ export default {
       }
 
       return style
+    },
+    mapType () {
+      let mapType = this.$store.state.mapType
+      if (!this.mapTypes[mapType]) {
+        mapType = 'openmaptiles'
+      }
+      return mapType
     }
   },
   methods: {
