@@ -65,7 +65,7 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.hangneigung-ueber_30/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 16
+      "maxzoom": 14
     },
     "summits": {
       "type": "vector",
@@ -158,7 +158,7 @@
       "layout": {"visibility": "none"},
       "paint": {
         "raster-opacity": 0.3,
-        "raster-resampling": "linear"
+        "raster-resampling": "nearest"
       }
     },
     {
