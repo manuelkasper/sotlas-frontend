@@ -32,6 +32,9 @@
             <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Schneeschuhrouten</b-checkbox>
           </b-field>
           <b-field>
+            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Hangneigungsklassen über 30°</b-checkbox>
+          </b-field>
+          <b-field>
             <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildruhezonen und Schutzgebiete</b-checkbox>
           </b-field>
         </template>

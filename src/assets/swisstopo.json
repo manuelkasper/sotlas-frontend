@@ -32,28 +32,40 @@
       "tiles": [
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.skitouren/default/current/3857/{z}/{x}/{y}.png"
       ],
-      "tileSize": 256
+      "tileSize": 256,
+      "maxzoom": 17
     },
     "snowshoe_trails_raster": {
       "type": "raster",
       "tiles": [
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.schneeschuhrouten/default/current/3857/{z}/{x}/{y}.png"
       ],
-      "tileSize": 256
+      "tileSize": 256,
+      "maxzoom": 17
     },
     "wildlife_areas": {
       "type": "raster",
       "tiles": [
         "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-wildruhezonen_portal/default/current/3857/{z}/{x}/{y}.png"
       ],
-      "tileSize": 256
+      "tileSize": 256,
+      "maxzoom": 18
     },
     "wildlife_reserves": {
       "type": "raster",
       "tiles": [
         "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-jagdbanngebiete_select/default/current/3857/{z}/{x}/{y}.png"
       ],
-      "tileSize": 256
+      "tileSize": 256,
+      "maxzoom": 18
+    },
+    "slope_classes": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.hangneigung-ueber_30/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16
     },
     "summits": {
       "type": "vector",
@@ -133,6 +145,19 @@
       "layout": {"visibility": "none"},
       "paint": {
         "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "slope_classes",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "slope_classes"
+      },
+      "source": "slope_classes",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.3,
         "raster-resampling": "linear"
       }
     },

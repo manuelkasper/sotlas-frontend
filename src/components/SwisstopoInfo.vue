@@ -14,6 +14,7 @@
         <ul>
           <li>Skitourenrouten</li>
           <li>Schneeschuhrouten</li>
+          <li>Hangneigungsklassen über 30°</li>
           <li>Wildschutzgebiete</li>
         </ul>
       </div>
