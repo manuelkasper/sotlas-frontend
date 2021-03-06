@@ -30,6 +30,7 @@
     </MglMap>
     <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map.</div>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
+    <SwisstopoInfo />
     <b-loading :is-full-page="false" :active="filtering || !showMap || !mapStyle" />
   </div>
 </template>
@@ -51,11 +52,12 @@ import SummitPopup from '../components/SummitPopup.vue'
 import MapRoute from '../components/MapRoute.vue'
 import MapInfoPopup from '../components/MapInfoPopup.vue'
 import MapDraw from '../components/MapDraw.vue'
+import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, SwisstopoInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   created () {
