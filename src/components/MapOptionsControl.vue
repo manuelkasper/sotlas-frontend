@@ -21,18 +21,25 @@
         </b-field>
       </div>
       <div class="map-option">
-        <b-field>
-          <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
-        </b-field>
-        <b-field v-if="mapType == 'swisstopo'">
-          <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Back-country skiing routes</b-checkbox>
-        </b-field>
-        <b-field v-if="mapType == 'swisstopo'">
-          <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
-        </b-field>
-        <b-field v-if="mapType == 'swisstopo'">
-          <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves</b-checkbox>
-        </b-field>
+        <template v-if="mapType === 'swisstopo'">
+          <b-field>
+            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Wanderwege</b-checkbox>
+          </b-field>
+          <b-field>
+            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Skirouten</b-checkbox>
+          </b-field>
+          <b-field>
+            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Schneeschuhrouten</b-checkbox>
+          </b-field>
+          <b-field>
+            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildruhezonen und Schutzgebiete</b-checkbox>
+          </b-field>
+        </template>
+        <template v-else>
+          <b-field>
+            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+          </b-field>
+        </template>
       </div>
       <div class="map-option">
         <b-field>
