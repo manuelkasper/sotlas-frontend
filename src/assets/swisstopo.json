@@ -20,6 +20,41 @@
       "minzoom": 0,
       "maxzoom": 19
     },
+    "hiking_trails_raster": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256
+    },
+    "skiing_trails_raster": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.skitouren/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256
+    },
+    "snowshoe_trails_raster": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.schneeschuhrouten/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256
+    },
+    "wildlife_areas": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-wildruhezonen_portal/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256
+    },
+    "wildlife_reserves": {
+      "type": "raster",
+      "tiles": [
+        "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-jagdbanngebiete_select/default/current/3857/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256
+    },
     "summits": {
       "type": "vector",
       "url": "https://1.{mapServer}.map.sotl.as/data/summits.json"
@@ -73,6 +108,32 @@
         ],
         "raster-contrast": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 12, 0],
         "raster-resampling": "nearest"
+      }
+    },
+    {
+      "id": "wildlife_areas",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "wildlife"
+      },
+      "source": "wildlife_areas",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "wildlife_reserves",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "wildlife"
+      },
+      "source": "wildlife_reserves",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
       }
     },
     {
@@ -1808,6 +1869,46 @@
         "line-gap-width": 0,
         "line-opacity": {"stops": [[12, 0], [12.1, 1]]},
         "line-width": {"base": 1.2, "stops": [[12, 0.5], [14, 2], [20, 12]]}
+      }
+    },
+    {
+      "id": "hiking_trails_raster",
+      "type": "raster",
+      "maxzoom": 14,
+      "metadata": {
+        "sotlas-map-option": "difficulty"
+      },
+      "source": "hiking_trails_raster",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "skiing_trails_raster",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "skiing"
+      },
+      "source": "skiing_trails_raster",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "snowshoe_trails_raster",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "snowshoe"
+      },
+      "source": "snowshoe_trails_raster",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
       }
     },
     {
