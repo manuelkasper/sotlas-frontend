@@ -13,10 +13,10 @@
         <b-field>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field>
+        <b-field v-if="mapType !== 'swisstopo_raster'">
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field>
+        <b-field v-if="mapType !== 'swisstopo_raster'">
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
       </div>
