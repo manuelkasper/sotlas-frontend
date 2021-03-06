@@ -21,7 +21,7 @@
         </b-field>
       </div>
       <div class="map-option">
-        <template v-if="mapType === 'swisstopo'">
+        <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
           <b-field>
             <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Wanderwege</b-checkbox>
           </b-field>

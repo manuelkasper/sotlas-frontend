@@ -92,7 +92,7 @@ export default {
         'eu': 'Europe (Switzerland)',
         'us': 'US (California)'
       },
-      mapTypes: { 'openmaptiles': 'OpenMapTiles', 'swisstopo': 'swisstopo' },
+      mapTypes: { 'openmaptiles': 'OpenMapTiles', 'swisstopo': 'swisstopo (Vector)', 'swisstopo_raster': 'swisstopo (Raster)' },
       initialMapOptions: null
     }
   }
