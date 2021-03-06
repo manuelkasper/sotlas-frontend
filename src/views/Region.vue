@@ -20,7 +20,7 @@
             <SummitList :data="filteredSummits" :myActivatedSummits="myActivatedSummits" :myActivatedSummitsThisYear="myActivatedSummitsThisYear" :myChasedSummits="myChasedSummits" />
           </div>
           <div class="column">
-            <MiniMap v-if="region" class="map" :bounds="region.bounds" :filter="mapFilter" :show-inactive-summits="showInactive" />
+            <MiniMap v-if="region" class="map" :bounds="region.bounds" :filter="mapFilter" :show-inactive-summits="showInactive" :overviewMap="true" />
           </div>
         </div>
       </div>

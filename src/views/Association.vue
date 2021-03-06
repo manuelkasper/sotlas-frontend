@@ -33,7 +33,7 @@
             </b-table>
           </div>
           <div class="column">
-            <MiniMap v-if="association.code" class="map" :bounds="association.bounds" :filter="mapFilter" />
+            <MiniMap v-if="association.code" class="map" :bounds="association.bounds" :filter="mapFilter" :overviewMap="true" />
           </div>
         </div>
       </div>

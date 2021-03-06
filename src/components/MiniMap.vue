@@ -38,7 +38,8 @@ export default {
     isEnlarged: Boolean,
     zoomWarning: Boolean,
     showInactiveSummits: Boolean,
-    canEnlarge: Boolean
+    canEnlarge: Boolean,
+    overviewMap: Boolean
   },
   components: {
     MglMap, MglGeolocateControl, MglNavigationControl, MapEnlargeControl, MglScaleControl, MglAttributionControl, MapRoute, MapPhoto, MapInfoPopup
@@ -85,6 +86,13 @@ export default {
     },
     mapOptions () {
       // Filter user map options; we don't need regions and spots here
+      if (this.overviewMap) {
+        return {
+          contours: this.$store.state.mapOptions.contours,
+          hillshading: this.$store.state.mapOptions.hillshading
+        }
+      }
+
       let mapOptions = { ...this.$store.state.mapOptions }
       mapOptions.spots = false
       mapOptions.regions = false
