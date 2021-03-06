@@ -71,6 +71,12 @@ export default {
       open: false
     }
   },
+  mounted () {
+    if (sessionStorage.getItem('mapReloaded')) {
+      sessionStorage.removeItem('mapReloaded')
+      this.open = true
+    }
+  },
   computed: {
     recentSpots () {
       let now = moment.utc()

@@ -140,6 +140,7 @@ const store = new Vuex.Store({
       localStorage.setItem('mapType', newMapType)
 
       // Force a reload now to avoid problems with layers added by draw etc.
+      sessionStorage.setItem('mapReloaded', true)
       window.location.reload()
     },
     setMapOption (state, mutation) {
