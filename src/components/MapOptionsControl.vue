@@ -127,7 +127,7 @@ export default {
       }
     },
     spotsShown () {
-      return this.spots
+      return this.mapOptions.spots
     },
     openCloseMapOptions () {
       this.open = !this.open
