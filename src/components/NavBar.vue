@@ -1,5 +1,5 @@
 <template>
-  <b-navbar wrapper-class="container" :fixed-top="true" :active.sync="burgerActive">
+  <b-navbar wrapper-class="container" :fixed-top="true" :close-on-click="false" :isActive.sync="burgerActive">
     <template #brand>
       <b-navbar-item tag="router-link" to="/about"><img src="../assets/sotlas.svg" alt="Logo"></b-navbar-item>
       <b-navbar-item class="clock" tag="div">
@@ -16,8 +16,7 @@
       </b-navbar-item>
       <b-navbar-dropdown label="More">
         <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click.native="closeBurger">
-          <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
-          {{ link.text }}
+          <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
       </b-navbar-dropdown>
       <b-navbar-item tag="div">

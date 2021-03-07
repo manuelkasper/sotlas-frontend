@@ -79,6 +79,11 @@ export default {
 .search-input {
   width: 18rem;
 }
+@media screen and (max-width: 1023px) {
+  .search-input {
+    width: 100%;
+  }
+}
 @media screen and (min-width: 1024px) and (max-width: 1215px) {
   .search-input {
     max-width: 11rem;
