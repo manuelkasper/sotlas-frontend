@@ -3,7 +3,7 @@
     <template v-slot:title>New Photos</template>
     <template v-slot:title-right>
       <b-field>
-        <b-dropdown class="control" v-model="selectedAssociations" multiple aria-role="list" :scrollable="$mq.desktop" @change="loadNewPhotos">
+        <b-dropdown class="control" v-model="selectedAssociations" multiple aria-role="list" position="is-bottom-left" :scrollable="$mq.desktop" @change="loadNewPhotos">
           <b-button icon-right="angle-down" slot="trigger">
             Associations {{ selectedAssociations.length > 0 ? ('(' + selectedAssociations.length + ')') : '' }}
           </b-button>
