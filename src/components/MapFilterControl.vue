@@ -273,7 +273,12 @@ export default {
           })
           return filter
         })
-        .catch(() => {
+        .catch((e) => {
+          this.$buefy.snackbar.open({
+            message: 'SOTA database error, try again later',
+            type: 'is-warning',
+            position: 'is-bottom'
+          })
           this.filterLoadingCount--
         })
     },
