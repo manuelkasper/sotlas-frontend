@@ -1,34 +1,30 @@
 <template>
-  <nav class="navbar is-fixed-top">
-    <div class="container">
-      <div class="navbar-brand">
-        <div class="navbar-item">
-          <router-link to="/about"><img src="../assets/sotlas.svg" alt="Logo"></router-link>
-        </div>
-        <div class="navbar-item clock">
-          <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
-        </div>
-        <a role="button" :class="{ 'navbar-burger': true, 'burger': true, 'is-active': burgerActive }" aria-label="menu" aria-expanded="false" data-target="navbarMenu" @click="burgerClicked">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div id="navbarMenu" :class="{ 'navbar-menu': true, 'is-active': burgerActive }">
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <SearchField :query="query" @search="closeBurger" />
-          </div>
-          <router-link v-for="link in links" :key="link.target" :to="link.target" :class="linkClass(link)" :title="link.title" @click.native="closeBurger">
-            <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
-            {{ link.text }}
-            <span v-if="!$mq.desktop">{{ link.mobileText }}</span>
-          </router-link>
-          <LoginButton @linkClicked="closeBurger" />
-        </div>
-      </div>
-    </div>
-  </nav>
+  <b-navbar wrapper-class="container" :fixed-top="true" :active.sync="burgerActive">
+    <template #brand>
+      <b-navbar-item tag="router-link" to="/about"><img src="../assets/sotlas.svg" alt="Logo"></b-navbar-item>
+      <b-navbar-item class="clock" tag="div">
+        <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
+      </b-navbar-item>
+    </template>
+    <template #end>
+      <b-navbar-item tag="div">
+        <SearchField :query="query" @search="closeBurger" />
+      </b-navbar-item>
+      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click.native="closeBurger">
+        <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
+        {{ link.text }}
+      </b-navbar-item>
+      <b-navbar-dropdown label="More">
+        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click.native="closeBurger">
+          <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
+          {{ link.text }}
+        </b-navbar-item>
+      </b-navbar-dropdown>
+      <b-navbar-item tag="div">
+        <LoginButton @linkClicked="closeBurger" />
+      </b-navbar-item>
+    </template>
+  </b-navbar>
 </template>
 
 <script>
@@ -65,16 +61,6 @@ export default {
     clearInterval(this.clockInterval)
   },
   methods: {
-    linkClass (link) {
-      let classes = { 'navbar-item': true }
-      if (this.$route.path.startsWith(link.target)) {
-        classes['is-active'] = true
-      }
-      return classes
-    },
-    burgerClicked () {
-      this.burgerActive = !this.burgerActive
-    },
     closeBurger () {
       this.burgerActive = false
     },
@@ -107,6 +93,14 @@ export default {
         {
           target: '/alerts',
           text: 'Alerts'
+        }
+      ]
+    },
+    moreLinks () {
+      return [
+        {
+          target: '/new_photos',
+          text: 'New Photos'
         },
         {
           target: '/activators',
@@ -114,7 +108,7 @@ export default {
         },
         {
           target: '/settings',
-          mobileText: 'Settings',
+          text: 'Settings',
           title: 'Settings',
           icon: 'cog',
           iconPack: 'fas'
@@ -151,8 +145,12 @@ export default {
     font-size: 1rem !important;
   }
 }
-a.navbar-item.is-active:not(:focus):not(:hover), .navbar-link.is-active:not(:focus):not(:hover) {
+.router-link-active:not(:focus):not(:hover) {
   background-color: whitesmoke;
+}
+.navbar-item .icon {
+  margin-right: 0.25em !important;
+  vertical-align: middle;
 }
 .clock {
   opacity: 0.7;
@@ -160,11 +158,5 @@ a.navbar-item.is-active:not(:focus):not(:hover), .navbar-link.is-active:not(:foc
 }
 .clock .faicon {
   margin-right: 0.3em;
-}
-.navbar-brand .navbar-item {
-  line-height: 1;
-}
-.navbar-menu .navbar-item span {
-  vertical-align: middle;
 }
 </style>

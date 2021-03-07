@@ -16,6 +16,7 @@ import Spots from './views/Spots.vue'
 import SotaSpots from './views/SotaSpots.vue'
 import RBNSpots from './views/RBNSpots.vue'
 import Alerts from './views/Alerts.vue'
+import NewPhotos from './views/NewPhotos.vue'
 
 Vue.use(Router)
 
@@ -161,6 +162,10 @@ let router = new Router({
     {
       path: '/alerts',
       component: Alerts
+    },
+    {
+      path: '/new_photos',
+      component: NewPhotos
     },
     {
       path: '*',

@@ -1,11 +1,13 @@
 <template>
   <b-dropdown v-if="authenticated" position="is-bottom-left" aria-role="menu">
-    <a class="navbar-item callsign" slot="trigger" role="button"><span>{{ $keycloak.tokenParsed.callsign ? $keycloak.tokenParsed.callsign : $keycloak.userName }}</span><b-icon icon="angle-down"></b-icon></a>
+    <template #trigger="{ active }">
+      <b-button class="callsign" :icon-right="active ? 'angle-up' : 'angle-down'" :label="$keycloak.tokenParsed.callsign ? $keycloak.tokenParsed.callsign : $keycloak.userName"></b-button>
+    </template>
     <b-dropdown-item v-if="$keycloak.tokenParsed.callsign" has-link><router-link :to="'/activators/' + $keycloak.tokenParsed.callsign" @click.native="$emit('linkClicked')">My activator page</router-link></b-dropdown-item>
     <b-dropdown-item @click="doAccountManagement">Manage account</b-dropdown-item>
     <b-dropdown-item @click="doLogout">Logout</b-dropdown-item>
   </b-dropdown>
-  <div v-else class="navbar-item">
+  <div v-else>
     <b-button type="is-info" @click="doLogin">Login</b-button>
   </div>
 </template>
@@ -54,8 +56,5 @@ export default {
 <style scoped>
 .callsign {
   font-weight: bold;
-}
-.dropdown-trigger .icon {
-  vertical-align: middle;
 }
 </style>

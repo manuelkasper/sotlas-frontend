@@ -1,5 +1,5 @@
 <template>
-  <file-pond name="photo" ref="filePond" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" accepted-file-types="image/jpeg, image/png, image/heic" :server="uploadServer()" @processfile="onProcessFile" />
+  <file-pond name="photo" ref="filePond" class-name="box" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" accepted-file-types="image/jpeg, image/png, image/heic" :server="uploadServer()" @processfile="onProcessFile" />
 </template>
 
 <script>
@@ -92,6 +92,6 @@ export default {
   margin-bottom: 0;
 }
 >>> .filepond--panel-root {
-    background-color: #f7f7f7;
+  background-color: #f7f7f7;
 }
 </style>

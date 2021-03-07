@@ -3,61 +3,61 @@
     <template v-slot:title>Search results</template>
     <template>
       <section v-if="summits !== null && summits.length > 0" class="section">
-      <div class="container">
-        <h4 class="title is-4"><b-icon icon="mountains" />Summits</h4>
-        <b-field v-if="inactiveCount > 0" grouped>
-          <b-switch v-model="showInactive">Show inactive ({{ inactiveCount }})</b-switch>
-        </b-field>
+        <div class="container">
+          <h4 class="title is-4"><b-icon icon="mountains" />Summits</h4>
+          <b-field v-if="inactiveCount > 0" grouped>
+            <b-switch v-model="showInactive">Show inactive ({{ inactiveCount }})</b-switch>
+          </b-field>
 
-        <SummitList :data="filteredSummits" auto-width />
+          <SummitList :data="filteredSummits" auto-width />
 
-        <b-message v-if="summits !== null && summits.length === this.limit" type="is-warning" has-icon>
-          More than {{ this.limit }} summits found, so not all summits may be shown. Please make your search input more specific.
-        </b-message>
-      </div>
-    </section>
+          <b-message v-if="summits !== null && summits.length === this.limit" type="is-warning" has-icon>
+            More than {{ this.limit }} summits found, so not all summits may be shown. Please make your search input more specific.
+          </b-message>
+        </div>
+      </section>
 
-    <section v-if="activators !== null && activators.length > 0" class="section">
-      <div class="container">
-        <h4 class="title is-4"><b-icon icon="user" />Activators</h4>
+      <section v-if="activators !== null && activators.length > 0" class="section">
+        <div class="container">
+          <h4 class="title is-4"><b-icon icon="user" />Activators</h4>
 
-        <b-table class="auto-width" default-sort="callsign" :narrowed="true" :striped="true" :data="activators" :mobile-cards="false">
-          <template slot-scope="props">
-            <b-table-column field="callsign" label="Callsign" sortable>
-              <router-link :to="makeActivatorLink(props.row.callsign)">{{ props.row.callsign }}</router-link>
-            </b-table-column>
-            <b-table-column field="summits" label="Summits" numeric sortable>
-              {{ props.row.summits }}
-            </b-table-column>
-            <b-table-column field="points" :label="$mq.mobile ? 'Pts.' : 'Points'" numeric sortable>
-              {{ props.row.points }}
-            </b-table-column>
-            <b-table-column field="bonusPoints" :label="$mq.mobile ? 'Bonus' : 'Bonus points'" numeric sortable>
-              {{ props.row.bonusPoints }}
-            </b-table-column>
-            <b-table-column field="score" label="Score" numeric sortable>
-              {{ props.row.score }}
-            </b-table-column>
-            <b-table-column v-if="!$mq.mobile" field="avgPoints" label="Avg. points" numeric sortable>
-              {{ props.row.avgPoints }}
-            </b-table-column>
-          </template>
-        </b-table>
+          <b-table class="auto-width" default-sort="callsign" :narrowed="true" :striped="true" :data="activators" :mobile-cards="false">
+            <template slot-scope="props">
+              <b-table-column field="callsign" label="Callsign" sortable>
+                <router-link :to="makeActivatorLink(props.row.callsign)">{{ props.row.callsign }}</router-link>
+              </b-table-column>
+              <b-table-column field="summits" label="Summits" numeric sortable>
+                {{ props.row.summits }}
+              </b-table-column>
+              <b-table-column field="points" :label="$mq.mobile ? 'Pts.' : 'Points'" numeric sortable>
+                {{ props.row.points }}
+              </b-table-column>
+              <b-table-column field="bonusPoints" :label="$mq.mobile ? 'Bonus' : 'Bonus points'" numeric sortable>
+                {{ props.row.bonusPoints }}
+              </b-table-column>
+              <b-table-column field="score" label="Score" numeric sortable>
+                {{ props.row.score }}
+              </b-table-column>
+              <b-table-column v-if="!$mq.mobile" field="avgPoints" label="Avg. points" numeric sortable>
+                {{ props.row.avgPoints }}
+              </b-table-column>
+            </template>
+          </b-table>
 
-        <b-message v-if="activators !== null && activators.length === this.limit" type="is-warning" has-icon>
-          More than {{ this.limit }} activators found, so not all activators may be shown. Please make your search input more specific.
-        </b-message>
-      </div>
-    </section>
+          <b-message v-if="activators !== null && activators.length === this.limit" type="is-warning" has-icon>
+            More than {{ this.limit }} activators found, so not all activators may be shown. Please make your search input more specific.
+          </b-message>
+        </div>
+      </section>
 
-    <section class="section">
-      <div class="container">
-        <b-message v-if="activators !== null && activators.length === 0 && summits !== null && summits.length === 0" type="is-info" has-icon>
-          No matching summits or activators for '{{ $route.query.q }}' found.
-        </b-message>
-      </div>
-    </section>
-  </template>
+      <section class="section">
+        <div class="container">
+          <b-message v-if="activators !== null && activators.length === 0 && summits !== null && summits.length === 0" type="is-info" has-icon>
+            No matching summits or activators for '{{ $route.query.q }}' found.
+          </b-message>
+        </div>
+      </section>
+    </template>
   </PageLayout>
 </template>
 

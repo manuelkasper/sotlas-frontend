@@ -9,7 +9,7 @@ import MatchMedia from 'vue-match-media/src'
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle, faArrowUp, faPlus, faCheckDouble,
-  faAngleRight, faAngleLeft, faAngleDown, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,
+  faAngleRight, faAngleLeft, faAngleDown, faAngleUp, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,
   faQuoteRight, faSearch, faMountains, faUser, faClock, faChevronCircleUp, faChevronCircleDown, faChartBar, faFileDownload,
   faExchange, faGlobe, faCalendarDay, faTrashAlt, faEdit, faClone, faCheckCircle as farCheckCircle, faArrowsH, faArrowsAlt,
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,
@@ -24,7 +24,7 @@ import axios from 'axios'
 import { SnackbarProgrammatic as Snackbar } from 'buefy/dist/components/snackbar'
 
 library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle, faArrowUp, faPlus, faCheckDouble,
-  faAngleRight, faAngleLeft, faAngleDown, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,
+  faAngleRight, faAngleLeft, faAngleDown, faAngleUp, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,
   faQuoteRight, faSearch, faMountains, faUser, faClock, faChevronCircleUp, faChevronCircleDown, faMap, faChartBar, faFileDownload,
   faExchange, faGlobe, faCalendarDay, faTrashAlt, faEdit, faClone, farCheckCircle, faArrowsH, faArrowsAlt,
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,

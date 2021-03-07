@@ -1,7 +1,16 @@
 <template>
   <div>
     <div v-for="group in groups" :key="group.key">
-      <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos" />
+      <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" :editable="editable" :showSummitName="showSummitName" :showWaypointButton="showWaypointButton" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos">
+        <template v-slot:title>
+          <template v-if="showSummitName">
+            <router-link :to="group.titleLink">{{ group.title }}</router-link><span class="has-text-weight-normal"> on </span><router-link :to="'/summits/' + summit.code">{{ summit.name }} <span class="has-text-weight-normal">(<AltitudeLabel :altitude="summit.altitude" />, {{ summit.code }})</span></router-link>
+          </template>
+          <template v-else>
+            <router-link :to="group.titleLink">{{ group.title }}</router-link>
+          </template>
+        </template>
+      </SummitPhotosGroup>
     </div>
     <b-modal :active.sync="isEditorActive" has-modal-card trap-focus aria-role="dialog" aria-modal>
       <EditPhoto v-if="editingPhoto" :photo="editingPhoto" :summitCode="summit.code" @photoEdited="$emit('photoEdited')" />
@@ -12,6 +21,7 @@
 <script>
 import SummitPhotosGroup from './SummitPhotosGroup.vue'
 import EditPhoto from './EditPhoto.vue'
+import AltitudeLabel from './AltitudeLabel.vue'
 import utils from '../mixins/utils.js'
 import api from '../mixins/api.js'
 import moment from 'moment'
@@ -19,10 +29,14 @@ import moment from 'moment'
 export default {
   name: 'SummitPhotos',
   props: {
-    summit: Object
+    summit: Object,
+    minDate: Date,
+    editable: Boolean,
+    showSummitName: Boolean,
+    showWaypointButton: Boolean
   },
   components: {
-    SummitPhotosGroup, EditPhoto
+    SummitPhotosGroup, EditPhoto, AltitudeLabel
   },
   mixins: [utils, api],
   computed: {
@@ -33,7 +47,13 @@ export default {
 
       // Group photos by author
       let authorGroups = new Map()
-      this.summit.photos.forEach(photo => {
+      let summitPhotos = this.summit.photos
+      if (this.minDate) {
+        summitPhotos = summitPhotos.filter(photo => {
+          return moment(photo.uploadDate).isSameOrAfter(moment(this.minDate))
+        })
+      }
+      summitPhotos.forEach(photo => {
         let authorGroup = authorGroups.get(photo.author)
         if (!authorGroup) {
           authorGroup = {

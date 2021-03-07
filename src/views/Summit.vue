@@ -95,10 +95,10 @@
     <section v-if="summit" class="section">
       <div class="container">
         <h4 class="title is-4">Photos</h4>
-        <SummitPhotos ref="summitPhotos" :summit="summit" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
+        <SummitPhotos ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
 
         <PhotosUploader v-if="$keycloak && $keycloak.authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
-        <div v-else class="uploader-placeholder"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
+        <div v-else class="uploader-placeholder box"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
       </div>
     </section>
 

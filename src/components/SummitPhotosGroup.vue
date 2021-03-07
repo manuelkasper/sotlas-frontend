@@ -1,11 +1,10 @@
 <template>
-  <div class="photo-group">
+  <div class="photo-group box">
     <div class="photo-group-title">
-      <router-link v-if="titleLink" :to="titleLink">{{ title }}</router-link>
-      <span v-else>{{ title }}</span>
+      <slot name="title"></slot>
     </div>
     <PictureSwipe ref="pictureSwipe" class="photos" :items="swipeItems" :options="swipeOptions" @mouseoverPicture="mouseoverPicture" @mouseleavePicture="mouseleavePicture" @editPicture="onEditPicture" @deletePicture="onDeletePicture" @movePicture="onMovePicture" />
-    <b-button v-if="waypointPhotos.length > 0 && !$mq.mobile" class="waypoints-button" icon-left="file-download" size="is-small" @click="downloadWaypoints">Photo waypoints (.gpx)</b-button>
+    <b-button v-if="waypointPhotos.length > 0 && !$mq.mobile && showWaypointButton" class="waypoints-button" icon-left="file-download" size="is-small" @click="downloadWaypoints">Photo waypoints (.gpx)</b-button>
   </div>
 </template>
 
@@ -20,9 +19,10 @@ export default {
   name: 'SummitPhotosGroup',
   props: {
     photos: Array,
-    title: String,
-    titleLink: String,
-    summit: Object
+    summit: Object,
+    editable: Boolean,
+    showSummitName: Boolean,
+    showWaypointButton: Boolean
   },
   components: {
     PictureSwipe
@@ -51,7 +51,7 @@ export default {
           h: largeH,
           title: this.makeTitleHtml(photo),
           thumbTitle: photo.title,
-          editable: (this.$keycloak && this.$keycloak.authenticated && this.$keycloak.tokenParsed.callsign === photo.author),
+          editable: (this.editable && this.$keycloak && this.$keycloak.authenticated && this.$keycloak.tokenParsed.callsign === photo.author),
           filename: photo.filename
         }
       })
@@ -172,14 +172,6 @@ export default {
   max-height: 128px;
   max-width: 256px;
 }
-@media (max-width: 768px) {
-  .photos >>> figure {
-    margin: 0 0.5rem 0.5rem 0;
-  }
-  .photos >>> figure img {
-    max-height: 104px;
-  }
-}
 >>> .photo-title {
   font-size: 1rem;
 }
@@ -206,7 +198,19 @@ export default {
 .photo-group-title a:hover {
   color: #3273dc;
 }
+@media (max-width: 768px) {
+  .photos >>> figure {
+    margin: 0 0.5rem 0.5rem 0;
+  }
+  .photos >>> figure img {
+    max-height: 104px;
+  }
+  .photo-group {
+    padding: 0.25rem 0 0 0.5rem;
+  }
+}
 .waypoints-button {
   margin-bottom: 0.75rem;
+  margin-right: 0.75rem;
 }
 </style>
