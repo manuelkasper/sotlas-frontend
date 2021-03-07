@@ -6,7 +6,7 @@
       </div>
       <h3>swisstopo-Karte jetzt verfügbar</h3>
       <p>Auf SOTLAS kann man nun auch die moderne swisstopo Vektor-Karte nutzen. Einfach den Kartentyp umstellen, fertig!</p>
-      <div class="has-text-centered is-hidden-mobile">
+      <div class="has-text-centered is-hidden-touch">
         <img class="swisstopo-info" src="../assets/swisstopo-info.png" />
       </div>
       <div>

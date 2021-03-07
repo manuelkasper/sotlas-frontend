@@ -65,9 +65,12 @@ export default {
 </script>
 
 <style scoped>
+.search-input {
+  width: 18rem;
+}
 @media screen and (min-width: 1024px) and (max-width: 1215px) {
   .search-input {
-    max-width: 13rem;
+    max-width: 11rem;
   }
 }
 </style>
