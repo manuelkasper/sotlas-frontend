@@ -16,7 +16,7 @@
     <template>
       <section v-if="summits !== null && summits.length > 0" class="section">
         <div class="container">
-          <SummitPhotos v-for="summit in summits" class="inline" :key="summit.code" :summit="summit" :minDate="minDate" :showSummitName="true" />
+          <SummitPhotos v-for="summit in summits" :key="summit.code" :summit="summit" :minDate="minDate" :showSummitName="true" />
         </div>
       </section>
       <section v-else-if="summits != null" class="section">
@@ -102,12 +102,5 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-.inline {
-  display: inline-block;
-  vertical-align: top;
-}
->>> .photo-group {
-  margin-right: 0.75rem;
 }
 </style>

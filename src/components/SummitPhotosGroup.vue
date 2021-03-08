@@ -184,6 +184,7 @@ export default {
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-bottom: 0.75rem;
+  margin-right: 0.75rem;
 }
 .photo-group-title {
   color: #777;

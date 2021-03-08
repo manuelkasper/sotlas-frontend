@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="inline">
     <div v-for="group in groups" :key="group.key">
       <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" :editable="editable" :showSummitName="showSummitName" :showWaypointButton="showWaypointButton" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos">
         <template v-slot:title>
@@ -160,3 +160,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.inline {
+  display: inline-block;
+  vertical-align: top;
+}
+.inline > div {
+  display: inline-block;
+  vertical-align: top;
+}
+</style>
