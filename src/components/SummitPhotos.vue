@@ -162,11 +162,7 @@ export default {
 </script>
 
 <style scoped>
-.inline {
-  display: inline-block;
-  vertical-align: top;
-}
-.inline > div {
+.inline, .inline > div {
   display: inline-block;
   vertical-align: top;
 }

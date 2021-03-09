@@ -1,10 +1,10 @@
 <template>
-  <div class="video-group">
+  <div class="video-group box">
     <div class="video-group-title">
       <router-link v-if="titleLink" :to="titleLink">{{ title }}</router-link>
       <span v-else>{{ title }}</span>
     </div>
-    <LazyYoutubeVideo v-for="video in videos" :key="video.src" :src="video.src" />
+    <LazyYoutubeVideo v-for="video in videos" :key="video.src" :src="video.src" previewImageSize="hqdefault" :webp="false" />
   </div>
 </template>
 
@@ -49,6 +49,7 @@ export default {
   background: whitesmoke;
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
+  margin-right: 0.75rem;
 }
 .video-group-title {
   color: #777;

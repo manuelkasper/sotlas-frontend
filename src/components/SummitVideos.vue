@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="inline">
     <div v-for="group in groups" :key="group.key" class="video-group-wrapper">
       <SummitVideosGroup :videos="group.videos" :title="group.title" :titleLink="group.titleLink" />
     </div>
@@ -66,5 +66,9 @@ export default {
 <style scoped>
 .video-group-wrapper:not(:last-child) {
   margin-bottom: 0.75rem;
+}
+.inline, .inline > div {
+  display: inline-block;
+  vertical-align: top;
 }
 </style>
