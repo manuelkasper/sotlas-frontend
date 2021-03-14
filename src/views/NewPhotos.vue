@@ -96,7 +96,7 @@ export default {
   data () {
     return {
       summits: null,
-      days: 7,
+      days: 30,
       limit: 20,
       hasMore: false,
       associations: null,
