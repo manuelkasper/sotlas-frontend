@@ -4,8 +4,13 @@
     <template v-slot:title-right>
       <b-field>
         <b-dropdown class="control" v-model="selectedAssociations" multiple aria-role="list" position="is-bottom-left" :scrollable="$mq.desktop" @change="loadNewPhotos">
-          <b-button icon-right="angle-down" slot="trigger">
-            Associations {{ selectedAssociations.length > 0 ? ('(' + selectedAssociations.length + ')') : '' }}
+          <b-button icon-left="globe" icon-right="angle-down" slot="trigger">
+            <template v-if="$mq.mobile">
+              {{ selectedAssociations.length > 0 ? (selectedAssociations.length) : '' }}
+            </template>
+            <template v-else>
+              Associations {{ selectedAssociations.length > 0 ? ('(' + selectedAssociations.length + ')') : '' }}
+            </template>
           </b-button>
           <b-dropdown-item v-for="association in associations" :key="association.code" :value="association.code" aria-role="listitem">
             {{ association.code }} – {{ association.name }}
@@ -17,6 +22,9 @@
       <section v-if="summits !== null && summits.length > 0" class="section">
         <div class="container">
           <SummitPhotos v-for="summit in summits" :key="summit.code" :summit="summit" :minDate="minDate" :showSummitName="true" />
+        </div>
+        <div v-if="hasMore" class="has-text-centered">
+          <b-button type="is-info" @click="loadMore">Load more</b-button>
         </div>
       </section>
       <section v-else-if="summits != null" class="section">
@@ -51,7 +59,7 @@ export default {
     loadNewPhotos () {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
 
-      let recentPhotosParams = { limit: this.limit }
+      let recentPhotosParams = { limit: this.limit + 1 }
       let associations = '*'
       if (this.selectedAssociations.length > 0) {
         associations = this.selectedAssociations.join('|')
@@ -59,7 +67,8 @@ export default {
       axios.get('https://api.sotl.as/summits/recent_photos/' + associations + '/' + this.days, { params: recentPhotosParams })
         .then(response => {
           this.loadingComponent.close()
-          this.summits = response.data
+          this.summits = response.data.slice(0, -1)
+          this.hasMore = (this.limit < response.data.length)
         })
     },
     loadAssociations () {
@@ -67,6 +76,10 @@ export default {
         .then(response => {
           this.associations = response.data
         })
+    },
+    loadMore () {
+      this.limit += 20
+      this.loadNewPhotos()
     }
   },
   computed: {
@@ -85,6 +98,7 @@ export default {
       summits: null,
       days: 7,
       limit: 20,
+      hasMore: false,
       associations: null,
       selectedAssociations: []
     }
