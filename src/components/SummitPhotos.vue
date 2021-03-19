@@ -1,16 +1,18 @@
 <template>
-  <div class="inline">
-    <div v-for="group in groups" :key="group.key">
-      <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" :editable="editable" :showSummitName="showSummitName" :showWaypointButton="showWaypointButton" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos">
-        <template v-slot:title>
-          <template v-if="showSummitName">
-            <router-link :to="group.titleLink">{{ group.title }}</router-link><span class="has-text-weight-normal"> on </span><router-link :to="'/summits/' + summit.code">{{ summit.name }} <span class="has-text-weight-normal">(<AltitudeLabel :altitude="summit.altitude" />, {{ summit.code }})</span></router-link>
+  <div>
+    <div class="inline">
+      <div v-for="group in groups" :key="group.key">
+        <SummitPhotosGroup ref="photosGroup" :photos="group.photos" :title="group.title" :titleLink="group.titleLink" :summit="summit" :editable="editable" :showSummitName="showSummitName" :showWaypointButton="showWaypointButton" @editPhoto="onEditPhoto" @deletePhoto="onDeletePhoto" @reorderPhotos="onReorderPhotos">
+          <template v-slot:title>
+            <template v-if="showSummitName">
+              <router-link :to="group.titleLink">{{ group.title }}</router-link><span class="has-text-weight-normal"> on </span><router-link :to="'/summits/' + summit.code">{{ summit.name }} <span class="has-text-weight-normal">(<AltitudeLabel :altitude="summit.altitude" />, {{ summit.code }})</span></router-link>
+            </template>
+            <template v-else>
+              <router-link :to="group.titleLink">{{ group.title }}</router-link>
+            </template>
           </template>
-          <template v-else>
-            <router-link :to="group.titleLink">{{ group.title }}</router-link>
-          </template>
-        </template>
-      </SummitPhotosGroup>
+        </SummitPhotosGroup>
+      </div>
     </div>
     <b-modal :active.sync="isEditorActive" has-modal-card trap-focus aria-role="dialog" aria-modal>
       <EditPhoto v-if="editingPhoto" :photo="editingPhoto" :summitCode="summit.code" @photoEdited="$emit('photoEdited')" />
