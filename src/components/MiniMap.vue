@@ -89,7 +89,8 @@ export default {
       if (this.overviewMap) {
         return {
           contours: this.$store.state.mapOptions.contours,
-          hillshading: this.$store.state.mapOptions.hillshading
+          hillshading: this.$store.state.mapOptions.hillshading,
+          inactive: this.showInactiveSummits
         }
       }
 
