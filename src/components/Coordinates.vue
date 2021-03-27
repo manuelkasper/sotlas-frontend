@@ -124,6 +124,51 @@ export default {
           }
         },
         {
+          name: 'Geoportal (HR)',
+          url: () => {
+            if (this.latitude >= 42.396 && this.latitude <= 46.324 && this.longitude >= 13.789 && this.longitude <= 18.497) {
+              return `https://geoportal.dgu.hr/#/?lng={this.longitude}&lat=${this.latitude}&zoom=7`
+            }
+            return null
+          }
+        },
+        {
+          name: 'LocationSA',
+          url: () => {
+            if (this.latitude >= -38.062 && this.latitude <= -25.957 && this.longitude >= 128.957 && this.longitude <= 140.953) {
+              return `http://location.sa.gov.au/viewer/?map=topographic&x=${this.longitude}&y=${this.latitude}&z=17`
+            }
+            return null
+          }
+        },
+        {
+          name: 'SK Geodesy',
+          url: () => {
+            if (this.latitude >= 47.776 && this.latitude <= 49.534 && this.longitude >= 17.041 && this.longitude <= 22.581) {
+              return `https://zbgis.skgeodesy.sk/mkzbgis?bm=zbgis&z=16&c=${this.longitude},${this.latitude}#`
+            }
+            return null
+          }
+        },
+        {
+          name: 'TopoSvalbard',
+          url: () => {
+            if (this.latitude >= 74.117 && this.latitude <= 80.948 && this.longitude >= 7.338 && this.longitude <= 33.631) {
+              return `https://toposvalbard.npolar.no/?lat=${this.latitude}&long={this.longitude}&zoom=8&layer=map`
+            }
+            return null
+          }
+        },
+        {
+          name: 'TopoJanMayen',
+          url: () => {
+            if (this.latitude >= 70.795 && this.latitude <= 71.175 && this.longitude >= -9.253 && this.longitude <= -7.838) {
+              return `https://topojanmayen.npolar.no/?lat=${this.latitude}&long={this.longitude}&zoom=8&layer=map`
+            }
+            return null
+          }
+        },
+        {
           name: 'Google Maps',
           url: () => {
             return `https://www.google.com/maps/search/?api=1&query=${this.latitude},${this.longitude}`
