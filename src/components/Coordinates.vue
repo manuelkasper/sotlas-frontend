@@ -154,7 +154,7 @@ export default {
           name: 'TopoSvalbard',
           url: () => {
             if (this.latitude >= 74.117 && this.latitude <= 80.948 && this.longitude >= 7.338 && this.longitude <= 33.631) {
-              return `https://toposvalbard.npolar.no/?lat=${this.latitude}&long=${this.longitude}&zoom=8&layer=map`
+              return `https://toposvalbard.npolar.no/?lat=${this.latitude.toFixed(6)}&long=${this.longitude.toFixed(6)}&zoom=8&layer=map`
             }
             return null
           }
@@ -163,7 +163,7 @@ export default {
           name: 'TopoJanMayen',
           url: () => {
             if (this.latitude >= 70.795 && this.latitude <= 71.175 && this.longitude >= -9.253 && this.longitude <= -7.838) {
-              return `https://topojanmayen.npolar.no/?lat=${this.latitude}&long=${this.longitude}&zoom=8&layer=map`
+              return `https://topojanmayen.npolar.no/?lat=${this.latitude.toFixed(6)}&long=${this.longitude.toFixed(6)}&zoom=8&layer=map`
             }
             return null
           }
