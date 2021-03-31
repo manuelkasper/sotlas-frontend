@@ -43,7 +43,7 @@ export default {
       return this.webcam.title
     },
     thumbnailSrc () {
-      return this.webcam.image.daylight.preview
+      return this.$store.state.mapOptions.webcamsType === 'current' ? this.webcam.image.current.preview : this.webcam.image.daylight.preview
     },
     thumbnailHref () {
       return this.$mq.mobile ? this.webcam.url.current.mobile : this.webcam.url.current.desktop

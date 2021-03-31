@@ -31,12 +31,17 @@ let mapOptions = {
   hillshading: true,
   difficulty: true,
   spots: false,
-  inactive: false
+  inactive: false,
+  webcams: false,
+  webcamsType: 'daylight'
 }
 let mapOptionsSettings = localStorage.getItem('mapOptions')
 if (mapOptionsSettings) {
   try {
-    mapOptions = JSON.parse(mapOptionsSettings)
+    let userMapOptions = JSON.parse(mapOptionsSettings)
+    for (let key in userMapOptions) {
+      mapOptions[key] = userMapOptions[key]
+    }
   } catch (e) {}
 }
 

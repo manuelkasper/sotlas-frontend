@@ -5,58 +5,62 @@
     </b-tooltip>
     <div v-if="open" class="map-options-container">
       <div class="map-option">
-        <b-field>
+        <b-field grouped>
           <b-select v-model="mapType" size="is-small">
             <option v-for="(desc, type) in mapTypes" :key="type" :value="type">{{ desc }}</option>
           </b-select>
         </b-field>
       </div>
       <div class="map-option">
-        <b-field>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster'">
+        <b-field v-if="mapType !== 'swisstopo_raster'" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster'">
+        <b-field v-if="mapType !== 'swisstopo_raster'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
       </div>
       <div class="map-option">
         <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Wanderwege</b-checkbox>
           </b-field>
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Skirouten</b-checkbox>
           </b-field>
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Schneeschuhrouten</b-checkbox>
           </b-field>
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Hangneigungsklassen über 30°</b-checkbox>
           </b-field>
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildruhezonen und Schutzgebiete</b-checkbox>
           </b-field>
         </template>
         <template v-else>
-          <b-field>
+          <b-field grouped>
             <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
           </b-field>
         </template>
       </div>
       <div class="map-option">
-        <b-field>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.spots" size="is-small" @input="setMapOption('spots', $event)">Recent spots</b-checkbox>
         </b-field>
-        <b-field>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.inactive" size="is-small" @input="setMapOption('inactive', $event)">Inactive summits</b-checkbox>
         </b-field>
       </div>
       <div class="map-option">
-        <b-field>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.webcams" size="is-small" @input="setMapOption('webcams', $event)"><b-icon pack="fas" icon="camera-home" size="is-small" /> Webcams</b-checkbox>
+        </b-field>
+        <b-field grouped>
+          <b-radio v-model="mapOptions.webcamsType" size="is-small" native-value="daylight" :disabled="!mapOptions.webcams" @input="setMapOption('webcamsType', $event)">Daylight</b-radio>
+          <b-radio v-model="mapOptions.webcamsType" size="is-small" native-value="current" :disabled="!mapOptions.webcams" @input="setMapOption('webcamsType', $event)">Current</b-radio>
         </b-field>
       </div>
     </div>
