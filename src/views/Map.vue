@@ -14,7 +14,7 @@
         <MapDownloadControl position="top-left" />
       </div>
 
-      <MglPopup v-if="loadingPopupCoordinates" key="loading" :coordinates="loadingPopupCoordinates" :showed="true" anchor="bottom">
+      <MglPopup v-if="loadingPopupCoordinates" key="loading" :coordinates="loadingPopupCoordinates" :showed="true" anchor="bottom" @added="onPopupAdded">
         <div class="loading-ring-wrapper">
           <LoadingRing />
         </div>
@@ -27,6 +27,8 @@
       <MapInfoPopup v-if="infoCoordinates !== null" :coordinates="infoCoordinates" @close="infoCoordinates = null" />
 
       <MapDraw ref="draw" />
+
+      <MapWebcams v-if="mapOptions.webcams" />
     </MglMap>
     <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map.</div>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
@@ -52,12 +54,13 @@ import SummitPopup from '../components/SummitPopup.vue'
 import MapRoute from '../components/MapRoute.vue'
 import MapInfoPopup from '../components/MapInfoPopup.vue'
 import MapDraw from '../components/MapDraw.vue'
+import MapWebcams from '../components/MapWebcams.vue'
 import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, SwisstopoInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   created () {
@@ -221,7 +224,7 @@ export default {
       this.updateRoute()
     },
     onMapClicked (event) {
-      if (this.$refs.draw.isDrawing()) {
+      if (this.$refs.draw.isDrawing() || event.mapboxEvent.originalEvent.hitMarker) {
         return
       }
 
@@ -306,6 +309,9 @@ export default {
     onPopupClosed () {
       this.summit = null
       this.updateMapURL()
+    },
+    onPopupAdded (popup) {
+      popup.popup.options.focusAfterOpen = false
     },
     handleSummitClick (feature) {
       this.loadingPopupCoordinates = feature.geometry.coordinates

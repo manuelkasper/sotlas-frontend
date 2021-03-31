@@ -11,6 +11,7 @@
     <MapRoute v-for="route in routes" :key="route.id" :route="route" />
     <MapPhoto v-for="photo in mapPhotos" :key="photo.filename" :summit="summit" :photo="photo" @photoClicked="photo => $emit('photoClicked', photo)" />
     <MapInfoPopup v-if="infoCoordinates !== null" :coordinates="infoCoordinates" @close="infoCoordinates = null" />
+    <MapWebcams v-if="mapOptions.webcams" size="is-small" />
     <div v-if="zoomWarningVisible" class="zoom-warning">Zoom in to see all activations</div>
   </MglMap>
 </template>
@@ -21,6 +22,7 @@ import MapRoute from './MapRoute.vue'
 import MapPhoto from './MapPhoto.vue'
 import MapInfoPopup from './MapInfoPopup.vue'
 import MapEnlargeControl from './MapEnlargeControl.vue'
+import MapWebcams from './MapWebcams.vue'
 import mapstyle from '../mixins/mapstyle.js'
 import utils from '../mixins/utils.js'
 import longtouch from '../mixins/longtouch.js'
@@ -42,7 +44,7 @@ export default {
     overviewMap: Boolean
   },
   components: {
-    MglMap, MglGeolocateControl, MglNavigationControl, MapEnlargeControl, MglScaleControl, MglAttributionControl, MapRoute, MapPhoto, MapInfoPopup
+    MglMap, MglGeolocateControl, MglNavigationControl, MapEnlargeControl, MglScaleControl, MglAttributionControl, MapRoute, MapPhoto, MapInfoPopup, MapWebcams
   },
   mixins: [utils, mapstyle, longtouch],
   watch: {

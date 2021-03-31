@@ -8,7 +8,7 @@
           <font-awesome-icon :icon="['fas', 'camera']" transform="shrink-7" :style="{ color: 'white' }" />
         </font-awesome-layers>
       </div>
-      <MglPopup :closeButton="false">
+      <MglPopup :closeButton="false" @added="popupAdded">
         <div class="thumbwrapper">
           <img class="thumb" :src="photoSrc(photo, 'thumb')" @click="$emit('photoClicked', photo)" />
           <div v-if="photo.title" class="caption">{{ photo.title }}</div>
@@ -40,6 +40,9 @@ export default {
   methods: {
     markerClicked (e) {
       e.hitMarker = true
+    },
+    popupAdded (popup) {
+      popup.popup.options.focusAfterOpen = false
     }
   }
 }

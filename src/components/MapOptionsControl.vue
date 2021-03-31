@@ -1,6 +1,8 @@
 <template>
   <div :class="{ 'mapboxgl-ctrl-group': true, 'mapboxgl-ctrl': true, 'mapbox-gl-map-options-container': true }">
-    <button :class="{ 'mapboxgl-ctrl-icon': true, 'mapbox-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
+    <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined label="Webcams and more available – open map options to see!">
+      <button :class="{ 'mapboxgl-ctrl-icon': true, 'mapbox-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
+    </b-tooltip>
     <div v-if="open" class="map-options-container">
       <div class="map-option">
         <b-field>
@@ -52,6 +54,11 @@
           <b-checkbox v-model="mapOptions.inactive" size="is-small" @input="setMapOption('inactive', $event)">Inactive summits</b-checkbox>
         </b-field>
       </div>
+      <div class="map-option">
+        <b-field>
+          <b-checkbox v-model="mapOptions.webcams" size="is-small" @input="setMapOption('webcams', $event)"><b-icon pack="fas" icon="cctv" size="is-small" /> Webcams</b-checkbox>
+        </b-field>
+      </div>
     </div>
   </div>
 </template>
@@ -59,16 +66,22 @@
 <script>
 import moment from 'moment'
 import mapstyle from '../mixins/mapstyle.js'
+import prefs from '../mixins/prefs.js'
 
 const RECENT_SPOT_AGE = 30 * 60 * 1000
 
 export default {
   name: 'MapOptionsControl',
   inject: ['map'],
-  mixins: [mapstyle],
+  mixins: [mapstyle, prefs],
+  prefs: {
+    key: 'mapOptionsControl',
+    props: ['infoTooltipShown']
+  },
   data () {
     return {
-      open: false
+      open: false,
+      infoTooltipShown: false
     }
   },
   mounted () {
@@ -110,6 +123,11 @@ export default {
         this.updateRecentSpots()
       },
       deep: true
+    },
+    open () {
+      if (this.open) {
+        this.infoTooltipShown = true
+      }
     }
   },
   methods: {
@@ -159,5 +177,11 @@ export default {
 .mapbox-gl-map-options-container button {
   display: inline-block;
   vertical-align: top;
+}
+.icon {
+  vertical-align: bottom;
+}
+.b-tooltip {
+  vertical-align: bottom;
 }
 </style>

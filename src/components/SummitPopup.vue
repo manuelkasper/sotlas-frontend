@@ -1,5 +1,5 @@
 <template>
-  <MglPopup v-if="summit" key="summitinfo" :coordinates="[summit.coordinates.longitude, summit.coordinates.latitude]" :showed="true" anchor="bottom" :closeButton="false" @close="$emit('close')">
+  <MglPopup v-if="summit" key="summitinfo" :coordinates="[summit.coordinates.longitude, summit.coordinates.latitude]" :showed="true" anchor="bottom" :closeButton="false" @close="$emit('close')" @added="popupAdded">
     <div :class="{ summitPopup: true, minimize: minimizePopup }">
       <div v-if="coverPhoto" class="photo">
         <div style="text-align: center"><a :href="coverPhoto.mediaLink" target="_blank"><img :src="coverPhoto.src" /></a></div>
@@ -41,6 +41,11 @@ export default {
   mixins: [utils, coverphoto],
   components: {
     MglPopup, ModeLabel, AltitudeLabel, SummitPointsLabel
+  },
+  methods: {
+    popupAdded (popup) {
+      popup.popup.options.focusAfterOpen = false
+    }
   },
   data () {
     return {
@@ -113,7 +118,7 @@ export default {
   color: #3f5da7;
 }
 .photo .attribution {
-  font-size: 8pt;
+  font-size: 0.7rem;
   line-height: 1.4;
   font-style: italic;
   color: #777;
