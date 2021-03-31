@@ -4,7 +4,7 @@
       <div slot="marker" class="marker-icon" @click="markerClicked">
         <font-awesome-layers slot="marker" class="fa-2x fa-fw">
           <font-awesome-icon icon="circle" />
-          <font-awesome-icon :icon="['fas', 'cctv']" transform="shrink-7" :style="{ color: 'white' }" />
+          <font-awesome-icon :icon="['fas', 'camera-home']" transform="shrink-7 left-0.5" :style="{ color: 'white' }" />
         </font-awesome-layers>
         <div v-if="webcam.map.clustersize > 1" class="clustersize">+{{ webcam.map.clustersize - 1 }}</div>
       </div>
@@ -13,7 +13,7 @@
           <a :href="thumbnailHref" target="_blank"><img class="thumb" :src="thumbnailSrc" /></a>
           <div class="caption">{{ title }}</div>
           <template v-if="webcam.map.clustersize > 1 && size != 'is-small'">
-            <div class="clustercaption">+{{ webcam.map.clustersize - 1 }} more webcam{{ webcam.map.clustersize > 2 ? 's' : '' }}</div>
+            <div class="clustercaption">{{ webcam.map.clustersize - 1 }} more webcam{{ webcam.map.clustersize > 2 ? 's' : '' }}</div>
             <div class="clusterinfo">zoom in to view</div>
           </template>
           <div class="attribution">Webcams provided by <a href="https://www.windy.com/" target="_blank">windy.com</a></div>

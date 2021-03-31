@@ -56,7 +56,7 @@
       </div>
       <div class="map-option">
         <b-field>
-          <b-checkbox v-model="mapOptions.webcams" size="is-small" @input="setMapOption('webcams', $event)"><b-icon pack="fas" icon="cctv" size="is-small" /> Webcams</b-checkbox>
+          <b-checkbox v-model="mapOptions.webcams" size="is-small" @input="setMapOption('webcams', $event)"><b-icon pack="fas" icon="camera-home" size="is-small" /> Webcams</b-checkbox>
         </b-field>
       </div>
     </div>
