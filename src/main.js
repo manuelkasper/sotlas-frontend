@@ -13,7 +13,7 @@ import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamat
   faQuoteRight, faSearch, faMountains, faUser, faClock, faChevronCircleUp, faChevronCircleDown, faChartBar, faFileDownload,
   faExchange, faGlobe, faCalendarDay, faTrashAlt, faEdit, faClone, faCheckCircle as farCheckCircle, faArrowsH, faArrowsAlt,
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,
-  faBookUser } from '@fortawesome/pro-regular-svg-icons'
+  faBookUser, faBookmark, faTag } from '@fortawesome/pro-regular-svg-icons'
 import { faMap, faCheckCircle as fasCheckCircle, faChevronCircleDown as fasChevronCircleDown, faChevronCircleUp as fasChevronCircleUp,
   faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, faCaretDown as fasCaretDown, faLocationArrow as fasLocationArrow } from '@fortawesome/pro-solid-svg-icons'
 import { faWikipediaW, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -28,7 +28,7 @@ library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExcla
   faQuoteRight, faSearch, faMountains, faUser, faClock, faChevronCircleUp, faChevronCircleDown, faMap, faChartBar, faFileDownload,
   faExchange, faGlobe, faCalendarDay, faTrashAlt, faEdit, faClone, farCheckCircle, faArrowsH, faArrowsAlt,
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,
-  faBookUser)
+  faBookUser, faBookmark, faTag)
 library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, fasCaretDown, fasLocationArrow)
 library.add(faWikipediaW, faGoogle, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)

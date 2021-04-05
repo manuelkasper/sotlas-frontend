@@ -263,40 +263,6 @@ export default {
         associations.add(activation.summit.code.substring(0, activation.summit.code.indexOf('/')))
       })
       return associations.size
-    },
-    activationsMapBounds () {
-      let minLat, minLon, maxLat, maxLon
-      this.activations.forEach(activation => {
-        if (!minLat || activation.summit.coordinates.latitude < minLat) {
-          minLat = activation.summit.coordinates.latitude
-        }
-        if (!maxLat || activation.summit.coordinates.latitude > maxLat) {
-          maxLat = activation.summit.coordinates.latitude
-        }
-        if (!minLon || activation.summit.coordinates.longitude < minLon) {
-          minLon = activation.summit.coordinates.longitude
-        }
-        if (!maxLon || activation.summit.coordinates.longitude > maxLon) {
-          maxLon = activation.summit.coordinates.longitude
-        }
-      })
-
-      // Some padding
-      let latDiff = maxLat - minLat
-      let lonDiff = maxLon - minLon
-      minLat -= (latDiff * 0.1)
-      maxLat += (latDiff * 0.1)
-      minLon -= (lonDiff * 0.1)
-      maxLon += (lonDiff * 0.1)
-
-      return [[minLon, minLat], [maxLon, maxLat]]
-    },
-    activationsMapFilter () {
-      let summits = new Set()
-      this.activations.forEach(activation => {
-        summits.add(activation.summit.code)
-      })
-      return ['in', 'code', ...summits]
     }
   },
   watch: {

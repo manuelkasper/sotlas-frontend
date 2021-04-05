@@ -222,6 +222,40 @@ export default {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;')
+    },
+    activationsMapBounds (summitList) {
+      let minLat, minLon, maxLat, maxLon
+      summitList.forEach(summitObj => {
+        if (!minLat || summitObj.summit.coordinates.latitude < minLat) {
+          minLat = summitObj.summit.coordinates.latitude
+        }
+        if (!maxLat || summitObj.summit.coordinates.latitude > maxLat) {
+          maxLat = summitObj.summit.coordinates.latitude
+        }
+        if (!minLon || summitObj.summit.coordinates.longitude < minLon) {
+          minLon = summitObj.summit.coordinates.longitude
+        }
+        if (!maxLon || summitObj.summit.coordinates.longitude > maxLon) {
+          maxLon = summitObj.summit.coordinates.longitude
+        }
+      })
+
+      // Some padding
+      let latDiff = maxLat - minLat
+      let lonDiff = maxLon - minLon
+      minLat -= (latDiff * 0.1)
+      maxLat += (latDiff * 0.1)
+      minLon -= (lonDiff * 0.1)
+      maxLon += (lonDiff * 0.1)
+
+      return [[minLon, minLat], [maxLon, maxLat]]
+    },
+    activationsMapFilter (summitList) {
+      let summits = new Set()
+      summitList.forEach(activation => {
+        summits.add(activation.summit.code)
+      })
+      return ['in', 'code', ...summits]
     }
   }
 }

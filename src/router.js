@@ -10,6 +10,7 @@ import NotFound from './views/NotFound.vue'
 import SearchAnything from './views/SearchAnything.vue'
 import Activator from './views/Activator.vue'
 import Activators from './views/Activators.vue'
+import UserData from './views/UserData.vue'
 import Summit from './views/Summit.vue'
 import Activation from './views/Activation.vue'
 import Spots from './views/Spots.vue'
@@ -140,6 +141,11 @@ let router = new Router({
       redirect: to => {
         return '/activators/' + to.params.callsign.toUpperCase()
       }
+    },
+    {
+      path: '/user_data/',
+      component: UserData,
+      meta: { savePath: null }
     },
     {
       path: '/spots',

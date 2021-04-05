@@ -18,6 +18,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.15.2",
     "@fortawesome/pro-solid-svg-icons": "^5.15.2",
     "@fortawesome/vue-fontawesome": "^0.1.10",
+    "@johmun/vue-tags-input": "^2.1.0",
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas",
     "@mapbox/togeojson": "^0.16.0",
     "@tmcw/togeojson": "^3.2.0",

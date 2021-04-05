@@ -7,6 +7,14 @@
         <div class="action-button">
           <b-field>
             <p class="control">
+              <b-button :type="bookmarkButtonType" icon-left="bookmark" :outlined="!isBookmarkedActive" @click="toggleBookmark()" :disabled="!authenticated">Bookmark</b-button>
+            </p>
+          </b-field>
+        </div>
+
+        <div class="action-button">
+          <b-field>
+            <p class="control">
               <b-button type="is-info" size="is-small" outlined icon-left="plus" @click="addAlert()" :disabled="!authenticated">Alert</b-button>
             </p>
             <p class="control">
@@ -59,13 +67,27 @@
 
             <SummitAttributes :attributes="summit.attributes" />
 
+            <div v-if="authenticated">
+              <h6 class="title is-6">Tags</h6>
+              <div class="vue-tags-wrapper">
+                <vue-tags-input v-model="summitTag" :tags="summitTags" :autocomplete-items="summitTagsExisting" @tags-changed="newTags => {this.summitTags = newTags; savePersonalSummitData()}" />
+              </div>
+            </div>
+
             <template v-if="resources.length > 0">
               <h6 class="title is-6">Resources</h6>
               <ResourceList :resources="resources" />
             </template>
+
           </div>
           <div class="column">
             <MiniMap :class="{ map: true, enlarge: enlargeMap }" :summit="summit" :routes="routes" :canEnlarge="true" :isEnlarged="enlargeMap" :showInactiveSummits="!isValid" ref="map" @enlarge="toggleEnlargeMap" @photoClicked="photoClicked" />
+            <div v-if="authenticated">
+              <h6 class="title is-6">Notes</h6>
+              <div>
+                <b-input type="textarea" class="summit-notes" id="textarea-summit-notes" v-model="summitNotes" v-on:change="savePersonalSummitData" placeholder="Your personal summit notes" size="is-small" rows="3"></b-input>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -126,6 +148,7 @@ import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import coverphoto from '../mixins/coverphoto.js'
 import Maidenhead from 'maidenhead'
+import VueTagsInput from '@johmun/vue-tags-input'
 
 import SummitDatabasePageLayout from '../components/SummitDatabasePageLayout.vue'
 import MiniMap from '../components/MiniMap.vue'
@@ -147,6 +170,7 @@ import EditSpot from '../components/EditSpot.vue'
 import HikrIcon from '../assets/hikr.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
 import EventBus from '../event-bus'
+import api from '../mixins/api.js'
 
 export default {
   name: 'Summit',
@@ -154,9 +178,9 @@ export default {
     summitCode: String
   },
   components: {
-    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot
+    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot, VueTagsInput
   },
-  mixins: [utils, smptracks, coverphoto],
+  mixins: [api, utils, smptracks, coverphoto],
   computed: {
     locator () {
       if (!this.summit.coordinates) {
@@ -334,6 +358,22 @@ export default {
 
         // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
         axios.post('https://api.sotl.as/summits/' + this.summitCode)
+
+        this.getPersonalSummitData(this.summitCode)
+          .then(response => {
+            const personalSummitData = response.data.summit
+
+            this.isBookmarkedActive = personalSummitData.isBookmarked ? personalSummitData.isBookmarked : false
+            this.summitNotes = personalSummitData.notes ? personalSummitData.notes : ''
+            this.summitTags = personalSummitData.tags ? personalSummitData.tags : []
+            this.toggleBookmarkButtonType()
+          })
+
+        this.getPersonalSummitTags().then(response => {
+          this.summitTagsExisting = response.map(item => {
+            return item.tag
+          })
+        })
       }
 
       loads.push(axios.get('https://api.sotl.as/summits/' + this.summitCode, options)
@@ -396,6 +436,25 @@ export default {
           this.loadingComponent.close()
         })
     },
+    toggleBookmarkButtonType () {
+      this.bookmarkButtonType = this.isBookmarkedActive ? 'is-success' : 'is-info'
+    },
+    savePersonalSummitData () {
+      this.postPersonalSummitData(
+        this.summitCode,
+        this.isBookmarkedActive,
+        this.summitNotes,
+        this.summitTags
+      ).then(response => {
+        this.toggleBookmarkButtonType()
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    toggleBookmark () {
+      this.isBookmarkedActive = !this.isBookmarkedActive
+      this.savePersonalSummitData()
+    },
     addAlert () {
       this.isAddAlertActive = true
     },
@@ -434,7 +493,13 @@ export default {
       isAddAlertActive: false,
       isAddSpotActive: false,
       enlargeMap: false,
-      alwaysLoadWikipedia: true
+      alwaysLoadWikipedia: true,
+      isBookmarkedActive: false,
+      bookmarkButtonType: 'is-info',
+      summitNotes: null,
+      summitTag: '',
+      summitTags: [],
+      summitTagsExisting: []
     }
   }
 }
@@ -487,6 +552,7 @@ export default {
   margin-right: 0.1em;
   opacity: 0.5;
 }
+
 >>> .coordinates {
   font-weight: bold;
 }

@@ -27,7 +27,7 @@ export default {
       })
       this.setPrefs(this.$options.prefs.key, prefs)
     },
-    getPrefs (key) {
+    getPrefsFromLocalStorage (key) {
       if (localStorage.getItem(key)) {
         try {
           return JSON.parse(localStorage.getItem(key))
@@ -37,8 +37,29 @@ export default {
       }
       return undefined
     },
-    setPrefs (key, prefs) {
+    getPrefs (key) {
+      if (!this.$keycloak.authenticated) {
+        return this.getPrefsFromLocalStorage(key)
+      }
+
+      this.getPersonalData().then(response => {
+        if (response[key]) {
+          this.setPrefsToLocalStorage(key, response[key])
+          return JSON.parse(response[key])
+        }
+        return this.getPrefsFromLocalStorage(key)
+      }).catch(() => {
+        return this.getPrefsFromLocalStorage(key)
+      })
+    },
+    setPrefsToLocalStorage (key, prefs) {
       localStorage.setItem(key, JSON.stringify(prefs))
+    },
+    setPrefs (key, prefs) {
+      if (this.$keycloak.authenticated) {
+        this.postPersonalSettings(key, prefs)
+      }
+      this.setPrefsToLocalStorage(key, prefs)
     }
   }
 }
