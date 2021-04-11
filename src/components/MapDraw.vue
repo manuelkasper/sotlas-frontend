@@ -2,6 +2,7 @@
   <div>
     <div v-if="chartData || loading" class="elevation-chart">
       <div class="elevation-controls">
+        <div v-if="ascent !== null && descent !== null" class="adescent-info">↑ <DistanceLabel :distance="ascent" small-units /> ↓ <DistanceLabel :distance="descent" small-units /></div>
         <b-button size="is-small" type="is-text" icon-left="window-close" @click="hideElevationProfile" />
       </div>
       <b-loading :active="loading" :is-full-page="false" />
@@ -19,10 +20,11 @@ import moment from 'moment'
 import axios from 'axios'
 import utils from '../mixins/utils.js'
 import LineChart from './LineChart.vue'
+import DistanceLabel from './DistanceLabel.vue'
 import { gpx, kml } from '@tmcw/togeojson'
 
 export default {
-  components: { LineChart },
+  components: { LineChart, DistanceLabel },
   inject: ['map'],
   mixins: [utils],
   mounted () {
@@ -402,6 +404,21 @@ export default {
               elevation: this.renderElevation(elevation)
             }
           })
+          let ascent = 0
+          let descent = 0
+          let lastElevation = null
+          result.data.forEach(elevation => {
+            if (lastElevation !== null) {
+              if (lastElevation < elevation) {
+                ascent += elevation - lastElevation
+              } else {
+                descent += lastElevation - elevation
+              }
+            }
+            lastElevation = elevation
+          })
+          this.ascent = ascent
+          this.descent = descent
           this.loading = false
         })
         .finally(() => {
@@ -410,6 +427,8 @@ export default {
     },
     hideElevationProfile () {
       this.chartData = null
+      this.ascent = null
+      this.descent = null
     },
     renderElevation (elevation) {
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -449,6 +468,8 @@ export default {
   data () {
     return {
       chartData: null,
+      ascent: null,
+      descent: null,
       loading: false,
       selectedFeatureId: null
     }
@@ -473,5 +494,12 @@ export default {
   background: white;
   right: 0px;
   z-index: 10;
+}
+.adescent-info {
+  padding-top: 0.3em;
+  color: #777;
+  display: inline-block;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 </style>
