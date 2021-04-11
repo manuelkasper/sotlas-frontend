@@ -7,8 +7,13 @@
         <div class="container content">
           <p>SOTA Atlas (SOTLAS) is created and maintained by Manuel Kasper, HB9DQM (<a href="mailto:mk@neon1.net">mk@neon1.net</a>).</p>
 
+          <p>Code contributed by: <a href="https://github.com/m1hax">@m1hax</a>, <a href="https://github.com/summitsontheair">@summitsontheair</a>,
+            <a href="https://github.com/vk3arr">@vk3arr</a>,
+            Simon G4TJC
+          </p>
+
           <p>
-            Summit database © 2002-2020 Summits on the Air.<br />
+            Summit database © 2002-2021 Summits on the Air.<br />
             Summits on the Air, SOTA and the SOTA Logo are trademarks of the Programme.
           </p>
 
