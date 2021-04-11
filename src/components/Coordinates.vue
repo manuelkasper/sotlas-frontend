@@ -119,7 +119,7 @@ export default {
         {
           name: 'Geoportail (FR)',
           url: () => {
-            if (this.reference.match('^F[LKR]*/')) {
+            if (this.reference && this.reference.match('^F[LKR]*/')) {
               return `https://www.geoportail.gouv.fr/carte?c=${this.longitude},${this.latitude}&z=15&l0=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD::GEOPORTAIL:OGC:WMTS(1)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGN::GEOPORTAIL:OGC:WMTS(1)&l2=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR::GEOPORTAIL:OGC:WMTS(1)&l3=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(1)&l4=GEOGRAPHICALGRIDSYSTEMS.MAPS::GEOPORTAIL:OGC:WMTS(1)&permalink=yes`
             }
           }
@@ -127,7 +127,7 @@ export default {
         {
           name: 'IGN',
           url: () => {
-            if (this.reference.match('^(EA[1-9]|ZB2)/')) {
+            if (this.reference && this.reference.match('^(EA[1-9]|ZB2)/')) {
               return `http://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
             }
           }
@@ -135,7 +135,7 @@ export default {
         {
           name: 'GSI Maps',
           url: () => {
-            if (this.reference.match('^JA[568]*/')) {
+            if (this.reference && this.reference.match('^JA[568]*/')) {
               return `https://maps.gsi.go.jp/#16/${this.latitude}/${this.longitude}/`
             }
           }
@@ -143,7 +143,7 @@ export default {
         {
           name: 'Norgeskart',
           url: () => {
-            if (this.reference.match('^LA/')) {
+            if (this.reference && this.reference.match('^LA/')) {
               return `https://www.norgeskart.no/#!?project=norgeskart&layers=1004&zoom=12&sok=${this.latitude},${this.longitude}`
             }
           }
@@ -151,7 +151,7 @@ export default {
         {
           name: 'TopoMap NZ',
           url: () => {
-            if (this.reference.match('^ZL[13789]/')) {
+            if (this.reference && this.reference.match('^ZL[13789]/')) {
               return `https://www.topomap.co.nz/NZTopoMap?v=2&ll=${this.latitude},${this.longitude}&z=15`
             }
           }
@@ -159,7 +159,7 @@ export default {
         {
           name: 'CalTopo (NA)',
           url: () => {
-            if (this.reference.match('^[WK]|^VE|^XE')) {
+            if (this.reference && this.reference.match('^[WK]|^VE|^XE')) {
               return `https://caltopo.com/map.html#ll=${this.latitude},${this.longitude}&z=15&b=t&o=f16a%2Cr&n=1,0.25`
             }
           }
@@ -167,7 +167,7 @@ export default {
         {
           name: 'Geoportal Bayern',
           url: () => {
-            if (this.reference.match('^(DL/|DM/BM)')) {
+            if (this.reference && this.reference.match('^(DL/|DM/BM)')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `https://geoportal.bayern.de/bayernatlas/index.html?zoom=12&lang=de&topic=ba&bgLayer=tk&E=${p[0]}&N=${p[1]}&catalogNodes=122`
             }
@@ -176,7 +176,7 @@ export default {
         {
           name: 'maps.rlp.de',
           url: () => {
-            if (this.reference.match('^DM/RP')) {
+            if (this.reference && this.reference.match('^DM/RP')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `https://maps.rlp.de/?layerIDs=152,3&visibility=true,true&transparency=0,0&center=${p[0]},${p[1]}&zoomlevel=8`
             }
@@ -185,7 +185,7 @@ export default {
         {
           name: 'Karten des BKG',
           url: () => {
-            if (this.reference.match('^D[LM]/')) {
+            if (this.reference && this.reference.match('^D[LM]/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `http://sg.geodatenzentrum.de/web_bkg_webmap/applications/bkgmaps/minimal.html?zoom=11&lat=${p[1]}&lon=${p[0]}&layers=B000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFT`
             }
@@ -194,7 +194,7 @@ export default {
         {
           name: 'UK OS Map (Bing)',
           url: () => {
-            if (this.reference.match('^G$|^G[^IJU]+')) {
+            if (this.reference && this.reference.match('^G$|^G[^IJU]+')) {
               return `https://www.bing.com/maps?osid=93955629-66b5-4407-9864-aff11618f451&cp=${this.latitude}~${this.longitude}&lvl=15&style=s&v=2&sV=2&form=S00027`
             }
           }
@@ -202,7 +202,7 @@ export default {
         {
           name: 'OSNI',
           url: () => {
-            if (this.reference.match('^GI/')) {
+            if (this.reference && this.reference.match('^GI/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:29900')
               return `https://maps.spatialni.gov.uk/?marker=${p[0]},${p[1]},29900,g,,g&level=7`
             }
@@ -211,7 +211,7 @@ export default {
         {
           name: 'Geoportail (LX)',
           url: () => {
-            if (this.reference.match('^LX/')) {
+            if (this.reference && this.reference.match('^LX/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://map.geoportail.lu/theme/main?version=3&zoom=16&X=${p[0]}&Y=${p[1]}&lang=fr&rotation=0&layers=206&opacities=1&bgLayer=blank`
             }
@@ -220,7 +220,7 @@ export default {
         {
           name: 'Geoportal (LT)',
           url: () => {
-            if (this.reference.match('^LY/')) {
+            if (this.reference && this.reference.match('^LY/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3346')
               return `https://www.geoportal.lt/map/#s=3346&x=${p[0]}&y=${p[1]}&l=8&b=default`
             }
@@ -229,7 +229,7 @@ export default {
         {
           name: 'SK Geodesy',
           url: () => {
-            if (this.reference.match('^OM/')) {
+            if (this.reference && this.reference.match('^OM/')) {
               return `https://zbgis.skgeodesy.sk/mkzbgis?bm=zbgis&z=16&c=${this.longitude},${this.latitude}#`
             }
           }
@@ -237,7 +237,7 @@ export default {
         {
           name: 'NGI',
           url: () => {
-            if (this.reference.match('^ON/')) {
+            if (this.reference && this.reference.match('^ON/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3812')
               return `https://topomapviewer.ngi.be/?l=en&x=${p[0]}&y=${p[1]}&zoom=9&baseLayer=classic.maps`
             }
@@ -246,7 +246,7 @@ export default {
         {
           name: 'Basemap.at',
           url: () => {
-            if (this.reference.match('^OE/')) {
+            if (this.reference && this.reference.match('^OE/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://basemap.at/bmapp/index.html#{%22center%22:[${p[0]},${p[1]}],%22zoom%22:16,%22rotation%22:0,%22layers%22:%220100000000%22}`
             }
@@ -255,7 +255,7 @@ export default {
         {
           name: 'Føroyakort',
           url: () => {
-            if (this.reference.match('^OY/')) {
+            if (this.reference && this.reference.match('^OY/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:5316')
               return `https://kort.foroyakort.fo/kort/?center=${p[0]},${p[1]},5316&level=9`
             }
@@ -264,7 +264,7 @@ export default {
         {
           name: 'Kortasjá',
           url: () => {
-            if (this.reference.match('^TF/')) {
+            if (this.reference && this.reference.match('^TF/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3057')
               return `http://kortasja.lmi.is/mapview/?application=kortasja&lang=is&center=${p[0]},${p[1]}&zoom=11&layers=219,225,228,286,221 X`
             }
@@ -273,7 +273,7 @@ export default {
         {
           name: 'SIXmaps',
           url: () => {
-            if (this.reference.match('^VK[12]/')) {
+            if (this.reference && this.reference.match('^VK[12]/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://portal.spatial.nsw.gov.au/portal/apps/webappviewer/index.html?center=${p[0]},${p[1]},102100&level=16`
             }
@@ -282,7 +282,7 @@ export default {
         {
           name: 'MapshareVIC',
           url: () => {
-            if (this.reference.match('^VK3/')) {
+            if (this.reference && this.reference.match('^VK3/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3111')
               return `https://mapshare.vic.gov.au/MapshareVic/?layerTheme=5&scale=3000&basemap=bWFwc2NhcGUgY29sb3Vy&center=${p[0]},${p[1]}`
             }
@@ -291,7 +291,7 @@ export default {
         {
           name: 'QTopo',
           url: () => {
-            if (this.reference.match('^VK4/')) {
+            if (this.reference && this.reference.match('^VK4/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://qtopo.information.qld.gov.au/?center=${p[0]},${p[1]},102100&level=16`
             }
@@ -300,7 +300,7 @@ export default {
         {
           name: 'LocationSA',
           url: () => {
-            if (this.reference.match('^VK5/')) {
+            if (this.reference && this.reference.match('^VK5/')) {
               return `http://location.sa.gov.au/viewer/?map=topographic&x=${this.longitude}&y=${this.latitude}&z=16&uids=&pinx=${this.longitude}&piny=${this.latitude}&pinTitle=&pinText=%%sumCode%%`
             }
           }
@@ -308,7 +308,7 @@ export default {
         {
           name: 'LGIA',
           url: () => {
-            if (this.reference.match('^YL/')) {
+            if (this.reference && this.reference.match('^YL/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3059')
               return `https://kartes.lgia.gov.lv/karte/?x=${p[1]}&y=${p[0]}&lx=5565.0&ly=3130.313&l=1,8,9,10,13,14,15,40,51,62,63,64,65,66,67,68,69,70`
             }
@@ -317,7 +317,7 @@ export default {
         {
           name: 'Govmap',
           url: () => {
-            if (this.reference.match('^4X/')) {
+            if (this.reference && this.reference.match('^4X/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:2039')
               return `https://www.govmap.gov.il/?c=${p[0]},${p[1]}&z=4&b=9`
             }
@@ -326,7 +326,7 @@ export default {
         {
           name: 'Geoportal (HR)',
           url: () => {
-            if (this.reference.match('^9A/')) {
+            if (this.reference && this.reference.match('^9A/')) {
               return `https://geoportal.dgu.hr/#/?lng=${this.longitude}&lat=${this.latitude}&zoom=7`
             }
           }
