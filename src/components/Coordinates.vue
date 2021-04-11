@@ -41,7 +41,7 @@ export default {
   computed: {
     filteredActions () {
       return this.actions.filter(action => {
-        return (action.url() !== null)
+        return (action.url() !== undefined)
       })
     },
     maidenhead () {
@@ -122,7 +122,6 @@ export default {
             if (this.reference.match('^F[LKR]*/')) {
               return `https://www.geoportail.gouv.fr/carte?c=${this.longitude},${this.latitude}&z=15&l0=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD::GEOPORTAIL:OGC:WMTS(1)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGN::GEOPORTAIL:OGC:WMTS(1)&l2=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR::GEOPORTAIL:OGC:WMTS(1)&l3=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(1)&l4=GEOGRAPHICALGRIDSYSTEMS.MAPS::GEOPORTAIL:OGC:WMTS(1)&permalink=yes`
             }
-            return null
           }
         },
         {
@@ -131,7 +130,6 @@ export default {
             if (this.reference.match('^(EA[1-9]|ZB2)/')) {
               return `http://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
             }
-            return null
           }
         },
         {
@@ -140,7 +138,6 @@ export default {
             if (this.reference.match('^JA[568]*/')) {
               return `https://maps.gsi.go.jp/#16/${this.latitude}/${this.longitude}/`
             }
-            return null
           }
         },
         {
@@ -149,7 +146,6 @@ export default {
             if (this.reference.match('^LA/')) {
               return `https://www.norgeskart.no/#!?project=norgeskart&layers=1004&zoom=12&sok=${this.latitude},${this.longitude}`
             }
-            return null
           }
         },
         {
@@ -158,7 +154,6 @@ export default {
             if (this.reference.match('^ZL[13789]/')) {
               return `https://www.topomap.co.nz/NZTopoMap?v=2&ll=${this.latitude},${this.longitude}&z=15`
             }
-            return null
           }
         },
         {
@@ -167,7 +162,6 @@ export default {
             if (this.reference.match('^[WK]|^VE|^XE')) {
               return `https://caltopo.com/map.html#ll=${this.latitude},${this.longitude}&z=15&b=t&o=f16a%2Cr&n=1,0.25`
             }
-            return null
           }
         },
         {
@@ -177,7 +171,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `https://geoportal.bayern.de/bayernatlas/index.html?zoom=12&lang=de&topic=ba&bgLayer=tk&E=${p[0]}&N=${p[1]}&catalogNodes=122`
             }
-            return null
           }
         },
         {
@@ -187,7 +180,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `https://maps.rlp.de/?layerIDs=152,3&visibility=true,true&transparency=0,0&center=${p[0]},${p[1]}&zoomlevel=8`
             }
-            return null
           }
         },
         {
@@ -197,7 +189,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
               return `http://sg.geodatenzentrum.de/web_bkg_webmap/applications/bkgmaps/minimal.html?zoom=11&lat=${p[1]}&lon=${p[0]}&layers=B000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFT`
             }
-            return null
           }
         },
         {
@@ -206,7 +197,6 @@ export default {
             if (this.reference.match('^G$|^G[^IJU]+')) {
               return `https://www.bing.com/maps?osid=93955629-66b5-4407-9864-aff11618f451&cp=${this.latitude}~${this.longitude}&lvl=15&style=s&v=2&sV=2&form=S00027`
             }
-            return null
           }
         },
         {
@@ -216,7 +206,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:29900')
               return `https://maps.spatialni.gov.uk/?marker=${p[0]},${p[1]},29900,g,,g&level=7`
             }
-            return null
           }
         },
         {
@@ -226,7 +215,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://map.geoportail.lu/theme/main?version=3&zoom=16&X=${p[0]}&Y=${p[1]}&lang=fr&rotation=0&layers=206&opacities=1&bgLayer=blank`
             }
-            return null
           }
         },
         {
@@ -236,7 +224,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3346')
               return `https://www.geoportal.lt/map/#s=3346&x=${p[0]}&y=${p[1]}&l=8&b=default`
             }
-            return null
           }
         },
         {
@@ -245,7 +232,6 @@ export default {
             if (this.reference.match('^OM/')) {
               return `https://zbgis.skgeodesy.sk/mkzbgis?bm=zbgis&z=16&c=${this.longitude},${this.latitude}#`
             }
-            return null
           }
         },
         {
@@ -255,7 +241,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3812')
               return `https://topomapviewer.ngi.be/?l=en&x=${p[0]}&y=${p[1]}&zoom=9&baseLayer=classic.maps`
             }
-            return null
           }
         },
         {
@@ -265,7 +250,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://basemap.at/bmapp/index.html#{%22center%22:[${p[0]},${p[1]}],%22zoom%22:16,%22rotation%22:0,%22layers%22:%220100000000%22}`
             }
-            return null
           }
         },
         {
@@ -275,7 +259,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:5316')
               return `https://kort.foroyakort.fo/kort/?center=${p[0]},${p[1]},5316&level=9`
             }
-            return null
           }
         },
         {
@@ -285,7 +268,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3057')
               return `http://kortasja.lmi.is/mapview/?application=kortasja&lang=is&center=${p[0]},${p[1]}&zoom=11&layers=219,225,228,286,221 X`
             }
-            return null
           }
         },
         {
@@ -295,7 +277,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://portal.spatial.nsw.gov.au/portal/apps/webappviewer/index.html?center=${p[0]},${p[1]},102100&level=16`
             }
-            return null
           }
         },
         {
@@ -305,7 +286,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3111')
               return `https://mapshare.vic.gov.au/MapshareVic/?layerTheme=5&scale=3000&basemap=bWFwc2NhcGUgY29sb3Vy&center=${p[0]},${p[1]}`
             }
-            return null
           }
         },
         {
@@ -315,7 +295,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
               return `https://qtopo.information.qld.gov.au/?center=${p[0]},${p[1]},102100&level=16`
             }
-            return null
           }
         },
         {
@@ -324,7 +303,6 @@ export default {
             if (this.reference.match('^VK5/')) {
               return `http://location.sa.gov.au/viewer/?map=topographic&x=${this.longitude}&y=${this.latitude}&z=16&uids=&pinx=${this.longitude}&piny=${this.latitude}&pinTitle=&pinText=%%sumCode%%`
             }
-            return null
           }
         },
         {
@@ -334,7 +312,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3059')
               return `https://kartes.lgia.gov.lv/karte/?x=${p[1]}&y=${p[0]}&lx=5565.0&ly=3130.313&l=1,8,9,10,13,14,15,40,51,62,63,64,65,66,67,68,69,70`
             }
-            return null
           }
         },
         {
@@ -344,7 +321,6 @@ export default {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:2039')
               return `https://www.govmap.gov.il/?c=${p[0]},${p[1]}&z=4&b=9`
             }
-            return null
           }
         },
         {
@@ -353,7 +329,14 @@ export default {
             if (this.reference.match('^9A/')) {
               return `https://geoportal.dgu.hr/#/?lng=${this.longitude}&lat=${this.latitude}&zoom=7`
             }
-            return null
+          }
+        },
+        {
+          name: 'swisstopo',
+          url: () => {
+            if (this.latitude >= 45.7 && this.latitude <= 47.85 && this.longitude >= 5.9 && this.longitude <= 10.9) {
+              return `https://map.geo.admin.ch/?swisssearch=${this.latitude},${this.longitude}`
+            }
           }
         },
         {
@@ -362,7 +345,6 @@ export default {
             if (this.latitude >= 74.117 && this.latitude <= 80.948 && this.longitude >= 7.338 && this.longitude <= 33.631) {
               return `https://toposvalbard.npolar.no/?lat=${this.latitude.toFixed(6)}&long=${this.longitude.toFixed(6)}&zoom=8&layer=map`
             }
-            return null
           }
         },
         {
@@ -371,7 +353,6 @@ export default {
             if (this.latitude >= 70.795 && this.latitude <= 71.175 && this.longitude >= -9.253 && this.longitude <= -7.838) {
               return `https://topojanmayen.npolar.no/?lat=${this.latitude.toFixed(6)}&long=${this.longitude.toFixed(6)}&zoom=8&layer=map`
             }
-            return null
           }
         },
         {
@@ -410,7 +391,6 @@ export default {
             if (this.reference) {
               return `https://summits.sota.org.uk/summit/${this.reference}`
             }
-            return null
           }
         },
         {
@@ -419,7 +399,6 @@ export default {
             if (this.reference) {
               return `https://www.sotamaps.org/summit/${this.reference}`
             }
-            return null
           }
         },
         {
