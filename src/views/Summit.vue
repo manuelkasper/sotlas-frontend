@@ -69,8 +69,8 @@
 
             <div v-if="authenticated">
               <h6 class="title is-6">Tags</h6>
-              <div class="vue-tags-wrapper">
-                <vue-tags-input v-model="summitTag" :tags="summitTags" :autocomplete-items="summitTagsExisting" @tags-changed="newTags => {this.summitTags = newTags; savePersonalSummitData()}" />
+              <div class="taginput-wrapper">
+                <b-taginput v-model="summitTags" ref="summitTagInput" autocomplete open-on-focus allow-new :data="filteredSummitTagsExisting" :confirm-key-codes="[9,13,32,188]" @typing="getFilteredSummitTags" @input="onSummitTagsInput" size="is-small" rounded append-to-body />
               </div>
             </div>
 
@@ -148,7 +148,6 @@ import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import coverphoto from '../mixins/coverphoto.js'
 import Maidenhead from 'maidenhead'
-import VueTagsInput from '@johmun/vue-tags-input'
 
 import SummitDatabasePageLayout from '../components/SummitDatabasePageLayout.vue'
 import MiniMap from '../components/MiniMap.vue'
@@ -178,7 +177,7 @@ export default {
     summitCode: String
   },
   components: {
-    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot, VueTagsInput
+    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot
   },
   mixins: [api, utils, smptracks, coverphoto],
   computed: {
@@ -373,6 +372,7 @@ export default {
           this.summitTagsExisting = response.map(item => {
             return item.tag
           })
+          this.filteredSummitTagsExisting = this.summitTagsExisting
         })
       }
 
@@ -481,6 +481,25 @@ export default {
     },
     navbarMenuOpened () {
       this.enlargeMap = false
+    },
+    getFilteredSummitTags (input) {
+      this.filteredSummitTagsExisting = this.summitTagsExisting
+        .filter(element => {
+          return !this.summitTags.includes(element)
+        })
+        .filter(element => {
+          return element
+            .toString()
+            .toLowerCase()
+            .indexOf(input.toLowerCase()) >= 0
+        })
+    },
+    onSummitTagsInput () {
+      this.filteredSummitTagsExisting = this.summitTagsExisting
+        .filter(element => {
+          return !this.summitTags.includes(element)
+        })
+      this.savePersonalSummitData()
     }
   },
   data () {
@@ -497,9 +516,9 @@ export default {
       isBookmarkedActive: false,
       bookmarkButtonType: 'is-info',
       summitNotes: null,
-      summitTag: '',
       summitTags: [],
-      summitTagsExisting: []
+      summitTagsExisting: [],
+      filteredSummitTagsExisting: this.summitTagsExisting
     }
   }
 }

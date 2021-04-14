@@ -152,36 +152,12 @@ hr {
   user-select: none;
 }
 
-.vue-tags-wrapper, .summit-notes {
+.taginput-wrapper, .summit-notes {
   margin-top: 0.7em;
 }
 
 .summit-notes textarea {
   box-shadow: none;
-}
-
-.vue-tags-input {
-  max-width: 100% !important;
-}
-
-.ti-input {
-  border-radius: 2px;
-  border-color: #dbdbdb !important;
-  font-size: 0.75rem;
-}
-
-.ti-new-tag-input-wrapper input::placeholder {
-  font-size: 0.75rem;
-  color: #c5c5c5;
-}
-
-.ti-input .ti-tag {
-  background: #ffffff;
-  border: 1px solid #209cee;
-  color: #209cee;
-  margin-right: 4px;
-  border-radius: 2px;
-  font-size: 0.75rem;
 }
 
 /* Fix Buefy bug */
