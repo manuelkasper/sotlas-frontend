@@ -1,4 +1,8 @@
+import api from '@/mixins/api'
+import utils from '@/mixins/utils'
+
 export default {
+  mixins: [api, utils],
   mounted () {
     if (this.$options.prefs) {
       this.loadPrefs()
@@ -27,7 +31,7 @@ export default {
       })
       this.setPrefs(this.$options.prefs.key, prefs)
     },
-    getPrefs (key) {
+    getPrefsFromLocalStorage (key) {
       if (localStorage.getItem(key)) {
         try {
           return JSON.parse(localStorage.getItem(key))
@@ -37,8 +41,29 @@ export default {
       }
       return undefined
     },
-    setPrefs (key, prefs) {
+    getPrefs (key) {
+      if (!this.authenticated) {
+        return this.getPrefsFromLocalStorage(key)
+      }
+
+      this.getPersonalData().then(response => {
+        if (response[key]) {
+          this.setPrefsToLocalStorage(key, response[key])
+          return JSON.parse(response[key])
+        }
+        return this.getPrefsFromLocalStorage(key)
+      }).catch(() => {
+        return this.getPrefsFromLocalStorage(key)
+      })
+    },
+    setPrefsToLocalStorage (key, prefs) {
       localStorage.setItem(key, JSON.stringify(prefs))
+    },
+    setPrefs (key, prefs) {
+      if (this.authenticated) {
+        this.postPersonalSettings(key, prefs)
+      }
+      this.setPrefsToLocalStorage(key, prefs)
     }
   }
 }

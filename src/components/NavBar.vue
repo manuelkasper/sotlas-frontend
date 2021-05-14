@@ -106,6 +106,10 @@ export default {
           text: 'Activators'
         },
         {
+          target: '/user_data',
+          text: 'User Data'
+        },
+        {
           target: '/settings',
           text: 'Settings',
           title: 'Settings',

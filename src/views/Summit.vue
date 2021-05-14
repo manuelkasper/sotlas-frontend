@@ -7,6 +7,14 @@
         <div class="action-button">
           <b-field>
             <p class="control">
+              <b-button :type="bookmarkButtonType" size="is-small" icon-left="bookmark" :outlined="!isBookmarkedActive" @click="toggleBookmark()" :disabled="!authenticated">Bookmark</b-button>
+            </p>
+          </b-field>
+        </div>
+
+        <div class="action-button">
+          <b-field>
+            <p class="control">
               <b-button type="is-info" size="is-small" outlined icon-left="plus" @click="addAlert()" :disabled="!authenticated">Alert</b-button>
             </p>
             <p class="control">
@@ -52,20 +60,34 @@
           <div v-if="!enlargeMap" class="column">
             <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :reference="summit.code" /></div>
             <div>Locator: <span class="locator">{{ locator }}</span></div>
-            <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
+            <div v-if="authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">First activation:
               <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><router-link :to="makeActivatorLinkUserId(activator.userId)"><strong>{{ activator.callsign }}</strong></router-link>{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
             <SummitAttributes :attributes="summit.attributes" />
 
+            <div v-if="authenticated">
+              <h6 class="title is-6">Tags</h6>
+              <div class="taginput-wrapper">
+                <b-taginput v-model="summitTags" ref="summitTagsInput" autocomplete open-on-focus allow-new :data="filteredSummitTagsExisting" :confirm-key-codes="[9,13,32,188]" @typing="getFilteredSummitTags" @input="onSummitTagsInput" @blur="onSummitTagsInputBlur" rounded />
+              </div>
+            </div>
+
             <template v-if="resources.length > 0">
               <h6 class="title is-6">Resources</h6>
               <ResourceList :resources="resources" />
             </template>
+
           </div>
           <div class="column">
             <MiniMap :class="{ map: true, enlarge: enlargeMap }" :summit="summit" :routes="routes" :canEnlarge="true" :isEnlarged="enlargeMap" :showInactiveSummits="!isValid" ref="map" @enlarge="toggleEnlargeMap" @photoClicked="photoClicked" />
+            <div v-if="authenticated">
+              <h6 class="title is-6">Notes</h6>
+              <div>
+                <b-input type="textarea" class="summit-notes" id="textarea-summit-notes" v-model="summitNotes" v-debounce:1s="savePersonalSummitData" placeholder="Your personal summit notes" size="is-small" rows="3"></b-input>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -97,7 +119,7 @@
         <h4 class="title is-4">Photos</h4>
         <SummitPhotos ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
 
-        <PhotosUploader v-if="$keycloak && $keycloak.authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
+        <PhotosUploader v-if="authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
         <div v-else class="uploader-placeholder box"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
       </div>
     </section>
@@ -147,6 +169,7 @@ import EditSpot from '../components/EditSpot.vue'
 import HikrIcon from '../assets/hikr.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
 import EventBus from '../event-bus'
+import api from '../mixins/api.js'
 
 export default {
   name: 'Summit',
@@ -156,7 +179,7 @@ export default {
   components: {
     SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot
   },
-  mixins: [utils, smptracks, coverphoto],
+  mixins: [api, utils, smptracks, coverphoto],
   computed: {
     locator () {
       if (!this.summit.coordinates) {
@@ -298,6 +321,9 @@ export default {
         }
       })
       return videos
+    },
+    bookmarkButtonType () {
+      return (this.isBookmarkedActive ? 'is-success' : 'is-info')
     }
   },
   watch: {
@@ -375,6 +401,21 @@ export default {
           .then(response => {
             this.myChases = response.data
           }))
+
+        loads.push(this.getPersonalSummitData(this.summitCode)
+          .then(response => {
+            this.isBookmarkedActive = response.data.isBookmarked ? response.data.isBookmarked : false
+            this.summitNotes = response.data.notes ? response.data.notes : ''
+            this.summitTags = response.data.tags ? response.data.tags : []
+          }))
+
+        loads.push(this.getPersonalSummitTags()
+          .then(response => {
+            this.summitTagsExisting = response.data.map(item => {
+              return item.tag
+            })
+            this.filteredSummitTagsExisting = this.summitTagsExisting
+          }))
       }
 
       Promise.all(loads)
@@ -395,6 +436,20 @@ export default {
         .finally(() => {
           this.loadingComponent.close()
         })
+    },
+    savePersonalSummitData () {
+      this.postPersonalSummitData(
+        this.summitCode,
+        this.isBookmarkedActive,
+        this.summitNotes,
+        this.summitTags
+      ).catch(error => {
+        console.log(error)
+      })
+    },
+    toggleBookmark () {
+      this.isBookmarkedActive = !this.isBookmarkedActive
+      this.savePersonalSummitData()
     },
     addAlert () {
       this.isAddAlertActive = true
@@ -422,6 +477,31 @@ export default {
     },
     navbarMenuOpened () {
       this.enlargeMap = false
+    },
+    getFilteredSummitTags (input) {
+      this.filteredSummitTagsExisting = this.summitTagsExisting
+        .filter(element => {
+          return !this.summitTags.includes(element)
+        })
+        .filter(element => {
+          return element
+            .toString()
+            .toLowerCase()
+            .indexOf(input.toLowerCase()) >= 0
+        })
+    },
+    onSummitTagsInput () {
+      this.filteredSummitTagsExisting = this.summitTagsExisting
+        .filter(element => {
+          return !this.summitTags.includes(element)
+        })
+      this.savePersonalSummitData()
+    },
+    onSummitTagsInputBlur () {
+      // Delay to avoid double entry when clicking a tag suggestion
+      setTimeout(() => {
+        this.$refs.summitTagsInput.addTag()
+      }, 100)
     }
   },
   data () {
@@ -434,7 +514,12 @@ export default {
       isAddAlertActive: false,
       isAddSpotActive: false,
       enlargeMap: false,
-      alwaysLoadWikipedia: true
+      alwaysLoadWikipedia: true,
+      isBookmarkedActive: false,
+      summitNotes: null,
+      summitTags: [],
+      summitTagsExisting: [],
+      filteredSummitTagsExisting: this.summitTagsExisting
     }
   }
 }
@@ -487,6 +572,7 @@ export default {
   margin-right: 0.1em;
   opacity: 0.5;
 }
+
 >>> .coordinates {
   font-weight: bold;
 }
@@ -561,5 +647,11 @@ export default {
 }
 .uploader-placeholder .fa-images {
   margin-right: 0.5em;
+}
+.taginput-wrapper, .summit-notes {
+  margin-top: 0.7em;
+}
+.summit-notes textarea {
+  box-shadow: none;
 }
 </style>
