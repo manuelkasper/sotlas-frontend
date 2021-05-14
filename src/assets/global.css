@@ -152,14 +152,6 @@ hr {
   user-select: none;
 }
 
-.taginput-wrapper, .summit-notes {
-  margin-top: 0.7em;
-}
-
-.summit-notes textarea {
-  box-shadow: none;
-}
-
 /* Fix Buefy bug */
 @media screen and (max-width: 1023px) {
   .dropdown.is-mobile-modal>.dropdown-menu>.dropdown-content>div>a {

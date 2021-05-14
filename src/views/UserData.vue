@@ -6,33 +6,22 @@
       </h1>
     </template>
 
-    <section class="section">
-      <div class="container">
-        <b-message v-if="!userSummits || userSummits.length === 0" type="is-info" has-icon>
-          No bookmarks or tags set, yet.
-        </b-message>
-      </div>
-    </section>
-
     <div v-if="userSummits && userSummits.length > 0">
       <section class="section">
         <div class="container">
-          <h4 class="title is-4 logged-act"><span>Summit Bookmarks</span><b-button size="is-small" icon-left="map" icon-pack="fas" type="is-info" @click="showMap = !showMap">{{ showMap ? 'Hide' : 'Show' }} Map</b-button></h4>
+          <h4 class="title is-4"><span>Summit Bookmarks</span></h4>
+          <b-field>
+            <FilterInput v-model="filterString" ref="filter" :is-regex="true" />
+          </b-field>
           <template v-if="filteredBookmarks && filteredBookmarks.length > 0">
-            <MiniMap v-if="showMap" class="map" :bounds="activationsMapBounds" :filter="activationsMapFilter" zoom-warning show-inactive-summits />
-
-            <b-field>
-              <FilterInput v-model="filterString" ref="filter" :is-regex="true" />
-            </b-field>
-
-            <SummitList :data="filteredBookmarks" auto-width />
+            <SummitList :data="filteredBookmarks" auto-width ignore-validity />
           </template>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <h4 class="title is-4 logged-act"><span>User Tags</span></h4>
+          <h4 class="title is-4"><span>User Tags</span></h4>
 
           <template v-if="userTags && userTags.length > 0">
             <b-table class="auto-width" default-sort="tag" :narrowed="true" :striped="true" :data="userTags" :mobile-cards="false">
@@ -50,11 +39,30 @@
         </div>
       </section>
     </div>
+    <div v-else-if="!authenticated">
+      <section class="section">
+        <div class="container">
+          <b-message type="is-info" has-icon>
+            Log in to view your summits and tags.
+          </b-message>
+        </div>
+      </section>
+    </div>
+    <div v-else>
+      <section class="section">
+        <div class="container">
+          <b-message type="is-info" has-icon>
+            No bookmarks or tags set, yet.
+          </b-message>
+        </div>
+      </section>
+    </div>
   </PageLayout>
 </template>
 
 <script>
 import FilterInput from '../components/FilterInput.vue'
+import SummitList from '../components/SummitList.vue'
 import PageLayout from '@/components/PageLayout'
 import utils from '@/mixins/utils'
 import api from '@/mixins/api'
@@ -62,39 +70,40 @@ import api from '@/mixins/api'
 export default {
   name: 'BookmarkList',
   components: {
-    PageLayout, FilterInput
+    PageLayout, FilterInput, SummitList
   },
   mixins: [api, utils],
-  delayScroll: true,
-  methods: {
-    summitLink (association) {
-      return '/summits/' + association.code
-    }
-  },
   mounted () {
     document.title = 'My User Data - SOTLAS'
     this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-    this.getPersonalData().then(response => {
-      this.userSummits = response.userSummits
-    })
-    this.getPersonalSummitTags().then(response => {
-      this.userTags = response
-    })
+
+    let loads = []
+    loads.push(this.getPersonalData().then(response => {
+      this.userSummits = response.data.userSummits
+    }))
+    loads.push(this.getPersonalSummitTags().then(response => {
+      this.userTags = response.data
+    }))
+
+    Promise.all(loads)
+      .finally(() => {
+        this.loadingComponent.close()
+      })
   },
   computed: {
     filteredBookmarks () {
-      let filterResult = this.userSummits.map(userSummit => {
-        if (userSummit.isBookmarked === true) {
-          return userSummit.summit
+      return this.userSummits.filter(userSummit => {
+        if (!userSummit.isBookmarked) {
+          return false
         }
-      })
 
-      if (!this.filterString || this.filterString === '') {
-        return filterResult
-      }
-
-      return filterResult.filter(userSummit => {
-        return userSummit.summit.code.includes(this.filterString.toUpperCase()) || userSummit.name.toLowerCase().includes(this.filterString.toLowerCase())
+        if (this.filterString) {
+          return userSummit.summit.code.includes(this.filterString.toUpperCase()) || userSummit.summit.name.toLowerCase().includes(this.filterString.toLowerCase())
+        } else {
+          return true
+        }
+      }).map(userSummit => {
+        return userSummit.summit
       })
     }
   },
@@ -108,3 +117,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.faicon {
+  margin-right: 0.5em;
+}
+</style>

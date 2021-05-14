@@ -7,7 +7,7 @@
         <div class="action-button">
           <b-field>
             <p class="control">
-              <b-button :type="bookmarkButtonType" icon-left="bookmark" :outlined="!isBookmarkedActive" @click="toggleBookmark()" :disabled="!authenticated">Bookmark</b-button>
+              <b-button :type="bookmarkButtonType" size="is-small" icon-left="bookmark" :outlined="!isBookmarkedActive" @click="toggleBookmark()" :disabled="!authenticated">Bookmark</b-button>
             </p>
           </b-field>
         </div>
@@ -60,7 +60,7 @@
           <div v-if="!enlargeMap" class="column">
             <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :reference="summit.code" /></div>
             <div>Locator: <span class="locator">{{ locator }}</span></div>
-            <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
+            <div v-if="authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">First activation:
               <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><router-link :to="makeActivatorLinkUserId(activator.userId)"><strong>{{ activator.callsign }}</strong></router-link>{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
@@ -70,7 +70,7 @@
             <div v-if="authenticated">
               <h6 class="title is-6">Tags</h6>
               <div class="taginput-wrapper">
-                <b-taginput v-model="summitTags" ref="summitTagInput" autocomplete open-on-focus allow-new :data="filteredSummitTagsExisting" :confirm-key-codes="[9,13,32,188]" @typing="getFilteredSummitTags" @input="onSummitTagsInput" size="is-small" rounded append-to-body />
+                <b-taginput v-model="summitTags" ref="summitTagsInput" autocomplete open-on-focus allow-new :data="filteredSummitTagsExisting" :confirm-key-codes="[9,13,32,188]" @typing="getFilteredSummitTags" @input="onSummitTagsInput" @blur="onSummitTagsInputBlur" rounded />
               </div>
             </div>
 
@@ -85,7 +85,7 @@
             <div v-if="authenticated">
               <h6 class="title is-6">Notes</h6>
               <div>
-                <b-input type="textarea" class="summit-notes" id="textarea-summit-notes" v-model="summitNotes" v-on:change="savePersonalSummitData" placeholder="Your personal summit notes" size="is-small" rows="3"></b-input>
+                <b-input type="textarea" class="summit-notes" id="textarea-summit-notes" v-model="summitNotes" v-debounce:1s="savePersonalSummitData" placeholder="Your personal summit notes" size="is-small" rows="3"></b-input>
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@
         <h4 class="title is-4">Photos</h4>
         <SummitPhotos ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
 
-        <PhotosUploader v-if="$keycloak && $keycloak.authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
+        <PhotosUploader v-if="authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
         <div v-else class="uploader-placeholder box"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
       </div>
     </section>
@@ -321,6 +321,9 @@ export default {
         }
       })
       return videos
+    },
+    bookmarkButtonType () {
+      return (this.isBookmarkedActive ? 'is-success' : 'is-info')
     }
   },
   watch: {
@@ -357,23 +360,6 @@ export default {
 
         // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
         axios.post('https://api.sotl.as/summits/' + this.summitCode)
-
-        this.getPersonalSummitData(this.summitCode)
-          .then(response => {
-            const personalSummitData = response.data.summit
-
-            this.isBookmarkedActive = personalSummitData.isBookmarked ? personalSummitData.isBookmarked : false
-            this.summitNotes = personalSummitData.notes ? personalSummitData.notes : ''
-            this.summitTags = personalSummitData.tags ? personalSummitData.tags : []
-            this.toggleBookmarkButtonType()
-          })
-
-        this.getPersonalSummitTags().then(response => {
-          this.summitTagsExisting = response.map(item => {
-            return item.tag
-          })
-          this.filteredSummitTagsExisting = this.summitTagsExisting
-        })
       }
 
       loads.push(axios.get('https://api.sotl.as/summits/' + this.summitCode, options)
@@ -415,6 +401,21 @@ export default {
           .then(response => {
             this.myChases = response.data
           }))
+
+        loads.push(this.getPersonalSummitData(this.summitCode)
+          .then(response => {
+            this.isBookmarkedActive = response.data.isBookmarked ? response.data.isBookmarked : false
+            this.summitNotes = response.data.notes ? response.data.notes : ''
+            this.summitTags = response.data.tags ? response.data.tags : []
+          }))
+
+        loads.push(this.getPersonalSummitTags()
+          .then(response => {
+            this.summitTagsExisting = response.data.map(item => {
+              return item.tag
+            })
+            this.filteredSummitTagsExisting = this.summitTagsExisting
+          }))
       }
 
       Promise.all(loads)
@@ -436,18 +437,13 @@ export default {
           this.loadingComponent.close()
         })
     },
-    toggleBookmarkButtonType () {
-      this.bookmarkButtonType = this.isBookmarkedActive ? 'is-success' : 'is-info'
-    },
     savePersonalSummitData () {
       this.postPersonalSummitData(
         this.summitCode,
         this.isBookmarkedActive,
         this.summitNotes,
         this.summitTags
-      ).then(response => {
-        this.toggleBookmarkButtonType()
-      }).catch(error => {
+      ).catch(error => {
         console.log(error)
       })
     },
@@ -500,6 +496,12 @@ export default {
           return !this.summitTags.includes(element)
         })
       this.savePersonalSummitData()
+    },
+    onSummitTagsInputBlur () {
+      // Delay to avoid double entry when clicking a tag suggestion
+      setTimeout(() => {
+        this.$refs.summitTagsInput.addTag()
+      }, 100)
     }
   },
   data () {
@@ -514,7 +516,6 @@ export default {
       enlargeMap: false,
       alwaysLoadWikipedia: true,
       isBookmarkedActive: false,
-      bookmarkButtonType: 'is-info',
       summitNotes: null,
       summitTags: [],
       summitTagsExisting: [],
@@ -646,5 +647,11 @@ export default {
 }
 .uploader-placeholder .fa-images {
   margin-right: 0.5em;
+}
+.taginput-wrapper, .summit-notes {
+  margin-top: 0.7em;
+}
+.summit-notes textarea {
+  box-shadow: none;
 }
 </style>

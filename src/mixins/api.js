@@ -20,8 +20,7 @@ export default {
       return this.axiosAuth.get('https://api.sotl.as/users/me/summit/' + summitCode)
     },
     postPersonalSummitData (summitCode, isBookmarked, notes, tags) {
-      return this.axiosAuth.post('https://api.sotl.as/users/me/summit', {
-        code: summitCode,
+      return this.axiosAuth.post('https://api.sotl.as/users/me/summit/' + summitCode, {
         isBookmarked: isBookmarked,
         notes: notes,
         tags: tags })

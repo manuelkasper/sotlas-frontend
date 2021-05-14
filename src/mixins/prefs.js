@@ -1,4 +1,8 @@
+import api from '@/mixins/api'
+import utils from '@/mixins/utils'
+
 export default {
+  mixins: [api, utils],
   mounted () {
     if (this.$options.prefs) {
       this.loadPrefs()
@@ -38,7 +42,7 @@ export default {
       return undefined
     },
     getPrefs (key) {
-      if (!this.$keycloak.authenticated) {
+      if (!this.authenticated) {
         return this.getPrefsFromLocalStorage(key)
       }
 
@@ -56,7 +60,7 @@ export default {
       localStorage.setItem(key, JSON.stringify(prefs))
     },
     setPrefs (key, prefs) {
-      if (this.$keycloak.authenticated) {
+      if (this.authenticated) {
         this.postPersonalSettings(key, prefs)
       }
       this.setPrefsToLocalStorage(key, prefs)
