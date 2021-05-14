@@ -4,7 +4,7 @@
     <template>
       <section v-if="summits !== null && summits.length > 0" class="section">
         <div class="container">
-          <h4 class="title is-4"><b-icon icon="mountains" />Summits<span v-if="tagSearch"> tagged with "{{ this.tagSearch }}"</span></h4>
+          <h4 class="title is-4"><b-icon icon="mountains" />Summits<span v-if="tagSearch"> tagged with <font-awesome-icon :icon="['far', 'tag']" class="faicon" /> {{ this.tagSearch }}</span></h4>
           <b-field v-if="inactiveCount > 0" grouped>
             <b-switch v-model="showInactive">Show inactive ({{ inactiveCount }})</b-switch>
           </b-field>
@@ -50,9 +50,9 @@
         </div>
       </section>
 
-      <section v-if="!userTags && userTags.length > 0" class="section">
+      <section v-if="userTags !== null && userTags.length > 0" class="section">
         <div class="container">
-          <h4 class="title is-4"><b-icon icon="" /><font-awesome-icon :icon="['far', 'tag']" class="faicon" />User Tags</h4>
+          <h4 class="title is-4"><b-icon icon="tag" />User Tags</h4>
 
           <b-table class="auto-width" default-sort="tag" :narrowed="true" :striped="true" :data="userTags" :mobile-cards="false">
             <template slot-scope="props">
@@ -98,37 +98,42 @@ export default {
       let q = this.$route.query.q.trim()
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
 
-      if (q.startsWith('@')) {
+      if (q.startsWith('@') && this.authenticated) {
         this.tagSearch = q.substring(1)
-        this.getPersonalSummitsFromTag(this.tagSearch)
+        loads.push(this.getPersonalSummitsFromTag(this.tagSearch)
           .then(response => {
             response.data.forEach(summit => {
               summit.isValid = true
             })
             this.summits = response.data
             return this.loadingComponent.close()
-          })
+          }))
+      } else {
+        this.tagSearch = null
+        loads.push(axios.get('https://api.sotl.as/summits/search', { params: { q, limit: this.limit } })
+          .then(response => {
+            let now = moment()
+            response.data.forEach(summit => {
+              summit.isValid = (moment(summit.validFrom).isBefore(now) && moment(summit.validTo).isAfter(now))
+            })
+            this.summits = response.data
+          }))
       }
 
-      loads.push(this.getPersonalSummitTags()
-        .then(response => {
-          this.userTags = response.data.filter(tag => {
-            return tag.toLowerCase().includes(q.toLowerCase())
-          })
-        }))
+      if (this.authenticated) {
+        loads.push(this.getPersonalSummitTags()
+          .then(response => {
+            this.userTags = response.data.filter(tag => {
+              return tag.tag.toLowerCase().includes(q.toLowerCase())
+            })
+          }))
+      } else {
+        this.userTags = []
+      }
 
       loads.push(axios.get('https://api.sotl.as/activators/search', { params: { q, limit: this.limit } })
         .then(response => {
           this.activators = response.data.activators
-        }))
-
-      loads.push(axios.get('https://api.sotl.as/summits/search', { params: { q, limit: this.limit } })
-        .then(response => {
-          let now = moment()
-          response.data.forEach(summit => {
-            summit.isValid = (moment(summit.validFrom).isBefore(now) && moment(summit.validTo).isAfter(now))
-          })
-          this.summits = response.data
         }))
 
       Promise.all(loads)
@@ -178,7 +183,7 @@ export default {
       limit: 100,
       summits: null,
       userTags: null,
-      tagSearch: false,
+      tagSearch: null,
       showInactive: false
     }
   }
@@ -213,5 +218,13 @@ export default {
 }
 .message.is-warning {
   margin-top: 1rem;
+}
+.faicon {
+  margin-right: 0.5em;
+}
+.title .faicon {
+  opacity: 0.5;
+  margin-left: 0.3em;
+  margin-right: 0;
 }
 </style>
