@@ -4,6 +4,7 @@
       <b-button slot="trigger" type="is-info" size="is-small" outlined icon-left="file-download" icon-right="angle-down">Download</b-button>
       <b-dropdown-item has-link><a :href="makeUrlForType('gpx')">GPX file</a></b-dropdown-item>
       <b-dropdown-item has-link><a :href="makeUrlForType('kml')">KML file</a></b-dropdown-item>
+      <b-dropdown-item has-link><a :href="makeUrlForType('geojson')">GeoJSON file</a></b-dropdown-item>
       <b-dropdown-item separator />
       <b-dropdown-item custom disabled><b>Label options</b></b-dropdown-item>
       <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="name">Summit name</b-checkbox></b-dropdown-item>
