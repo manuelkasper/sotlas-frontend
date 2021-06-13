@@ -47,7 +47,7 @@ export default {
               if (res.data.length > 0 && !res.data[0].coordinates && !this.gpsNotificationShown) {
                 this.$buefy.dialog.alert({
                   title: 'No GPS information',
-                  message: '<p>Your photo has been uploaded successfully, but did not contain GPS coordinates in its metadata (Exif header). If possible, try uploading original full-resolution files from your camera. SOTLAS will automatically reduce the resolution if needed, and will use the GPS coordinates to show the photos on the map if the position is accurate enough.</p><p><small>This alert will not appear again for future uploads with missing GPS information.</small></p>',
+                  message: '<p>Your photo has been uploaded successfully, but did not contain GPS coordinates in its metadata (Exif header). If possible, try uploading original full-resolution files from your camera, and use your computer instead of your mobile phone to upload the photos (as mobile browsers will often strip metadata while uploading).</p><p>SOTLAS will automatically reduce the resolution if needed, and will use the GPS coordinates to show the photos on the map if the position is accurate enough.</p><p><small>This alert will not appear again for future uploads with missing GPS information.</small></p>',
                   type: 'is-info',
                   hasIcon: true,
                   icon: 'info-circle',
