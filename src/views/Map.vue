@@ -1,6 +1,6 @@
 <template>
   <div class="map-layout" ref="mapLayout">
-    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :preserveDrawingBuffer="!$mq.mobile" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
+    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
       <MglScaleControl position="bottom-left" />
