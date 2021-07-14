@@ -50,7 +50,7 @@
             </div>
           </div>
           <div v-if="!enlargeMap" class="column">
-            <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :reference="summit.code" /></div>
+            <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :altitude="summit.altitude" :reference="summit.code" /></div>
             <div>Locator: <span class="locator">{{ locator }}</span></div>
             <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">First activation:

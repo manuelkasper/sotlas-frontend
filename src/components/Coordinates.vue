@@ -34,6 +34,7 @@ export default {
   props: {
     latitude: Number,
     longitude: Number,
+    altitude: Number,
     reference: String,
     showMaidenhead: Boolean,
     showElevation: Boolean
@@ -376,7 +377,13 @@ export default {
         {
           name: 'FatMap',
           url: () => {
-            return `https://fatmap.com/adventures/@${this.latitude},${this.longitude},10000,-66,-12,satellite`
+            let cameraAltitude = 10000
+            if (this.altitude) {
+              cameraAltitude = Math.round((this.altitude * 2) * 3.28)
+            } else if (this.elevation) {
+              cameraAltitude = Math.round((this.elevation * 2) * 3.28)
+            }
+            return `https://fatmap.com/adventures/@${this.latitude},${this.longitude},${cameraAltitude},-66,-12,satellite`
           }
         },
         {
