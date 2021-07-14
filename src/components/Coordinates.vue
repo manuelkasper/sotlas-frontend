@@ -374,6 +374,12 @@ export default {
           }
         },
         {
+          name: 'FatMap',
+          url: () => {
+            return `https://fatmap.com/adventures/@${this.latitude},${this.longitude},10000,-66,-12,satellite`
+          }
+        },
+        {
           name: 'OpenStreetMap',
           url: () => {
             return `https://www.openstreetmap.org/?mlat=${this.latitude}&mlon=${this.longitude}&zoom=16`
