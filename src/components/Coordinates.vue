@@ -375,6 +375,12 @@ export default {
           }
         },
         {
+          name: 'Mapy.cz',
+          url: () => {
+            return `https://en.mapy.cz/turisticka?x=${this.longitude}&y=${this.latitude}&z=17`
+          }
+        },
+        {
           name: 'FatMap',
           url: () => {
             let cameraAltitude = 10000
