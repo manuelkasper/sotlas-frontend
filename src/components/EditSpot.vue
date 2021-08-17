@@ -10,7 +10,7 @@
 
       <b-field label="Summit reference" :message="summitDisplay" :type="summitType" :class="summitLabelClass" expanded>
         <b-field>
-          <b-input type="text" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+          <b-input type="text" class="summit-code" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
           <p class="control">
             <NearbySummitsList @summitSelected="onSummitSelected" />
           </p>
@@ -250,6 +250,9 @@ export default {
 <style scoped>
 .callsign >>> input {
   text-transform: uppercase;
+}
+.summit-code >>> input {
+  width: 10em;
 }
 .invalid >>> .help {
   text-decoration: line-through;

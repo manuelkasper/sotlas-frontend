@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown ref="dropdown" aria-role="list" position="is-bottom-left" class="nearby-summits">
+  <b-dropdown ref="dropdown" aria-role="list" position="is-bottom-left" class="nearby-summits" append-to-body>
     <b-button slot="trigger" icon-right="angle-down" :loading="loading" @click.stop="clickButton">Nearby</b-button>
     <b-dropdown-item v-for="summit in nearbySummits" :key="summit.code" aria-role="listitem" @click="clickSummit(summit)">
       <div class="summit-title"><div class="summit-name">{{ summit.name }}</div><div class="summit-alt"><AltitudeLabel :altitude="summit.altitude" /></div></div>
