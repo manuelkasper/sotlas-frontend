@@ -343,9 +343,6 @@ export default {
 .callsign >>> input {
   text-transform: uppercase;
 }
-.summit-code >>> input {
-  width: 10em;
-}
 @media (max-width: 1023px) {
   >>> .datepicker .dropdown.is-mobile-modal .dropdown-menu {
     width: calc(100vw - 40px);

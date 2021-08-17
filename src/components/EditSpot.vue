@@ -251,9 +251,6 @@ export default {
 .callsign >>> input {
   text-transform: uppercase;
 }
-.summit-code >>> input {
-  width: 10em;
-}
 .invalid >>> .help {
   text-decoration: line-through;
 }
