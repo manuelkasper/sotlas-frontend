@@ -145,6 +145,7 @@ import AlertsList from '../components/AlertsList.vue'
 import EditAlert from '../components/EditAlert.vue'
 import EditSpot from '../components/EditSpot.vue'
 import HikrIcon from '../assets/hikr.png'
+import SACIcon from '../assets/sac.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
 import EventBus from '../event-bus'
 
@@ -213,13 +214,21 @@ export default {
           url: this.wikipediaPhoto.link
         })
       }
+      if (this.summit.code && this.summit.code.startsWith('HB')) {
+        resources.push({
+          iconImg: SACIcon,
+          prefix: 'SAC-Tourenportal',
+          title: this.summit.name + ' (' + this.summit.altitude + ' m)',
+          url: 'https://www.sac-cas.ch/de/suche/?tx_solr[filter][0]=type%3Atour_destination&tx_solr[q]=' + encodeURIComponent(this.summit.name)
+        })
+      }
       if (this.summit.code && this.summit.code.match(/^(HB|OE|DL|DM)/)) {
         let hikrSummitName = this.summit.name.replace(/\/.*$/, '')
         resources.push({
           iconImg: HikrIcon,
           prefix: 'Hikr.org',
           title: hikrSummitName + ' (' + this.summit.altitude + ' m)',
-          url: 'http://www.hikr.org/dir/?adv=1&piz_name=' + encodeURIComponent(hikrSummitName) + '&piz_height_min=' + (this.summit.altitude - 50) + '&piz_height_max=' + (this.summit.altitude + 50) + '&piz_type=peak&piz_order=piz_name&action=search'
+          url: 'https://www.hikr.org/dir/?adv=1&piz_name=' + encodeURIComponent(hikrSummitName) + '&piz_height_min=' + (this.summit.altitude - 50) + '&piz_height_max=' + (this.summit.altitude + 50) + '&piz_type=peak&piz_order=piz_name&action=search'
         })
       }
       resources.push({
