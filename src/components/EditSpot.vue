@@ -19,7 +19,7 @@
 
       <b-field label="Frequency" :message="maybeKhz ? 'Do you really mean ' + frequency + ' MHz, or are you missing a dot?' : ''" :type="maybeKhz ? 'is-warning' : ''">
         <b-field :type="maybeKhz ? 'is-warning' : ''">
-          <b-input v-model="frequency" type="number" step="any" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+          <b-input v-model="frequency" type="number" inputmode="decimal" step="any" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
           <p class="control">
             <span class="button is-static">MHz</span>
           </p>
