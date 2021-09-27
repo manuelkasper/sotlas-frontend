@@ -167,7 +167,7 @@ export default {
       event.preventDefault()
       this.$buefy.dialog.alert({
         title: 'Activation zones',
-        message: 'The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (aperture width 0.5 m).',
+        message: '<p style="margin-bottom: 0.5em">The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (aperture width 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</p><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
