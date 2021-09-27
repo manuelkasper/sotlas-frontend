@@ -22,7 +22,10 @@
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
         <b-field v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'" grouped>
-          <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">Activation zones</b-checkbox>
+          <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
+            Activation zones
+            <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
+          </b-checkbox>
         </b-field>
       </div>
       <div class="map-option">
@@ -159,6 +162,17 @@ export default {
     },
     setMapOption (option, value) {
       this.$store.commit('setMapOption', { option, value })
+    },
+    showActivationZoneInfo (event) {
+      event.preventDefault()
+      this.$buefy.dialog.alert({
+        title: 'Activation zones',
+        message: 'The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (aperture width 0.5 m).',
+        type: 'is-info',
+        hasIcon: true,
+        icon: 'info-circle',
+        iconPack: 'fas'
+      })
     }
   }
 }
