@@ -127,6 +127,38 @@
       }
     },
     {
+      "id": "summits_az",
+      "type": "fill",
+      "metadata": {
+        "sotlas-map-option": "az"
+      },
+      "source": "az",
+      "source-layer": "az",
+      "layout": {"visibility": "none"},
+      "minzoom": 12,
+      "paint": {
+        "fill-antialias": false,
+        "fill-color": "rgba(255, 255, 0, 1)",
+        "fill-opacity": {"stops": [[12, 0], [12.5, 0.5]]}
+      }
+    },
+    {
+      "id": "summits_az_border",
+      "type": "line",
+      "metadata": {
+        "sotlas-map-option": "az"
+      },
+      "source": "az",
+      "source-layer": "az",
+      "layout": {"visibility": "none"},
+      "minzoom": 12,
+      "paint": {
+        "line-color": "rgba(235, 196, 0, 1)",
+        "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
+        "line-width": {"stops": [[12, 1], [16, 3]]}
+      }
+    },
+    {
       "id": "slope_classes",
       "type": "raster",
       "metadata": {
@@ -176,38 +208,6 @@
       "paint": {
         "raster-opacity": 0.6,
         "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "summits_az",
-      "type": "fill",
-      "metadata": {
-        "sotlas-map-option": "az"
-      },
-      "source": "az",
-      "source-layer": "az",
-      "layout": {"visibility": "none"},
-      "minzoom": 12,
-      "paint": {
-        "fill-antialias": false,
-        "fill-color": "rgba(255, 255, 0, 1)",
-        "fill-opacity": {"stops": [[12, 0], [12.5, 0.5]]}
-      }
-    },
-    {
-      "id": "summits_az_border",
-      "type": "line",
-      "metadata": {
-        "sotlas-map-option": "az"
-      },
-      "source": "az",
-      "source-layer": "az",
-      "layout": {"visibility": "none"},
-      "minzoom": 12,
-      "paint": {
-        "line-color": "rgba(235, 196, 0, 1)",
-        "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
-        "line-width": {"stops": [[12, 1], [16, 3]]}
       }
     },
     {
