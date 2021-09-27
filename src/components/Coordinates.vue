@@ -129,7 +129,7 @@ export default {
           name: 'IGN',
           url: () => {
             if (this.reference && this.reference.match('^(EA[1-9]|ZB2)/')) {
-              return `http://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
+              return `https://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
             }
           }
         },
@@ -188,7 +188,7 @@ export default {
           url: () => {
             if (this.reference && this.reference.match('^D[LM]/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:25832')
-              return `http://sg.geodatenzentrum.de/web_bkg_webmap/applications/bkgmaps/minimal.html?zoom=11&lat=${p[1]}&lon=${p[0]}&layers=B000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFT`
+              return `https://sg.geodatenzentrum.de/web_bkg_webmap/applications/bkgmaps/minimal.html?zoom=11&lat=${p[1]}&lon=${p[0]}&layers=B000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFT`
             }
           }
         },
@@ -267,7 +267,7 @@ export default {
           url: () => {
             if (this.reference && this.reference.match('^TF/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3057')
-              return `http://kortasja.lmi.is/mapview/?application=kortasja&lang=is&center=${p[0]},${p[1]}&zoom=11&layers=219,225,228,286,221 X`
+              return `https://kortasja.lmi.is/mapview/?application=kortasja&lang=is&center=${p[0]},${p[1]}&zoom=11&layers=219,225,228,286,221 X`
             }
           }
         },
@@ -302,7 +302,7 @@ export default {
           name: 'LocationSA',
           url: () => {
             if (this.reference && this.reference.match('^VK5/')) {
-              return `http://location.sa.gov.au/viewer/?map=topographic&x=${this.longitude}&y=${this.latitude}&z=16&uids=&pinx=${this.longitude}&piny=${this.latitude}&pinTitle=&pinText=%%sumCode%%`
+              return `https://location.sa.gov.au/viewer/?map=topographic&x=${this.longitude}&y=${this.latitude}&z=16&uids=&pinx=${this.longitude}&piny=${this.latitude}&pinTitle=&pinText=%%sumCode%%`
             }
           }
         },
@@ -402,6 +402,14 @@ export default {
           name: 'OpenTopoMap',
           url: () => {
             return `https://www.opentopomap.org/#marker=16/${this.latitude}/${this.longitude}`
+          }
+        },
+        {
+          name: 'Activation Zone Estimator',
+          url: () => {
+            if (this.reference) {
+              return `https://activation.zone/?summitRef=${this.reference}`
+            }
           }
         },
         {
