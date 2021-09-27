@@ -29,6 +29,7 @@ let mapOptions = {
   regions: false,
   contours: true,
   hillshading: true,
+  az: true,
   difficulty: true,
   spots: false,
   inactive: false,

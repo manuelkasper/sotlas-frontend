@@ -21,6 +21,9 @@
         <b-field v-if="mapType !== 'swisstopo_raster'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
+        <b-field v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'" grouped>
+          <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">Activation zones</b-checkbox>
+        </b-field>
       </div>
       <div class="map-option">
         <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
