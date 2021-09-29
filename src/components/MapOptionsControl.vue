@@ -29,26 +29,21 @@
         </b-field>
       </div>
       <div class="map-option">
-        <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Wanderwege</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Skirouten</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Schneeschuhrouten</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Hangneigungsklassen über 30°</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildruhezonen und Schutzgebiete</b-checkbox>
-          </b-field>
-        </template>
-        <template v-else>
           <b-field grouped>
             <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+          </b-field>
+        <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
+          <b-field grouped>
+            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Ski routes</b-checkbox>
+          </b-field>
+          <b-field grouped>
+            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
+          </b-field>
+          <b-field grouped>
+            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes over 30°</b-checkbox>
+          </b-field>
+          <b-field grouped>
+            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves and areas</b-checkbox>
           </b-field>
         </template>
       </div>
