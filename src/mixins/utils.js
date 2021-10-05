@@ -19,7 +19,10 @@ let bands = [
   { from: 900, to: 928, band: '33cm' },
   { from: 1200, to: 1400, band: '23cm' },
   { from: 2300, to: 2450, band: '13cm' },
-  { from: 3300, to: 3500, band: '9cm' }
+  { from: 3300, to: 3500, band: '9cm' },
+  { from: 5600, to: 5925, band: '5cm' },
+  { from: 10000, to: 10500, band: '3cm' },
+  { from: 24000, to: 24250, band: '1.2cm' }
 ]
 
 let continents = {
@@ -210,6 +213,21 @@ export default {
         return band.band
       } else {
         return undefined
+      }
+    },
+    bandForDbFrequency (dbFrequency) {
+      return this.bandForFrequency(this.dbFrequencyToMHz(dbFrequency))
+    },
+    dbFrequencyToMHz (dbFrequency) {
+      let matches = /^([0-9.]+)([GM]Hz)$/.exec(dbFrequency)
+      if (matches) {
+        let multiplier = 1
+        if (matches[2] === 'GHz') {
+          multiplier = 1000
+        }
+        return parseFloat(matches[1]) * multiplier
+      } else {
+        return dbFrequency
       }
     },
     escapeHtml (unsafe) {

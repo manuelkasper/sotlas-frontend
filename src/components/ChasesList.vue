@@ -8,7 +8,7 @@
         <router-link :to="makeActivatorLink(props.row.otherCallsign.toUpperCase())">{{ props.row.otherCallsign.toUpperCase() }}</router-link>
       </b-table-column>
       <b-table-column field="band" label="Band" :custom-sort="sortBand" sortable numeric>
-        {{ bandForFrequency(props.row.band.replace('MHz', '')) }}
+        {{ bandForDbFrequency(props.row.band) }}
       </b-table-column>
       <b-table-column field="mode" label="Mode" sortable>
         <ModeLabel :mode="props.row.mode" />
@@ -31,8 +31,8 @@ export default {
   },
   methods: {
     sortBand (a, b, isAsc) {
-      let fa = parseFloat(a.band.replace('MHz', ''))
-      let fb = parseFloat(b.band.replace('MHz', ''))
+      let fa = this.dbFrequencyToMHz(a.band)
+      let fb = this.dbFrequencyToMHz(b.band)
       if (fa < fb) {
         return (isAsc ? -1 : 1)
       } else if (fa === fb) {
