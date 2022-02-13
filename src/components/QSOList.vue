@@ -6,7 +6,7 @@
       </b-table-column>
       <b-table-column field="OtherCallsign" label="Callsign" class="nowrap" sortable>
         <CountryFlag :country="isoCodeForCallsign(props.row.OtherCallsign.trim())" class="flag" />
-        <router-link :to="makeActivatorLink(props.row.OtherCallsign.trim())">{{ props.row.OtherCallsign }}</router-link>
+        <router-link :to="makeActivatorLink(props.row.OtherCallsign.trim())">{{ props.row.OtherCallsign.trim() }}</router-link>
       </b-table-column>
       <b-table-column field="Band" label="Band" :custom-sort="sortBand" class="nowrap" sortable numeric>
         {{ bandForDbFrequency(props.row.Band) }}
