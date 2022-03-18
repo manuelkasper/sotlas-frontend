@@ -18,51 +18,49 @@
     </CardPagination>
     <p v-else-if="!$mq.desktop && cardAlerts.length === 0">No matching alerts found.</p>
     <b-table v-else default-sort="dateActivated" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :current-page.sync="curPage" :row-class="rowClass">
-      <template slot-scope="props">
-        <b-table-column field="dateActivated" class="timestamp" label="Date/Time" sortable>
-          <span v-html="formatDateTimeRelative(props.row.dateActivated)" />
-        </b-table-column>
-        <b-table-column v-if="showCallsign" field="activatorCallsign" label="Callsign" sortable>
-          <template v-if="callsignLink">
-            <router-link :to="makeActivatorLink(props.row.activatorCallsign)">{{ props.row.activatorCallsign }}</router-link>
-          </template>
-          <template v-else>
-            {{ props.row.activatorCallsign }}
-          </template>
-        </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit code" class="nowrap" sortable>
-          <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
-          <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
-          <span v-else>{{ props.row.summit.code }}</span>
-        </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit name" sortable>
-          <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
-        </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.altitude" label="Altitude" sortable numeric>
-          <template v-if="props.row.summit.altitude"><AltitudeLabel :altitude="props.row.summit.altitude" /></template>
-        </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.points" label="Points" sortable numeric>
-          <SummitPointsLabel v-if="props.row.summit.points" :points="props.row.summit.points" />
-        </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.activationCount" label="Act." sortable numeric>
-          <ActivationCount :activationCount="props.row.summit.activationCount" />
-        </b-table-column>
-        <b-table-column class="comments" label="Frequencies/Comments">
-          <div class="comments-cell">
-            <div>
-              {{ props.row.frequency }}<br />
-              <span class="comments-text">{{ props.row.comments }} ({{ props.row.posterCallsign }})</span>
-            </div>
-            <b-dropdown v-if="canEditAlert(props.row)" class="actions" aria-role="list">
-              <b-button size="is-small" slot="trigger" icon-pack="fas" icon-right="caret-down" outlined>Actions</b-button>
-
-              <b-dropdown-item aria-role="listitem" @click="editAlert(props.row)"><b-icon icon="edit" size="is-small" /><span class="dropdown-label">Edit</span></b-dropdown-item>
-              <b-dropdown-item aria-role="listitem" @click="makeSpot(props.row)"><b-icon icon="plus" size="is-small" /><span class="dropdown-label">Spot</span></b-dropdown-item>
-              <b-dropdown-item aria-role="listitem" @click="deleteAlert(props.row)"><b-icon icon="trash-alt" type="is-danger" size="is-small" /><span class="has-text-danger dropdown-label">Delete</span></b-dropdown-item>
-            </b-dropdown>
+      <b-table-column field="dateActivated" class="timestamp" label="Date/Time" sortable v-slot="props">
+        <span v-html="formatDateTimeRelative(props.row.dateActivated)" />
+      </b-table-column>
+      <b-table-column v-if="showCallsign" field="activatorCallsign" label="Callsign" sortable v-slot="props">
+        <template v-if="callsignLink">
+          <router-link :to="makeActivatorLink(props.row.activatorCallsign)">{{ props.row.activatorCallsign }}</router-link>
+        </template>
+        <template v-else>
+          {{ props.row.activatorCallsign }}
+        </template>
+      </b-table-column>
+      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit code" cell-class="nowrap" sortable v-slot="props">
+        <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
+        <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
+        <span v-else>{{ props.row.summit.code }}</span>
+      </b-table-column>
+      <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit name" sortable v-slot="props">
+        <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
+      </b-table-column>
+      <b-table-column v-if="showSummitInfo" field="summit.altitude" label="Altitude" sortable numeric v-slot="props">
+        <template v-if="props.row.summit.altitude"><AltitudeLabel :altitude="props.row.summit.altitude" /></template>
+      </b-table-column>
+      <b-table-column v-if="showSummitInfo" field="summit.points" label="Points" sortable numeric v-slot="props">
+        <SummitPointsLabel v-if="props.row.summit.points" :points="props.row.summit.points" />
+      </b-table-column>
+      <b-table-column v-if="showSummitInfo" field="summit.activationCount" label="Act." sortable numeric v-slot="props">
+        <ActivationCount :activationCount="props.row.summit.activationCount" />
+      </b-table-column>
+      <b-table-column class="comments" label="Frequencies/Comments" v-slot="props">
+        <div class="comments-cell">
+          <div>
+            {{ props.row.frequency }}<br />
+            <span class="comments-text">{{ props.row.comments }} ({{ props.row.posterCallsign }})</span>
           </div>
-        </b-table-column>
-      </template>
+          <b-dropdown v-if="canEditAlert(props.row)" class="actions" aria-role="list">
+            <b-button size="is-small" slot="trigger" icon-pack="fas" icon-right="caret-down" outlined>Actions</b-button>
+
+            <b-dropdown-item aria-role="listitem" @click="editAlert(props.row)"><b-icon icon="edit" size="is-small" /><span class="dropdown-label">Edit</span></b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" @click="makeSpot(props.row)"><b-icon icon="plus" size="is-small" /><span class="dropdown-label">Spot</span></b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" @click="deleteAlert(props.row)"><b-icon icon="trash-alt" type="is-danger" size="is-small" /><span class="has-text-danger dropdown-label">Delete</span></b-dropdown-item>
+          </b-dropdown>
+        </div>
+      </b-table-column>
       <template v-if="paginated" v-slot:bottom-left>
         <b-select v-model="perPage">
           <option v-for="option in perPageOptions" :key="option" :value="option">{{ option }} per page</option>

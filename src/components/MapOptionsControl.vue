@@ -1,6 +1,10 @@
 <template>
   <div :class="{ 'mapboxgl-ctrl-group': true, 'mapboxgl-ctrl': true, 'mapbox-gl-map-options-container': true }">
-    <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined label="Webcams and more available – open map options to see!">
+    <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined>
+      <template v-slot:content>
+        <p>Webcams and more available – open map options to see!</p>
+        <SwisstopoInfo />
+      </template>
       <button :class="{ 'mapboxgl-ctrl-icon': true, 'mapbox-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
     </b-tooltip>
     <div v-if="open" class="map-options-container">
@@ -72,11 +76,15 @@
 import moment from 'moment'
 import mapstyle from '../mixins/mapstyle.js'
 import prefs from '../mixins/prefs.js'
+import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 
 const RECENT_SPOT_AGE = 30 * 60 * 1000
 
 export default {
   name: 'MapOptionsControl',
+  components: {
+    SwisstopoInfo
+  },
   inject: ['map'],
   mixins: [mapstyle, prefs],
   prefs: {
@@ -190,7 +198,7 @@ export default {
   padding: 0 0.5em 0.5em 0;
   display: inline-block;
 }
-.mapbox-gl-map-options-container button {
+.mapbox-gl-map-options-container .info-tooltip {
   display: inline-block;
   vertical-align: top;
 }

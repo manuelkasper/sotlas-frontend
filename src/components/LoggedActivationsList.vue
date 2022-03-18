@@ -1,18 +1,16 @@
 <template>
   <div>
     <b-table :narrowed="true" :paginated="true" :striped="true" :default-sort="['activationDate', 'desc']" :per-page="15" :data="data" :mobile-cards="false">
-      <template slot-scope="props">
-        <b-table-column field="activationDate" label="Date" sortable>
-          {{ props.row.activationDate | formatActivationDate }}
-        </b-table-column>
-        <b-table-column field="ownCallsign" label="Activator" sortable>
-          <router-link :to="makeActivatorLinkUserId(props.row.userId)">{{ props.row.ownCallsign.toUpperCase() }}</router-link>
-        </b-table-column>
-        <b-table-column field="qsos" label="QSOs" sortable numeric>
-          <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
-          <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
-        </b-table-column>
-      </template>
+      <b-table-column field="activationDate" label="Date" sortable v-slot="props">
+        {{ props.row.activationDate | formatActivationDate }}
+      </b-table-column>
+      <b-table-column field="ownCallsign" label="Activator" sortable v-slot="props">
+        <router-link :to="makeActivatorLinkUserId(props.row.userId)">{{ props.row.ownCallsign.toUpperCase() }}</router-link>
+      </b-table-column>
+      <b-table-column field="qsos" label="QSOs" sortable numeric v-slot="props">
+        <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
+        <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
+      </b-table-column>
     </b-table>
 
     <ModalQSOList :activationId="modalActivationId" @modalClosed="modalActivationId = null" />

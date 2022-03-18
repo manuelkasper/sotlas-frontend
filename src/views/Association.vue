@@ -16,20 +16,18 @@
         <div class="columns">
           <div class="column">
             <b-table default-sort="code" :narrowed="true" :striped="true" :data="filteredRegions" :mobile-cards="false">
-              <template slot-scope="props">
-                <b-table-column field="code" label="Code" class="nowrap" sortable>
-                  <router-link :to="regionLink(props.row)">{{ props.row.code }}</router-link>
-                </b-table-column>
-                <b-table-column field="name" label="Name" sortable>
-                  <router-link :to="regionLink(props.row)">{{ props.row.name }}</router-link>
-                </b-table-column>
-                <b-table-column field="summitCount" label="Summits" sortable numeric>
-                  {{ props.row.summitCount }}
-                </b-table-column>
-                <b-table-column v-if="myActivationsPerRegion" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric>
-                  {{ myActivationsPerRegion[associationCode + '/' + props.row.code] }}
-                </b-table-column>
-              </template>
+              <b-table-column field="code" label="Code" class="nowrap" sortable v-slot="props">
+                <router-link :to="regionLink(props.row)">{{ props.row.code }}</router-link>
+              </b-table-column>
+              <b-table-column field="name" label="Name" sortable v-slot="props">
+                <router-link :to="regionLink(props.row)">{{ props.row.name }}</router-link>
+              </b-table-column>
+              <b-table-column field="summitCount" label="Summits" sortable numeric v-slot="props">
+                {{ props.row.summitCount }}
+              </b-table-column>
+              <b-table-column v-if="myActivationsPerRegion" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric v-slot="props">
+                {{ myActivationsPerRegion[associationCode + '/' + props.row.code] }}
+              </b-table-column>
             </b-table>
           </div>
           <div class="column">

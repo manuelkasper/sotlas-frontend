@@ -22,7 +22,7 @@
     "@mapbox/togeojson": "^0.16.0",
     "@tmcw/togeojson": "^3.2.0",
     "axios": "^0.21.1",
-    "buefy": "^0.8.20",
+    "buefy": "^0.9.19",
     "cheap-ruler": "^2.5.1",
     "core-js": "^2.6.12",
     "filepond": "^4.25.1",

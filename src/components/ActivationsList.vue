@@ -6,36 +6,34 @@
       </template>
     </CardPagination>
     <b-table v-else class="auto-width" :narrowed="true" :paginated="true" :striped="true" :default-sort="['date', 'desc']" :per-page="perPage" :data="data" :row-class="rowClass">
-      <template slot-scope="props">
-        <b-table-column field="date" label="Date" sortable>
-          {{ props.row.date | formatActivationDate }}
-        </b-table-column>
-        <b-table-column field="summit.code" label="Summit" class="code" sortable>
-          <CountryFlag v-if="props.row.summit.isoCode" :country="props.row.summit.isoCode" class="flag" />
-          <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
-        </b-table-column>
-        <b-table-column field="summit.name" label="Name" class="name" sortable>
-          <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
-          <font-awesome-icon v-if="hasOwnPhotos(props.row.summit)" class="photos-icon" :icon="['far', 'images']" />
-          <font-awesome-icon v-else-if="props.row.summit.photoAuthors && props.row.summit.photoAuthors.length > 0" class="photos-icon-others" :icon="['far', 'images']" />
-        </b-table-column>
-        <b-table-column field="summit.altitude" label="Altitude" class="altitude" sortable numeric>
-          <AltitudeLabel :altitude="props.row.summit.altitude" />
-        </b-table-column>
-        <b-table-column field="points" label="Points" sortable>
-          <SummitPointsLabel :points="props.row.points" :bonus="props.row.bonus" />
-        </b-table-column>
-        <b-table-column field="summit.activationCount" label="Activations" sortable numeric>
-          <ActivationCount :activationCount="props.row.summit.activationCount" />
-        </b-table-column>
-        <b-table-column field="callsignUsed" label="Callsign used" sortable>
-          {{ props.row.callsignUsed.toUpperCase() }}
-        </b-table-column>
-        <b-table-column field="qsos" label="QSOs" sortable numeric>
-          <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
-          <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
-        </b-table-column>
-      </template>
+      <b-table-column field="date" label="Date" sortable v-slot="props">
+        {{ props.row.date | formatActivationDate }}
+      </b-table-column>
+      <b-table-column field="summit.code" label="Summit" class="code" sortable v-slot="props">
+        <CountryFlag v-if="props.row.summit.isoCode" :country="props.row.summit.isoCode" class="flag" />
+        <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
+      </b-table-column>
+      <b-table-column field="summit.name" label="Name" class="name" sortable v-slot="props">
+        <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
+        <font-awesome-icon v-if="hasOwnPhotos(props.row.summit)" class="photos-icon" :icon="['far', 'images']" />
+        <font-awesome-icon v-else-if="props.row.summit.photoAuthors && props.row.summit.photoAuthors.length > 0" class="photos-icon-others" :icon="['far', 'images']" />
+      </b-table-column>
+      <b-table-column field="summit.altitude" label="Altitude" class="altitude" sortable numeric v-slot="props">
+        <AltitudeLabel :altitude="props.row.summit.altitude" />
+      </b-table-column>
+      <b-table-column field="points" label="Points" sortable v-slot="props">
+        <SummitPointsLabel :points="props.row.points" :bonus="props.row.bonus" />
+      </b-table-column>
+      <b-table-column field="summit.activationCount" label="Activations" sortable numeric v-slot="props">
+        <ActivationCount :activationCount="props.row.summit.activationCount" />
+      </b-table-column>
+      <b-table-column field="callsignUsed" label="Callsign used" sortable v-slot="props">
+        {{ props.row.callsignUsed.toUpperCase() }}
+      </b-table-column>
+      <b-table-column field="qsos" label="QSOs" sortable numeric v-slot="props">
+        <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
+        <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
+      </b-table-column>
       <template v-slot:bottom-left>
         <b-select v-model="perPage">
           <option v-for="option in perPageOptions" :key="option" :value="option">{{ option }} per page</option>

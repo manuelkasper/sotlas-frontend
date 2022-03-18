@@ -10,27 +10,25 @@
           </b-field>
 
           <b-table class="auto-width" :narrowed="true" :striped="true" :data="activators" :loading="loading" paginated backend-pagination :total="total" :per-page="perPage" :current-page.sync="curPage" backend-sorting :default-sort="[sortField, sortDirection]" @sort="onSort" :mobile-cards="false">
-            <template slot-scope="props">
-              <b-table-column field="callsign" label="Callsign" class="nowrap" sortable>
-                <CountryFlag :country="country(props.row.callsign)" class="flag" />
-                <router-link :to="makeActivatorLink(props.row.callsign)">{{ props.row.callsign }}</router-link>
-              </b-table-column>
-              <b-table-column field="summits" :label="$mq.mobile ? 'Act.' : 'Activations'" numeric sortable>
-                {{ props.row.summits }}
-              </b-table-column>
-              <b-table-column field="points" :label="$mq.mobile ? 'Pts.' : 'Points'" numeric sortable>
-                {{ props.row.points }}
-              </b-table-column>
-              <b-table-column field="bonusPoints" :label="$mq.mobile ? 'Bonus' : 'Bonus points'" numeric sortable>
-                {{ props.row.bonusPoints }}
-              </b-table-column>
-              <b-table-column field="score" label="Score" numeric sortable>
-                {{ props.row.score }}
-              </b-table-column>
-              <b-table-column v-if="!$mq.mobile" field="avgPoints" label="Avg. points" numeric sortable>
-                {{ props.row.avgPoints }}
-              </b-table-column>
-            </template>
+            <b-table-column field="callsign" label="Callsign" class="nowrap" sortable v-slot="props">
+              <CountryFlag :country="country(props.row.callsign)" class="flag" />
+              <router-link :to="makeActivatorLink(props.row.callsign)">{{ props.row.callsign }}</router-link>
+            </b-table-column>
+            <b-table-column field="summits" :label="$mq.mobile ? 'Act.' : 'Activations'" numeric sortable v-slot="props">
+              {{ props.row.summits }}
+            </b-table-column>
+            <b-table-column field="points" :label="$mq.mobile ? 'Pts.' : 'Points'" numeric sortable v-slot="props">
+              {{ props.row.points }}
+            </b-table-column>
+            <b-table-column field="bonusPoints" :label="$mq.mobile ? 'Bonus' : 'Bonus points'" numeric sortable v-slot="props">
+              {{ props.row.bonusPoints }}
+            </b-table-column>
+            <b-table-column field="score" label="Score" numeric sortable v-slot="props">
+              {{ props.row.score }}
+            </b-table-column>
+            <b-table-column v-if="!$mq.mobile" field="avgPoints" label="Avg. points" numeric sortable v-slot="props">
+              {{ props.row.avgPoints }}
+            </b-table-column>
             <template v-slot:bottom-left>
               <b-select v-model="perPage">
                 <option v-for="option in perPageOptions" :key="option" :value="option">{{ option }} per page</option>
