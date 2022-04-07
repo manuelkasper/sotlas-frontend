@@ -7,6 +7,9 @@
       </b-navbar-item>
     </template>
     <template #end>
+      <b-navbar-item v-if="$mq.widescreen" tag="div">
+        <SolarData />
+      </b-navbar-item>
       <b-navbar-item tag="div">
         <SearchField :query="query" @search="closeBurger" />
       </b-navbar-item>
@@ -30,6 +33,7 @@
 import moment from 'moment'
 import SearchField from '../components/SearchField.vue'
 import LoginButton from '../components/LoginButton.vue'
+import SolarData from '../components/SolarData.vue'
 import utils from '../mixins/utils.js'
 import EventBus from '../event-bus'
 
@@ -37,7 +41,7 @@ export default {
   name: 'NavBar',
   mixins: [ utils ],
   components: {
-    SearchField, LoginButton
+    SearchField, LoginButton, SolarData
   },
   props: {
     query: {
