@@ -2,8 +2,8 @@
   <div :class="['solar-container', kAttribute]" v-if="latest !== null">
     <div><label>SFI</label>{{ latest.sfi }}</div>
     <div><label>SN</label>{{ latest.r }}</div>
-    <div><label>A</label>{{ latest.a }}</div>
     <div><label>K</label>{{ latest.k }}</div>
+    <div><label>A</label>{{ latest.a }}</div>
   </div>
 </template>
 
