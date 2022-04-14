@@ -1,8 +1,8 @@
 <template>
-  <div :class="['solar-container', kAttribute]" v-if="latest !== null">
+  <div class="solar-container" v-if="latest !== null">
     <div><label>SFI</label>{{ latest.sfi }}</div>
     <div><label>SN</label>{{ latest.r }}</div>
-    <div><label>K</label>{{ latest.k }}</div>
+    <div :class="[kAttribute]"><label>K</label>{{ latest.k }}</div>
     <div><label>A</label>{{ latest.a }}</div>
   </div>
 </template>
@@ -70,19 +70,19 @@ export default {
   font-weight: normal;
   opacity: 0.6;
 }
-.solar-container.k-quiet {
+.solar-container .k-quiet {
   color: #106f06;
 }
-.solar-container.k-unsettled {
+.solar-container .k-unsettled {
   color: #817f03;
 }
-.solar-container.k-active {
+.solar-container .k-active {
   color: #8c5903;
 }
-.solar-container.k-storm {
+.solar-container .k-storm {
   color: #8d0002;
 }
-.solar-container.k-severestorm {
+.solar-container .k-severestorm {
   color: #7e0053;
 }
 </style>
