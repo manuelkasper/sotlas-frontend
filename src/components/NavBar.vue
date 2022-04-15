@@ -2,8 +2,8 @@
   <b-navbar wrapper-class="container" :fixed-top="true" :close-on-click="false" :isActive.sync="burgerActive">
     <template #brand>
       <b-navbar-item tag="router-link" to="/about">
-        <img v-if="$mq.desktop && !$mq.widescreen" src="../assets/sotlas-icon.svg" alt="Logo">
-        <img v-else src="../assets/sotlas.svg" alt="Logo">
+        <img v-if="$mq.widescreen" src="../assets/sotlas.svg" alt="Logo">
+        <img v-else src="../assets/sotlas-icon.svg" alt="Logo">
       </b-navbar-item>
       <b-navbar-item class="clock" tag="div">
         <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
