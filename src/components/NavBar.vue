@@ -8,7 +8,7 @@
       <b-navbar-item class="clock" tag="div">
         <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
       </b-navbar-item>
-      <b-navbar-item tag="div">
+      <b-navbar-item tag="router-link" to="/solar_history">
         <SolarData />
       </b-navbar-item>
     </template>
