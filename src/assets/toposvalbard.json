@@ -14,7 +14,8 @@
       ],
       "tileSize": 256,
       "maxzoom": 13,
-      "bounds": [7.4670, 73.7357, 36.0502, 81.1569]
+      "bounds": [7.4670, 73.7357, 36.0502, 81.1569],
+      "attribution": "© Norwegian Polar Institute"
     },
     "summits": {
       "type": "vector",

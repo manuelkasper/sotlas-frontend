@@ -14,7 +14,8 @@
       ],
       "tileSize": 256,
       "maxzoom": 19,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651],
+      "attribution": "© swisstopo"
     },
     "hiking_trails_raster": {
       "type": "raster",
