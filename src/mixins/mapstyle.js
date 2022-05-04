@@ -99,7 +99,14 @@ export default {
         'eu': 'Europe (Switzerland)',
         'us': 'US (California)'
       },
-      mapTypes: { 'openmaptiles': 'OpenMapTiles', 'swisstopo': 'swisstopo (Vector)', 'swisstopo_raster': 'swisstopo (Raster)', 'swisstopo_aerial': 'swisstopo (Aerial)', 'toposvalbard': 'TopoSvalbard' },
+      mapTypes: {
+        'openmaptiles': 'OpenMapTiles',
+        'swisstopo': 'swisstopo (Vector)',
+        'swisstopo_raster': 'swisstopo (Raster)',
+        'swisstopo_aerial': 'swisstopo (Aerial)',
+        'toposvalbard': 'TopoSvalbard',
+        'norkart': 'Norkart'
+      },
       initialMapOptions: null
     }
   }
