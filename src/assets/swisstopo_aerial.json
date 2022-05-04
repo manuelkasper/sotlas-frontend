@@ -13,7 +13,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"
       ],
       "tileSize": 256,
-      "maxzoom": 19
+      "maxzoom": 19,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "hiking_trails_raster": {
       "type": "raster",
@@ -21,7 +22,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 18
+      "maxzoom": 18,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "skiing_trails_raster": {
       "type": "raster",
@@ -29,7 +31,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.skitouren/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 17
+      "maxzoom": 17,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "snowshoe_trails_raster": {
       "type": "raster",
@@ -37,7 +40,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.schneeschuhrouten/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 17
+      "maxzoom": 17,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "wildlife_areas": {
       "type": "raster",
@@ -45,7 +49,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-wildruhezonen_portal/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 18
+      "maxzoom": 18,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "wildlife_reserves": {
       "type": "raster",
@@ -53,7 +58,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-jagdbanngebiete_select/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 18
+      "maxzoom": 18,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "slope_classes": {
       "type": "raster",
@@ -61,7 +67,8 @@
         "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.hangneigung-ueber_30/default/current/3857/{z}/{x}/{y}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 14
+      "maxzoom": 14,
+      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
     },
     "summits": {
       "type": "vector",

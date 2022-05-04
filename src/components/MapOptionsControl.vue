@@ -15,10 +15,10 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster' && mapType !== 'swisstopo_aerial'" grouped>
+        <b-field v-if="mapType !== 'swisstopo_raster' && mapType !== 'swisstopo_aerial' && mapType != 'toposvalbard'" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster' && mapType !== 'swisstopo_aerial'" grouped>
+        <b-field v-if="mapType !== 'swisstopo_raster' && mapType !== 'swisstopo_aerial' && mapType != 'toposvalbard'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
         <b-field v-if="mapType.startsWith('swisstopo')" grouped>
@@ -28,10 +28,10 @@
           </b-checkbox>
         </b-field>
       </div>
-      <div class="map-option">
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
-          </b-field>
+      <div class="map-option" v-if="mapType != 'toposvalbard'">
+        <b-field grouped>
+          <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+        </b-field>
         <template v-if="mapType.startsWith('swisstopo')">
           <b-field grouped>
             <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Ski routes</b-checkbox>
