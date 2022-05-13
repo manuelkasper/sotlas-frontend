@@ -21,7 +21,7 @@
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas",
     "@mapbox/togeojson": "^0.16.0",
     "@tmcw/togeojson": "^3.2.0",
-    "axios": "^0.21.1",
+    "axios": "^0.27.2",
     "buefy": "^0.8.20",
     "cheap-ruler": "^2.5.1",
     "core-js": "^2.6.12",
@@ -45,7 +45,7 @@
     "vue-lazy-youtube-video": "^2.3.0",
     "vue-mapbox": "github:manuelkasper/vue-mapbox#fix-layer-remove",
     "vue-match-media": "^1.0.3",
-    "vue-native-websocket": "^2.0.14",
+    "vue-native-websocket": "^2.0.15",
     "vue-router": "^3.5.1",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
