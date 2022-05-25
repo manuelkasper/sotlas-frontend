@@ -20,7 +20,7 @@
         </div>
       </MglPopup>
 
-      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" @close="onPopupClosed" />
+      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" :nextAlert="nextSummitAlert" @close="onPopupClosed" />
 
       <MapRoute v-for="route in persistentRoutes" :key="route.id" :route="route" />
 
@@ -190,6 +190,28 @@ export default {
       })
       if (spots.length > 0) {
         return spots[0]
+      } else {
+        return null
+      }
+    },
+    nextSummitAlert () {
+      if (!this.summit) {
+        return null
+      }
+
+      let alerts = this.$store.state.alerts.filter(alert => {
+        return (alert.summit.code === this.summit.code)
+      }).sort((a, b) => {
+        if (a.dateActivated > b.dateActivated) {
+          return 1
+        } else if (a.dateActivated < b.dateActivated) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+      if (alerts.length > 0) {
+        return alerts[0]
       } else {
         return null
       }

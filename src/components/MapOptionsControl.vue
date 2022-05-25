@@ -52,6 +52,9 @@
           <b-checkbox v-model="mapOptions.spots" size="is-small" @input="setMapOption('spots', $event)">Recent spots</b-checkbox>
         </b-field>
         <b-field grouped>
+          <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts</b-checkbox>
+        </b-field>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.inactive" size="is-small" @input="setMapOption('inactive', $event)">Inactive summits</b-checkbox>
         </b-field>
       </div>
@@ -74,6 +77,7 @@ import mapstyle from '../mixins/mapstyle.js'
 import prefs from '../mixins/prefs.js'
 
 const RECENT_SPOT_AGE = 30 * 60 * 1000
+const MAX_ALERT_AGE = 3 * 60 * 60 * 1000
 
 export default {
   name: 'MapOptionsControl',
@@ -104,6 +108,14 @@ export default {
         return spot.summit.code
       })
     },
+    alerts () {
+      let now = moment.utc()
+      return this.$store.state.alerts.filter(alert => {
+        return (now.diff(alert.dateActivated) < MAX_ALERT_AGE)
+      }).map(alert => {
+        return alert.summit.code
+      })
+    },
     mapType: {
       get () {
         return this.$store.state.mapType
@@ -123,9 +135,16 @@ export default {
       },
       immediate: true
     },
+    alerts: {
+      handler () {
+        this.updateAlerts()
+      },
+      immediate: true
+    },
     mapOptions: {
       handler () {
         this.updateRecentSpots()
+        this.updateAlerts()
       },
       deep: true
     },
@@ -149,8 +168,18 @@ export default {
         this.map.setFilter('summits_highlight', ['in', 'code'])
       }
     },
+    updateAlerts () {
+      if (this.mapOptions.alerts) {
+        this.map.setFilter('summits_highlight_alerts', ['in', 'code', ...this.alerts])
+      } else {
+        this.map.setFilter('summits_highlight_alerts', ['in', 'code'])
+      }
+    },
     spotsShown () {
       return this.mapOptions.spots
+    },
+    alertsShown () {
+      return this.mapOptions.alerts
     },
     openCloseMapOptions () {
       this.open = !this.open

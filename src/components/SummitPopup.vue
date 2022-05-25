@@ -13,6 +13,7 @@
         <tr><th>Activations</th><td>{{ summit.activationCount }}</td></tr>
         <tr v-if="summit.activationDate"><th>Last activation</th><td>{{ summit.activationDate | formatActivationDate }} (<router-link :to="makeActivatorLink(summit.activationCall)">{{ summit.activationCall }}</router-link>)</td></tr>
         <tr v-if="lastSpot"><th>Last spot</th><td><span v-html="formatTimeDay(lastSpot.timeStamp)" />: <router-link :to="makeActivatorLink(lastSpot.activatorCallsign)">{{ lastSpot.activatorCallsign }}</router-link>, {{ lastSpot.frequency }} <ModeLabel :mode="lastSpot.mode" /></td></tr>
+        <tr v-if="nextAlert" class="nextAlert"><th>Next alert</th><td><span v-html="formatDateTimeRelative(nextAlert.dateActivated)" />: <router-link :to="makeActivatorLink(nextAlert.activatorCallsign)">{{ nextAlert.activatorCallsign }}</router-link><div v-if="nextAlert.frequency" class="alertFrequencies">{{ nextAlert.frequency }}</div><div v-if="nextAlert.comments" class="alertComments">{{ nextAlert.comments }}</div></td></tr>
       </table>
       <div class="buttons">
         <b-button v-if="!minimizePopup" size="is-small" icon-left="window-close" @click="$emit('close')">Close</b-button>
@@ -36,7 +37,8 @@ export default {
   name: 'SummitPopup',
   props: {
     summit: Object,
-    lastSpot: Object
+    lastSpot: Object,
+    nextAlert: Object
   },
   mixins: [utils, coverphoto],
   components: {
@@ -96,6 +98,25 @@ export default {
 }
 .summitPopup.minimize .summitCode {
   display: none;
+}
+.summitPopup .nextAlert >>> .date-small {
+  font-size: 100%;
+  min-width: 0;
+}
+.summitPopup .alertFrequencies {
+  font-size: 0.9em;
+  margin-top: 0.1em;
+  max-width: 25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.summitPopup .alertComments {
+  font-size: 0.9em;
+  margin-top: 0.1em;
+  max-width: 25em;
+  color: #777;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .photo {
   width: 300px;

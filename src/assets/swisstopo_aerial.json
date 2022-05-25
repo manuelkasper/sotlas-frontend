@@ -325,9 +325,20 @@
         "circle-color": "rgba(2, 243, 198, 1)",
         "circle-radius": {"stops": [[6, 15], [20, 50]]},
         "circle-opacity": 0.75,
-        "circle-stroke-color": "rgba(210, 255, 0, 0.05)",
-        "circle-stroke-width": 0,
-        "circle-stroke-opacity": 1,
+        "circle-blur": 0.7
+      }
+    },
+    {
+      "id": "summits_highlight_alerts",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(210, 255, 0, 1)",
+        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-opacity": 0.55,
         "circle-blur": 0.7
       }
     },
