@@ -101,6 +101,8 @@ export default {
   },
   watch: {
     regionCode () {
+      this.association = {}
+      this.summits = []
       this.loadRegion()
     },
     showActivatedThisYear () {
