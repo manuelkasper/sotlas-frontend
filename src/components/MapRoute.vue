@@ -48,9 +48,9 @@ export default {
           'line-cap': 'round'
         },
         paint: {
-          'line-color': this.route.highlight ? '#ff0000' : '#245acd',
-          'line-width': 3,
-          'line-opacity': 0.75
+          'line-color': this.route.highlight ? '#4fe005' : '#1cd60d',
+          'line-width': this.route.highlight ? 4.5 : 3,
+          'line-opacity': this.route.highlight ? 0.85 : 0.75
         }
       }
     },
