@@ -248,6 +248,15 @@ export default {
           this.$store.dispatch('reloadAlerts')
           this.$parent.close()
         })
+        .catch(err => {
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: 'Could not post alert: ' + err.message,
+            type: 'is-danger',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
+        })
         .finally(() => {
           this.posting = false
         })

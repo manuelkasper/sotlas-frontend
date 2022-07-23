@@ -218,6 +218,15 @@ export default {
 
           this.$parent.close()
         })
+        .catch(err => {
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: 'Could not post spot: ' + err.message,
+            type: 'is-danger',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
+        })
         .finally(() => {
           this.posting = false
         })
