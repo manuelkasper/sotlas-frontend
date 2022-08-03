@@ -344,10 +344,10 @@ export default {
         }
 
         // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-        axios.post('https://api.sotl.as/summits/' + this.summitCode)
+        axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
       }
 
-      loads.push(axios.get('https://api.sotl.as/summits/' + this.summitCode, options)
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, options)
         .then(response => {
           this.summit = response.data
           document.title = this.summit.name + ' (' + this.summit.code + ') - SOTLAS'
@@ -358,7 +358,7 @@ export default {
           }
         }))
 
-      loads.push(axios.get('https://api.sotl.as/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
         .then(response => {
           this.association = response.data
         }))
@@ -397,9 +397,9 @@ export default {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: false })
 
       // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-      axios.post('https://api.sotl.as/summits/' + this.summitCode)
+      axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
 
-      axios.get('https://api.sotl.as/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
+      axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
         .then(response => {
           this.summit = response.data
         })

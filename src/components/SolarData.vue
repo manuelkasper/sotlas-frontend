@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     loadSolarData () {
-      axios.get('https://api.sotl.as/solardata/latest')
+      axios.get(process.env.VUE_APP_API_URL + '/solardata/latest')
         .then(response => {
           this.latest = response.data
         })

@@ -78,12 +78,12 @@ export default {
       let loads = []
       let q = this.$route.query.q.trim()
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-      loads.push(axios.get('https://api.sotl.as/activators/search', { params: { q, limit: this.limit } })
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q, limit: this.limit } })
         .then(response => {
           this.activators = response.data.activators
         }))
 
-      loads.push(axios.get('https://api.sotl.as/summits/search', { params: { q, limit: this.limit } })
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q, limit: this.limit } })
         .then(response => {
           let now = moment()
           response.data.forEach(summit => {

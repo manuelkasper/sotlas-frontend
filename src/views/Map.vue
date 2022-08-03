@@ -101,7 +101,7 @@ export default {
         } catch (e) {}
         this.showMap = true
       } else {
-        axios.get('https://api.sotl.as/my_coordinates')
+        axios.get(process.env.VUE_APP_API_URL + '/my_coordinates')
           .then(response => {
             if (response.data.latitude && response.data.longitude) {
               this.center = [response.data.longitude, response.data.latitude]
@@ -346,7 +346,7 @@ export default {
         })
     },
     fetchSummit (summitCode) {
-      return axios.get('https://api.sotl.as/summits/' + summitCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/summits/' + summitCode)
         .then(response => {
           let summit = response.data
           summit.photo = null
@@ -354,7 +354,7 @@ export default {
         })
     },
     fetchAssociation (associationCode) {
-      return axios.get('https://api.sotl.as/associations/' + associationCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/associations/' + associationCode)
         .then(response => {
           return response.data
         })

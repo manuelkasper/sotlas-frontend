@@ -340,7 +340,7 @@ export default {
       this.databaseError = false
 
       let loads = []
-      axios.get('https://api.sotl.as/activators/' + this.callsign)
+      axios.get(process.env.VUE_APP_API_URL + '/activators/' + this.callsign)
         .then(response => {
           if (response) {
             this.activator = response.data

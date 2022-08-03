@@ -12,7 +12,7 @@ export default {
     if (mapServerOverride && mapServerOverride !== 'test') {
       this.mapServer = mapServerOverride
     } else {
-      axios.get('https://api.sotl.as/map_server')
+      axios.get(process.env.VUE_APP_API_URL + '/map_server')
         .then(response => {
           if (response.data.mapServer) {
             this.mapServer = response.data.mapServer
