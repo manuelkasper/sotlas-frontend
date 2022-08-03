@@ -59,8 +59,8 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "git-revision-webpack-plugin": "^3.0.6",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^7.3.1",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10.3.1",
     "vue-svgicon": "^3.2.9",
     "vue-template-compiler": "^2.6.12"
   },
