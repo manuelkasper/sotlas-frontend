@@ -43,7 +43,7 @@
     "vue-filepond": "^6.0.3",
     "vue-infinite-loading": "^2.4.5",
     "vue-lazy-youtube-video": "^2.3.0",
-    "vue-mapbox": "github:manuelkasper/vue-mapbox#fix-layer-remove",
+    "vue-mapbox": "github:manuelkasper/vue-mapbox#sotlas",
     "vue-match-media": "^1.0.3",
     "vue-native-websocket": "^2.0.15",
     "vue-router": "^3.5.1",
