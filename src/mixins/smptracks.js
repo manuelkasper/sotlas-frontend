@@ -48,7 +48,8 @@ export default {
           routes.push({
             id: track.hdr_id,
             title: track.track_title,
-            description: '<p>' + this.escapeHtml(track.track_notes) + '</p><p><small>Track imported from <a href="https://www.sotamaps.org" target="_blank">SMP</a></small></p>',
+            htmlDescription: '<p>' + this.escapeHtml(track.track_notes) + '</p><p><small>Track imported from <a href="https://www.sotamaps.org" target="_blank">SMP</a></small></p>',
+            description: track.track_notes,
             author: track.callsign,
             distance,
             ascent,
