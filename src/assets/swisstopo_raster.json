@@ -88,7 +88,7 @@
       "url": "https://1.{mapServer}.map.sotl.as/data/az.json"
     }
   },
-  "sprite": "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/v1.0.0/sprite/sprite",
+  "sprite": "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/sprite/sprite",
   "glyphs": "https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf",
   "transition": {},
   "layers": [
