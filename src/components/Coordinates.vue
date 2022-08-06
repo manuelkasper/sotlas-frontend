@@ -103,7 +103,7 @@ export default {
       if (!this.latitude || !this.longitude || !this.showElevation) {
         return
       }
-      axios.post('https://ele.sotl.as/api', [[this.latitude, this.longitude]])
+      axios.post(process.env.VUE_APP_ELEVATION_API_URL, [[this.latitude, this.longitude]])
         .then(result => {
           this.elevation = Math.round(result.data[0])
         })

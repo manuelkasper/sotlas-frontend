@@ -396,7 +396,7 @@ export default {
       }
 
       this.loading = true
-      axios.post('https://ele.sotl.as/api', eleCoordinates)
+      axios.post(process.env.VUE_APP_ELEVATION_API_URL, eleCoordinates)
         .then(result => {
           this.chartData = result.data.map((elevation, i) => {
             return {
