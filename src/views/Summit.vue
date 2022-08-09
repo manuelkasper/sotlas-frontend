@@ -415,9 +415,21 @@ export default {
     },
     routeDetailsOpen (route) {
       this.$set(route, 'highlight', true)
+      this.routes.forEach(curRoute => {
+        if (curRoute.highlight !== true) {
+          this.$set(curRoute, 'highlight', false)
+        }
+      })
     },
     routeDetailsClose (route) {
       this.$set(route, 'highlight', false)
+
+      // If all route highlights are false, set them all to null
+      if (this.routes.every(curRoute => curRoute.highlight === false)) {
+        this.routes.forEach(curRoute => {
+          this.$set(curRoute, 'highlight', null)
+        })
+      }
     },
     mapReposition (coordinates) {
       if (coordinates) {
