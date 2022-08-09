@@ -1,5 +1,5 @@
 <template>
-  <MglMap v-if="(mapCenter || bounds) && mapStyle" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
+  <MglMap v-if="(mapCenter || bounds) && mapStyle" :key="summit.code" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
     <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
     <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
     <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" />
