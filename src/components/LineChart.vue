@@ -28,6 +28,18 @@ export default {
     suffixY: {
       type: String,
       default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: 250
+    },
+    spline: {
+      type: [String, Number],
+      default: 0
+    },
+    regionFill: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -61,7 +73,7 @@ export default {
           datasets: datasets
         },
         type: 'line',
-        height: 250,
+        height: parseInt(this.height),
         colors: ['red'],
         axisOptions: {
           xAxisMode: 'tick',
@@ -69,7 +81,8 @@ export default {
         },
         lineOptions: {
           hideDots: true,
-          regionFill: true
+          regionFill: this.regionFill,
+          spline: parseInt(this.spline)
         },
         tooltipOptions: {
           formatTooltipX: d => d + this.suffixX,

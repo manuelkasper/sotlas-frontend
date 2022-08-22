@@ -1,6 +1,6 @@
 <template>
   <div class="map-layout" ref="mapLayout">
-    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :preserveDrawingBuffer="!$mq.mobile" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
+    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
       <MglScaleControl position="bottom-left" />
@@ -20,7 +20,7 @@
         </div>
       </MglPopup>
 
-      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" @close="onPopupClosed" />
+      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" :nextAlert="nextSummitAlert" @close="onPopupClosed" />
 
       <MapRoute v-for="route in persistentRoutes" :key="route.id" :route="route" />
 
@@ -101,7 +101,7 @@ export default {
         } catch (e) {}
         this.showMap = true
       } else {
-        axios.get('https://api.sotl.as/my_coordinates')
+        axios.get(process.env.VUE_APP_API_URL + '/my_coordinates')
           .then(response => {
             if (response.data.latitude && response.data.longitude) {
               this.center = [response.data.longitude, response.data.latitude]
@@ -190,6 +190,28 @@ export default {
       })
       if (spots.length > 0) {
         return spots[0]
+      } else {
+        return null
+      }
+    },
+    nextSummitAlert () {
+      if (!this.summit) {
+        return null
+      }
+
+      let alerts = this.$store.state.alerts.filter(alert => {
+        return (alert.summit.code === this.summit.code)
+      }).sort((a, b) => {
+        if (a.dateActivated > b.dateActivated) {
+          return 1
+        } else if (a.dateActivated < b.dateActivated) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+      if (alerts.length > 0) {
+        return alerts[0]
       } else {
         return null
       }
@@ -324,7 +346,7 @@ export default {
         })
     },
     fetchSummit (summitCode) {
-      return axios.get('https://api.sotl.as/summits/' + summitCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/summits/' + summitCode)
         .then(response => {
           let summit = response.data
           summit.photo = null
@@ -332,7 +354,7 @@ export default {
         })
     },
     fetchAssociation (associationCode) {
-      return axios.get('https://api.sotl.as/associations/' + associationCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/associations/' + associationCode)
         .then(response => {
           return response.data
         })

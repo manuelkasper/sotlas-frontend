@@ -1,6 +1,6 @@
 {
   "version": 8,
-  "name": "swisstopo_raster",
+  "name": "swisstopo_aerial",
   "metadata": {"maputnik:renderer": "mbgljs", "openmaptiles:version": "3.x"},
   "center": [7.969664962869274, 47.021278030856564],
   "zoom": 9.333879434342306,
@@ -10,7 +10,7 @@
     "swisstopo": {
       "type": "raster",
       "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"
+        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"
       ],
       "tileSize": 256,
       "maxzoom": 19,
@@ -104,7 +104,7 @@
       "source": "swisstopo",
       "layout": {"visibility": "visible"},
       "paint": {
-        "raster-opacity": 0.75,
+        "raster-opacity": 1.0,
         "raster-resampling": "linear"
       }
     },
@@ -262,8 +262,8 @@
         "text-rotate": 0
       },
       "paint": {
-        "text-color": "rgba(51, 51, 51, 1)",
-        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-color": "rgba(255, 255, 255, 1)",
+        "text-halo-color": "rgba(51, 51, 51, 1)",
         "text-halo-width": 1,
         "text-halo-blur": 1
       }
@@ -423,9 +423,9 @@
       "minzoom": 0,
       "layout": {"visibility": "none"},
       "paint": {
-        "fill-opacity": 0.1,
+        "fill-opacity": 0.15,
         "fill-antialias": false,
-        "fill-color": "rgba(0, 0, 0, 1)"
+        "fill-color": "rgba(255, 255, 255, 1)"
       }
     },
     {

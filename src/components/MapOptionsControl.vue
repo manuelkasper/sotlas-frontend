@@ -15,40 +15,44 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType !== 'swisstopo_raster'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
+        <b-field v-if="mapType.startsWith('swisstopo')" grouped>
+          <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
+            Activation zones
+            <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
+          </b-checkbox>
+        </b-field>
       </div>
-      <div class="map-option">
-        <template v-if="mapType === 'swisstopo' || mapType === 'swisstopo_raster'">
+      <div class="map-option" v-if="mapType !== 'toposvalbard' && mapType !== 'norkart'">
+        <b-field grouped>
+          <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+        </b-field>
+        <template v-if="mapType.startsWith('swisstopo')">
           <b-field grouped>
-            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Wanderwege</b-checkbox>
+            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Ski routes</b-checkbox>
           </b-field>
           <b-field grouped>
-            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Skirouten</b-checkbox>
+            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
           </b-field>
           <b-field grouped>
-            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Schneeschuhrouten</b-checkbox>
+            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes over 30°</b-checkbox>
           </b-field>
           <b-field grouped>
-            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Hangneigungsklassen über 30°</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildruhezonen und Schutzgebiete</b-checkbox>
-          </b-field>
-        </template>
-        <template v-else>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves and areas</b-checkbox>
           </b-field>
         </template>
       </div>
       <div class="map-option">
         <b-field grouped>
           <b-checkbox v-model="mapOptions.spots" size="is-small" @input="setMapOption('spots', $event)">Recent spots</b-checkbox>
+        </b-field>
+        <b-field grouped>
+          <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts</b-checkbox>
         </b-field>
         <b-field grouped>
           <b-checkbox v-model="mapOptions.inactive" size="is-small" @input="setMapOption('inactive', $event)">Inactive summits</b-checkbox>
@@ -73,6 +77,7 @@ import mapstyle from '../mixins/mapstyle.js'
 import prefs from '../mixins/prefs.js'
 
 const RECENT_SPOT_AGE = 30 * 60 * 1000
+const MAX_ALERT_AGE = 3 * 60 * 60 * 1000
 
 export default {
   name: 'MapOptionsControl',
@@ -103,6 +108,14 @@ export default {
         return spot.summit.code
       })
     },
+    alerts () {
+      let now = moment.utc()
+      return this.$store.state.alerts.filter(alert => {
+        return (now.diff(alert.dateActivated) < MAX_ALERT_AGE)
+      }).map(alert => {
+        return alert.summit.code
+      })
+    },
     mapType: {
       get () {
         return this.$store.state.mapType
@@ -122,9 +135,16 @@ export default {
       },
       immediate: true
     },
+    alerts: {
+      handler () {
+        this.updateAlerts()
+      },
+      immediate: true
+    },
     mapOptions: {
       handler () {
         this.updateRecentSpots()
+        this.updateAlerts()
       },
       deep: true
     },
@@ -148,14 +168,35 @@ export default {
         this.map.setFilter('summits_highlight', ['in', 'code'])
       }
     },
+    updateAlerts () {
+      if (this.mapOptions.alerts) {
+        this.map.setFilter('summits_highlight_alerts', ['in', 'code', ...this.alerts])
+      } else {
+        this.map.setFilter('summits_highlight_alerts', ['in', 'code'])
+      }
+    },
     spotsShown () {
       return this.mapOptions.spots
+    },
+    alertsShown () {
+      return this.mapOptions.alerts
     },
     openCloseMapOptions () {
       this.open = !this.open
     },
     setMapOption (option, value) {
       this.$store.commit('setMapOption', { option, value })
+    },
+    showActivationZoneInfo (event) {
+      event.preventDefault()
+      this.$buefy.dialog.alert({
+        title: 'Activation zones',
+        message: '<p style="margin-bottom: 0.5em">The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (spatial resolution 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</p><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
+        type: 'is-info',
+        hasIcon: true,
+        icon: 'info-circle',
+        iconPack: 'fas'
+      })
     }
   }
 }

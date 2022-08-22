@@ -263,6 +263,45 @@ export default {
         associations.add(activation.summit.code.substring(0, activation.summit.code.indexOf('/')))
       })
       return associations.size
+    },
+    activationsMapBounds () {
+      let minLat, minLon, maxLat, maxLon
+      this.activations.forEach(activation => {
+        if (!minLat || activation.summit.coordinates.latitude < minLat) {
+          minLat = activation.summit.coordinates.latitude
+        }
+        if (!maxLat || activation.summit.coordinates.latitude > maxLat) {
+          maxLat = activation.summit.coordinates.latitude
+        }
+        if (!minLon || activation.summit.coordinates.longitude < minLon) {
+          minLon = activation.summit.coordinates.longitude
+        }
+        if (!maxLon || activation.summit.coordinates.longitude > maxLon) {
+          maxLon = activation.summit.coordinates.longitude
+        }
+      })
+
+      // Some padding
+      let latDiff = maxLat - minLat
+      let lonDiff = maxLon - minLon
+      minLat -= (latDiff * 0.05)
+      maxLat += (latDiff * 0.05)
+      minLon -= (lonDiff * 0.05)
+      maxLon += (lonDiff * 0.05)
+
+      minLat = Math.max(Math.min(minLat, 90), -90)
+      maxLat = Math.max(Math.min(maxLat, 90), -90)
+      minLon = Math.max(Math.min(minLon, 180), -180)
+      maxLon = Math.max(Math.min(maxLon, 180), -180)
+
+      return [[minLon, minLat], [maxLon, maxLat]]
+    },
+    activationsMapFilter () {
+      let summits = new Set()
+      this.activations.forEach(activation => {
+        summits.add(activation.summit.code)
+      })
+      return ['in', 'code', ...summits]
     }
   },
   watch: {
@@ -301,7 +340,7 @@ export default {
       this.databaseError = false
 
       let loads = []
-      axios.get('https://api.sotl.as/activators/' + this.callsign)
+      axios.get(process.env.VUE_APP_API_URL + '/activators/' + this.callsign)
         .then(response => {
           if (response) {
             this.activator = response.data

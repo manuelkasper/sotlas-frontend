@@ -10,7 +10,7 @@
 
       <b-field label="Summit reference" :message="summitDisplay" :type="summitType" :class="summitLabelClass" expanded>
         <b-field>
-          <b-input type="text" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+          <b-input type="text" class="summit-code" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
           <p class="control">
             <NearbySummitsList @summitSelected="onSummitSelected" />
           </p>
@@ -154,7 +154,7 @@ export default {
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
             this.summitLoading = true
-            axios.get('https://api.sotl.as/summits/' + this.summitCode)
+            axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
               .then(response => {
                 this.summitLoading = false
                 this.summitInvalid = false
@@ -247,6 +247,15 @@ export default {
         .then(response => {
           this.$store.dispatch('reloadAlerts')
           this.$parent.close()
+        })
+        .catch(err => {
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: 'Could not post alert: ' + err.message,
+            type: 'is-danger',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
         })
         .finally(() => {
           this.posting = false

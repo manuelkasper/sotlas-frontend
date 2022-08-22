@@ -10,7 +10,7 @@
 
       <b-field label="Summit reference" :message="summitDisplay" :type="summitType" :class="summitLabelClass" expanded>
         <b-field>
-          <b-input type="text" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+          <b-input type="text" class="summit-code" ref="summitCode" v-model="summitCode" placeholder="XX/YY-000" :loading="summitLoading" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
           <p class="control">
             <NearbySummitsList @summitSelected="onSummitSelected" />
           </p>
@@ -19,7 +19,7 @@
 
       <b-field label="Frequency" :message="maybeKhz ? 'Do you really mean ' + frequency + ' MHz, or are you missing a dot?' : ''" :type="maybeKhz ? 'is-warning' : ''">
         <b-field :type="maybeKhz ? 'is-warning' : ''">
-          <b-input v-model="frequency" type="number" step="any" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+          <FrequencyInput v-model="frequency" />
           <p class="control">
             <span class="button is-static">MHz</span>
           </p>
@@ -49,10 +49,11 @@ import utils from '../mixins/utils.js'
 import prefs from '../mixins/prefs.js'
 import sotawatch from '../mixins/sotawatch.js'
 import NearbySummitsList from './NearbySummitsList.vue'
+import FrequencyInput from './FrequencyInput.vue'
 
 export default {
   components: {
-    NearbySummitsList
+    NearbySummitsList, FrequencyInput
   },
   mixins: [utils, prefs, sotawatch],
   props: {
@@ -140,7 +141,7 @@ export default {
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
             this.summitLoading = true
-            axios.get('https://api.sotl.as/summits/' + this.summitCode)
+            axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
               .then(response => {
                 this.summitLoading = false
                 this.summitInvalid = false
@@ -216,6 +217,15 @@ export default {
           })
 
           this.$parent.close()
+        })
+        .catch(err => {
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: 'Could not post spot: ' + err.message,
+            type: 'is-danger',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
         })
         .finally(() => {
           this.posting = false

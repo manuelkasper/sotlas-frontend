@@ -180,6 +180,15 @@ export default {
             .then(response => {
               this.$store.dispatch('reloadAlerts')
             })
+            .catch(err => {
+              this.$buefy.dialog.alert({
+                title: 'Error',
+                message: 'Could not delete spot: ' + err.message,
+                type: 'is-danger',
+                ariaRole: 'alertdialog',
+                ariaModal: true
+              })
+            })
         }
       })
     }

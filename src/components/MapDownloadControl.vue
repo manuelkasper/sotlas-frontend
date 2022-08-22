@@ -10,12 +10,15 @@ export default {
   inject: ['map'],
   methods: {
     downloadMap () {
-      let link = document.createElement('a')
-      link.download = 'map.png'
-      link.href = this.map.getCanvas().toDataURL()
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+      this.map.once('render', () => {
+        let link = document.createElement('a')
+        link.download = 'map.png'
+        link.href = this.map.getCanvas().toDataURL()
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      })
+      this.map._render()
     }
   }
 }

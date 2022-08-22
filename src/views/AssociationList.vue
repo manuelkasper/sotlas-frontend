@@ -49,7 +49,7 @@ export default {
   mounted () {
     document.title = 'Associations - SOTLAS'
     this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-    axios.get('https://api.sotl.as/associations/all')
+    axios.get(process.env.VUE_APP_API_URL + '/associations/all')
       .then(response => {
         this.associations = response.data
         this.loadingComponent.close()

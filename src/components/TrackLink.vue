@@ -4,10 +4,11 @@
 
 <script>
 import tracks from '../mixins/tracks.js'
+import utils from '../mixins/utils.js'
 
 export default {
   name: 'TrackLink',
-  mixins: [tracks],
+  mixins: [tracks, utils],
   props: {
     route: Object,
     summit: Object
@@ -42,8 +43,9 @@ export default {
     </link>
   </metadata>
   <trk>
-    <name>${this.route.title}</name>
+    <name>${this.escapeHtml(this.route.title)}</name>
     <src>${this.route.author}</src>
+    <desc>${this.escapeHtml(this.route.description)}</desc>
     <trkseg>
     ${trkpts.join('\n')}
     </trkseg>

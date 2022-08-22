@@ -1,7 +1,11 @@
 export default {
   methods: {
     photoSrc (photo, size) {
-      return 'https://images.sotl.as/photos/' + size + '/' + photo.filename.substring(0, 2) + '/' + photo.filename
+      if (size === 'original') {
+        return process.env.VUE_APP_PHOTOS_ORIGINAL_URL + '/' + photo.filename
+      } else {
+        return process.env.VUE_APP_PHOTOS_URL + '/' + size + '/' + photo.filename
+      }
     }
   }
 }

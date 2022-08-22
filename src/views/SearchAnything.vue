@@ -131,9 +131,18 @@ export default {
         this.userTags = []
       }
 
-      loads.push(axios.get('https://api.sotl.as/activators/search', { params: { q, limit: this.limit } })
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q, limit: this.limit } })
         .then(response => {
           this.activators = response.data.activators
+        }))
+
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q, limit: this.limit } })
+        .then(response => {
+          let now = moment()
+          response.data.forEach(summit => {
+            summit.isValid = (moment(summit.validFrom).isBefore(now) && moment(summit.validTo).isAfter(now))
+          })
+          this.summits = response.data
         }))
 
       Promise.all(loads)

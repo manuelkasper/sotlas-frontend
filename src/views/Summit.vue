@@ -58,10 +58,12 @@
             </div>
           </div>
           <div v-if="!enlargeMap" class="column">
-            <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :reference="summit.code" /></div>
+            <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :altitude="summit.altitude" :reference="summit.code" /></div>
             <div>Locator: <span class="locator">{{ locator }}</span></div>
-            <div v-if="authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
-            <div v-if="firstActivations">First activation:
+            <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
+            <div v-if="firstActivations">
+              <span v-if="firstActivations.activators.length == 1">First activation: </span>
+              <span v-else>First day's activations: </span>
               <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><router-link :to="makeActivatorLinkUserId(activator.userId)"><strong>{{ activator.callsign }}</strong></router-link>{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
@@ -167,6 +169,7 @@ import AlertsList from '../components/AlertsList.vue'
 import EditAlert from '../components/EditAlert.vue'
 import EditSpot from '../components/EditSpot.vue'
 import HikrIcon from '../assets/hikr.png'
+import SACIcon from '../assets/sac.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
 import EventBus from '../event-bus'
 import api from '../mixins/api.js'
@@ -236,13 +239,21 @@ export default {
           url: this.wikipediaPhoto.link
         })
       }
+      if (this.summit.code && this.summit.code.startsWith('HB')) {
+        resources.push({
+          iconImg: SACIcon,
+          prefix: 'SAC-Tourenportal',
+          title: this.summit.name + ' (' + this.summit.altitude + ' m)',
+          url: 'https://www.sac-cas.ch/de/suche/?tx_solr[filter][0]=type%3Atour_destination&tx_solr[q]=' + encodeURIComponent(this.summit.name)
+        })
+      }
       if (this.summit.code && this.summit.code.match(/^(HB|OE|DL|DM)/)) {
         let hikrSummitName = this.summit.name.replace(/\/.*$/, '')
         resources.push({
           iconImg: HikrIcon,
           prefix: 'Hikr.org',
           title: hikrSummitName + ' (' + this.summit.altitude + ' m)',
-          url: 'http://www.hikr.org/dir/?adv=1&piz_name=' + encodeURIComponent(hikrSummitName) + '&piz_height_min=' + (this.summit.altitude - 50) + '&piz_height_max=' + (this.summit.altitude + 50) + '&piz_type=peak&piz_order=piz_name&action=search'
+          url: 'https://www.hikr.org/dir/?adv=1&piz_name=' + encodeURIComponent(hikrSummitName) + '&piz_height_min=' + (this.summit.altitude - 50) + '&piz_height_max=' + (this.summit.altitude + 50) + '&piz_type=peak&piz_order=piz_name&action=search'
         })
       }
       resources.push({
@@ -359,10 +370,10 @@ export default {
         }
 
         // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-        axios.post('https://api.sotl.as/summits/' + this.summitCode)
+        axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
       }
 
-      loads.push(axios.get('https://api.sotl.as/summits/' + this.summitCode, options)
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, options)
         .then(response => {
           this.summit = response.data
           document.title = this.summit.name + ' (' + this.summit.code + ') - SOTLAS'
@@ -373,7 +384,7 @@ export default {
           }
         }))
 
-      loads.push(axios.get('https://api.sotl.as/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
         .then(response => {
           this.association = response.data
         }))
@@ -427,9 +438,9 @@ export default {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: false })
 
       // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-      axios.post('https://api.sotl.as/summits/' + this.summitCode)
+      axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
 
-      axios.get('https://api.sotl.as/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
+      axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
         .then(response => {
           this.summit = response.data
         })
@@ -459,9 +470,21 @@ export default {
     },
     routeDetailsOpen (route) {
       this.$set(route, 'highlight', true)
+      this.routes.forEach(curRoute => {
+        if (curRoute.highlight !== true) {
+          this.$set(curRoute, 'highlight', false)
+        }
+      })
     },
     routeDetailsClose (route) {
       this.$set(route, 'highlight', false)
+
+      // If all route highlights are false, set them all to null
+      if (this.routes.every(curRoute => curRoute.highlight === false)) {
+        this.routes.forEach(curRoute => {
+          this.$set(curRoute, 'highlight', null)
+        })
+      }
     },
     mapReposition (coordinates) {
       if (coordinates) {

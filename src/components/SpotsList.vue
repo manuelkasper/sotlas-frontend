@@ -192,6 +192,15 @@ export default {
             .then(response => {
               this.$store.commit('deleteSpot', spot)
             })
+            .catch(err => {
+              this.$buefy.dialog.alert({
+                title: 'Error',
+                message: 'Could not delete spot: ' + err.message,
+                type: 'is-danger',
+                ariaRole: 'alertdialog',
+                ariaModal: true
+              })
+            })
         }
       })
     }

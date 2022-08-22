@@ -15,7 +15,8 @@ import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamat
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,
   faBookUser, faBookmark, faTag } from '@fortawesome/pro-regular-svg-icons'
 import { faMap, faCheckCircle as fasCheckCircle, faChevronCircleDown as fasChevronCircleDown, faChevronCircleUp as fasChevronCircleUp,
-  faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, faCaretDown as fasCaretDown, faLocationArrow as fasLocationArrow } from '@fortawesome/pro-solid-svg-icons'
+  faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, faCaretDown as fasCaretDown,
+  faLocationArrow as fasLocationArrow, faInfoCircle as fasInfoCircle } from '@fortawesome/pro-solid-svg-icons'
 import { faWikipediaW, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 import '@/assets/global.css'
@@ -29,7 +30,8 @@ library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExcla
   faExchange, faGlobe, faCalendarDay, faTrashAlt, faEdit, faClone, farCheckCircle, faArrowsH, faArrowsAlt,
   faSnowflake, faWindowMinimize, faWindowMaximize, faWindowClose, faExpandArrows, faLocation, faCalendarCheck, faComment, faSpinner,
   faBookUser, faBookmark, faTag)
-library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, fasCaretDown, fasLocationArrow)
+library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faParking, faSquare, faBus, faHiking, faCircle, faCamera,
+  faCameraHome, faVolume, faVolumeMute, faCog, fasCaretDown, fasLocationArrow, fasInfoCircle)
 library.add(faWikipediaW, faGoogle, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
@@ -106,6 +108,7 @@ function startVue () {
     mq: {
       mobile: '(max-width: 768px)',
       desktop: '(min-width: 1024px)',
+      widescreen: '(min-width: 1216px)',
       fullhd: '(min-width: 1408px)'
     }
   }).$mount('#app')

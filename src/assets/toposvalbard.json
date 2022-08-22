@@ -1,75 +1,21 @@
 {
   "version": 8,
-  "name": "swisstopo_raster",
+  "name": "toposvalbard",
   "metadata": {"maputnik:renderer": "mbgljs", "openmaptiles:version": "3.x"},
-  "center": [7.969664962869274, 47.021278030856564],
-  "zoom": 9.333879434342306,
+  "center": [16.765892, 78.112112],
+  "zoom": 6,
   "bearing": 0,
   "pitch": 0,
   "sources": {
-    "swisstopo": {
+    "toposvalbard": {
       "type": "raster",
       "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"
+        "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_3857/MapServer/tile/{z}/{y}/{x}"
       ],
       "tileSize": 256,
-      "maxzoom": 19,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651],
-      "attribution": "© swisstopo"
-    },
-    "hiking_trails_raster": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 18,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
-    },
-    "skiing_trails_raster": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.skitouren/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 17,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
-    },
-    "snowshoe_trails_raster": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo-karto.schneeschuhrouten/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 17,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
-    },
-    "wildlife_areas": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-wildruhezonen_portal/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 18,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
-    },
-    "wildlife_reserves": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.bafu.wrz-jagdbanngebiete_select/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 18,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
-    },
-    "slope_classes": {
-      "type": "raster",
-      "tiles": [
-        "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.hangneigung-ueber_30/default/current/3857/{z}/{x}/{y}.png"
-      ],
-      "tileSize": 256,
-      "maxzoom": 14,
-      "bounds": [5.140242, 45.398181, 11.47757, 48.230651]
+      "maxzoom": 13,
+      "bounds": [7.4670, 73.7357, 36.0502, 81.1569],
+      "attribution": "© Norwegian Polar Institute"
     },
     "summits": {
       "type": "vector",
@@ -88,8 +34,8 @@
       "url": "https://1.{mapServer}.map.sotl.as/data/az.json"
     }
   },
-  "sprite": "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/sprite/sprite",
-  "glyphs": "https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf",
+  "sprite": "https://sotl.as/sprites",
+  "glyphs": "https://0.{mapServer}.map.sotl.as/fonts/{fontstack}/{range}.pbf",
   "transition": {},
   "layers": [
     {
@@ -99,38 +45,12 @@
       "paint": {"background-color": "rgba(255, 255, 255, 1)"}
     },
     {
-      "id": "swisstopo",
+      "id": "toposvalbard",
       "type": "raster",
-      "source": "swisstopo",
+      "source": "toposvalbard",
       "layout": {"visibility": "visible"},
       "paint": {
         "raster-opacity": 0.75,
-        "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "wildlife_areas",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "wildlife"
-      },
-      "source": "wildlife_areas",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "wildlife_reserves",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "wildlife"
-      },
-      "source": "wildlife_reserves",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
         "raster-resampling": "linear"
       }
     },
@@ -164,58 +84,6 @@
         "line-color": "rgba(235, 196, 0, 1)",
         "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
         "line-width": {"stops": [[12, 1], [16, 3]]}
-      }
-    },
-    {
-      "id": "slope_classes",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "slope_classes"
-      },
-      "source": "slope_classes",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.3,
-        "raster-resampling": "nearest"
-      }
-    },
-    {
-      "id": "hiking_trails_raster",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "difficulty"
-      },
-      "source": "hiking_trails_raster",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "skiing_trails_raster",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "skiing"
-      },
-      "source": "skiing_trails_raster",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "snowshoe_trails_raster",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "snowshoe"
-      },
-      "source": "snowshoe_trails_raster",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
       }
     },
     {

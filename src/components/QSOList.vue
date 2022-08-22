@@ -5,11 +5,11 @@
         {{ props.row.TimeOfDay }}
       </b-table-column>
       <b-table-column field="OtherCallsign" label="Callsign" class="nowrap" sortable>
-        <CountryFlag :country="isoCodeForCallsign(props.row.OtherCallsign)" class="flag" />
-        <router-link :to="makeActivatorLink(props.row.OtherCallsign)">{{ props.row.OtherCallsign }}</router-link>
+        <CountryFlag :country="isoCodeForCallsign(props.row.OtherCallsign.trim())" class="flag" />
+        <router-link :to="makeActivatorLink(props.row.OtherCallsign.trim())">{{ props.row.OtherCallsign.trim() }}</router-link>
       </b-table-column>
       <b-table-column field="Band" label="Band" :custom-sort="sortBand" class="nowrap" sortable numeric>
-        {{ bandForFrequency(props.row.Band.replace('MHz', '')) }}
+        {{ bandForDbFrequency(props.row.Band) }}
       </b-table-column>
       <b-table-column field="Mode" label="Mode" class="mode nowrap" sortable>
         <ModeLabel :mode="props.row.Mode" />
@@ -40,8 +40,8 @@ export default {
   mixins: [utils],
   methods: {
     sortBand (a, b, isAsc) {
-      let fa = parseFloat(a.Band.replace('MHz', ''))
-      let fb = parseFloat(b.Band.replace('MHz', ''))
+      let fa = this.dbFrequencyToMHz(a.Band)
+      let fb = this.dbFrequencyToMHz(b.Band)
       if (fa < fb) {
         return (isAsc ? -1 : 1)
       } else if (fa === fb) {
