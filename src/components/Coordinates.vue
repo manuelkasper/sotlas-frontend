@@ -371,7 +371,7 @@ export default {
         {
           name: 'Gaia GPS',
           url: () => {
-            return `https://www.gaiagps.com/map/?loc=14/${this.longitude}/${this.latitude}&layer=GaiaTopoRasterMeters`
+            return `https://www.gaiagps.com/map/?loc=14/${this.longitude}/${this.latitude}`
           }
         },
         {
