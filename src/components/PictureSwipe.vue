@@ -4,7 +4,7 @@
       <draggable v-model="myItems" handle=".handle" @change="dragChange">
         <figure v-for="(item, index) in myItems" :key="item.src">
           <a :href="item.src" :title="item.thumbTitle" @click.prevent="open(index)" @mouseover="$emit('mouseoverPicture', item, index)" @mouseleave="$emit('mouseleavePicture', item, index)">
-            <img :src="item.msrc" />
+            <img :src="item.msrc" :width="thumbSize(item).w" :height="thumbSize(item).h" />
           </a>
           <div class="move-button" v-if="item.editable">
             <b-button class="control handle" size="is-small" icon-left="arrows-alt" title="Drag to reorder"></b-button>
@@ -113,6 +113,19 @@ export default {
       if (event.moved) {
         this.$emit('movePicture', event.moved.newIndex, event.moved.oldIndex, event.element)
       }
+    },
+    thumbSize (item) {
+      let thumbW = item.w
+      let thumbH = item.h
+      if (thumbW > 256) {
+        thumbH = (thumbH * 256) / thumbW
+        thumbW = 256
+      }
+      if (thumbH > 128) {
+        thumbW = (thumbW * 128) / thumbH
+        thumbH = 128
+      }
+      return { w: Math.round(thumbW), h: Math.round(thumbH) }
     }
   },
   data () {

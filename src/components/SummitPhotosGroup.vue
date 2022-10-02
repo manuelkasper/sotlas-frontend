@@ -171,6 +171,7 @@ export default {
 .photos >>> figure img {
   max-height: 128px;
   max-width: 256px;
+  background-color: #e7e7e7;
 }
 >>> .photo-title {
   font-size: 1rem;
