@@ -206,6 +206,7 @@ export default {
   }
   .photos >>> figure img {
     max-height: 104px;
+    width: auto;
   }
   .photo-group {
     padding: 0.25rem 0 0 0.5rem;
