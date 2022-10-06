@@ -44,8 +44,8 @@ export default {
   </metadata>
   <trk>
     <name>${this.escapeHtml(this.route.title)}</name>
-    <src>${this.route.author}</src>
     <desc>${this.escapeHtml(this.route.description)}</desc>
+    <src>${this.route.author}</src>
     <trkseg>
     ${trkpts.join('\n')}
     </trkseg>
