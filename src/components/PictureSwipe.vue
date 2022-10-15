@@ -78,6 +78,14 @@ export default {
       type: Object
     }
   },
+  computed: {
+    thumbMaxW () {
+      return this.$mq.mobile ? 242 : 300
+    },
+    thumbMaxH () {
+      return this.$mq.mobile ? 104 : 128
+    }
+  },
   methods: {
     open (index, disableAnimation = false) {
       let that = this
@@ -117,13 +125,13 @@ export default {
     thumbSize (item) {
       let thumbW = item.w
       let thumbH = item.h
-      if (thumbW > 256) {
-        thumbH = (thumbH * 256) / thumbW
-        thumbW = 256
+      if (thumbW > this.thumbMaxW) {
+        thumbH = (thumbH * this.thumbMaxW) / thumbW
+        thumbW = this.thumbMaxW
       }
-      if (thumbH > 128) {
-        thumbW = (thumbW * 128) / thumbH
-        thumbH = 128
+      if (thumbH > this.thumbMaxH) {
+        thumbW = (thumbW * this.thumbMaxH) / thumbH
+        thumbH = this.thumbMaxH
       }
       return { w: Math.round(thumbW), h: Math.round(thumbH) }
     }

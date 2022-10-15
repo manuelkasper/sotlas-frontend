@@ -170,7 +170,7 @@ export default {
 }
 .photos >>> figure img {
   max-height: 128px;
-  max-width: 256px;
+  max-width: 300px;
   background-color: #e7e7e7;
 }
 >>> .photo-title {
@@ -206,7 +206,7 @@ export default {
   }
   .photos >>> figure img {
     max-height: 104px;
-    width: auto;
+    max-width: 242px;
   }
   .photo-group {
     padding: 0.25rem 0 0 0.5rem;
