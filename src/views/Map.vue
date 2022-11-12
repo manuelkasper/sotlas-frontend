@@ -224,7 +224,7 @@ export default {
     onMapLoaded (event) {
       this.map = event.map
       this.map.touchZoomRotate.disableRotation();
-      ['summits_circles', 'summits_inactive_circles'].forEach(layer => {
+      ['summits_circles_all', 'summits_circles', 'summits_inactive_circles'].forEach(layer => {
         this.map.on('mouseenter', layer, () => {
           if (!this.$refs.draw.isDrawing()) {
             this.map.getCanvas().style.cursor = 'pointer'
@@ -236,6 +236,7 @@ export default {
       })
 
       this.updateLayers(this.map)
+      this.map.setLayoutProperty('summits_circles_all', 'visibility', 'visible')
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -253,7 +254,7 @@ export default {
       // Search for summit circles with some padding/fuzz to make it easier to hit on mobile devices
       let point = event.mapboxEvent.point
       let bbox = [[point.x - this.clickFuzz, point.y - this.clickFuzz], [point.x + this.clickFuzz, point.y + this.clickFuzz]]
-      let features = this.map.queryRenderedFeatures(bbox, { layers: ['summits_circles', 'summits_inactive_circles'] })
+      let features = this.map.queryRenderedFeatures(bbox, { layers: ['summits_circles_all', 'summits_circles', 'summits_inactive_circles'] })
 
       if (features.length === 0) {
         // User probably clicked outside any features; close any controls

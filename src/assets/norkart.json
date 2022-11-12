@@ -137,6 +137,35 @@
       }
     },
     {
+      "id": "summits_circles_all",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "circle-stroke-color": "rgba(255, 255, 255, 1)",
+        "circle-color": [
+          "match",
+          ["get", "points"],
+          [1],
+          "rgba(77, 122, 32, 1)",
+          [2],
+          "rgba(109, 165, 54, 1)",
+          [4],
+          "rgba(174, 167, 39, 1)",
+          [6],
+          "rgba(239, 168, 24, 1)",
+          [8],
+          "rgba(220, 93, 4, 0.5)",
+          [10],
+          "rgba(200, 16, 30, 0.5)",
+          "#000"
+        ],
+        "circle-stroke-width": {"stops": [[4, 0], [15, 1]]},
+        "circle-radius": {"stops": [[0, 0.05], [10, 4], [22, 10]]}
+      }
+    },
+    {
       "id": "summits_circles",
       "type": "circle",
       "source": "summits",
