@@ -249,9 +249,13 @@ export default {
           this.$parent.close()
         })
         .catch(err => {
+          let errorText = err.message
+          if (err.response && err.response.data) {
+            errorText = err.response.data
+          }
           this.$buefy.dialog.alert({
             title: 'Error',
-            message: 'Could not post alert: ' + err.message,
+            message: 'Could not post alert: ' + errorText,
             type: 'is-danger',
             ariaRole: 'alertdialog',
             ariaModal: true
