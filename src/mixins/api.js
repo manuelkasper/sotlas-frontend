@@ -10,6 +10,27 @@ export default {
           return response.data
         })
     },
+    getPersonalData () {
+      return this.axiosAuth.get('https://api.sotl.as/users/me')
+    },
+    postPersonalSettings (key, value) {
+      return this.axiosAuth.post('https://api.sotl.as/users/me/settings', { [key]: value })
+    },
+    getPersonalSummitData (summitCode) {
+      return this.axiosAuth.get('https://api.sotl.as/users/me/summit/' + summitCode)
+    },
+    postPersonalSummitData (summitCode, isBookmarked, notes, tags) {
+      return this.axiosAuth.post('https://api.sotl.as/users/me/summit/' + summitCode, {
+        isBookmarked: isBookmarked,
+        notes: notes,
+        tags: tags })
+    },
+    getPersonalSummitTags () {
+      return this.axiosAuth.get('https://api.sotl.as/users/me/tags')
+    },
+    getPersonalSummitsFromTag (tagName) {
+      return this.axiosAuth.get('https://api.sotl.as/users/me/summits/tags', { params: { q: tagName } })
+    },
     uploadPhoto (summitCode, file, progress, cancelToken) {
       let formData = new FormData()
       formData.append('photo', file)

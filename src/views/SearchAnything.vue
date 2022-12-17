@@ -4,7 +4,7 @@
     <template>
       <section v-if="summits !== null && summits.length > 0" class="section">
         <div class="container">
-          <h4 class="title is-4"><b-icon icon="mountains" />Summits</h4>
+          <h4 class="title is-4"><b-icon icon="mountains" />Summits<span v-if="tagSearch"> tagged with <font-awesome-icon :icon="['far', 'tag']" class="faicon" /> {{ this.tagSearch }}</span></h4>
           <b-field v-if="inactiveCount > 0" grouped>
             <b-switch v-model="showInactive">Show inactive ({{ inactiveCount }})</b-switch>
           </b-field>
@@ -50,10 +50,28 @@
         </div>
       </section>
 
+      <section v-if="userTags !== null && userTags.length > 0" class="section">
+        <div class="container">
+          <h4 class="title is-4"><b-icon icon="tag" />User Tags</h4>
+
+          <b-table class="auto-width" default-sort="tag" :narrowed="true" :striped="true" :data="userTags" :mobile-cards="false">
+            <template slot-scope="props">
+              <b-table-column field="tag" label="User Tag" class="nowrap" sortable>
+                <font-awesome-icon :icon="['far', 'tag']" class="faicon" />
+                <router-link :to="'/search?q=@' + encodeURIComponent(props.row.tag)">{{ props.row.tag }}</router-link>
+              </b-table-column>
+              <b-table-column field="count" :label="Count" numeric sortable>
+                {{ props.row.count }}
+              </b-table-column>
+            </template>
+          </b-table>
+        </div>
+      </section>
+
       <section class="section">
         <div class="container">
-          <b-message v-if="activators !== null && activators.length === 0 && summits !== null && summits.length === 0" type="is-info" has-icon>
-            No matching summits or activators for '{{ $route.query.q }}' found.
+          <b-message v-if="activators !== null && activators.length === 0 && summits !== null && summits.length === 0 && userTags !== null && userTags.length === 0" type="is-info" has-icon>
+            No matching summits, activators or user tags for '{{ $route.query.q }}' found.
           </b-message>
         </div>
       </section>
@@ -68,16 +86,51 @@ import utils from '../mixins/utils.js'
 
 import PageLayout from '../components/PageLayout.vue'
 import SummitList from '../components/SummitList.vue'
+import api from '@/mixins/api'
 
 export default {
   name: 'SearchAnything',
   components: { PageLayout, SummitList },
-  mixins: [utils],
+  mixins: [utils, api],
   methods: {
     doSearch () {
       let loads = []
       let q = this.$route.query.q.trim()
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
+
+      if (q.startsWith('@') && this.authenticated) {
+        this.tagSearch = q.substring(1)
+        loads.push(this.getPersonalSummitsFromTag(this.tagSearch)
+          .then(response => {
+            response.data.forEach(summit => {
+              summit.isValid = true
+            })
+            this.summits = response.data
+            return this.loadingComponent.close()
+          }))
+      } else {
+        this.tagSearch = null
+        loads.push(axios.get('https://api.sotl.as/summits/search', { params: { q, limit: this.limit } })
+          .then(response => {
+            let now = moment()
+            response.data.forEach(summit => {
+              summit.isValid = (moment(summit.validFrom).isBefore(now) && moment(summit.validTo).isAfter(now))
+            })
+            this.summits = response.data
+          }))
+      }
+
+      if (this.authenticated) {
+        loads.push(this.getPersonalSummitTags()
+          .then(response => {
+            this.userTags = response.data.filter(tag => {
+              return tag.tag.toLowerCase().includes(q.toLowerCase())
+            })
+          }))
+      } else {
+        this.userTags = []
+      }
+
       loads.push(axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q, limit: this.limit } })
         .then(response => {
           this.activators = response.data.activators
@@ -138,6 +191,8 @@ export default {
       activators: null,
       limit: 100,
       summits: null,
+      userTags: null,
+      tagSearch: null,
       showInactive: false
     }
   }
@@ -172,5 +227,13 @@ export default {
 }
 .message.is-warning {
   margin-top: 1rem;
+}
+.faicon {
+  margin-right: 0.5em;
+}
+.title .faicon {
+  opacity: 0.5;
+  margin-left: 0.3em;
+  margin-right: 0;
 }
 </style>

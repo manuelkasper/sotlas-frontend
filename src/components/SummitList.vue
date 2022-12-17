@@ -1,5 +1,5 @@
 <template>
-  <b-table :class="{ 'auto-width': autoWidth, summits: true }" default-sort="code" :narrowed="true" :striped="true" :data="data" :mobile-cards="false" :row-class="(row, index) => !row.isValid && 'is-invalid'">
+  <b-table :class="{ 'auto-width': autoWidth, summits: true }" default-sort="code" :narrowed="true" :striped="true" :data="data" :mobile-cards="false" :row-class="(row, index) => !row.isValid && !ignoreValidity ? 'is-invalid' : ''">
     <template slot-scope="props">
       <b-table-column field="code" label="Code" class="nowrap" sortable>
         <router-link :to="makeSummitLink(props.row.code)">{{ props.row.code }}</router-link>
@@ -44,7 +44,8 @@ export default {
     myActivatedSummits: Set,
     myActivatedSummitsThisYear: Set,
     myChasedSummits: Set,
-    autoWidth: Boolean
+    autoWidth: Boolean,
+    ignoreValidity: Boolean
   },
   mixins: [utils],
   components: {
