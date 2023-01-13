@@ -1,7 +1,7 @@
 <template>
   <b-table :class="{ 'auto-width': autoWidth, summits: true }" default-sort="code" :narrowed="true" :striped="true" :data="data" :mobile-cards="false" :row-class="(row, index) => !row.isValid && 'is-invalid'">
     <template slot-scope="props">
-      <b-table-column field="code" label="Code" class="nowrap" sortable>
+      <b-table-column field="code" label="Reference" class="nowrap" sortable>
         <router-link :to="makeSummitLink(props.row.code)">{{ props.row.code }}</router-link>
       </b-table-column>
       <b-table-column field="name" label="Name" class="summit-name" sortable>

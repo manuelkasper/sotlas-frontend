@@ -32,12 +32,12 @@
         <b-table-column field="mode" label="Mode" sortable>
           <ModeLabel :mode="props.row.mode" />
         </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit code" class="nowrap" sortable>
+        <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable>
           <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
           <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
           <span v-else>{{ props.row.summit.code }}</span>
         </b-table-column>
-        <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit name" sortable>
+        <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit Name" sortable>
           <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
         </b-table-column>
         <b-table-column v-if="showSummitInfo" field="summit.altitude" label="Altitude" sortable numeric>
@@ -49,7 +49,7 @@
         <b-table-column v-if="showSummitInfo" field="summit.activationCount" label="Act." sortable numeric>
           <ActivationCount :activationCount="props.row.summit.activationCount" />
         </b-table-column>
-        <b-table-column field="callsign" label="Posted by" sortable>
+        <b-table-column field="callsign" label="Posted By" sortable>
           {{ props.row.callsign }}
         </b-table-column>
         <b-table-column field="comments" class="comments" label="Comments">

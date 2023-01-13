@@ -13,7 +13,7 @@
         </b-field>
         <b-table class="auto-width" default-sort="code" :narrowed="true" :striped="true" :data="filteredAssociations" :mobile-cards="false">
           <template slot-scope="props">
-            <b-table-column field="code" label="Code" class="nowrap" sortable>
+            <b-table-column field="code" label="Identifier" class="nowrap" sortable>
               <router-link :to="associationLink(props.row)">{{ props.row.code }}</router-link>
             </b-table-column>
             <b-table-column field="name" label="Name" sortable>
