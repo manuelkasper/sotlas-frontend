@@ -419,6 +419,12 @@ export default {
           }
         },
         {
+          name: 'Peakbagger.com',
+          url: () => {
+            return `https://peakbagger.com/search.aspx?tid=R&lat=${this.latitude}&lon=${this.longitude}&ss=`
+          }
+        },
+        {
           name: 'SOTA Summits',
           url: () => {
             if (this.reference) {
