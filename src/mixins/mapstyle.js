@@ -104,6 +104,7 @@ export default {
         'swisstopo': 'swisstopo (Vector)',
         'swisstopo_raster': 'swisstopo (Raster)',
         'swisstopo_aerial': 'swisstopo (Aerial)',
+        'caltopo': 'CalTopo',
         'toposvalbard': 'TopoSvalbard',
         'norkart': 'Norkart'
       },

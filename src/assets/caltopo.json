@@ -1,0 +1,353 @@
+{
+  "version": 8,
+  "name": "caltopo",
+  "metadata": {"maputnik:renderer": "mbgljs", "openmaptiles:version": "3.x"},
+  "center": [-110.0, 47.0],
+  "zoom": 2.5,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "caltopo": {
+      "type": "raster",
+      "tiles": [
+        "https://s3-us-west-1.amazonaws.com/caltopo/topo/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16,
+      "bounds": [-175, 8, -45, 84],
+      "attribution": "© CalTopo"
+    },
+    "summits": {
+      "type": "vector",
+      "url": "https://1.{mapServer}.map.sotl.as/data/summits.json"
+    },
+    "summits_inactive": {
+      "type": "vector",
+      "url": "https://1.{mapServer}.map.sotl.as/data/summits_inactive.json"
+    },
+    "regions": {
+      "type": "vector",
+      "url": "https://1.{mapServer}.map.sotl.as/data/regions.json"
+    },
+    "az": {
+      "type": "vector",
+      "url": "https://1.{mapServer}.map.sotl.as/data/az.json"
+    }
+  },
+  "sprite": "https://sotl.as/sprites",
+  "glyphs": "https://0.{mapServer}.map.sotl.as/fonts/{fontstack}/{range}.pbf",
+  "transition": {},
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "layout": {"visibility": "visible"},
+      "paint": {"background-color": "rgba(255, 255, 255, 1)"}
+    },
+    {
+      "id": "caltopo",
+      "type": "raster",
+      "source": "caltopo",
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "raster-opacity": 0.75,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "summits_az",
+      "type": "fill",
+      "metadata": {
+        "sotlas-map-option": "az"
+      },
+      "source": "az",
+      "source-layer": "az",
+      "layout": {"visibility": "none"},
+      "minzoom": 12,
+      "paint": {
+        "fill-antialias": false,
+        "fill-color": "rgba(255, 255, 0, 1)",
+        "fill-opacity": {"stops": [[12, 0], [12.5, 0.5]]}
+      }
+    },
+    {
+      "id": "summits_az_border",
+      "type": "line",
+      "metadata": {
+        "sotlas-map-option": "az"
+      },
+      "source": "az",
+      "source-layer": "az",
+      "layout": {"visibility": "none"},
+      "minzoom": 12,
+      "paint": {
+        "line-color": "rgba(235, 196, 0, 1)",
+        "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
+        "line-width": {"stops": [[12, 1], [16, 3]]}
+      }
+    },
+    {
+      "id": "summits_selected",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(2, 153, 243, 1)",
+        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-opacity": 0.75,
+        "circle-stroke-color": "rgba(210, 255, 0, 0.05)",
+        "circle-stroke-width": 0,
+        "circle-stroke-opacity": 1,
+        "circle-blur": 0.7
+      }
+    },
+    {
+      "id": "summits_names",
+      "type": "symbol",
+      "source": "summits",
+      "source-layer": "summits",
+      "minzoom": 10,
+      "maxzoom": 24,
+      "filter": ["all", ["in", "code"]],
+      "layout": {
+        "visibility": "visible",
+        "text-field": "{name}\n{code}\n{alt} m",
+        "text-size": {"stops": [[10, 10], [20, 16]]},
+        "text-font": ["Frutiger Neue Regular"],
+        "text-anchor": "bottom",
+        "text-offset": {"stops": [[10, [0, -1]], [20, [0, -2]]]},
+        "icon-size": 1,
+        "symbol-spacing": 250,
+        "symbol-avoid-edges": false,
+        "text-keep-upright": true,
+        "text-transform": "none",
+        "text-optional": false,
+        "text-allow-overlap": {"stops": [[18, false], [19, true]]},
+        "text-ignore-placement": false,
+        "text-justify": "center",
+        "text-rotate": 0
+      },
+      "paint": {
+        "text-color": "rgba(51, 51, 51, 1)",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "summits_circles_all",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "circle-stroke-color": "rgba(255, 255, 255, 1)",
+        "circle-color": [
+          "match",
+          ["get", "points"],
+          [1],
+          "rgba(77, 122, 32, 0.5)",
+          [2],
+          "rgba(109, 165, 54, 0.5)",
+          [4],
+          "rgba(174, 167, 39, 0.5)",
+          [6],
+          "rgba(239, 168, 24, 0.5)",
+          [8],
+          "rgba(220, 93, 4, 0.5)",
+          [10],
+          "rgba(200, 16, 30, 0.5)",
+          "#000"
+        ],
+        "circle-stroke-width": {"stops": [[4, 0], [15, 1]]},
+        "circle-radius": {"stops": [[0, 0.05], [10, 2.5], [22, 12]]}
+      }
+    },
+    {
+      "id": "summits_circles",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-stroke-color": "rgba(255, 255, 255, 1)",
+        "circle-color": [
+          "match",
+          ["get", "points"],
+          [1],
+          "rgba(77, 122, 32, 1)",
+          [2],
+          "rgba(109, 165, 54, 1)",
+          [4],
+          "rgba(174, 167, 39, 1)",
+          [6],
+          "rgba(239, 168, 24, 1)",
+          [8],
+          "rgba(220, 93, 4, 1)",
+          [10],
+          "rgba(200, 16, 30, 1)",
+          "#000"
+        ],
+        "circle-stroke-width": {"stops": [[4, 0], [15, 2]]},
+        "circle-radius": {"stops": [[0, 0.1], [10, 8], [22, 20]]}
+      }
+    },
+    {
+      "id": "summits_activations",
+      "type": "symbol",
+      "source": "summits",
+      "source-layer": "summits",
+      "minzoom": 10,
+      "maxzoom": 24,
+      "filter": ["all", ["in", "code"]],
+      "layout": {
+        "text-field": "{act}",
+        "text-font": ["Frutiger Neue Bold"],
+        "text-size": {"stops": [[10, 8], [20, 16]]},
+        "text-offset": [0,0.1]
+      },
+      "paint": {"text-color": "rgba(255, 255, 255, 1)"}
+    },
+    {
+      "id": "summits_highlight",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(2, 243, 198, 1)",
+        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-opacity": 0.75,
+        "circle-blur": 0.7
+      }
+    },
+    {
+      "id": "summits_highlight_alerts",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(210, 255, 0, 1)",
+        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-opacity": 0.55,
+        "circle-blur": 0.7
+      }
+    },
+    {
+      "id": "summits_inactive_names",
+      "type": "symbol",
+      "metadata": {
+        "sotlas-map-option": "inactive"
+      },
+      "source": "summits_inactive",
+      "source-layer": "summits_inactive",
+      "minzoom": 10,
+      "maxzoom": 24,
+      "filter": ["all", ["in", "code"]],
+      "layout": {
+        "visibility": "none",
+        "text-field": "{name}\n{code}\n{alt} m\n(inactive)",
+        "text-size": {"stops": [[10, 10], [20, 16]]},
+        "text-font": ["Frutiger Neue Regular"],
+        "text-anchor": "bottom",
+        "text-offset": {"stops": [[10, [0, -1]], [20, [0, -2]]]},
+        "icon-size": 1,
+        "symbol-spacing": 250,
+        "symbol-avoid-edges": false,
+        "text-keep-upright": true,
+        "text-transform": "none",
+        "text-optional": false,
+        "text-allow-overlap": {"stops": [[18, false], [19, true]]},
+        "text-ignore-placement": false,
+        "text-justify": "center",
+        "text-rotate": 0
+      },
+      "paint": {
+        "text-color": "rgba(51, 51, 51, 1)",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1,
+        "text-opacity": 1
+      }
+    },
+    {
+      "id": "summits_inactive_circles",
+      "type": "circle",
+      "metadata": {
+        "sotlas-map-option": "inactive"
+      },
+      "source": "summits_inactive",
+      "source-layer": "summits_inactive",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "none"},
+      "paint": {
+        "circle-stroke-color": "rgba(255, 255, 255, 1)",
+        "circle-color": [
+          "match",
+          ["get", "points"],
+          [1],
+          "rgba(77, 122, 32, 0.5)",
+          [2],
+          "rgba(109, 165, 54, 0.5)",
+          [4],
+          "rgba(174, 167, 39, 0.5)",
+          [6],
+          "rgba(239, 168, 24, 0.5)",
+          [8],
+          "rgba(220, 93, 4, 0.5)",
+          [10],
+          "rgba(200, 16, 30, 0.5)",
+          "#000"
+        ],
+        "circle-stroke-width": {"stops": [[4, 0], [15, 2]]},
+        "circle-radius": {"stops": [[0, 0.1], [10, 8], [22, 20]]}
+      }
+    },
+    {
+      "id": "regions_areas",
+      "type": "fill",
+      "metadata": {
+        "sotlas-map-option": "regions"
+      },
+      "source": "regions",
+      "source-layer": "areas",
+      "minzoom": 0,
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-opacity": 0.1,
+        "fill-antialias": false,
+        "fill-color": "rgba(0, 0, 0, 1)"
+      }
+    },
+    {
+      "id": "regions_labels",
+      "type": "symbol",
+      "metadata": {
+        "sotlas-map-option": "regions"
+      },
+      "source": "regions",
+      "source-layer": "labels",
+      "layout": {
+        "visibility": "none",
+        "text-field": "{region}",
+        "text-anchor": "top-left",
+        "text-justify": "center",
+        "text-offset": [0.3, 0.3],
+        "text-font": ["Frutiger Neue Regular"],
+        "text-size": {"stops": [[6, 8], [10, 16]]}
+      },
+      "paint": {
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 1,
+        "text-translate": [0, 0]
+      }
+    }
+  ]
+}

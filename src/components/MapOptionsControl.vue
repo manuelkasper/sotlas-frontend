@@ -28,7 +28,7 @@
           </b-checkbox>
         </b-field>
       </div>
-      <div class="map-option" v-if="mapType !== 'toposvalbard' && mapType !== 'norkart'">
+      <div class="map-option" v-if="mapType !== 'toposvalbard' && mapType !== 'norkart' && mapType !== 'caltopo'">
         <b-field grouped>
           <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
         </b-field>
