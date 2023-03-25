@@ -62,7 +62,7 @@
             <SummitAttributes :attributes="summit.attributes" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources<span class="add-article">(<a :href="addArticleLink">+ Article</a>)</span></h6>
+              <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled">+ Article</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -592,5 +592,9 @@ export default {
   font-weight: normal;
   font-size: 90%;
   margin-left: 0.5em;
+}
+.add-article .disabled {
+  color: #b5b5b5;
+  cursor: not-allowed;
 }
 </style>
