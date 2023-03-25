@@ -62,7 +62,7 @@
             <SummitAttributes :attributes="summit.attributes" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources</h6>
+              <h6 class="title is-6">Resources<span class="add-article">(<a :href="addArticleLink">+ Article</a>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -309,6 +309,9 @@ export default {
         }
       })
       return videos
+    },
+    addArticleLink () {
+      return 'https://summits.sota.org.uk/article/new/' + this.summit.code
     }
   },
   watch: {
@@ -584,5 +587,10 @@ export default {
 }
 .uploader-placeholder .fa-images {
   margin-right: 0.5em;
+}
+.add-article {
+  font-weight: normal;
+  font-size: 90%;
+  margin-left: 0.5em;
 }
 </style>
