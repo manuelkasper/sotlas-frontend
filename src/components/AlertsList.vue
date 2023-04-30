@@ -183,7 +183,7 @@ export default {
             .catch(err => {
               this.$buefy.dialog.alert({
                 title: 'Error',
-                message: 'Could not delete spot: ' + err.message,
+                message: 'Could not delete alert: ' + err.message,
                 type: 'is-danger',
                 ariaRole: 'alertdialog',
                 ariaModal: true
