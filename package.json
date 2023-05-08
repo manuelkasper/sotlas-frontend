@@ -3,13 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "export SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "prebuild": "vsvg -s ./svg-icons -t ./src/compiled-icons",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons",
-    "deploy": "gzip -fk9 dist/js/*.js dist/css/*.css && rsync -av dist/* root@vs5.ksys.ch:/data/www",
-    "deploy:beta": "gzip -fk9 dist/js/*.js dist/css/*.css && rsync -av --delete dist/* root@vs5.ksys.ch:/data/www/beta"
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
+    "lint": "export SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
+    "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
   },
   "dependencies": {
     "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#sotlas",

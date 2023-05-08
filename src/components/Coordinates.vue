@@ -129,7 +129,8 @@ export default {
           name: 'IGN',
           url: () => {
             if (this.reference && this.reference.match('^(EA[1-9]|ZB2)/')) {
-              return `https://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
+              let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
+              return `https://componentes.cnig.es/api-core/?center=${p[0]},${p[1]}&zoom=16&controls=scale*true&plugins=toc,zoompanel,measurebar,mousesrs&layers=WMTS*https://www.ign.es/wmts/mapa-raster?*MTN*GoogleMapsCompatible*Map*false*image/jpeg*false*false*true&projection=EPSG:3857*m`
             }
           }
         },
