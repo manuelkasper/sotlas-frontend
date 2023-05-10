@@ -23,6 +23,7 @@ Vue.use(Router)
 
 let router = new Router({
   mode: 'history',
+  base: process.env.PUBLIC_PATH ?? '/',
   routes: [
     {
       path: '/',
