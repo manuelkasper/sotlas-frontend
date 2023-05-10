@@ -16,7 +16,7 @@ export default {
   name: 'Footer',
   computed: {
     version () {
-      return VERSION + '-' + COMMITHASH.substring(0, 7)
+      return 'Build ' + COMMITHASH.substring(0, 7) + ' (' + BRANCH + ')'
     }
   }
 }

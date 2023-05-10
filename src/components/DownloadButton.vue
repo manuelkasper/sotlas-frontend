@@ -7,9 +7,9 @@
       <b-dropdown-item has-link><a :href="makeUrlForType('geojson')">GeoJSON file</a></b-dropdown-item>
       <b-dropdown-item separator />
       <b-dropdown-item custom disabled><b>Label options</b></b-dropdown-item>
-      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="name">Summit name</b-checkbox></b-dropdown-item>
-      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="altitude">Summit altitude</b-checkbox></b-dropdown-item>
-      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="points">Summit points</b-checkbox></b-dropdown-item>
+      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="name">Summit Name</b-checkbox></b-dropdown-item>
+      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="altitude">Summit Altitude</b-checkbox></b-dropdown-item>
+      <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="points">Summit Points</b-checkbox></b-dropdown-item>
     </b-dropdown>
   </div>
 </template>

@@ -20,7 +20,7 @@
         </div>
       </MglPopup>
 
-      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" @close="onPopupClosed" />
+      <SummitPopup v-if="summit" :summit="summit" :lastSpot="lastSummitSpot" :nextAlert="nextSummitAlert" @close="onPopupClosed" />
 
       <MapRoute v-for="route in persistentRoutes" :key="route.id" :route="route" />
 
@@ -101,7 +101,7 @@ export default {
         } catch (e) {}
         this.showMap = true
       } else {
-        axios.get('https://api.sotl.as/my_coordinates')
+        axios.get(process.env.VUE_APP_API_URL + '/my_coordinates')
           .then(response => {
             if (response.data.latitude && response.data.longitude) {
               this.center = [response.data.longitude, response.data.latitude]
@@ -194,6 +194,28 @@ export default {
         return null
       }
     },
+    nextSummitAlert () {
+      if (!this.summit) {
+        return null
+      }
+
+      let alerts = this.$store.state.alerts.filter(alert => {
+        return (alert.summit.code === this.summit.code)
+      }).sort((a, b) => {
+        if (a.dateActivated > b.dateActivated) {
+          return 1
+        } else if (a.dateActivated < b.dateActivated) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+      if (alerts.length > 0) {
+        return alerts[0]
+      } else {
+        return null
+      }
+    },
     mapOptions () {
       return this.$store.state.mapOptions
     }
@@ -202,7 +224,7 @@ export default {
     onMapLoaded (event) {
       this.map = event.map
       this.map.touchZoomRotate.disableRotation();
-      ['summits_circles', 'summits_inactive_circles'].forEach(layer => {
+      ['summits_circles_all', 'summits_circles', 'summits_inactive_circles'].forEach(layer => {
         this.map.on('mouseenter', layer, () => {
           if (!this.$refs.draw.isDrawing()) {
             this.map.getCanvas().style.cursor = 'pointer'
@@ -214,6 +236,7 @@ export default {
       })
 
       this.updateLayers(this.map)
+      this.map.setLayoutProperty('summits_circles_all', 'visibility', 'visible')
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -231,7 +254,7 @@ export default {
       // Search for summit circles with some padding/fuzz to make it easier to hit on mobile devices
       let point = event.mapboxEvent.point
       let bbox = [[point.x - this.clickFuzz, point.y - this.clickFuzz], [point.x + this.clickFuzz, point.y + this.clickFuzz]]
-      let features = this.map.queryRenderedFeatures(bbox, { layers: ['summits_circles', 'summits_inactive_circles'] })
+      let features = this.map.queryRenderedFeatures(bbox, { layers: ['summits_circles_all', 'summits_circles', 'summits_inactive_circles'] })
 
       if (features.length === 0) {
         // User probably clicked outside any features; close any controls
@@ -324,7 +347,7 @@ export default {
         })
     },
     fetchSummit (summitCode) {
-      return axios.get('https://api.sotl.as/summits/' + summitCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/summits/' + summitCode)
         .then(response => {
           let summit = response.data
           summit.photo = null
@@ -332,7 +355,7 @@ export default {
         })
     },
     fetchAssociation (associationCode) {
-      return axios.get('https://api.sotl.as/associations/' + associationCode)
+      return axios.get(process.env.VUE_APP_API_URL + '/associations/' + associationCode)
         .then(response => {
           return response.data
         })

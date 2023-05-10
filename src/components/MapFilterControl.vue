@@ -138,7 +138,7 @@ export default {
       let filterPromises = []
 
       if (this.activationsEnabled) {
-        if (this.activationsFrom && this.activationsTo && this.activationsTo < this.activationsFrom) {
+        if (this.activationsFrom && this.activationsTo && parseInt(this.activationsTo) < parseInt(this.activationsFrom)) {
           let tmp = this.activationsFrom
           this.activationsFrom = this.activationsTo
           this.activationsTo = tmp
@@ -152,7 +152,7 @@ export default {
       }
 
       if (this.pointsEnabled) {
-        if (this.pointsFrom && this.pointsTo && this.pointsTo < this.pointsFrom) {
+        if (this.pointsFrom && this.pointsTo && parseInt(this.pointsTo) < parseInt(this.pointsFrom)) {
           let tmp = this.pointsFrom
           this.pointsFrom = this.pointsTo
           this.pointsTo = tmp
@@ -172,7 +172,7 @@ export default {
         if (this.altitudeTo) {
           this.altitudeTo = parseInt(this.altitudeTo)
         }
-        if (this.altitudeFrom && this.altitudeTo && this.altitudeTo < this.altitudeFrom) {
+        if (this.altitudeFrom && this.altitudeTo && parseInt(this.altitudeTo) < parseInt(this.altitudeFrom)) {
           let tmp = this.altitudeFrom
           this.altitudeFrom = this.altitudeTo
           this.altitudeTo = tmp

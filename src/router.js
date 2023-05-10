@@ -17,11 +17,13 @@ import SotaSpots from './views/SotaSpots.vue'
 import RBNSpots from './views/RBNSpots.vue'
 import Alerts from './views/Alerts.vue'
 import NewPhotos from './views/NewPhotos.vue'
+import SolarHistory from './views/SolarHistory.vue'
 
 Vue.use(Router)
 
 let router = new Router({
   mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -166,6 +168,10 @@ let router = new Router({
     {
       path: '/new_photos',
       component: NewPhotos
+    },
+    {
+      path: '/solar_history',
+      component: SolarHistory
     },
     {
       path: '*',

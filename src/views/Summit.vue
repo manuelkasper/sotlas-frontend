@@ -62,7 +62,7 @@
             <SummitAttributes :attributes="summit.attributes" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources</h6>
+              <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled">+ Article</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -309,6 +309,9 @@ export default {
         }
       })
       return videos
+    },
+    addArticleLink () {
+      return 'https://summits.sota.org.uk/article/new/' + this.summit.code
     }
   },
   watch: {
@@ -344,10 +347,10 @@ export default {
         }
 
         // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-        axios.post('https://api.sotl.as/summits/' + this.summitCode)
+        axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
       }
 
-      loads.push(axios.get('https://api.sotl.as/summits/' + this.summitCode, options)
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, options)
         .then(response => {
           this.summit = response.data
           document.title = this.summit.name + ' (' + this.summit.code + ') - SOTLAS'
@@ -358,7 +361,7 @@ export default {
           }
         }))
 
-      loads.push(axios.get('https://api.sotl.as/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
+      loads.push(axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.summitCode.substr(0, this.summitCode.indexOf('/')))
         .then(response => {
           this.association = response.data
         }))
@@ -397,9 +400,9 @@ export default {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: false })
 
       // Make a dummy POST to the summit URL to invalidate the browser's cache for future page loads
-      axios.post('https://api.sotl.as/summits/' + this.summitCode)
+      axios.post(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
 
-      axios.get('https://api.sotl.as/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
+      axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode, { params: { t: new Date().getTime() } })
         .then(response => {
           this.summit = response.data
         })
@@ -415,9 +418,21 @@ export default {
     },
     routeDetailsOpen (route) {
       this.$set(route, 'highlight', true)
+      this.routes.forEach(curRoute => {
+        if (curRoute.highlight !== true) {
+          this.$set(curRoute, 'highlight', false)
+        }
+      })
     },
     routeDetailsClose (route) {
       this.$set(route, 'highlight', false)
+
+      // If all route highlights are false, set them all to null
+      if (this.routes.every(curRoute => curRoute.highlight === false)) {
+        this.routes.forEach(curRoute => {
+          this.$set(curRoute, 'highlight', null)
+        })
+      }
     },
     mapReposition (coordinates) {
       if (coordinates) {
@@ -459,7 +474,7 @@ export default {
 }
 @media (min-width: 769px) {
   .map.enlarge {
-    height: calc(100vh - 20rem);
+    height: calc(100vh - 16rem);
   }
 }
 @media (max-width: 768px) {
@@ -572,5 +587,14 @@ export default {
 }
 .uploader-placeholder .fa-images {
   margin-right: 0.5em;
+}
+.add-article {
+  font-weight: normal;
+  font-size: 90%;
+  margin-left: 0.5em;
+}
+.add-article .disabled {
+  color: #b5b5b5;
+  cursor: not-allowed;
 }
 </style>

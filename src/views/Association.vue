@@ -16,7 +16,7 @@
         <div class="columns">
           <div class="column">
             <b-table default-sort="code" :narrowed="true" :striped="true" :data="filteredRegions" :mobile-cards="false">
-              <b-table-column field="code" label="Code" class="nowrap" sortable v-slot="props">
+              <b-table-column field="code" label="Identifier" class="nowrap" sortable v-slot="props">
                 <router-link :to="regionLink(props.row)">{{ props.row.code }}</router-link>
               </b-table-column>
               <b-table-column field="name" label="Name" sortable v-slot="props">
@@ -77,7 +77,7 @@ export default {
     },
     loadAssociation () {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-      axios.get('https://api.sotl.as/associations/' + this.associationCode)
+      axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.associationCode)
         .then(response => {
           this.association = response.data
           document.title = this.association.name + ' (' + this.associationCode + ') - SOTLAS'
@@ -102,7 +102,7 @@ export default {
       })
     },
     exportUrlPrefix () {
-      return `https://api.sotl.as/geoexport/associations/${this.associationCode}`
+      return process.env.VUE_APP_API_URL + '/geoexport/associations/' + this.associationCode
     },
     myActivationsPerRegion () {
       if (!this.$store.state.myActivatedSummits) {

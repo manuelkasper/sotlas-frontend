@@ -284,10 +284,15 @@ export default {
       // Some padding
       let latDiff = maxLat - minLat
       let lonDiff = maxLon - minLon
-      minLat -= (latDiff * 0.1)
-      maxLat += (latDiff * 0.1)
-      minLon -= (lonDiff * 0.1)
-      maxLon += (lonDiff * 0.1)
+      minLat -= (latDiff * 0.05)
+      maxLat += (latDiff * 0.05)
+      minLon -= (lonDiff * 0.05)
+      maxLon += (lonDiff * 0.05)
+
+      minLat = Math.max(Math.min(minLat, 90), -90)
+      maxLat = Math.max(Math.min(maxLat, 90), -90)
+      minLon = Math.max(Math.min(minLon, 180), -180)
+      maxLon = Math.max(Math.min(maxLon, 180), -180)
 
       return [[minLon, minLat], [maxLon, maxLat]]
     },
@@ -335,7 +340,7 @@ export default {
       this.databaseError = false
 
       let loads = []
-      axios.get('https://api.sotl.as/activators/' + this.callsign)
+      axios.get(process.env.VUE_APP_API_URL + '/activators/' + this.callsign)
         .then(response => {
           if (response) {
             this.activator = response.data

@@ -13,13 +13,25 @@ import axios from 'axios'
 export default {
   name: 'SwisstopoInfo',
   mounted () {
-    // Check if we are in Switzerland
-    axios.get('https://api.sotl.as/my_country')
-      .then(response => {
-        if (response.data.country === 'CH') {
-          this.inSwitzerland = true
-        }
-      })
+    if (!localStorage.getItem('swisstopoInfoShown')) {
+      // Check if we are in Switzerland
+      axios.get(process.env.VUE_APP_API_URL + '/my_country')
+        .then(response => {
+          if (response.data.country === 'CH') {
+            this.active = true
+          }
+        })
+    }
+  },
+  methods: {
+    cancelInfo () {
+      this.active = false
+      localStorage.setItem('swisstopoInfoShown', true)
+    },
+    switchMap () {
+      this.cancelInfo()
+      this.$store.commit('setMapType', 'swisstopo')
+    }
   },
   data () {
     return {

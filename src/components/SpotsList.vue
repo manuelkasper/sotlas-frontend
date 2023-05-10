@@ -31,12 +31,12 @@
       <b-table-column field="mode" label="Mode" sortable v-slot="props">
         <ModeLabel :mode="props.row.mode" />
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit code" class="nowrap" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
         <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
         <span v-else>{{ props.row.summit.code }}</span>
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit name" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit Name" sortable v-slot="props">
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
       </b-table-column>
       <b-table-column v-if="showSummitInfo" field="summit.altitude" label="Altitude" sortable numeric v-slot="props">
@@ -48,7 +48,7 @@
       <b-table-column v-if="showSummitInfo" field="summit.activationCount" label="Act." sortable numeric v-slot="props">
         <ActivationCount :activationCount="props.row.summit.activationCount" />
       </b-table-column>
-      <b-table-column field="callsign" label="Posted by" sortable v-slot="props">
+      <b-table-column field="callsign" label="Posted By" sortable v-slot="props">
         {{ props.row.callsign }}
       </b-table-column>
       <b-table-column field="comments" class="comments" label="Comments" v-slot="props">
@@ -189,6 +189,15 @@ export default {
           this.deleteSotaWatchSpot(spot.id)
             .then(response => {
               this.$store.commit('deleteSpot', spot)
+            })
+            .catch(err => {
+              this.$buefy.dialog.alert({
+                title: 'Error',
+                message: 'Could not delete spot: ' + err.message,
+                type: 'is-danger',
+                ariaRole: 'alertdialog',
+                ariaModal: true
+              })
             })
         }
       })

@@ -200,7 +200,7 @@ function loadAlerts (noCache) {
   if (noCache) {
     params.noCache = 1
   }
-  axios.get('https://api.sotl.as/alerts', { params })
+  axios.get(process.env.VUE_APP_API_URL + '/alerts', { params })
     .then(response => {
       store.commit('setAlerts', response.data)
     })
@@ -209,7 +209,7 @@ function loadAlerts (noCache) {
 loadAlerts(false)
 setInterval(loadAlerts, ALERT_UPDATE_INTERVAL)
 
-Vue.use(VueNativeSock, 'wss://api.sotl.as/ws', {
+Vue.use(VueNativeSock, process.env.VUE_APP_WSS_URL + '/ws', {
   format: 'json',
   store,
   reconnection: true,

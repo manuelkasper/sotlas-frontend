@@ -28,17 +28,20 @@ export default {
   },
   mounted () {
     if (this.homeQth === null) {
-      this.$keycloak.loadUserProfile()
-        .success(profile => {
-          if (profile.attributes.Lat && profile.attributes.Lat[0] && profile.attributes.Lon && profile.attributes.Lon[0]) {
-            this.$store.commit('setHomeQth', {
-              latitude: parseFloat(profile.attributes.Lat[0]),
-              longitude: parseFloat(profile.attributes.Lon[0])
+      this.$keycloak.updateToken(60)
+        .success(() => {
+          this.$keycloak.loadUserProfile()
+            .success(profile => {
+              if (profile.attributes.Lat && profile.attributes.Lat[0] && profile.attributes.Lon && profile.attributes.Lon[0]) {
+                this.$store.commit('setHomeQth', {
+                  latitude: parseFloat(profile.attributes.Lat[0]),
+                  longitude: parseFloat(profile.attributes.Lon[0])
+                })
+                this.calculate()
+              } else {
+                this.$store.commit('setHomeQth', undefined)
+              }
             })
-            this.calculate()
-          } else {
-            this.$store.commit('setHomeQth', undefined)
-          }
         })
     } else {
       this.calculate()

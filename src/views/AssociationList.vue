@@ -12,7 +12,7 @@
           <FilterInput v-model="filter" ref="filter" />
         </b-field>
         <b-table class="auto-width" default-sort="code" :narrowed="true" :striped="true" :data="filteredAssociations" :mobile-cards="false">
-          <b-table-column field="code" label="Code" class="nowrap" sortable v-slot="props">
+          <b-table-column field="code" label="Identifier" class="nowrap" sortable v-slot="props">
             <router-link :to="associationLink(props.row)">{{ props.row.code }}</router-link>
           </b-table-column>
           <b-table-column field="name" label="Name" sortable v-slot="props">
@@ -47,7 +47,7 @@ export default {
   mounted () {
     document.title = 'Associations - SOTLAS'
     this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-    axios.get('https://api.sotl.as/associations/all')
+    axios.get(process.env.VUE_APP_API_URL + '/associations/all')
       .then(response => {
         this.associations = response.data
         this.loadingComponent.close()

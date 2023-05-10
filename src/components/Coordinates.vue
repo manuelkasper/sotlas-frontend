@@ -103,7 +103,7 @@ export default {
       if (!this.latitude || !this.longitude || !this.showElevation) {
         return
       }
-      axios.post('https://ele.sotl.as/api', [[this.latitude, this.longitude]])
+      axios.post(process.env.VUE_APP_ELEVATION_API_URL, [[this.latitude, this.longitude]])
         .then(result => {
           this.elevation = Math.round(result.data[0])
         })
@@ -129,7 +129,8 @@ export default {
           name: 'IGN',
           url: () => {
             if (this.reference && this.reference.match('^(EA[1-9]|ZB2)/')) {
-              return `https://www.ign.es/iberpix2/visor/?&x=${this.longitude}&y=${this.latitude}&level=15&srid=4258&visible=MTN`
+              let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
+              return `https://componentes.cnig.es/api-core/?center=${p[0]},${p[1]}&zoom=16&controls=scale*true&plugins=toc,zoompanel,measurebar,mousesrs&layers=WMTS*https://www.ign.es/wmts/mapa-raster?*MTN*GoogleMapsCompatible*Map*false*image/jpeg*false*false*true&projection=EPSG:3857*m`
             }
           }
         },
@@ -371,7 +372,7 @@ export default {
         {
           name: 'Gaia GPS',
           url: () => {
-            return `https://www.gaiagps.com/map/?loc=14/${this.longitude}/${this.latitude}&layer=GaiaTopoRasterMeters`
+            return `https://www.gaiagps.com/map/?loc=14/${this.longitude}/${this.latitude}`
           }
         },
         {
@@ -416,6 +417,12 @@ export default {
           name: 'SummitPost',
           url: () => {
             return `https://www.summitpost.org/object_list.php?object_type=1&distance_lat_1=${this.latitude}&distance_lon_1=${this.longitude}&map_1=1`
+          }
+        },
+        {
+          name: 'Peakbagger.com',
+          url: () => {
+            return `https://peakbagger.com/search.aspx?tid=R&lat=${this.latitude}&lon=${this.longitude}&ss=`
           }
         },
         {

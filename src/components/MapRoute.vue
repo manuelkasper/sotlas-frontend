@@ -25,7 +25,7 @@
 
 <script>
 import axios from 'axios'
-import togeojson from '@mapbox/togeojson'
+import togeojson from '@tmcw/togeojson'
 import { MglGeojsonLayer, MglMarker } from 'vue-mapbox'
 import haversineDistance from 'haversine-distance'
 import tracks from '../mixins/tracks.js'
@@ -41,6 +41,18 @@ export default {
   mixins: [tracks],
   computed: {
     trackLayer () {
+      let lineColor = '#1cd60d'
+      let lineOpacity = 0.75
+      let lineWidth = 3
+      if (this.route.highlight === true) {
+        lineColor = '#4fe005'
+        lineOpacity = 0.85
+        lineWidth = 4.5
+      } else if (this.route.highlight === false) {
+        lineColor = '#86bc6b'
+        lineOpacity = 0.25
+      }
+
       return {
         type: 'line',
         layout: {
@@ -48,9 +60,9 @@ export default {
           'line-cap': 'round'
         },
         paint: {
-          'line-color': this.route.highlight ? '#ff0000' : '#245acd',
-          'line-width': 3,
-          'line-opacity': 0.75
+          'line-color': lineColor,
+          'line-width': lineWidth,
+          'line-opacity': lineOpacity
         }
       }
     },

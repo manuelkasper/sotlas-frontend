@@ -5,7 +5,7 @@ export default {
   mixins: [ssoauth],
   methods: {
     loadActivations (callsign) {
-      return axios.get('https://api.sotl.as/activations/' + callsign)
+      return axios.get(process.env.VUE_APP_API_URL + '/activations/' + callsign)
         .then(response => {
           return response.data
         })

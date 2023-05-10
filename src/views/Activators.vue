@@ -61,7 +61,7 @@ export default {
   methods: {
     loadData () {
       this.loading = true
-      axios.get('https://api.sotl.as/activators/search', { params: { q: this.filter, skip: (this.curPage - 1) * this.perPage, limit: this.perPage, sort: this.sortField, sortDirection: this.sortDirection } })
+      axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q: this.filter, skip: (this.curPage - 1) * this.perPage, limit: this.perPage, sort: this.sortField, sortDirection: this.sortDirection } })
         .then(response => {
           this.activators = response.data.activators
           this.total = response.data.total

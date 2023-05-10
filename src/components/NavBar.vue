@@ -1,9 +1,15 @@
 <template>
   <b-navbar wrapper-class="container" :fixed-top="true" :close-on-click="false" :isActive.sync="burgerActive">
     <template #brand>
-      <b-navbar-item tag="router-link" to="/about"><img src="../assets/sotlas.svg" alt="Logo"></b-navbar-item>
+      <b-navbar-item tag="router-link" to="/about">
+        <img v-if="$mq.widescreen" src="../assets/sotlas.svg" alt="Logo">
+        <img v-else src="../assets/sotlas-icon.svg" alt="Logo">
+      </b-navbar-item>
       <b-navbar-item class="clock" tag="div">
         <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
+      </b-navbar-item>
+      <b-navbar-item tag="router-link" to="/solar_history">
+        <SolarData />
       </b-navbar-item>
     </template>
     <template #end>
@@ -30,6 +36,7 @@
 import moment from 'moment'
 import SearchField from '../components/SearchField.vue'
 import LoginButton from '../components/LoginButton.vue'
+import SolarData from '../components/SolarData.vue'
 import utils from '../mixins/utils.js'
 import EventBus from '../event-bus'
 
@@ -37,7 +44,7 @@ export default {
   name: 'NavBar',
   mixins: [ utils ],
   components: {
-    SearchField, LoginButton
+    SearchField, LoginButton, SolarData
   },
   props: {
     query: {

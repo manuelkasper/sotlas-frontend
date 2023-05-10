@@ -29,12 +29,12 @@
           {{ props.row.activatorCallsign }}
         </template>
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit code" cell-class="nowrap" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
         <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
         <span v-else>{{ props.row.summit.code }}</span>
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit name" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.name" label="Summit Name" sortable v-slot="props">
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
       </b-table-column>
       <b-table-column v-if="showSummitInfo" field="summit.altitude" label="Altitude" sortable numeric v-slot="props">
@@ -177,6 +177,15 @@ export default {
           this.deleteSotaWatchAlert(alert.id)
             .then(response => {
               this.$store.dispatch('reloadAlerts')
+            })
+            .catch(err => {
+              this.$buefy.dialog.alert({
+                title: 'Error',
+                message: 'Could not delete alert: ' + err.message,
+                type: 'is-danger',
+                ariaRole: 'alertdialog',
+                ariaModal: true
+              })
             })
         }
       })

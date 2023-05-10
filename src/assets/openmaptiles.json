@@ -2204,6 +2204,35 @@
       }
     },
     {
+      "id": "summits_circles_all",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "circle-stroke-color": "rgba(255, 255, 255, 1)",
+        "circle-color": [
+          "match",
+          ["get", "points"],
+          [1],
+          "rgba(77, 122, 32, 0.5)",
+          [2],
+          "rgba(109, 165, 54, 0.5)",
+          [4],
+          "rgba(174, 167, 39, 0.5)",
+          [6],
+          "rgba(239, 168, 24, 0.5)",
+          [8],
+          "rgba(220, 93, 4, 0.5)",
+          [10],
+          "rgba(200, 16, 30, 0.5)",
+          "#000"
+        ],
+        "circle-stroke-width": {"stops": [[4, 0], [15, 1]]},
+        "circle-radius": {"stops": [[0, 0.05], [10, 2.5], [22, 12]]}
+      }
+    },
+    {
       "id": "summits_circles",
       "type": "circle",
       "source": "summits",
@@ -2259,9 +2288,20 @@
         "circle-color": "rgba(2, 243, 198, 1)",
         "circle-radius": {"stops": [[6, 15], [20, 50]]},
         "circle-opacity": 0.75,
-        "circle-stroke-color": "rgba(210, 255, 0, 0.05)",
-        "circle-stroke-width": 0,
-        "circle-stroke-opacity": 1,
+        "circle-blur": 0.7
+      }
+    },
+    {
+      "id": "summits_highlight_alerts",
+      "type": "circle",
+      "source": "summits",
+      "source-layer": "summits",
+      "filter": ["all", ["in", "code"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(210, 255, 0, 1)",
+        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-opacity": 0.55,
         "circle-blur": 0.7
       }
     },

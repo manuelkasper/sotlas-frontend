@@ -108,6 +108,7 @@ function startVue () {
     mq: {
       mobile: '(max-width: 768px)',
       desktop: '(min-width: 1024px)',
+      widescreen: '(min-width: 1216px)',
       fullhd: '(min-width: 1408px)'
     }
   }).$mount('#app')

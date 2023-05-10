@@ -17,7 +17,23 @@ export default {
       type: Boolean,
       default: false
     },
-    stacked: Boolean
+    height: {
+      type: [String, Number],
+      default: 250
+    },
+    spaceRatio: {
+      type: Number,
+      default: 0.3
+    },
+    yMarkers: {
+      type: Array
+    },
+    stacked: Boolean,
+    colors: Array,
+    yAxisMode: {
+      type: String,
+      default: 'span'
+    }
   },
   methods: {
     updateChart () {
@@ -47,17 +63,20 @@ export default {
       this.chart = new Chart(this.$refs.chart, {
         data: {
           labels,
-          datasets: datasets
+          datasets: datasets,
+          yMarkers: this.yMarkers
         },
         type: 'bar',
-        height: 250,
+        height: parseInt(this.height),
+        colors: this.colors,
         barOptions: {
-          spaceRatio: 0.3,
+          spaceRatio: this.spaceRatio,
           stacked: this.stacked
         },
         axisOptions: {
           xAxisMode: 'tick',
-          xIsSeries: this.xIsSeries
+          xIsSeries: this.xIsSeries,
+          yAxisMode: this.yAxisMode
         }
       })
     }

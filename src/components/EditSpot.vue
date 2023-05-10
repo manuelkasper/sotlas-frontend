@@ -141,7 +141,7 @@ export default {
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
             this.summitLoading = true
-            axios.get('https://api.sotl.as/summits/' + this.summitCode)
+            axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
               .then(response => {
                 this.summitLoading = false
                 this.summitInvalid = false
@@ -217,6 +217,19 @@ export default {
           })
 
           this.$parent.close()
+        })
+        .catch(err => {
+          let errorText = err.message
+          if (err.response && err.response.data) {
+            errorText = err.response.data
+          }
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: 'Could not post spot: ' + errorText,
+            type: 'is-danger',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
         })
         .finally(() => {
           this.posting = false
