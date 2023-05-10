@@ -13,7 +13,7 @@
           </p>
 
           <p>
-            Summit database © 2002-2021 Summits on the Air.<br />
+            Summit database © 2002-2023 Summits on the Air.<br />
             Summits on the Air, SOTA and the SOTA Logo are trademarks of the Programme.
           </p>
 
