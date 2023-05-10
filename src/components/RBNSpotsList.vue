@@ -5,7 +5,7 @@
     </template>
   </CardPagination>
   <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :row-class="rowClass">
-    <b-table-column field="timeStamp" class="timestamp" label="Time" sortable v-slot="props">
+    <b-table-column field="timeStamp" cell-class="timestamp" label="Time" sortable v-slot="props">
       <span v-html="formatTimeDay(props.row.timeStamp)" />
     </b-table-column>
     <b-table-column field="callsign" label="Callsign" sortable v-slot="props">
@@ -100,13 +100,13 @@ export default {
 </script>
 
 <style scoped>
-tr .timestamp {
+>>> tr .timestamp {
   border-left: 3px solid #e0e0e0;
 }
-tr.recent1 .timestamp {
+>> tr.recent1 .timestamp {
   border-left: 3px solid #f28591;
 }
-tr.recent2 .timestamp {
+>>> tr.recent2 .timestamp {
   border-left: 3px solid #fbaf63;
 }
 .card {

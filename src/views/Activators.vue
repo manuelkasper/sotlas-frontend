@@ -10,7 +10,7 @@
           </b-field>
 
           <b-table class="auto-width" :narrowed="true" :striped="true" :data="activators" :loading="loading" paginated backend-pagination :total="total" :per-page="perPage" :current-page.sync="curPage" backend-sorting :default-sort="[sortField, sortDirection]" @sort="onSort" :mobile-cards="false">
-            <b-table-column field="callsign" label="Callsign" class="nowrap" sortable v-slot="props">
+            <b-table-column field="callsign" label="Callsign" cell-class="nowrap" sortable v-slot="props">
               <CountryFlag :country="country(props.row.callsign)" class="flag" />
               <router-link :to="makeActivatorLink(props.row.callsign)">{{ props.row.callsign }}</router-link>
             </b-table-column>

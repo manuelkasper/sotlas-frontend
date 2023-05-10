@@ -14,7 +14,7 @@
       </template>
     </CardPagination>
     <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" :current-page.sync="curPage" :row-class="rowClass">
-      <b-table-column field="timeStamp" class="timestamp" label="Time" sortable v-slot="props">
+      <b-table-column field="timeStamp" cell-class="timestamp" label="Time" sortable v-slot="props">
         <span v-html="formatTimeDay(props.row.timeStamp)" />
       </b-table-column>
       <b-table-column v-if="showCallsign" field="activatorCallsign" label="Callsign" sortable v-slot="props">
@@ -31,7 +31,7 @@
       <b-table-column field="mode" label="Mode" sortable v-slot="props">
         <ModeLabel :mode="props.row.mode" />
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." cell-class="nowrap" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
         <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
         <span v-else>{{ props.row.summit.code }}</span>
@@ -51,7 +51,7 @@
       <b-table-column field="callsign" label="Posted By" sortable v-slot="props">
         {{ props.row.callsign }}
       </b-table-column>
-      <b-table-column field="comments" class="comments" label="Comments" v-slot="props">
+      <b-table-column field="comments" label="Comments" v-slot="props">
         <div class="comments-cell">
           <b-tooltip class="comments-tooltip" :label="props.row.comments" position="is-left" multilined :active="!$mq.fullhd"><div>{{ props.row.comments }}</div></b-tooltip>
           <b-dropdown v-if="canEditSpot(props.row)" class="actions" aria-role="list">
@@ -215,13 +215,13 @@ export default {
 </script>
 
 <style scoped>
-tr .timestamp {
+>>> tr .timestamp {
   border-left: 3px solid #e0e0e0;
 }
-tr.recent1 .timestamp {
+>>> tr.recent1 .timestamp {
   border-left: 3px solid #f28591;
 }
-tr.recent2 .timestamp {
+>>> tr.recent2 .timestamp {
   border-left: 3px solid #fbaf63;
 }
 @media (min-width: 769px) {

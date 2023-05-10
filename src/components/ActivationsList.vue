@@ -9,16 +9,16 @@
       <b-table-column field="date" label="Date" sortable v-slot="props">
         {{ props.row.date | formatActivationDate }}
       </b-table-column>
-      <b-table-column field="summit.code" label="Summit" class="code" sortable v-slot="props">
+      <b-table-column field="summit.code" label="Summit" cell-class="code" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode" :country="props.row.summit.isoCode" class="flag" />
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
       </b-table-column>
-      <b-table-column field="summit.name" label="Name" class="name" sortable v-slot="props">
+      <b-table-column field="summit.name" label="Name" cell-class="name" sortable v-slot="props">
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
         <font-awesome-icon v-if="hasOwnPhotos(props.row.summit)" class="photos-icon" :icon="['far', 'images']" />
         <font-awesome-icon v-else-if="props.row.summit.photoAuthors && props.row.summit.photoAuthors.length > 0" class="photos-icon-others" :icon="['far', 'images']" />
       </b-table-column>
-      <b-table-column field="summit.altitude" label="Altitude" class="altitude" sortable numeric v-slot="props">
+      <b-table-column field="summit.altitude" label="Altitude" cell-class="altitude" sortable numeric v-slot="props">
         <AltitudeLabel :altitude="props.row.summit.altitude" />
       </b-table-column>
       <b-table-column field="points" label="Points" sortable v-slot="props">
@@ -132,7 +132,7 @@ export default {
   margin-left: 0.5em;
   color: #aaa;
 }
-.invalid .code, .invalid .name {
+>>> .invalid .code, >>> .invalid .name {
   opacity: 0.7;
   text-decoration: line-through;
 }
