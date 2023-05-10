@@ -474,7 +474,7 @@ export default {
 }
 @media (min-width: 769px) {
   .map.enlarge {
-    height: calc(100vh - 20rem);
+    height: calc(100vh - 16rem);
   }
 }
 @media (max-width: 768px) {
