@@ -25,7 +25,7 @@
 
 <script>
 import axios from 'axios'
-import togeojson from '@mapbox/togeojson'
+import togeojson from '@tmcw/togeojson'
 import { MglGeojsonLayer, MglMarker } from 'vue-mapbox'
 import haversineDistance from 'haversine-distance'
 import tracks from '../mixins/tracks.js'

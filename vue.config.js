@@ -15,5 +15,6 @@ module.exports = {
         'BRANCH': JSON.stringify(gitRevisionPlugin.branch())
       })
     ]
-  }
+  },
+  publicPath: process.env.PUBLIC_PATH ?? '/'
 }
