@@ -5,7 +5,7 @@
     </header>
     <section class="modal-card-body">
       <b-field label="Callsign" :message="isOwnCallsign ? '' : 'You are posting an alert for someone else\'s callsign'" :type="isOwnCallsign ? '' : 'is-info'">
-        <b-input type="text" class="callsign" v-model="callsign" pattern="[a-zA-Z0-9/]{3,}" validation-message="Invalid callsign" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
+        <b-input type="text" class="callsign" v-model="callsign" pattern="[a-zA-Z0-9\/]{3,}" validation-message="Invalid callsign" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required />
       </b-field>
 
       <b-field label="Summit reference" :message="summitDisplay" :type="summitType" :class="summitLabelClass" expanded>
@@ -122,7 +122,10 @@ export default {
       }
     },
     isInputValid () {
-      return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) && this.summit !== null && this.isSummitValid(this.summit) && this.date && /^\d\d:\d\d$/.test(this.time) && this.freqMode.length > 0 && (this.freqMode.join(', ').length <= 40 || this.freqMode.join(',').length <= 40)
+      return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) &&
+        (this.summitCodeXxx || (this.summit !== null && this.isSummitValid(this.summit))) &&
+        this.date && /^\d\d:\d\d$/.test(this.time) &&
+        this.freqMode.length > 0 && (this.freqMode.join(', ').length <= 40 || this.freqMode.join(',').length <= 40)
     },
     summitLabelClass () {
       if (!this.summit || this.isSummitValid(this.summit)) {
@@ -149,22 +152,29 @@ export default {
       handler () {
         if (this.summitCode) {
           // Shorthand input
-          let summitRegex = /^([A-Z0-9]{1,8})[/ ]([A-Z]{2})[- ]?([0-9]{3})$/i
+          let summitRegex = /^([A-Z0-9]{1,8})[/ ]([A-Z]{2})[- ]?([0-9]{3}|xxx)$/i
           let matches = this.summitCode.match(summitRegex)
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
-            this.summitLoading = true
-            axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
-              .then(response => {
-                this.summitLoading = false
-                this.summitInvalid = false
-                this.summit = response.data
-              })
-              .catch(() => {
-                this.summitLoading = false
-                this.summitInvalid = true
-                this.summit = null
-              })
+            if (matches[3].toUpperCase() === 'XXX') {
+              this.summitInvalid = false
+              this.summitCodeXxx = true
+              this.summit = null
+            } else {
+              this.summitLoading = true
+              this.summitCodeXxx = false
+              axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
+                .then(response => {
+                  this.summitLoading = false
+                  this.summitInvalid = false
+                  this.summit = response.data
+                })
+                .catch(() => {
+                  this.summitLoading = false
+                  this.summitInvalid = true
+                  this.summit = null
+                })
+            }
           } else {
             this.summit = null
             this.summitInvalid = false
@@ -344,6 +354,7 @@ export default {
       comments: '',
       summit: null,
       summitInvalid: false,
+      summitCodeXxx: false,
       summitLoading: false,
       timeZone: 'utc',
       posting: false
