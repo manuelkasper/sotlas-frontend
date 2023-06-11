@@ -152,7 +152,7 @@ export default {
       handler () {
         if (this.summitCode) {
           // Shorthand input
-          let summitRegex = /^([A-Z0-9]{1,8})[/ ]([A-Z]{2})[- ]?([0-9]{3}|xxx|\?\?\?)$/i
+          let summitRegex = /^([A-Z0-9]{1,8})[/ ]([A-Z]{2}|\?\?)[- ]?([0-9]{3}|xxx|\?\?\?)$/i
           let matches = this.summitCode.match(summitRegex)
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
