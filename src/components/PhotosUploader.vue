@@ -22,7 +22,7 @@ export default {
   },
   prefs: {
     key: 'photosUploaderPrefs',
-    props: ['gpsNotificationShown']
+    props: ['gpsNotificationShown', 'resolutionWarningShown']
   },
   mixins: [api, prefs],
   computed: {
@@ -55,6 +55,18 @@ export default {
                 })
                 this.gpsNotificationShown = true
               }
+
+              if (res.data.length > 0 && res.data[0].width < 1600 && res.data[0].height < 1600 && !this.resolutionWarningShown) {
+                this.$buefy.dialog.alert({
+                  title: 'Low photo resolution',
+                  message: '<p>Your photo has been uploaded successfully, but its resolution is quite low (< 1600 pixels width or height). Please upload original, full resolution photos whenever possible. SOTLAS will automatically resize them as appropriate.</p><p><small>This alert will not appear again for future uploads of low resolution photos.</small></p>',
+                  type: 'is-info',
+                  hasIcon: true,
+                  icon: 'info-circle',
+                  iconPack: 'far'
+                })
+                this.resolutionWarningShown = true
+              }
             })
             .catch(err => {
               error(err)
@@ -81,7 +93,8 @@ export default {
   },
   data () {
     return {
-      gpsNotificationShown: false
+      gpsNotificationShown: false,
+      resolutionWarningShown: false
     }
   }
 }
