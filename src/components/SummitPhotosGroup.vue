@@ -4,7 +4,7 @@
       <slot name="title"></slot>
     </div>
     <PictureSwipe ref="pictureSwipe" class="photos" :items="swipeItems" :options="swipeOptions" @mouseoverPicture="mouseoverPicture" @mouseleavePicture="mouseleavePicture" @editPicture="onEditPicture" @deletePicture="onDeletePicture" @movePicture="onMovePicture" />
-    <b-button v-if="waypointPhotos.length > 0 && !$mq.mobile && showWaypointButton" class="waypoints-button" icon-left="file-download" size="is-small" @click="downloadWaypoints">Photo waypoints (.gpx)</b-button>
+    <b-button v-if="waypointPhotos.length > 0 && showWaypointButton" class="waypoints-button" icon-left="file-download" size="is-small" @click="downloadWaypoints">Photo waypoints (.gpx)</b-button>
   </div>
 </template>
 
