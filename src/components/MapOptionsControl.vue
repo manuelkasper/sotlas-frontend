@@ -30,7 +30,10 @@
       </div>
       <div class="map-option" v-if="mapType !== 'toposvalbard' && mapType !== 'norkart' && mapType !== 'caltopo'">
         <b-field grouped>
-          <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">Hiking difficulty</b-checkbox>
+          <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">
+            Hiking difficulty
+            <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showHikingDifficultyInfo" />
+          </b-checkbox>
         </b-field>
         <template v-if="mapType.startsWith('swisstopo')">
           <b-field grouped>
@@ -192,6 +195,17 @@ export default {
       this.$buefy.dialog.alert({
         title: 'Activation zones',
         message: '<p style="margin-bottom: 0.5em">The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (spatial resolution 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</p><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
+        type: 'is-info',
+        hasIcon: true,
+        icon: 'info-circle',
+        iconPack: 'fas'
+      })
+    },
+    showHikingDifficultyInfo (event) {
+      event.preventDefault()
+      this.$buefy.dialog.alert({
+        title: 'Hiking difficulty',
+        message: '<p>The hiking difficulty grading uses the <a href="https://www.sac-cas.ch/fileadmin/Ausbildung_und_Wissen/Sicher_unterwegs/Sicher_unterwegs_Wandern/2020_Berg_Alpinwanderskala_EN.pdf" target="_blank">SAC scale</a>. Colors shown are as follows:</p><ul><li><span style="color: #cccc00">Yellow</span>: T1</li><li><span style="color: #cc0000">Red</span>: T2…T3</li><li><span style="color: #3333cc">Blue</span>: T4…T6</li></ul>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
