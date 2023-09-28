@@ -6,14 +6,14 @@
           <font-awesome-icon icon="circle" />
           <font-awesome-icon :icon="['fas', 'camera-home']" transform="shrink-7 left-0.5" :style="{ color: 'white' }" />
         </font-awesome-layers>
-        <div v-if="webcam.map.clustersize > 1" class="clustersize">+{{ webcam.map.clustersize - 1 }}</div>
+        <div v-if="webcam.clusterSize > 1" class="clustersize">+{{ webcam.clusterSize - 1 }}</div>
       </div>
       <MglPopup :closeButton="false" @added="popupAdded">
         <div :class="['thumbwrapper', size]">
           <a :href="thumbnailHref" target="_blank"><img class="thumb" :src="thumbnailSrc" /></a>
           <div class="caption">{{ title }}</div>
-          <template v-if="webcam.map.clustersize > 1 && size != 'is-small'">
-            <div class="clustercaption">{{ webcam.map.clustersize - 1 }} more webcam{{ webcam.map.clustersize > 2 ? 's' : '' }}</div>
+          <template v-if="webcam.clusterSize > 1 && size != 'is-small'">
+            <div class="clustercaption">{{ webcam.clusterSize - 1 }} more webcam{{ webcam.clusterSize > 2 ? 's' : '' }}</div>
             <div class="clusterinfo">zoom in to view</div>
           </template>
           <div class="attribution">Webcams provided by <a href="https://www.windy.com/" target="_blank">windy.com</a></div>
@@ -43,10 +43,10 @@ export default {
       return this.webcam.title
     },
     thumbnailSrc () {
-      return this.$store.state.mapOptions.webcamsType === 'current' ? this.webcam.image.current.preview : this.webcam.image.daylight.preview
+      return this.$store.state.mapOptions.webcamsType === 'current' ? this.webcam.images.current.preview : this.webcam.images.daylight.preview
     },
     thumbnailHref () {
-      return this.$mq.mobile ? this.webcam.url.current.mobile : this.webcam.url.current.desktop
+      return 'https://www.windy.com/webcams/' + this.webcam.webcamId
     }
   },
   methods: {
