@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MapWebcam v-for="webcam in webcams" :key="webcam.id" :webcam="webcam" :size="size" />
+    <MapWebcam v-for="webcam in webcams" :key="webcam.webcamId" :webcam="webcam" :size="size" />
   </div>
 </template>
 
