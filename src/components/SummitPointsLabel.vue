@@ -1,10 +1,8 @@
 <template>
-  <b-tooltip class="season-tooltip" type="is-light" :position="$mq.mobile ? 'is-bottom' : 'is-right'" :label="seasonLabel">
-    <b-taglist v-if="points !== null && points !== undefined" :class="{ ['points-' + points]: true }" attached>
-      <b-tag>{{ points }}</b-tag>
-      <b-tag class="bonus" v-if="bonus">+{{ bonus }}</b-tag>
-    </b-taglist>
-  </b-tooltip>
+  <b-taglist v-if="points !== null && points !== undefined" :class="{ ['points-' + points]: true }" attached>
+    <b-tag>{{ points }}</b-tag>
+    <b-tag class="bonus" v-if="bonus">+{{ bonus }}</b-tag>
+  </b-taglist>
 </template>
 
 <script>
@@ -16,18 +14,6 @@ export default {
     },
     bonus: {
       type: Number
-    },
-    season: {
-      type: String
-    }
-  },
-  computed: {
-    seasonLabel: function () {
-      if (this.season) {
-        return '+ ' + this.season
-      } else {
-        return null
-      }
     }
   }
 }
@@ -45,9 +31,6 @@ export default {
   line-height: 1em;
   height: auto;
   margin-bottom: 0 !important;
-}
-.season-tooltip {
-  cursor: default;
 }
 @media (max-width: 768px) {
   .tag {
