@@ -20,7 +20,7 @@
       <p class="subtitle is-size-7-mobile">
         <span class="summit-info"><strong>{{ summit.code }}</strong></span>
         <span class="summit-info"><AltitudeLabel :altitude="summit.altitude" /></span>
-        <span class="summit-info"><SummitPointsLabel class="points" :points="summit.points" :bonus="summit.bonusPoints" /> {{ summit.points > 1 ? 'points' : 'point' }}</span>
+        <span class="summit-info"><SummitPointsLabel class="points" :points="summit.points" :bonus="summit.bonusPoints" :season="bonusSeason" /> {{ summit.points > 1 ? 'points' : 'point' }}</span>
         <span v-if="activations !== null" class="summit-info"><font-awesome-icon :icon="['far', 'chevron-circle-up']" class="faicon" /> {{ activations.length }} {{ activations.length === 1 ? 'activation' : 'activations' }}<span v-if="myActivations && myActivations.length > 0"> ({{ myActivations.length }} by me)</span></span>
         <span v-if="myChases !== null && myChases.length > 0" class="summit-info"><font-awesome-icon :icon="['far', 'chevron-circle-down']" class="faicon" /> {{ myChases.length }} {{ myChases.length === 1 ? 'chase' : 'chases' }} by me</span>
         <span v-if="isComplete" class="summit-info"><font-awesome-icon :icon="['far', 'check-double']" class="faicon" /> Complete</span>
@@ -384,6 +384,11 @@ export default {
           })
         }))
 
+      loads.push(axios.get('https://api-db2.sota.org.uk/summits/history/' + this.summitCode)
+        .then(response => {
+          this.bonusSeason = response.data.BonusSeason
+        }))
+
       if (this.myUserId) {
         loads.push(axios.get('https://api2.sota.org.uk/api/qsos/user-chases-by-summit/' + this.summitCode + '/' + this.myUserId)
           .then(response => {
@@ -460,7 +465,8 @@ export default {
       isAddAlertActive: false,
       isAddSpotActive: false,
       enlargeMap: false,
-      alwaysLoadWikipedia: true
+      alwaysLoadWikipedia: true,
+      bonusSeason: null
     }
   }
 }
