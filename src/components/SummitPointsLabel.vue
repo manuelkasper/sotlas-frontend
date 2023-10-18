@@ -1,5 +1,5 @@
 <template>
-  <b-tooltip class="season-tooltip" type="is-light" position="is-right" :label="seasonLabel">
+  <b-tooltip class="season-tooltip" type="is-light" :position="$mq.mobile ? 'is-bottom' : 'is-right'" :label="seasonLabel">
     <b-taglist v-if="points !== null && points !== undefined" :class="{ ['points-' + points]: true }" attached>
       <b-tag>{{ points }}</b-tag>
       <b-tag class="bonus" v-if="bonus">+{{ bonus }}</b-tag>
