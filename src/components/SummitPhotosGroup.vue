@@ -13,12 +13,13 @@ import PictureSwipe from './PictureSwipe.vue'
 import utils from '../mixins/utils.js'
 import photos from '../mixins/photos.js'
 import moment from 'moment'
-import togpx from 'togpx'
+import GeoJsonToGpx from '@dwayneparton/geojson-to-gpx'
 
 export default {
   name: 'SummitPhotosGroup',
   props: {
     photos: Array,
+    title: String,
     summit: Object,
     editable: Boolean,
     showSummitName: Boolean,
@@ -146,11 +147,17 @@ export default {
         return feature
       })
 
-      let gpx = togpx({
+      let options = {
+        metadata: {
+          name: 'Photos from ' + this.title + ' for ' + this.summit.name + ' (' + this.summit.code + ')'
+        }
+      }
+      let gpx = GeoJsonToGpx({
         'type': 'FeatureCollection',
         'features': features
-      })
-      let blob = new Blob([gpx], { type: 'application/gpx+xml' })
+      }, options)
+      let gpxString = new XMLSerializer().serializeToString(gpx)
+      let blob = new Blob([gpxString], { type: 'application/gpx+xml' })
       let url = window.URL.createObjectURL(blob)
       let link = document.createElement('a')
       link.download = 'photos-' + this.summit.code.replace('/', '_') + '-' + this.title + '.gpx'
