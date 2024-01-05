@@ -25,7 +25,7 @@
 
 <script>
 import axios from 'axios'
-import togeojson from '@tmcw/togeojson'
+import { gpx } from '@tmcw/togeojson'
 import { MglGeojsonLayer, MglMarker } from 'vue-mapbox'
 import haversineDistance from 'haversine-distance'
 import tracks from '../mixins/tracks.js'
@@ -180,7 +180,7 @@ export default {
           let dom = (new DOMParser()).parseFromString(response.data, 'text/xml')
           this.geoJsonSource = {
             type: 'geojson',
-            data: togeojson.gpx(dom)
+            data: gpx(dom)
           }
         })
     },

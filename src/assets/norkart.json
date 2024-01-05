@@ -32,6 +32,10 @@
     "az": {
       "type": "vector",
       "url": "https://1.{mapServer}.map.sotl.as/data/az.json"
+    },
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://0.{mapServer}.map.sotl.as/data/osm-sotlas.json"
     }
   },
   "sprite": "https://sotl.as/sprites",
@@ -43,6 +47,34 @@
       "type": "background",
       "layout": {"visibility": "visible"},
       "paint": {"background-color": "rgba(255, 255, 255, 1)"}
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "filter": ["all"],
+      "layout": {"visibility": "visible"},
+      "paint": {"fill-color": "rgba(103, 166, 196, 0.2)"}
+    },
+    {
+      "id": "boundary_2",
+      "type": "line",
+      "metadata": {},
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "filter": ["all", ["==", "admin_level", 2], ["==", "maritime", 0]],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(136, 136, 136, 1)",
+        "line-opacity": 0.2,
+        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
+      }
     },
     {
       "id": "norkart",

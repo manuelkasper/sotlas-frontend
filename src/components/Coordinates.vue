@@ -246,6 +246,14 @@ export default {
           }
         },
         {
+          name: 'Austrian Map',
+          url: () => {
+            if (this.reference && this.reference.match('^OE/')) {
+              return `https://maps.bev.gv.at/#/center/${this.longitude},${this.latitude}/zoom/13`
+            }
+          }
+        },
+        {
           name: 'Basemap.at',
           url: () => {
             if (this.reference && this.reference.match('^OE/')) {

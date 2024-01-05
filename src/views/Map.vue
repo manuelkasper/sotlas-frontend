@@ -30,7 +30,7 @@
 
       <MapWebcams v-if="mapOptions.webcams" />
     </MglMap>
-    <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map.</div>
+    <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map. <strong>iOS 17 users: There is a bug in iOS 17 that can sometimes cause this error. Restarting Safari (closing/killing it completely) resolves the issue temporarily.</strong></div>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
     <SwisstopoInfo />
     <b-loading :is-full-page="false" :active="filtering || !showMap || !mapStyle" />

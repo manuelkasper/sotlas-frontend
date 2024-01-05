@@ -1,8 +1,9 @@
 import axios from 'axios'
 import ssoauth from './ssoauth.js'
+import utils from './utils.js'
 
 export default {
-  mixins: [ssoauth],
+  mixins: [ssoauth, utils],
   methods: {
     loadActivations (callsign) {
       return axios.get(process.env.VUE_APP_API_URL + '/activations/' + callsign)

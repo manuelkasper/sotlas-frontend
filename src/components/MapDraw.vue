@@ -15,7 +15,7 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
 import haversineDistance from 'haversine-distance'
 import cheapRuler from 'cheap-ruler'
-import togpx from 'togpx'
+import GeoJsonToGpx from '@dwayneparton/geojson-to-gpx'
 import moment from 'moment'
 import axios from 'axios'
 import utils from '../mixins/utils.js'
@@ -295,8 +295,9 @@ export default {
           this.addElevations(all)
             .then(() => {
               loadingComponent.close()
-              let gpx = togpx(all)
-              let blob = new Blob([gpx], { type: 'application/gpx+xml' })
+              let gpx = GeoJsonToGpx(all)
+              let gpxString = new XMLSerializer().serializeToString(gpx)
+              let blob = new Blob([gpxString], { type: 'application/gpx+xml' })
               let url = window.URL.createObjectURL(blob)
               let link = document.createElement('a')
               link.download = 'sotlas-' + moment().format('YYYYMMDD-HHmmss') + '.gpx'
@@ -454,7 +455,7 @@ export default {
         }
 
         let coordsSwapped = feature.geometry.coordinates.map(coord => [coord[1], coord[0]])
-        return axios.post('https://ele.sotl.as/api', coordsSwapped)
+        return axios.post(process.env.VUE_APP_ELEVATION_API_URL, coordsSwapped)
           .then(result => {
             result.data.forEach((elevation, index) => {
               if (feature.geometry.coordinates[index].length === 2) {

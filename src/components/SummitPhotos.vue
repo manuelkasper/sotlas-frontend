@@ -50,7 +50,7 @@ export default {
       let summitPhotos = this.summit.photos
       if (this.minDate) {
         summitPhotos = summitPhotos.filter(photo => {
-          return moment(photo.uploadDate).isSameOrAfter(moment(this.minDate))
+          return photo.uploadDate && moment(photo.uploadDate).isSameOrAfter(moment(this.minDate))
         })
       }
       summitPhotos.forEach(photo => {
