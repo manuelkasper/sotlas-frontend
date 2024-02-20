@@ -10,10 +10,10 @@
     "basemapat": {
       "type": "raster",
       "tiles": [
-        "https://mapsneu.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg"
+        "https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png"
       ],
       "tileSize": 256,
-      "maxzoom": 18,
+      "maxzoom": 19,
       "bounds": [8.782379, 46.358770, 17.5, 49.037872],
       "attribution": "Grundkarte: <a target=\"_blank\" href=\"https://basemap.at/\">basemap.at</a>"
     },
@@ -98,7 +98,7 @@
       "minzoom": 12,
       "paint": {
         "fill-antialias": false,
-        "fill-color": "rgba(255, 255, 0, 1)",
+        "fill-color": "rgba(50, 255, 0, 0.4)",
         "fill-opacity": {"stops": [[12, 0], [12.5, 0.5]]}
       }
     },
@@ -113,9 +113,10 @@
       "layout": {"visibility": "none"},
       "minzoom": 12,
       "paint": {
-        "line-color": "rgba(235, 196, 0, 1)",
+        "line-color": "rgba(50, 150, 0, 1)",
         "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
-        "line-width": {"stops": [[12, 1], [16, 3]]}
+        "line-width": {"stops": [[12, 1], [16, 2]]},
+        "line-dasharray": [1,1]
       }
     },
     {

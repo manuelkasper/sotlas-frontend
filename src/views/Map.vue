@@ -33,6 +33,7 @@
     <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map. <strong>iOS 17 users: There is a bug in iOS 17 that can sometimes cause this error. Restarting Safari (closing/killing it completely) resolves the issue temporarily.</strong></div>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
     <SwisstopoInfo />
+    <BasemapAtInfo />
     <b-loading :is-full-page="false" :active="filtering || !showMap || !mapStyle" />
   </div>
 </template>
@@ -56,11 +57,12 @@ import MapInfoPopup from '../components/MapInfoPopup.vue'
 import MapDraw from '../components/MapDraw.vue'
 import MapWebcams from '../components/MapWebcams.vue'
 import SwisstopoInfo from '../components/SwisstopoInfo.vue'
+import BasemapAtInfo from '../components/BasemapAtInfo.vue'
 
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo, BasemapAtInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   created () {
