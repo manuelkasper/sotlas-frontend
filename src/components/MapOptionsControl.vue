@@ -21,7 +21,7 @@
         <b-field v-if="mapType === 'openmaptiles' || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
-        <b-field v-if="mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
           <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
             Activation zones
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
@@ -194,7 +194,7 @@ export default {
       event.preventDefault()
       this.$buefy.dialog.alert({
         title: 'Activation zones',
-        message: '<p style="margin-bottom: 0.5em">The activation zones for HB/HB0 have been calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (spatial resolution 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</p><p style="margin-bottom: 0.5em">The activation zones for OE have been calculated using <a href="https://data.bev.gv.at/geonetwork/srv/ger/catalog.search;jsessionid=1F5F6A9D0278E6871FEDB6B87EE0936B#/metadata/eae5f98d-d605-4783-8292-8b913d163cac" target="_blank">BEV ALS DTM</a> data (spatial resolution 1 m, accuracy generally ± 0.5 m, may vary in high altitude).</p><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
+        message: '<p style="margin-bottom: 0.5em">Activation zone boundaries are currently available for the following associations:</p><ul><li style="margin-bottom: 0.5em"><strong>HB/HB0</strong><br />Calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (spatial resolution 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</li><li style="margin-bottom: 0.5em"><strong>OE</strong><br />Calculated using <a href="https://data.bev.gv.at/geonetwork/srv/ger/catalog.search;jsessionid=1F5F6A9D0278E6871FEDB6B87EE0936B#/metadata/eae5f98d-d605-4783-8292-8b913d163cac" target="_blank">BEV ALS DTM</a> data (spatial resolution 1 m, accuracy generally ± 0.5 m, may vary in high altitude).</li></ul><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
@@ -205,7 +205,7 @@ export default {
       event.preventDefault()
       this.$buefy.dialog.alert({
         title: 'Hiking difficulty',
-        message: '<p>The hiking difficulty grading uses the <a href="https://www.sac-cas.ch/fileadmin/Ausbildung_und_Wissen/Sicher_unterwegs/Sicher_unterwegs_Wandern/2020_Berg_Alpinwanderskala_EN.pdf" target="_blank">SAC scale</a>. Colors shown are as follows:</p><ul><li><span style="color: #cccc00">Yellow</span>: T1</li><li><span style="color: #cc0000">Red</span>: T2…T3</li><li><span style="color: #3333cc">Blue</span>: T4…T6</li></ul>',
+        message: '<p style="margin-bottom: 0.5em">The hiking difficulty grading uses the <a href="https://www.sac-cas.ch/fileadmin/Ausbildung_und_Wissen/Sicher_unterwegs/Sicher_unterwegs_Wandern/2020_Berg_Alpinwanderskala_EN.pdf" target="_blank">SAC scale</a>. Colors shown are as follows:</p><ul><li><span style="color: #cccc00">Yellow</span>: T1</li><li><span style="color: #cc0000">Red</span>: T2…T3</li><li><span style="color: #3333cc">Blue</span>: T4…T6</li></ul>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
