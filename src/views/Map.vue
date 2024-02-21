@@ -247,6 +247,8 @@ export default {
         }
       })
       this.updateRoute()
+
+      axios.post(process.env.VUE_APP_API_URL + '/mapsession')
     },
     onMapClicked (event) {
       if (this.$refs.draw.isDrawing() || event.mapboxEvent.originalEvent.hitMarker) {

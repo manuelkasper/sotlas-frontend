@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { MglMap, MglGeolocateControl, MglNavigationControl, MglScaleControl, MglAttributionControl } from 'vue-mapbox'
 import MapRoute from './MapRoute.vue'
 import MapPhoto from './MapPhoto.vue'
@@ -171,6 +172,8 @@ export default {
         this.map.dragPan.disable()
       }
       this.highlightCurrentSummit()
+
+      axios.post(process.env.VUE_APP_API_URL + '/mapsession')
     },
     onMapClicked (event) {
       if (event.mapboxEvent.originalEvent.hitMarker) {
