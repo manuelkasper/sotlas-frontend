@@ -248,7 +248,7 @@ export default {
       })
       this.updateRoute()
 
-      axios.post(process.env.VUE_APP_API_URL + '/mapsession')
+      axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'main' })
     },
     onMapClicked (event) {
       if (this.$refs.draw.isDrawing() || event.mapboxEvent.originalEvent.hitMarker) {

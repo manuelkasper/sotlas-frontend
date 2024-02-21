@@ -173,7 +173,7 @@ export default {
       }
       this.highlightCurrentSummit()
 
-      axios.post(process.env.VUE_APP_API_URL + '/mapsession')
+      axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'mini' })
     },
     onMapClicked (event) {
       if (event.mapboxEvent.originalEvent.hitMarker) {
