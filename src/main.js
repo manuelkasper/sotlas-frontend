@@ -100,6 +100,8 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error)
 })
 
+axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'init' })
+
 function startVue () {
   new Vue({
     store,
