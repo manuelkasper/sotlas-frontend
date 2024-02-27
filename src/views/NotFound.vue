@@ -6,7 +6,7 @@
       <section class="section">
         <div class="container">
           <b-message title="Not Found" type="is-danger">
-            The page, summit, association or region that you requested cannot be found.
+            The callsign, summit, association, region or page that you requested cannot be found.
           </b-message>
         </div>
       </section>
