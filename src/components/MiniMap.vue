@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { MglMap, MglGeolocateControl, MglNavigationControl, MglScaleControl, MglAttributionControl } from 'vue-mapbox'
 import MapRoute from './MapRoute.vue'
 import MapPhoto from './MapPhoto.vue'
@@ -27,6 +26,7 @@ import MapWebcams from './MapWebcams.vue'
 import mapstyle from '../mixins/mapstyle.js'
 import utils from '../mixins/utils.js'
 import longtouch from '../mixins/longtouch.js'
+import reportMapSession from '../mapsession.js'
 
 export default {
   name: 'MiniMap',
@@ -173,7 +173,7 @@ export default {
       }
       this.highlightCurrentSummit()
 
-      axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'mini' })
+      reportMapSession()
     },
     onMapClicked (event) {
       if (event.mapboxEvent.originalEvent.hitMarker) {

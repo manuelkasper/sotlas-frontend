@@ -45,6 +45,7 @@ import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import mapstyle from '../mixins/mapstyle.js'
 import longtouch from '../mixins/longtouch.js'
+import reportMapSession from '../mapsession.js'
 
 import { MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl } from 'vue-mapbox'
 import MapFilterControl from '../components/MapFilterControl.vue'
@@ -248,7 +249,7 @@ export default {
       })
       this.updateRoute()
 
-      axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'main' })
+      reportMapSession()
     },
     onMapClicked (event) {
       if (this.$refs.draw.isDrawing() || event.mapboxEvent.originalEvent.hitMarker) {
