@@ -33,7 +33,7 @@
         </div>
       </div>
       <article class="routeDescr" v-html="linkifyCoordinates(props.row.htmlDescription ? props.row.htmlDescription : props.row.description)" />
-      <div class="author">by {{ props.row.author }}</div>
+      <div class="author">Posted on {{ props.row.postedDate | formatActivationDate }} by {{ props.row.author }}</div>
       <div class="track-download" v-if="props.row.track">
         <TrackLink :route="props.row" :summit="summit"><font-awesome-icon :icon="['far', 'file-download']" class="fa-icon" /> Download track (.gpx)</TrackLink>
       </div>
