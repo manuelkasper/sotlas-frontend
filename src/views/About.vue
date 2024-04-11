@@ -10,7 +10,8 @@
           <p>Code contributed by: <a href="https://github.com/m1hax">@m1hax</a>, <a href="https://github.com/summitsontheair">@summitsontheair</a>,
             <a href="https://github.com/vk3arr">@vk3arr</a>,
             Simon G4TJC,
-            <a href="https://github.com/g84ycm">@g84ycm</a>
+            <a href="https://github.com/g84ycm">@g84ycm</a>,
+            <a href="https://github.com/benmarwick">@benmarwick</a>
           </p>
 
           <p>
