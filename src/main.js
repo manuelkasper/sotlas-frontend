@@ -22,7 +22,6 @@ import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome
 import '@/assets/global.css'
 import store from './store'
 import axios from 'axios'
-import { SnackbarProgrammatic as Snackbar } from 'buefy/dist/components/snackbar'
 
 library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle, faArrowUp, faPlus, faCheckDouble,
   faAngleRight, faAngleLeft, faAngleDown, faAngleUp, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,
@@ -43,6 +42,8 @@ Vue.use(Buefy, {
   defaultIconPack: 'far'
 })
 Vue.use(MatchMedia)
+
+let myVue
 
 if (window.performance && performance.navigation.type === 1) {
   // Store last reload timestamp so user reloads can be detected despite SSO redirect
@@ -85,8 +86,10 @@ let lastError = null
 axios.interceptors.response.use(response => {
   return response
 }, error => {
-  if ((!lastError || new Date().getTime() - lastError > 9000) && (!error.response || error.response.status !== 404)) {
-    Snackbar.open({
+  if ((!lastError || new Date().getTime() - lastError > 9000) && (!error.response || error.response.status !== 404) && myVue) {
+    // SnackbarProgrammatic.open doesn't work with Webpack 5
+    // See https://github.com/buefy/buefy/issues/2299
+    myVue.$buefy.snackbar.open({
       duration: 9000,
       message: 'Network or server error while loading data, try again later',
       type: 'is-danger',
@@ -101,7 +104,7 @@ axios.interceptors.response.use(response => {
 })
 
 function startVue () {
-  new Vue({
+  myVue = new Vue({
     store,
     router,
     render: h => h(App),

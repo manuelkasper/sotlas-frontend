@@ -7,6 +7,7 @@ function reportMapSession () {
     return
   }
   axios.post(process.env.VUE_APP_API_URL + '/mapsession', { type: 'first' })
+    .catch(() => {})
   mapSessionReported = true
 }
 
