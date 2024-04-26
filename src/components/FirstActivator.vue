@@ -1,6 +1,9 @@
 <template>
-  <span>
-    <router-link :to="makeActivatorLinkUserId(userId)"><strong>{{ callsign }}</strong></router-link>{{ databaseCallsign ? ' (' + databaseCallsign + ')' : '' }}
+  <span v-if="databaseCallsign">
+    {{ callsign }} (<strong><router-link :to="makeActivatorLinkUserId(userId)">{{ databaseCallsign }}</router-link></strong>)
+  </span>
+  <span v-else>
+    <router-link :to="makeActivatorLinkUserId(userId)"><strong>{{ callsign }}</strong></router-link>
   </span>
 </template>
 
