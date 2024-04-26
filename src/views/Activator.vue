@@ -106,7 +106,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import utils from '../mixins/utils.js'
 import api from '../mixins/api.js'
@@ -340,10 +339,10 @@ export default {
       this.databaseError = false
 
       let loads = []
-      axios.get(process.env.VUE_APP_API_URL + '/activators/' + this.callsign)
-        .then(response => {
-          if (response) {
-            this.activator = response.data
+      this.loadActivator(this.callsign)
+        .then(activator => {
+          if (activator) {
+            this.activator = activator
             if (this.activator && this.activator.callsign !== this.callsign) {
               this.$router.replace('/activators/' + this.activator.callsign)
               return
