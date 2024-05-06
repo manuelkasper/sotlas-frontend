@@ -15,13 +15,13 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
-        <b-field v-if="mapType.startsWith('maptiler') || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
+        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
           <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
             Activation zones
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
