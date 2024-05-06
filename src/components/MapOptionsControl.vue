@@ -1,7 +1,7 @@
 <template>
-  <div :class="{ 'mapboxgl-ctrl-group': true, 'mapboxgl-ctrl': true, 'mapbox-gl-map-options-container': true }">
+  <div :class="{ 'maplibregl-ctrl-group': true, 'maplibregl-ctrl': true, 'maplibre-gl-map-options-container': true }">
     <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined label="Webcams and more available – open map options to see!">
-      <button :class="{ 'mapboxgl-ctrl-icon': true, 'mapbox-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
+      <button :class="{ 'maplibregl-ctrl-icon': true, 'maplibre-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
     </b-tooltip>
     <div v-if="open" class="map-options-container">
       <div class="map-option">
@@ -15,13 +15,13 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
+        <b-field v-if="mapType.startsWith('maptiler') || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
           <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
             Activation zones
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
@@ -217,7 +217,7 @@ export default {
 </script>
 
 <style scoped>
-.mapbox-gl-map-options {
+.maplibre-gl-map-options {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' stroke-linejoin='round' stroke-miterlimit='2'%3E%3Cpath d='M16.847 2.863c-.049 0-.1.009-.15.029l-4.28 1.582-4.33-1.529a1.602 1.602 0 00-1.008-.003L3.257 4.271a.808.808 0 00-.507.748v8.718a.404.404 0 00.553.374l4.28-1.582 4.33 1.528c.327.109.681.11 1.008.004l3.822-1.33a.807.807 0 00.507-.747V3.266a.403.403 0 00-.403-.403zm-8.458 1.47l3.222 1.138v7.198l-3.222-1.137V4.333zm-4.43 8.247V5.306l3.222-1.121v7.204l-.016.006-3.206 1.185zm12.082-.884l-3.222 1.121V5.613l.016-.006 3.206-1.185v7.274zM16.975 15.625H7.7v-.412a.276.276 0 00-.275-.275h-.55a.275.275 0 00-.275.275v.412H3.025a.276.276 0 00-.275.275v.275c0 .151.124.275.275.275H6.6v.412c0 .152.123.275.275.275h.55a.275.275 0 00.275-.275v-.412h9.275a.276.276 0 00.275-.275V15.9a.276.276 0 00-.275-.275z' /%3E%3C/svg%3E");
 }
 .map-option {
@@ -228,12 +228,12 @@ export default {
   background-color: #eee;
   font-size: 0.8rem;
 }
-.mapbox-gl-map-options-container .map-options-container {
+.maplibre-gl-map-options-container .map-options-container {
   display: none;
   padding: 0 0.5em 0.5em 0;
   display: inline-block;
 }
-.mapbox-gl-map-options-container button {
+.maplibre-gl-map-options-container button {
   display: inline-block;
   vertical-align: top;
 }

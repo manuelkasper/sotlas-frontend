@@ -1,6 +1,6 @@
 <template>
   <div class="map-layout" ref="mapLayout">
-    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
+    <MglMap v-if="showMap && mapStyle" :apiKey="mapApiKey" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
       <MglScaleControl position="bottom-left" />
@@ -8,7 +8,7 @@
 
       <!-- Note: these are not true Mapbox GL controls that get added via addControl(), as those don't mix well with Vue.js templating.
            Instead, we simply put all our custom non-Mapbox controls in the top left corner where they don't clash with any builtin controls. -->
-      <div class="mapboxgl-ctrl-top-left">
+      <div class="maplibregl-ctrl-top-left">
         <MapFilterControl ref="filterControl" position="top-left" @startFiltering="filtering = true" @stopFiltering="filtering = false" />
         <MapOptionsControl ref="optionsControl" position="top-left" />
         <MapDownloadControl position="top-left" />
@@ -30,7 +30,6 @@
 
       <MapWebcams v-if="mapOptions.webcams" />
     </MglMap>
-    <div v-if="browserNotSupported" class="browser-not-supported">Your browser does not support WebGL, which is required to render this map. <strong>iOS 17 users: There is a bug in iOS 17 that can sometimes cause this error. Restarting Safari (closing/killing it completely) resolves the issue temporarily.</strong></div>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
     <SwisstopoInfo />
     <BasemapAtInfo />
@@ -40,7 +39,6 @@
 
 <script>
 import axios from 'axios'
-import mapboxgl from 'mapbox-gl'
 import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import mapstyle from '../mixins/mapstyle.js'
@@ -70,10 +68,6 @@ export default {
     this.map = null
   },
   mounted () {
-    if (!mapboxgl.supported()) {
-      this.browserNotSupported = true
-    }
-
     // Check for summit code or coordinates first; if present, start map right there
     if (this.$route.params.summitCode) {
       this.fetchSummit(this.$route.params.summitCode)
@@ -136,7 +130,6 @@ export default {
       summit: null,
       leavingRoute: false,
       zoomWarning: false,
-      browserNotSupported: false,
       filtering: false,
       infoCoordinates: null,
       persistentRoutes: []
@@ -460,7 +453,7 @@ export default {
   bottom: 0;
   left: 0;
 }
-.map >>> .mapboxgl-popup {
+.map >>> .maplibregl-popup {
   max-width: 600px !important;
 }
 .loading-ring-wrapper {
@@ -476,14 +469,5 @@ export default {
   border-radius: 0.5em;
   text-align: center;
   opacity: 0.9;
-}
-.browser-not-supported {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fdc5c9;
-  padding: 0.2em 0.5em;
-  border-radius: 0.5em;
 }
 </style>

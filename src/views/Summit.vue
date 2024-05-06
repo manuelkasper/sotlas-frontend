@@ -592,7 +592,7 @@ export default {
   color: #777;
   text-align: right;
 }
->>> .mapboxgl-canvas-container.mapboxgl-interactive {
+>>> .maplibregl-canvas-container.maplibregl-interactive {
   cursor: auto;
 }
 .uploader-placeholder {

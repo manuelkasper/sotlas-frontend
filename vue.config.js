@@ -19,7 +19,8 @@ module.exports = {
       fallback: {
         fs: false,
         path: false
-      }
+      },
+      exportsFields: []  // Needed because @maptiler/sdk uses "import" instead of "style" on the .css export in its package.json; see also https://github.com/webpack/webpack/issues/9509#issuecomment-1915084026
     }
   },
   publicPath: process.env.PUBLIC_PATH

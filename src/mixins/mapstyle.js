@@ -29,6 +29,12 @@ export default {
         return null
       }
 
+      if (this.mapType === 'maptiler_outdoor') {
+        return '26b8cd69-a1b5-4203-b5e2-d1a87230148e'
+      } else if (this.mapType === 'maptiler_winter') {
+        return 'dd452e90-5e79-4a2e-b084-f27a2f87cfa3'
+      }
+
       let style = require('../assets/' + this.mapType + '.json')
       style = JSON.parse(JSON.stringify(style))
 
@@ -72,6 +78,9 @@ export default {
         mapType = 'openmaptiles'
       }
       return mapType
+    },
+    mapApiKey () {
+      return process.env.VUE_APP_MAPTILER_KEY
     }
   },
   methods: {
@@ -101,6 +110,8 @@ export default {
       },
       mapTypes: {
         'openmaptiles': 'OpenMapTiles',
+        'maptiler_outdoor': 'MapTiler Outdoor',
+        'maptiler_winter': 'MapTiler Winter',
         'swisstopo': 'swisstopo (Vector)',
         'swisstopo_raster': 'swisstopo (Raster)',
         'swisstopo_aerial': 'swisstopo (Aerial)',

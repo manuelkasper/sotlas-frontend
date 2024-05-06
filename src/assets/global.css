@@ -148,7 +148,7 @@ hr {
 }
 
 /* Fix for scale text selection */
-.mapboxgl-ctrl-scale {
+.maplibregl-ctrl-scale {
   user-select: none;
 }
 
