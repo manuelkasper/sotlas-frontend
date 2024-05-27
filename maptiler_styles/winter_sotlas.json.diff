@@ -1,5 +1,5 @@
 --- Winter_original/style.json	2024-05-27 13:56:46
-+++ SOTLAS_Winter_meters/style.json	2024-05-27 13:56:22
++++ SOTLAS_Winter_meters/style.json	2024-05-27 14:05:28
 @@ -1,7 +1,7 @@
  {
    "version": 8,
@@ -114,7 +114,14 @@
          "all",
          [
 \ No newline at end of file
-@@ -3577,18 +3612,19 @@
+@@ -3571,24 +3606,25 @@
+       "source": "maptiler_planet",
+       "source-layer": "boundary",
+       "minzoom": 3.0,
+-      "maxzoom": 13.0,
++      "maxzoom": 20.0,
+       "layout": {
+         "line-join": "round",
          "visibility": "visible"
        },
        "paint": {
@@ -139,24 +146,31 @@
 +            "zoom"
 +          ],
 +          3,
-+          "hsl(120, 2%, 55%)",
++          "hsl(7, 30%, 55%)",
 +          12,
-+          "hsl(120, 2%, 65%)"
++          "hsl(7, 30%, 55%)"
 +        ],
          "line-width": [
            "interpolate",
            [
 \ No newline at end of file
-@@ -3605,6 +3641,7 @@
+@@ -3605,9 +3641,12 @@
            12,
            1
          ],
 +        "line-opacity": 0.75,
          "line-dasharray": [
-           5,
-           1
+-          5,
+-          1
++          7,
++          1.5,
++          2,
++          1.5
+         ]
+       },
+       "metadata": {},
 \ No newline at end of file
-@@ -3617,13 +3654,7 @@
+@@ -3617,13 +3656,7 @@
            "in",
            "admin_level",
            3,
@@ -172,7 +186,7 @@
          [
            "==",
 \ No newline at end of file
-@@ -6256,7 +6287,7 @@
+@@ -6256,7 +6289,7 @@
            ],
            " ft"
          ],
@@ -182,7 +196,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6323,10 +6354,6 @@
+@@ -6323,10 +6356,6 @@
          [
            "has",
            "name"
@@ -194,7 +208,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6483,10 +6510,6 @@
+@@ -6483,10 +6512,6 @@
          [
            "has",
            "name"
@@ -206,7 +220,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6495,7 +6518,7 @@
+@@ -6495,7 +6520,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -216,7 +230,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -6576,7 +6599,7 @@
+@@ -6576,7 +6601,7 @@
            ],
            " ft"
          ],
@@ -226,7 +240,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6598,6 +6621,8 @@
+@@ -6598,6 +6623,8 @@
        "paint": {
          "icon-color": "hsl(232, 30%, 39%)",
          "text-color": "hsl(232, 30%, 39%)",
@@ -236,7 +250,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -6643,10 +6668,6 @@
+@@ -6643,10 +6670,6 @@
          [
            "has",
            "name"
@@ -248,7 +262,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6655,7 +6676,7 @@
+@@ -6655,7 +6678,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -258,7 +272,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -6758,6 +6779,8 @@
+@@ -6758,6 +6781,8 @@
        "paint": {
          "icon-color": "hsl(232, 30%, 39%)",
          "text-color": "hsl(232, 30%, 39%)",
@@ -268,7 +282,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -6815,10 +6838,6 @@
+@@ -6815,10 +6840,6 @@
          [
            "has",
            "name"
@@ -280,10 +294,11 @@
        ]
      },
 \ No newline at end of file
-@@ -8612,12 +8631,737 @@
+@@ -8611,13 +8632,738 @@
+         "parco_nazionale",
          "parque_nacional",
          "\u043d\u0430\u0446\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439_\u043f\u0430\u0440\u043a"
-       ]
++      ]
 +    },
 +    {
 +      "id": "summits_az",
@@ -319,7 +334,7 @@
 +          "geometry-type"
 +        ],
 +        "Polygon"
-+      ]
+       ]
 +    },
 +    {
 +      "id": "summits_az_border",
@@ -1019,7 +1034,7 @@
            "icon": "poi",
            "name": "POI",
 \ No newline at end of file
-@@ -8803,7 +9547,14 @@
+@@ -8803,7 +9549,14 @@
        ],
        "viewState": {
          "mapType": "Style",

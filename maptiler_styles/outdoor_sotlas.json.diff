@@ -1,5 +1,5 @@
 --- Outdoor_original/style.json	2024-05-27 08:09:30
-+++ SOTLAS_Outdoor_meters/style.json	2024-05-27 13:54:00
++++ SOTLAS_Outdoor_meters/style.json	2024-05-27 14:05:32
 @@ -1,7 +1,7 @@
  {
    "version": 8,
@@ -11,11 +11,10 @@
      "outdoor": {
        "url": "https://api.maptiler.com/tiles/outdoor/tiles.json?key={key}",
 \ No newline at end of file
-@@ -17,6 +17,22 @@
-     },
+@@ -18,6 +18,22 @@
      "maptiler_planet": {
        "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
-+      "type": "vector"
+       "type": "vector"
 +    },
 +    "2d324268-fe52-4875-96ca-bc5692fc1225": {
 +      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={key}",
@@ -31,9 +30,10 @@
 +    },
 +    "e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3": {
 +      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={key}",
-       "type": "vector"
++      "type": "vector"
      }
    },
+   "layers": [
 \ No newline at end of file
 @@ -380,6 +396,9 @@
          },
@@ -57,16 +57,16 @@
          "all",
          [
 \ No newline at end of file
-@@ -575,6 +597,9 @@
+@@ -574,6 +596,9 @@
+           18,
            0.5
          ]
-       },
++      },
 +      "metadata": {
 +        "sotlas-map-option": "contours"
-+      },
+       },
        "filter": [
          "all",
-         [
 \ No newline at end of file
 @@ -605,6 +630,9 @@
          "line-width": 0.8,
@@ -515,17 +515,47 @@
          [
            "!in",
 \ No newline at end of file
-@@ -3926,7 +4080,7 @@
+@@ -3891,7 +4045,7 @@
+       "source": "maptiler_planet",
+       "source-layer": "boundary",
+       "minzoom": 3.0,
+-      "maxzoom": 13.0,
++      "maxzoom": 20.0,
+       "layout": {
+         "line-join": "round",
+         "visibility": "visible"
+\ No newline at end of file
+@@ -3906,9 +4060,9 @@
+             "zoom"
+           ],
+           3,
+-          "hsl(120, 2%, 55%)",
++          "hsl(7, 30%, 55%)",
+           12,
+-          "hsl(120, 2%, 65%)"
++          "hsl(7, 30%, 55%)"
+         ],
+         "line-width": [
+           "interpolate",
+\ No newline at end of file
+@@ -3926,10 +4080,12 @@
            12,
            1
          ],
 -        "line-opacity": 1,
 +        "line-opacity": 0.75,
          "line-dasharray": [
-           5,
-           1
+-          5,
+-          1
++          7,
++          1.5,
++          2,
++          1.5
+         ]
+       },
+       "metadata": {},
 \ No newline at end of file
-@@ -3939,13 +4093,7 @@
+@@ -3939,13 +4095,7 @@
            "in",
            "admin_level",
            3,
@@ -541,7 +571,7 @@
          [
            "==",
 \ No newline at end of file
-@@ -6511,7 +6659,7 @@
+@@ -6511,7 +6661,7 @@
            ],
            " ft"
          ],
@@ -551,7 +581,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6585,10 +6733,6 @@
+@@ -6585,10 +6735,6 @@
          [
            "has",
            "name"
@@ -563,7 +593,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6752,10 +6896,6 @@
+@@ -6752,10 +6898,6 @@
          [
            "has",
            "name"
@@ -575,7 +605,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6764,7 +6904,7 @@
+@@ -6764,7 +6906,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -585,7 +615,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -6845,7 +6985,7 @@
+@@ -6845,7 +6987,7 @@
            ],
            " ft"
          ],
@@ -595,7 +625,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6874,6 +7014,8 @@
+@@ -6874,6 +7016,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -605,7 +635,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -6919,10 +7061,6 @@
+@@ -6919,10 +7063,6 @@
          [
            "has",
            "name"
@@ -617,7 +647,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6931,7 +7069,7 @@
+@@ -6931,7 +7071,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -627,7 +657,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -7041,6 +7179,8 @@
+@@ -7041,6 +7181,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -637,7 +667,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -7098,10 +7238,6 @@
+@@ -7098,10 +7240,6 @@
          [
            "has",
            "name"
@@ -649,7 +679,7 @@
        ]
      },
 \ No newline at end of file
-@@ -7619,7 +7755,7 @@
+@@ -7619,7 +7757,7 @@
              "name"
            ]
          ],
@@ -659,7 +689,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -7704,7 +7840,7 @@
+@@ -7704,7 +7842,7 @@
              "name"
            ]
          ],
@@ -669,7 +699,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -8603,13 +8739,837 @@
+@@ -8603,13 +8741,837 @@
          "==",
          "class",
          "continent"
@@ -1508,7 +1538,7 @@
            "icon": "poi",
            "name": "POI",
 \ No newline at end of file
-@@ -8651,7 +9611,9 @@
+@@ -8651,7 +9613,9 @@
              "Bicycle longdistance",
              "Bicycle longdistance labels",
              "Longdistance trail labels",
@@ -1520,7 +1550,7 @@
          },
          {
 \ No newline at end of file
-@@ -8783,10 +9745,17 @@
+@@ -8783,10 +9747,17 @@
        ],
        "viewState": {
          "mapType": "Style",
