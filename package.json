@@ -21,7 +21,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.15.2",
     "@fortawesome/pro-solid-svg-icons": "^5.15.2",
     "@fortawesome/vue-fontawesome": "^0.1.10",
-    "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#8ef893d",
+    "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas",
     "@maptiler/sdk": "^2.0.3",
     "@tmcw/togeojson": "^3.2.0",
     "axios": "^1.6.8",
