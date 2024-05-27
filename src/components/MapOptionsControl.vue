@@ -119,7 +119,11 @@ export default {
     },
     mapType: {
       get () {
-        return this.$store.state.mapType
+        if (!this.mapTypes[this.$store.state.mapType]) {
+          return Object.keys(this.mapTypes)[0]
+        } else {
+          return this.$store.state.mapType
+        }
       },
       set (newMapType) {
         this.$store.commit('setMapType', newMapType)
