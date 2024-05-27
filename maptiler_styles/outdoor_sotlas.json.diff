@@ -1,0 +1,1543 @@
+--- Outdoor_original/style.json	2024-05-27 08:09:30
++++ SOTLAS_Outdoor_meters/style.json	2024-05-27 13:54:00
+@@ -1,7 +1,7 @@
+ {
+   "version": 8,
+-  "id": "45b6d505-d5c6-4041-a445-427a325503f5",
+-  "name": "Outdoor original",
++  "id": "3a0840d2-674e-4630-a70e-8fdb111259b9",
++  "name": "SOTLAS Outdoor (meters)",
+   "sources": {
+     "outdoor": {
+       "url": "https://api.maptiler.com/tiles/outdoor/tiles.json?key={key}",
+\ No newline at end of file
+@@ -17,6 +17,22 @@
+     },
+     "maptiler_planet": {
+       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
++      "type": "vector"
++    },
++    "2d324268-fe52-4875-96ca-bc5692fc1225": {
++      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={key}",
++      "type": "vector"
++    },
++    "ac4e1bc3-fbfb-4830-8279-675cc18f86f0": {
++      "url": "https://api.maptiler.com/tiles/ac4e1bc3-fbfb-4830-8279-675cc18f86f0/tiles.json?key={key}",
++      "type": "vector"
++    },
++    "d6ccc3ec-a677-4fcd-a211-2f2da36965cb": {
++      "url": "https://api.maptiler.com/tiles/d6ccc3ec-a677-4fcd-a211-2f2da36965cb/tiles.json?key={key}",
++      "type": "vector"
++    },
++    "e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3": {
++      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={key}",
+       "type": "vector"
+     }
+   },
+\ No newline at end of file
+@@ -380,6 +396,9 @@
+         },
+         "hillshade-shadow-color": "hsl(9, 3%, 41%)",
+         "hillshade-highlight-color": "hsl(20, 13%, 68%)"
++      },
++      "metadata": {
++        "sotlas-map-option": "hillshading"
+       }
+     },
+     {
+\ No newline at end of file
+@@ -522,6 +541,9 @@
+           0.5
+         ]
+       },
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -575,6 +597,9 @@
+           0.5
+         ]
+       },
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -605,6 +630,9 @@
+         "line-width": 0.8,
+         "line-opacity": 0.3
+       },
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -634,6 +662,9 @@
+         "line-width": 0.8,
+         "line-opacity": 0.3
+       },
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -799,7 +830,9 @@
+         "text-halo-color": "hsla(0, 0%, 100%, 0.8)",
+         "text-halo-width": 0.8
+       },
+-      "metadata": {},
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -868,7 +901,9 @@
+         "text-halo-color": "hsla(0, 0%, 100%, 0.8)",
+         "text-halo-width": 0.8
+       },
+-      "metadata": {},
++      "metadata": {
++        "sotlas-map-option": "contours"
++      },
+       "filter": [
+         "all",
+         [
+\ No newline at end of file
+@@ -1816,21 +1851,23 @@
+           "interpolate",
+           [
+             "exponential",
+-            1.2
++            1
+           ],
+           [
+             "zoom"
+           ],
+-          13,
+-          0.5,
+-          16,
+-          1,
+-          20,
+-          2
++          10,
++          1.5,
++          12,
++          2.25,
++          14,
++          2,
++          18,
++          3
+         ],
+         "line-dasharray": [
+-          5,
+-          2
++          4,
++          1
+         ]
+       },
+       "metadata": {},
+\ No newline at end of file
+@@ -1869,21 +1906,23 @@
+           "interpolate",
+           [
+             "exponential",
+-            1.2
++            1
+           ],
+           [
+             "zoom"
+           ],
+-          13,
+-          0.5,
+-          16,
+-          1,
+-          20,
+-          2
++          10,
++          1.5,
++          12,
++          2.25,
++          14,
++          2,
++          18,
++          3
+         ],
+         "line-dasharray": [
+-          5,
+-          2
++          4,
++          1
+         ]
+       },
+       "metadata": {},
+\ No newline at end of file
+@@ -1906,6 +1945,11 @@
+         ],
+         [
+           "!=",
++          "subclass",
++          "path"
++        ],
++        [
++          "!=",
+           "surface",
+           "paved"
+         ],
+\ No newline at end of file
+@@ -2326,7 +2370,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -2454,7 +2498,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -2564,13 +2608,17 @@
+             "zoom"
+           ],
+           10,
+-          1.5,
++          0.5,
+           12,
+-          2.25,
++          1,
+           14,
+-          2,
++          1.7,
+           18,
+           3
++        ],
++        "line-dasharray": [
++          1,
++          2
+         ]
+       },
+       "metadata": {},
+\ No newline at end of file
+@@ -2582,8 +2630,88 @@
+           "LineString"
+         ],
+         [
+-          "!has",
+-          "color"
++          "!in",
++          "class",
++          "bicycle",
++          "horse",
++          "via_ferrata",
++          "wheelchair"
++        ]
++      ]
++    },
++    {
++      "id": "Trails with SAC scale",
++      "type": "line",
++      "source": "outdoor",
++      "source-layer": "trail",
++      "minzoom": 10.0,
++      "layout": {
++        "line-cap": "round",
++        "line-join": "miter",
++        "visibility": "visible",
++        "line-miter-limit": {
++          "stops": [
++            [
++              9,
++              1
++            ],
++            [
++              14,
++              3
++            ]
++          ]
++        }
++      },
++      "paint": {
++        "line-color": [
++          "match",
++          [
++            "get",
++            "scale"
++          ],
++          "hiking",
++          "hsl(52, 100%, 50%)",
++          "mountain_hiking",
++          "hsl(10, 100%, 50%)",
++          "demanding_mountain_hiking",
++          "hsl(10, 100%, 50%)",
++          "alpine_hiking",
++          "hsl(217, 71%, 51%)",
++          "demanding_alpine_hiking",
++          "hsl(217, 71%, 51%)",
++          "difficult_alpine_hiking",
++          "hsl(217, 71%, 51%)",
++          "rgba(0,0,0,0)"
++        ],
++        "line-width": [
++          "interpolate",
++          [
++            "exponential",
++            1
++          ],
++          [
++            "zoom"
++          ],
++          10,
++          0.5,
++          12,
++          1,
++          14,
++          1.7,
++          18,
++          3
++        ],
++        "line-opacity": 0.8
++      },
++      "metadata": {
++        "sotlas-map-option": "difficulty"
++      },
++      "filter": [
++        "all",
++        [
++          "==",
++          "$type",
++          "LineString"
+         ],
+         [
+           "!in",
+\ No newline at end of file
+@@ -2604,7 +2732,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -2675,7 +2803,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": {
+           "stops": [
+             [
+\ No newline at end of file
+@@ -2770,7 +2898,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -2854,7 +2982,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": {
+           "stops": [
+             [
+\ No newline at end of file
+@@ -2950,7 +3078,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -3034,7 +3162,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -3118,7 +3246,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": {
+           "stops": [
+             [
+\ No newline at end of file
+@@ -3213,7 +3341,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": {
+           "stops": [
+             [
+\ No newline at end of file
+@@ -3316,7 +3444,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "bevel",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": {
+           "stops": [
+             [
+\ No newline at end of file
+@@ -3396,7 +3524,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "round",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -3448,7 +3576,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -3637,7 +3765,7 @@
+       "layout": {
+         "line-cap": "round",
+         "line-join": "miter",
+-        "visibility": "visible",
++        "visibility": "none",
+         "line-miter-limit": 3
+       },
+       "paint": {
+\ No newline at end of file
+@@ -3725,9 +3853,20 @@
+         }
+       },
+       "filter": [
+-        "==",
+-        "class",
+-        "aerialway"
++        "all",
++        [
++          "==",
++          "class",
++          "aerialway"
++        ],
++        [
++          "in",
++          "subclass",
++          "cable_car",
++          "gondola",
++          "mixed_lift",
++          "chair_lift"
++        ]
+       ]
+     },
+     {
+\ No newline at end of file
+@@ -3761,9 +3900,20 @@
+         ]
+       },
+       "filter": [
+-        "==",
+-        "class",
+-        "aerialway"
++        "all",
++        [
++          "==",
++          "class",
++          "aerialway"
++        ],
++        [
++          "in",
++          "subclass",
++          "cable_car",
++          "gondola",
++          "mixed_lift",
++          "chair_lift"
++        ]
+       ]
+     },
+     {
+\ No newline at end of file
+@@ -3873,8 +4023,12 @@
+         [
+           "!in",
+           "subclass",
+-          "gondola",
+-          "cable_car"
++          "drag_lift",
++          "t-bar",
++          "j-bar",
++          "platter",
++          "rope_tow",
++          "magic_carpet"
+         ],
+         [
+           "!in",
+\ No newline at end of file
+@@ -3926,7 +4080,7 @@
+           12,
+           1
+         ],
+-        "line-opacity": 1,
++        "line-opacity": 0.75,
+         "line-dasharray": [
+           5,
+           1
+\ No newline at end of file
+@@ -3939,13 +4093,7 @@
+           "in",
+           "admin_level",
+           3,
+-          4,
+-          5,
+-          6,
+-          7,
+-          8,
+-          9,
+-          10
++          4
+         ],
+         [
+           "==",
+\ No newline at end of file
+@@ -6511,7 +6659,7 @@
+           ],
+           " ft"
+         ],
+-        "visibility": "visible",
++        "visibility": "none",
+         "text-anchor": "top",
+         "text-offset": [
+           0,
+\ No newline at end of file
+@@ -6585,10 +6733,6 @@
+         [
+           "has",
+           "name"
+-        ],
+-        [
+-          "has",
+-          "customary_ft"
+         ]
+       ]
+     },
+\ No newline at end of file
+@@ -6752,10 +6896,6 @@
+         [
+           "has",
+           "name"
+-        ],
+-        [
+-          "!has",
+-          "customary_ft"
+         ]
+       ]
+     },
+\ No newline at end of file
+@@ -6764,7 +6904,7 @@
+       "type": "symbol",
+       "source": "maptiler_planet",
+       "source-layer": "mountain_peak",
+-      "minzoom": 9.0,
++      "minzoom": 14.0,
+       "layout": {
+         "icon-size": [
+           "interpolate",
+\ No newline at end of file
+@@ -6845,7 +6985,7 @@
+           ],
+           " ft"
+         ],
+-        "visibility": "visible",
++        "visibility": "none",
+         "text-anchor": "top",
+         "text-offset": [
+           0,
+\ No newline at end of file
+@@ -6874,6 +7014,8 @@
+       "paint": {
+         "icon-color": "hsl(23, 57%, 24%)",
+         "text-color": "hsl(23, 57%, 24%)",
++        "icon-opacity": 0.6,
++        "text-opacity": 0.6,
+         "icon-halo-blur": 0.2,
+         "text-halo-blur": {
+           "stops": [
+\ No newline at end of file
+@@ -6919,10 +7061,6 @@
+         [
+           "has",
+           "name"
+-        ],
+-        [
+-          "has",
+-          "customary_ft"
+         ]
+       ]
+     },
+\ No newline at end of file
+@@ -6931,7 +7069,7 @@
+       "type": "symbol",
+       "source": "maptiler_planet",
+       "source-layer": "mountain_peak",
+-      "minzoom": 9.0,
++      "minzoom": 14.0,
+       "layout": {
+         "icon-size": [
+           "interpolate",
+\ No newline at end of file
+@@ -7041,6 +7179,8 @@
+       "paint": {
+         "icon-color": "hsl(23, 57%, 24%)",
+         "text-color": "hsl(23, 57%, 24%)",
++        "icon-opacity": 0.6,
++        "text-opacity": 0.6,
+         "icon-halo-blur": 0.2,
+         "text-halo-blur": {
+           "stops": [
+\ No newline at end of file
+@@ -7098,10 +7238,6 @@
+         [
+           "has",
+           "name"
+-        ],
+-        [
+-          "!has",
+-          "customary_ft"
+         ]
+       ]
+     },
+\ No newline at end of file
+@@ -7619,7 +7755,7 @@
+             "name"
+           ]
+         ],
+-        "visibility": "visible",
++        "visibility": "none",
+         "symbol-placement": "line"
+       },
+       "paint": {
+\ No newline at end of file
+@@ -7704,7 +7840,7 @@
+             "name"
+           ]
+         ],
+-        "visibility": "visible",
++        "visibility": "none",
+         "text-anchor": "center",
+         "text-offset": [
+           0,
+\ No newline at end of file
+@@ -8603,13 +8739,837 @@
+         "==",
+         "class",
+         "continent"
++      ]
++    },
++    {
++      "id": "SAC scale labels",
++      "type": "symbol",
++      "source": "outdoor",
++      "source-layer": "trail",
++      "layout": {
++        "text-font": [
++          "Noto Sans Regular"
++        ],
++        "text-size": {
++          "stops": [
++            [
++              14,
++              9
++            ],
++            [
++              16,
++              14
++            ]
++          ]
++        },
++        "text-field": [
++          "match",
++          [
++            "get",
++            "scale"
++          ],
++          "hiking",
++          "T1",
++          "mountain_hiking",
++          "T2",
++          "demanding_mountain_hiking",
++          "T3",
++          "alpine_hiking",
++          "T4",
++          "demanding_alpine_hiking",
++          "T5",
++          "difficult_alpine_hiking",
++          "T6",
++          ""
++        ],
++        "visibility": "visible",
++        "icon-offset": [
++          10,
++          10
++        ],
++        "text-anchor": "center",
++        "text-offset": [
++          0,
++          0
++        ],
++        "symbol-spacing": 250,
++        "text-transform": "none",
++        "symbol-placement": "line",
++        "text-letter-spacing": 0
++      },
++      "paint": {
++        "text-color": "rgba(67, 67, 67, 1)",
++        "text-halo-blur": {
++          "stops": [
++            [
++              14,
++              1
++            ],
++            [
++              16,
++              2
++            ]
++          ]
++        },
++        "text-translate": [
++          0,
++          0
++        ],
++        "text-halo-color": "rgba(255, 255, 255, 1)",
++        "text-halo-width": {
++          "stops": [
++            [
++              14,
++              1
++            ],
++            [
++              16,
++              2
++            ]
++          ]
++        }
++      },
++      "metadata": {
++        "sotlas-map-option": "difficulty"
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "LineString"
++      ]
++    },
++    {
++      "id": "summits_az",
++      "type": "fill",
++      "source": "e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3",
++      "source-layer": "az",
++      "minzoom": 12.0,
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "fill-color": "rgba(50, 255, 0, 0.4)",
++        "fill-opacity": {
++          "stops": [
++            [
++              12,
++              0
++            ],
++            [
++              12.5,
++              0.5
++            ]
++          ]
++        },
++        "fill-antialias": false
++      },
++      "metadata": {
++        "sotlas-map-option": "az"
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "Polygon"
+       ]
++    },
++    {
++      "id": "summits_az_border",
++      "type": "line",
++      "source": "e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3",
++      "source-layer": "az",
++      "minzoom": 12.0,
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "line-color": "rgba(50, 150, 0, 1)",
++        "line-width": {
++          "stops": [
++            [
++              12,
++              1
++            ],
++            [
++              16,
++              2
++            ]
++          ]
++        },
++        "line-opacity": {
++          "stops": [
++            [
++              12,
++              0
++            ],
++            [
++              12.5,
++              0.5
++            ]
++          ]
++        },
++        "line-dasharray": [
++          1,
++          1
++        ]
++      },
++      "metadata": {
++        "sotlas-map-option": "az"
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "Polygon"
++      ]
++    },
++    {
++      "id": "summits_selected",
++      "type": "circle",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "circle-blur": 0.7,
++        "circle-color": "rgba(2, 153, 243, 1)",
++        "circle-radius": {
++          "stops": [
++            [
++              6,
++              15
++            ],
++            [
++              20,
++              50
++            ]
++          ]
++        },
++        "circle-opacity": 0.75,
++        "circle-stroke-color": "rgba(210, 255, 0, 0.05)",
++        "circle-stroke-width": 0,
++        "circle-stroke-opacity": 1
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_names",
++      "type": "symbol",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "minzoom": 10.0,
++      "layout": {
++        "icon-size": 1,
++        "text-font": [
++          "Noto Sans Regular"
++        ],
++        "text-size": {
++          "stops": [
++            [
++              10,
++              10
++            ],
++            [
++              20,
++              16
++            ]
++          ]
++        },
++        "text-field": "{name}\n{code}\n{alt} m",
++        "visibility": "visible",
++        "text-anchor": "bottom",
++        "text-offset": {
++          "stops": [
++            [
++              10,
++              [
++                0,
++                -1.2
++              ]
++            ],
++            [
++              20,
++              [
++                0,
++                -2
++              ]
++            ]
++          ]
++        },
++        "text-rotate": 0,
++        "text-justify": "center",
++        "text-optional": false,
++        "symbol-spacing": 250,
++        "text-transform": "none",
++        "text-keep-upright": true,
++        "symbol-avoid-edges": false,
++        "text-allow-overlap": {
++          "stops": [
++            [
++              18,
++              false
++            ],
++            [
++              19,
++              true
++            ]
++          ]
++        },
++        "text-ignore-placement": false
++      },
++      "paint": {
++        "text-color": "rgba(51, 51, 51, 1)",
++        "text-halo-blur": 1,
++        "text-translate": [
++          0,
++          2
++        ],
++        "text-halo-color": "rgba(255, 255, 255, 1)",
++        "text-halo-width": 1
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_circles_all",
++      "type": "circle",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "layout": {
++        "visibility": "none"
++      },
++      "paint": {
++        "circle-color": [
++          "match",
++          [
++            "get",
++            "points"
++          ],
++          [
++            1
++          ],
++          "rgba(77, 122, 32, 0.5)",
++          [
++            2
++          ],
++          "rgba(109, 165, 54, 0.5)",
++          [
++            4
++          ],
++          "rgba(174, 167, 39, 0.5)",
++          [
++            6
++          ],
++          "rgba(239, 168, 24, 0.5)",
++          [
++            8
++          ],
++          "rgba(220, 93, 4, 0.5)",
++          [
++            10
++          ],
++          "rgba(200, 16, 30, 0.5)",
++          "#000"
++        ],
++        "circle-radius": {
++          "stops": [
++            [
++              0,
++              0.05
++            ],
++            [
++              10,
++              2.5
++            ],
++            [
++              22,
++              12
++            ]
++          ]
++        },
++        "circle-stroke-color": "rgba(255, 255, 255, 1)",
++        "circle-stroke-width": {
++          "stops": [
++            [
++              4,
++              0
++            ],
++            [
++              15,
++              1
++            ]
++          ]
++        }
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "Point"
++      ]
++    },
++    {
++      "id": "summits_circles",
++      "type": "circle",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "circle-color": [
++          "match",
++          [
++            "get",
++            "points"
++          ],
++          [
++            1
++          ],
++          "rgba(77, 122, 32, 1)",
++          [
++            2
++          ],
++          "rgba(109, 165, 54, 1)",
++          [
++            4
++          ],
++          "rgba(174, 167, 39, 1)",
++          [
++            6
++          ],
++          "rgba(239, 168, 24, 1)",
++          [
++            8
++          ],
++          "rgba(220, 93, 4, 1)",
++          [
++            10
++          ],
++          "rgba(200, 16, 30, 1)",
++          "#000"
++        ],
++        "circle-radius": {
++          "stops": [
++            [
++              0,
++              0.1
++            ],
++            [
++              10,
++              8
++            ],
++            [
++              22,
++              20
++            ]
++          ]
++        },
++        "circle-stroke-color": "rgba(255, 255, 255, 1)",
++        "circle-stroke-width": {
++          "stops": [
++            [
++              4,
++              0
++            ],
++            [
++              15,
++              2
++            ]
++          ]
++        }
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_activations",
++      "type": "symbol",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "minzoom": 10.0,
++      "layout": {
++        "text-font": [
++          "Noto Sans Bold"
++        ],
++        "text-size": {
++          "stops": [
++            [
++              10,
++              8
++            ],
++            [
++              20,
++              16
++            ]
++          ]
++        },
++        "text-field": "{act}",
++        "visibility": "visible"
++      },
++      "paint": {
++        "text-color": "rgba(255, 255, 255, 1)"
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_highlight",
++      "type": "circle",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "circle-blur": 0.7,
++        "circle-color": "rgba(2, 243, 198, 1)",
++        "circle-radius": {
++          "stops": [
++            [
++              6,
++              15
++            ],
++            [
++              20,
++              50
++            ]
++          ]
++        },
++        "circle-opacity": 0.75
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_highlight_alerts",
++      "type": "circle",
++      "source": "d6ccc3ec-a677-4fcd-a211-2f2da36965cb",
++      "source-layer": "summits",
++      "layout": {
++        "visibility": "visible"
++      },
++      "paint": {
++        "circle-blur": 0.7,
++        "circle-color": "rgba(210, 255, 0, 1)",
++        "circle-radius": {
++          "stops": [
++            [
++              6,
++              15
++            ],
++            [
++              20,
++              50
++            ]
++          ]
++        },
++        "circle-opacity": 0.55
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_inactive_names",
++      "type": "symbol",
++      "source": "ac4e1bc3-fbfb-4830-8279-675cc18f86f0",
++      "source-layer": "summits_inactive",
++      "minzoom": 10.0,
++      "layout": {
++        "icon-size": 1,
++        "text-font": [
++          "Noto Sans Regular"
++        ],
++        "text-size": {
++          "stops": [
++            [
++              10,
++              10
++            ],
++            [
++              20,
++              16
++            ]
++          ]
++        },
++        "text-field": "{name}\n{code}\n{alt} m\n(inactive)",
++        "visibility": "none",
++        "text-anchor": "bottom",
++        "text-offset": {
++          "stops": [
++            [
++              10,
++              [
++                0,
++                -1.2
++              ]
++            ],
++            [
++              20,
++              [
++                0,
++                -2
++              ]
++            ]
++          ]
++        },
++        "text-rotate": 0,
++        "text-justify": "center",
++        "text-optional": false,
++        "symbol-spacing": 250,
++        "text-transform": "none",
++        "text-keep-upright": true,
++        "symbol-avoid-edges": false,
++        "text-allow-overlap": {
++          "stops": [
++            [
++              18,
++              false
++            ],
++            [
++              19,
++              true
++            ]
++          ]
++        },
++        "text-ignore-placement": false
++      },
++      "paint": {
++        "text-color": "rgba(51, 51, 51, 1)",
++        "text-opacity": 1,
++        "text-halo-blur": 1,
++        "text-halo-color": "rgba(255, 255, 255, 1)",
++        "text-halo-width": 1
++      },
++      "metadata": {
++        "sotlas-map-option": "inactive"
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "summits_inactive_circles",
++      "type": "circle",
++      "source": "ac4e1bc3-fbfb-4830-8279-675cc18f86f0",
++      "source-layer": "summits_inactive",
++      "layout": {
++        "visibility": "none"
++      },
++      "paint": {
++        "circle-color": [
++          "match",
++          [
++            "get",
++            "points"
++          ],
++          [
++            1
++          ],
++          "rgba(77, 122, 32, 0.5)",
++          [
++            2
++          ],
++          "rgba(109, 165, 54, 0.5)",
++          [
++            4
++          ],
++          "rgba(174, 167, 39, 0.5)",
++          [
++            6
++          ],
++          "rgba(239, 168, 24, 0.5)",
++          [
++            8
++          ],
++          "rgba(220, 93, 4, 0.5)",
++          [
++            10
++          ],
++          "rgba(200, 16, 30, 0.5)",
++          "#000"
++        ],
++        "circle-radius": {
++          "stops": [
++            [
++              0,
++              0.1
++            ],
++            [
++              10,
++              8
++            ],
++            [
++              22,
++              20
++            ]
++          ]
++        },
++        "circle-stroke-color": "rgba(255, 255, 255, 1)",
++        "circle-stroke-width": {
++          "stops": [
++            [
++              4,
++              0
++            ],
++            [
++              15,
++              2
++            ]
++          ]
++        }
++      },
++      "metadata": {
++        "sotlas-map-option": "inactive"
++      },
++      "filter": [
++        "all",
++        [
++          "in",
++          "code"
++        ]
++      ]
++    },
++    {
++      "id": "regions_areas",
++      "type": "fill",
++      "source": "2d324268-fe52-4875-96ca-bc5692fc1225",
++      "source-layer": "areas",
++      "layout": {
++        "visibility": "none"
++      },
++      "paint": {
++        "fill-color": "rgba(0, 0, 0, 1)",
++        "fill-opacity": 0.1,
++        "fill-antialias": false
++      },
++      "metadata": {
++        "sotlas-map-option": "regions"
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "Polygon"
++      ]
++    },
++    {
++      "id": "regions_labels",
++      "type": "symbol",
++      "source": "2d324268-fe52-4875-96ca-bc5692fc1225",
++      "source-layer": "labels",
++      "layout": {
++        "text-font": [
++          "Noto Sans Regular"
++        ],
++        "text-size": {
++          "stops": [
++            [
++              6,
++              8
++            ],
++            [
++              10,
++              16
++            ]
++          ]
++        },
++        "text-field": "{region}",
++        "visibility": "none",
++        "text-anchor": "top-left",
++        "text-offset": [
++          0.3,
++          0.3
++        ],
++        "text-justify": "center"
++      },
++      "paint": {
++        "text-halo-blur": 1,
++        "text-translate": [
++          0,
++          0
++        ],
++        "text-halo-color": "rgba(255, 255, 255, 1)",
++        "text-halo-width": 0.5
++      },
++      "metadata": {
++        "sotlas-map-option": "regions"
++      },
++      "filter": [
++        "==",
++        [
++          "geometry-type"
++        ],
++        "Point"
++      ]
+     }
+   ],
+   "metadata": {
+     "maptiler:template": {
+       "groups": [
+         {
++          "id": "J_EB0yo2x-VV8l0LAz5VP",
++          "icon": "other",
++          "name": "SOTLAS",
++          "layers": [
++            "regions_labels",
++            "regions_areas",
++            "summits_inactive_circles",
++            "summits_inactive_names",
++            "summits_highlight_alerts",
++            "summits_highlight",
++            "summits_activations",
++            "summits_circles",
++            "summits_circles_all",
++            "summits_names",
++            "summits_selected",
++            "summits_az_border",
++            "summits_az"
++          ]
++        },
++        {
+           "id": "poi",
+           "icon": "poi",
+           "name": "POI",
+\ No newline at end of file
+@@ -8651,7 +9611,9 @@
+             "Bicycle longdistance",
+             "Bicycle longdistance labels",
+             "Longdistance trail labels",
+-            "Yellow trail"
++            "Yellow trail",
++            "Trails with SAC scale",
++            "SAC scale labels"
+           ]
+         },
+         {
+\ No newline at end of file
+@@ -8783,10 +9745,17 @@
+       ],
+       "viewState": {
+         "mapType": "Style",
+-        "toolPanelType": "QuickEdits"
++        "activeBlock": null,
++        "toolPanelType": "Layers",
++        "selectedLayers": [
++          "Other border"
++        ],
++        "propertyPanelType": "Edit",
++        "editorFocusProperty": null,
++        "layersViewPanelType": "Verticality"
+       },
+       "userSettings": {
+-        "preferredViewPanelType": "Blocks"
++        "preferredViewPanelType": "Verticality"
+       }
+     }
+   },
+\ No newline at end of file
