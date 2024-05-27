@@ -11,11 +11,6 @@
               <b-radio v-model="units" native-value="ft">Imperial (ft/mi)</b-radio>
             </b-field>
           </b-field>
-          <b-field label="Map server" message="Choosing the closest server can help increase map loading performance.">
-            <b-select v-model="mapServerSelect">
-              <option v-for="(v, k) in mapServers" :value="k" :key="k">{{ v }}</option>
-            </b-select>
-          </b-field>
           <b-field label="Spot default comments">
             <b-input v-model="spotDefaultComments" type="text" maxlength="60" />
           </b-field>
@@ -40,15 +35,6 @@ export default {
     document.title = 'Settings - SOTLAS'
   },
   computed: {
-    mapServerSelect: {
-      get () {
-        return this.mapServer
-      },
-      set (newMapServer) {
-        localStorage.setItem('mapServer', newMapServer)
-        location.reload()
-      }
-    },
     units: {
       get () {
         return this.$store.state.altitudeUnits

@@ -7,7 +7,7 @@
       <div class="map-option">
         <b-field grouped>
           <b-select v-model="mapType" size="is-small">
-            <option v-for="(desc, type) in mapTypes" :key="type" :value="type">{{ desc }}</option>
+            <option v-for="(attrs, type) in mapTypes" :key="type" :value="type">{{ attrs.name }}</option>
           </b-select>
         </b-field>
       </div>
@@ -15,40 +15,38 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.regions" size="is-small" @input="setMapOption('regions', $event)">Regions</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapTypes[mapType].contours" grouped>
           <b-checkbox v-model="mapOptions.contours" size="is-small" @input="setMapOption('contours', $event)">Contour lines</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType === 'swisstopo_vector'" grouped>
+        <b-field v-if="mapTypes[mapType].hillshading" grouped>
           <b-checkbox v-model="mapOptions.hillshading" size="is-small" @input="setMapOption('hillshading', $event)">Hillshading</b-checkbox>
         </b-field>
-        <b-field v-if="mapType === 'openmaptiles' || mapType.startsWith('maptiler') || mapType.startsWith('swisstopo') || mapType === 'basemapat'" grouped>
+        <b-field grouped>
           <b-checkbox v-model="mapOptions.az" size="is-small" @input="setMapOption('az', $event)">
             Activation zones
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
           </b-checkbox>
         </b-field>
       </div>
-      <div class="map-option" v-if="mapType !== 'toposvalbard' && mapType !== 'norkart' && mapType !== 'caltopo' && mapType !== 'basemapat'">
+      <div class="map-option" v-if="mapTypes[mapType].difficulty">
         <b-field grouped>
           <b-checkbox v-model="mapOptions.difficulty" size="is-small" @input="setMapOption('difficulty', $event)">
             Hiking difficulty
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showHikingDifficultyInfo" />
           </b-checkbox>
         </b-field>
-        <template v-if="mapType.startsWith('swisstopo')">
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Ski routes</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes over 30°</b-checkbox>
-          </b-field>
-          <b-field grouped>
-            <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves and areas</b-checkbox>
-          </b-field>
-        </template>
+        <b-field v-if="mapTypes[mapType].skiing" grouped>
+          <b-checkbox v-model="mapOptions.skiing" size="is-small" @input="setMapOption('skiing', $event)">Ski routes</b-checkbox>
+        </b-field>
+        <b-field v-if="mapTypes[mapType].snowshoe" grouped>
+          <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
+        </b-field>
+        <b-field v-if="mapTypes[mapType].slope_classes" grouped>
+          <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes over 30°</b-checkbox>
+        </b-field>
+        <b-field v-if="mapTypes[mapType].wildlife" grouped>
+          <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves and areas</b-checkbox>
+        </b-field>
       </div>
       <div class="map-option">
         <b-field grouped>

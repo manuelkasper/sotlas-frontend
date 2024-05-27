@@ -39,7 +39,7 @@
 
           <p>Technologies used:
             <ul>
-              <li><a href="https://openmaptiles.org">OpenMapTiles</a></li>
+              <li><a href="https://maptiler.com/">MapTiler</a></li>
               <li><a href="https://docs.mapbox.com/mapbox-gl-js/overview/">Mapbox GL JS</a>
               <li><a href="https://nodejs.org/">Node.js</a> server</li>
               <li>SPA built with <a href="https://vuejs.org">Vue.js</a>, <a href="https://vuex.vuejs.org">Vuex</a> and <a href="https://router.vuejs.org">Vue Router</a></li>
