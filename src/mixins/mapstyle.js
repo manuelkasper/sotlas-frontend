@@ -30,9 +30,9 @@ export default {
       }
 
       if (this.mapType === 'maptiler_outdoor') {
-        return '26b8cd69-a1b5-4203-b5e2-d1a87230148e'
+        return '3a0840d2-674e-4630-a70e-8fdb111259b9'
       } else if (this.mapType === 'maptiler_winter') {
-        return 'dd452e90-5e79-4a2e-b084-f27a2f87cfa3'
+        return '5e862436-7ea7-4102-8b56-d35df3a11c07'
       }
 
       let style = require('../assets/' + this.mapType + '.json')
