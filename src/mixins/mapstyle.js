@@ -30,9 +30,17 @@ export default {
       }
 
       if (this.mapType === 'maptiler_outdoor') {
-        return '3a0840d2-674e-4630-a70e-8fdb111259b9'
+        if (this.$store.state.altitudeUnits === 'ft') {
+          return 'dc9edd90-1320-4fa4-98ba-ad2d4efe5998'
+        } else {
+          return '3a0840d2-674e-4630-a70e-8fdb111259b9'
+        }
       } else if (this.mapType === 'maptiler_winter') {
-        return '5e862436-7ea7-4102-8b56-d35df3a11c07'
+        if (this.$store.state.altitudeUnits === 'ft') {
+          return 'f5400991-e3f4-4734-a941-6be8d26381e7'
+        } else {
+          return '5e862436-7ea7-4102-8b56-d35df3a11c07'
+        }
       }
 
       let style = require('../assets/' + this.mapType + '.json')
