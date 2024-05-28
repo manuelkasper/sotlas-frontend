@@ -2,7 +2,9 @@
   <div>
     <div v-if="chartData || loading" class="elevation-chart">
       <div class="elevation-controls">
-        <div v-if="ascent !== null && descent !== null" class="adescent-info">↑ <DistanceLabel :distance="ascent" small-units /> ↓ <DistanceLabel :distance="descent" small-units /></div>
+        <div v-if="distance != null" class="distance-info">↔︎ <DistanceLabel :distance="distance" /></div>
+        <div v-if="ascent !== null" class="distance-info">↑ <DistanceLabel :distance="ascent" small-units /></div>
+        <div v-if="descent !== null" class="distance-info">↓ <DistanceLabel :distance="descent" small-units /></div>
         <b-button size="is-small" type="is-text" icon-left="window-close" @click="hideElevationProfile" />
       </div>
       <b-loading :active="loading" :is-full-page="false" />
@@ -314,6 +316,7 @@ export default {
           })
           this.ascent = ascent
           this.descent = descent
+          this.distance = distance
           this.loading = false
         })
         .finally(() => {
@@ -324,6 +327,7 @@ export default {
       this.chartData = null
       this.ascent = null
       this.descent = null
+      this.distance = null
     },
     renderElevation (elevation) {
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -365,6 +369,7 @@ export default {
       chartData: null,
       ascent: null,
       descent: null,
+      distance: null,
       loading: false,
       selectedFeatureId: null
     }
@@ -390,7 +395,8 @@ export default {
   right: 0px;
   z-index: 10;
 }
-.adescent-info {
+.distance-info {
+  padding-left: 0.5em;
   padding-top: 0.3em;
   color: #777;
   display: inline-block;
