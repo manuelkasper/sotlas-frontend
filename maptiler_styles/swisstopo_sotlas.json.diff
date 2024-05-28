@@ -1,5 +1,5 @@
---- style.json	2024-05-28 19:10:13
-+++ /Users/mk/Repositories/SOTLAS/sotlas-frontend/src/assets/swisstopo.json	2024-05-28 18:57:42
+--- style.json	2024-05-28 19:33:50
++++ /Users/mk/Repositories/SOTLAS/sotlas-frontend/src/assets/swisstopo.json	2024-05-28 19:32:59
 @@ -10,6 +10,72 @@
      "base_v1.0.0": {
        "url": "https://vectortiles.geo.admin.ch/tiles/ch.swisstopo.base.vt/v1.0.0/tiles.json",
@@ -74,12 +74,10 @@
    },
    "layers": [
 \ No newline at end of file
-@@ -22,12 +88,77 @@
-       "paint": {
-         "background-color": "rgba(253, 253, 254, 1)"
+@@ -24,10 +90,75 @@
        }
-+    },
-+    {
+     },
+     {
 +      "id": "background_water",
 +      "type": "fill",
 +      "source": "v3",
@@ -140,8 +138,8 @@
 +          0
 +        ]
 +      ]
-     },
-     {
++    },
++    {
        "id": "hillshade_grey",
        "type": "fill",
        "source": "terrain_v1.0.0",
@@ -164,10 +162,13 @@
          "visibility": "visible"
        },
 \ No newline at end of file
-@@ -256,11 +390,53 @@
-       }
-     },
-     {
+@@ -253,6 +387,45 @@
+           "scree_small_4",
+           ""
+         ]
++      }
++    },
++    {
 +      "id": "wildlife_areas",
 +      "type": "raster",
 +      "metadata": {
@@ -204,11 +205,11 @@
 +      "paint": {
 +        "raster-opacity": 0.3,
 +        "raster-resampling": "nearest"
-+      }
-+    },
-+    {
-       "id": "contour_line",
-       "type": "line",
+       }
+     },
+     {
+\ No newline at end of file
+@@ -261,6 +434,9 @@
        "source": "base_v1.0.0",
        "source-layer": "contour_line",
        "minzoom": 11.0,
@@ -230,15 +231,30 @@
        "filter": [
          "in",
 \ No newline at end of file
-@@ -2734,7 +2911,66 @@
-             false
-           ],
-           true
-+        ],
-+        [
-+          "==",
-+          ["geometry-type"],
-+          "LineString"
+@@ -2461,7 +2638,7 @@
+       },
+       "paint": {
+         "line-blur": 0.25,
+-        "line-color": "rgba(80, 80, 80, 1)",
++        "line-color": "rgba(210, 80, 80, 1)",
+         "line-width": [
+           "interpolate",
+           ["linear"],
+\ No newline at end of file
+@@ -2498,7 +2675,7 @@
+       },
+       "paint": {
+         "line-blur": 0.25,
+-        "line-color": "rgba(80, 80, 80, 1)",
++        "line-color": "rgba(210, 80, 80, 1)",
+         "line-width": [
+           "interpolate",
+           ["linear"],
+\ No newline at end of file
+@@ -2739,6 +2916,68 @@
+           "==",
+           ["geometry-type"],
+           "LineString"
 +        ]
 +      ]
 +    },
@@ -282,7 +298,7 @@
 +          4,
 +          20,
 +          10
-         ],
++        ],
 +        "line-opacity": 0.8
 +      },
 +      "metadata": {
@@ -290,20 +306,25 @@
 +      },
 +      "filter": [
 +        "all",
++        ["has", "sac_scale"],
 +        [
-+          "has",
-+          "sac_scale"
++          "!in",
++          "class",
++          "via_ferrata",
++          "via_ferrata_construction"
 +        ],
-         [
-           "==",
-           ["geometry-type"],
-\ No newline at end of file
-@@ -3007,8 +3243,34 @@
-           "LineString"
++        [
++          "!in",
++          "subclass",
++          "mask_rock_via_ferrata"
          ]
        ]
-+    },
-+    {
+     },
+\ No newline at end of file
+@@ -3009,6 +3248,32 @@
+       ]
+     },
+     {
 +      "id": "skiing_trails_raster",
 +      "type": "raster",
 +      "metadata": {
@@ -315,8 +336,8 @@
 +        "raster-opacity": 0.6,
 +        "raster-resampling": "linear"
 +      }
-     },
-     {
++    },
++    {
 +      "id": "snowshoe_trails_raster",
 +      "type": "raster",
 +      "metadata": {
@@ -334,7 +355,7 @@
        "type": "symbol",
        "source": "base_v1.0.0",
 \ No newline at end of file
-@@ -9137,6 +9399,9 @@
+@@ -9137,6 +9402,9 @@
        "source": "base_v1.0.0",
        "source-layer": "contour_line_pt",
        "minzoom": 16.0,
@@ -345,7 +366,7 @@
          "text-font": ["Frutiger Neue Italic"],
          "text-size": 12,
 \ No newline at end of file
-@@ -9217,6 +9482,9 @@
+@@ -9217,6 +9485,9 @@
        "source": "base_v1.0.0",
        "source-layer": "contour_line_pt",
        "minzoom": 13.0,
@@ -356,7 +377,17 @@
          "text-font": ["Frutiger Neue Italic"],
          "text-size": [
 \ No newline at end of file
-@@ -13032,8 +13300,8 @@
+@@ -10981,6 +11252,8 @@
+             "rgba(27, 36, 62, 1)",
+             ["historic_archive","historic_library"],
+             "rgba(46,52,70,1)",
++            ["via_ferrata","via_ferrata_construction"],
++            "rgba(210, 80, 80, 1)",
+             "rgba(42, 42, 42, 1)"
+           ]
+         ],
+\ No newline at end of file
+@@ -13032,8 +13305,8 @@
            "international",
            ["literal","uppercase"],
            "regional",
@@ -368,7 +399,7 @@
          "symbol-placement": "point",
          "text-letter-spacing": [
 \ No newline at end of file
-@@ -14151,6 +14419,303 @@
+@@ -14151,6 +14424,303 @@
          ["==","class","country"],
          ["==","iso_a2","CH"]
        ]

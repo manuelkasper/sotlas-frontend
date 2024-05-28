@@ -2638,7 +2638,7 @@
       },
       "paint": {
         "line-blur": 0.25,
-        "line-color": "rgba(80, 80, 80, 1)",
+        "line-color": "rgba(210, 80, 80, 1)",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -2675,7 +2675,7 @@
       },
       "paint": {
         "line-blur": 0.25,
-        "line-color": "rgba(80, 80, 80, 1)",
+        "line-color": "rgba(210, 80, 80, 1)",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -2967,14 +2967,17 @@
       },
       "filter": [
         "all",
+        ["has", "sac_scale"],
         [
-          "has",
-          "sac_scale"
+          "!in",
+          "class",
+          "via_ferrata",
+          "via_ferrata_construction"
         ],
         [
-          "==",
-          ["geometry-type"],
-          "LineString"
+          "!in",
+          "subclass",
+          "mask_rock_via_ferrata"
         ]
       ]
     },
@@ -11249,6 +11252,8 @@
             "rgba(27, 36, 62, 1)",
             ["historic_archive","historic_library"],
             "rgba(46,52,70,1)",
+            ["via_ferrata","via_ferrata_construction"],
+            "rgba(210, 80, 80, 1)",
             "rgba(42, 42, 42, 1)"
           ]
         ],
