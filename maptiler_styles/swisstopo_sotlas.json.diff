@@ -1,5 +1,5 @@
 --- style.json	2024-05-28 19:33:50
-+++ /Users/mk/Repositories/SOTLAS/sotlas-frontend/src/assets/swisstopo.json	2024-05-28 19:32:59
++++ /Users/mk/Repositories/SOTLAS/sotlas-frontend/src/assets/swisstopo.json	2024-05-28 20:22:15
 @@ -10,6 +10,72 @@
      "base_v1.0.0": {
        "url": "https://vectortiles.geo.admin.ch/tiles/ch.swisstopo.base.vt/v1.0.0/tiles.json",
@@ -162,13 +162,10 @@
          "visibility": "visible"
        },
 \ No newline at end of file
-@@ -253,6 +387,45 @@
-           "scree_small_4",
-           ""
-         ]
-+      }
-+    },
-+    {
+@@ -256,11 +390,53 @@
+       }
+     },
+     {
 +      "id": "wildlife_areas",
 +      "type": "raster",
 +      "metadata": {
@@ -205,11 +202,11 @@
 +      "paint": {
 +        "raster-opacity": 0.3,
 +        "raster-resampling": "nearest"
-       }
-     },
-     {
-\ No newline at end of file
-@@ -261,6 +434,9 @@
++      }
++    },
++    {
+       "id": "contour_line",
+       "type": "line",
        "source": "base_v1.0.0",
        "source-layer": "contour_line",
        "minzoom": 11.0,
@@ -251,14 +248,10 @@
            "interpolate",
            ["linear"],
 \ No newline at end of file
-@@ -2739,6 +2916,68 @@
-           "==",
-           ["geometry-type"],
-           "LineString"
-+        ]
-+      ]
-+    },
-+    {
+@@ -2743,6 +2920,68 @@
+       ]
+     },
+     {
 +      "id": "road_footway_sac",
 +      "type": "line",
 +      "source": "base_v1.0.0",
@@ -317,14 +310,20 @@
 +          "!in",
 +          "subclass",
 +          "mask_rock_via_ferrata"
++        ]
++      ]
++    },
++    {
+       "id": "road_path",
+       "type": "line",
+       "source": "base_v1.0.0",
+\ No newline at end of file
+@@ -3007,6 +3246,32 @@
+           "LineString"
          ]
        ]
-     },
-\ No newline at end of file
-@@ -3009,6 +3248,32 @@
-       ]
-     },
-     {
++    },
++    {
 +      "id": "skiing_trails_raster",
 +      "type": "raster",
 +      "metadata": {
@@ -349,11 +348,9 @@
 +        "raster-opacity": 0.6,
 +        "raster-resampling": "linear"
 +      }
-+    },
-+    {
+     },
+     {
        "id": "landcover_pt",
-       "type": "symbol",
-       "source": "base_v1.0.0",
 \ No newline at end of file
 @@ -9137,6 +9402,9 @@
        "source": "base_v1.0.0",
@@ -376,6 +373,16 @@
        "layout": {
          "text-font": ["Frutiger Neue Italic"],
          "text-size": [
+\ No newline at end of file
+@@ -9524,7 +9795,7 @@
+         "symbol-placement": "point",
+         "text-keep-upright": true,
+         "symbol-avoid-edges": true,
+-        "text-allow-overlap": false,
++        "text-allow-overlap": true,
+         "text-letter-spacing": 0.02,
+         "text-pitch-alignment": "viewport",
+         "text-ignore-placement": false,
 \ No newline at end of file
 @@ -10981,6 +11252,8 @@
              "rgba(27, 36, 62, 1)",

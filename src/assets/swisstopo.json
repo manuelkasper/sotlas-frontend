@@ -9795,7 +9795,7 @@
         "symbol-placement": "point",
         "text-keep-upright": true,
         "symbol-avoid-edges": true,
-        "text-allow-overlap": false,
+        "text-allow-overlap": true,
         "text-letter-spacing": 0.02,
         "text-pitch-alignment": "viewport",
         "text-ignore-placement": false,
