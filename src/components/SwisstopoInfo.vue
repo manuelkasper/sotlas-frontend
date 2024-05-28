@@ -4,26 +4,26 @@
       <div class="has-text-centered">
         <span class="fp ch flag"></span>
       </div>
-      <h3>swisstopo-Karte jetzt verfügbar</h3>
-      <p>Auf SOTLAS kann man nun auch die moderne swisstopo Vektor-Karte nutzen. Einfach den Kartentyp umstellen, fertig!</p>
+      <h3>swisstopo map available</h3>
+      <p>The modern swisstopo map is much more accurate in Switzerland than the global map. Just switch the map type, done!</p>
       <div class="has-text-centered is-hidden-touch">
         <img class="swisstopo-info" src="../assets/swisstopo-info.png" />
       </div>
       <div>
-        <h5>Weitere Funktionen:</h5>
+        <h5>More features:</h5>
         <ul>
-          <li>Skitourenrouten</li>
-          <li>Schneeschuhrouten</li>
-          <li>Hangneigungsklassen über 30°</li>
-          <li>Wildschutzgebiete</li>
+          <li>Ski routes</li>
+          <li>Snowshoe routes</li>
+          <li>Slope classes above 30°</li>
+          <li>Wildlife reserves and areas</li>
         </ul>
       </div>
       <div class="action-buttons">
         <div class="has-text-centered">
-          <b-button type="is-info" size="is-medium" @click="switchMap">Jetzt umstellen</b-button>
+          <b-button type="is-info" size="is-medium" @click="switchMap">Switch now</b-button>
         </div>
         <div class="has-text-centered">
-          <b-button size="is-medium" @click="cancelInfo">OK, cool!</b-button>
+          <b-button size="is-medium" @click="cancelInfo">Use global map</b-button>
         </div>
       </div>
     </div>
