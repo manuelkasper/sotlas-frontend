@@ -1,20 +1,21 @@
---- Outdoor_original/style.json	2024-05-27 08:09:30
-+++ SOTLAS_Outdoor_meters/style.json	2024-05-27 14:05:32
+--- Outdoor/style.json	2024-05-29 11:35:38
++++ SOTLAS_Outdoor_meters/style.json	2024-05-29 11:34:54
 @@ -1,7 +1,7 @@
  {
    "version": 8,
--  "id": "45b6d505-d5c6-4041-a445-427a325503f5",
--  "name": "Outdoor original",
+-  "id": "a871a779-89fe-4cc9-8627-2a0ccd47424c",
+-  "name": "Outdoor",
 +  "id": "3a0840d2-674e-4630-a70e-8fdb111259b9",
 +  "name": "SOTLAS Outdoor (meters)",
    "sources": {
      "outdoor": {
        "url": "https://api.maptiler.com/tiles/outdoor/tiles.json?key={key}",
 \ No newline at end of file
-@@ -18,6 +18,22 @@
+@@ -17,6 +17,22 @@
+     },
      "maptiler_planet": {
        "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
-       "type": "vector"
++      "type": "vector"
 +    },
 +    "2d324268-fe52-4875-96ca-bc5692fc1225": {
 +      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={key}",
@@ -30,10 +31,9 @@
 +    },
 +    "e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3": {
 +      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={key}",
-+      "type": "vector"
+       "type": "vector"
      }
    },
-   "layers": [
 \ No newline at end of file
 @@ -380,6 +396,9 @@
          },
@@ -57,16 +57,16 @@
          "all",
          [
 \ No newline at end of file
-@@ -574,6 +596,9 @@
-           18,
+@@ -575,6 +597,9 @@
            0.5
          ]
-+      },
+       },
 +      "metadata": {
 +        "sotlas-map-option": "contours"
-       },
++      },
        "filter": [
          "all",
+         [
 \ No newline at end of file
 @@ -605,6 +630,9 @@
          "line-width": 0.8,
@@ -114,22 +114,90 @@
          "all",
          [
 \ No newline at end of file
-@@ -1816,21 +1851,23 @@
-           "interpolate",
-           [
-             "exponential",
--            1.2
+@@ -1555,7 +1590,191 @@
+       ]
+     },
+     {
+-      "id": "Road network",
++      "id": "Steps",
++      "type": "line",
++      "source": "maptiler_planet",
++      "source-layer": "transportation",
++      "minzoom": 15.0,
++      "layout": {
++        "line-join": "round",
++        "visibility": "visible"
++      },
++      "paint": {
++        "line-color": "hsl(24, 10%, 60%)",
++        "line-width": {
++          "base": 1.4,
++          "stops": [
++            [
++              14.5,
++              0
++            ],
++            [
++              15,
++              3
++            ],
++            [
++              20,
++              8
++            ]
++          ]
++        },
++        "line-dasharray": [
++          0.5,
++          1
++        ]
++      },
++      "metadata": {},
++      "filter": [
++        "all",
++        [
++          "==",
++          "$type",
++          "LineString"
++        ],
++        [
++          "==",
++          "class",
++          "path"
++        ],
++        [
++          "!=",
++          "brunnel",
++          "tunnel"
++        ],
++        [
++          "==",
++          "subclass",
++          "steps"
++        ]
++      ]
++    },
++    {
++      "id": "Track",
++      "type": "line",
++      "source": "maptiler_planet",
++      "source-layer": "transportation",
++      "minzoom": 12.0,
++      "layout": {
++        "line-join": "round",
++        "visibility": "visible"
++      },
++      "paint": {
++        "line-color": "hsl(24, 10%, 60%)",
++        "line-width": [
++          "interpolate",
++          [
++            "exponential",
 +            1
-           ],
-           [
-             "zoom"
-           ],
--          13,
--          0.5,
--          16,
--          1,
--          20,
--          2
++          ],
++          [
++            "zoom"
++          ],
 +          10,
 +          1.5,
 +          12,
@@ -138,32 +206,53 @@
 +          2,
 +          18,
 +          3
-         ],
-         "line-dasharray": [
--          5,
--          2
++        ],
++        "line-dasharray": [
 +          4,
 +          1
-         ]
-       },
-       "metadata": {},
-\ No newline at end of file
-@@ -1869,21 +1906,23 @@
-           "interpolate",
-           [
-             "exponential",
--            1.2
++        ]
++      },
++      "metadata": {},
++      "filter": [
++        "all",
++        [
++          "==",
++          "$type",
++          "LineString"
++        ],
++        [
++          "==",
++          "class",
++          "track"
++        ],
++        [
++          "!=",
++          "brunnel",
++          "tunnel"
++        ]
++      ]
++    },
++    {
++      "id": "Path",
++      "type": "line",
++      "source": "maptiler_planet",
++      "source-layer": "transportation",
++      "minzoom": 12.0,
++      "layout": {
++        "line-join": "round",
++        "visibility": "visible"
++      },
++      "paint": {
++        "line-color": "hsl(24, 10%, 60%)",
++        "line-width": [
++          "interpolate",
++          [
++            "exponential",
 +            1
-           ],
-           [
-             "zoom"
-           ],
--          13,
--          0.5,
--          16,
--          1,
--          20,
--          2
++          ],
++          [
++            "zoom"
++          ],
 +          10,
 +          1.5,
 +          12,
@@ -172,30 +261,569 @@
 +          2,
 +          18,
 +          3
-         ],
-         "line-dasharray": [
--          5,
--          2
++        ],
++        "line-dasharray": [
 +          4,
 +          1
-         ]
-       },
-       "metadata": {},
-\ No newline at end of file
-@@ -1906,6 +1945,11 @@
-         ],
-         [
-           "!=",
++        ]
++      },
++      "metadata": {},
++      "filter": [
++        "all",
++        [
++          "==",
++          "$type",
++          "LineString"
++        ],
++        [
++          "==",
++          "class",
++          "path"
++        ],
++        [
++          "!=",
++          "subclass",
++          "steps"
++        ],
++        [
++          "!=",
 +          "subclass",
 +          "path"
 +        ],
 +        [
 +          "!=",
-           "surface",
-           "paved"
++          "surface",
++          "paved"
++        ],
++        [
++          "!=",
++          "brunnel",
++          "tunnel"
++        ]
++      ]
++    },
++    {
++      "id": "Road network casing",
+       "type": "line",
+       "source": "maptiler_planet",
+       "source-layer": "transportation",
+\ No newline at end of file
+@@ -1566,7 +1785,18 @@
+         "visibility": "visible"
+       },
+       "paint": {
+-        "line-color": "hsl(0, 100%, 100%)",
++        "line-color": [
++          "match",
++          [
++            "get",
++            "class"
++          ],
++          "motorway",
++          "hsl(28, 72%, 69%)",
++          "primary",
++          "hsl(28, 72%, 69%)",
++          "hsl(0, 0%, 65%)"
++        ],
+         "line-width": [
+           "interpolate",
+           [
+\ No newline at end of file
+@@ -1583,8 +1813,10 @@
+               "get",
+               "class"
+             ],
++            "primary",
++            1,
+             "motorway",
+-            0.5,
++            1.5,
+             0
+           ],
+           7,
+\ No newline at end of file
+@@ -1594,8 +1826,10 @@
+               "get",
+               "class"
+             ],
++            "primary",
++            1.5,
+             "motorway",
+-            1,
++            2.5,
+             0
+           ],
+           9,
+\ No newline at end of file
+@@ -1605,8 +1839,10 @@
+               "get",
+               "class"
+             ],
++            "primary",
++            2.5,
+             "motorway",
+-            2,
++            4,
+             0
+           ],
+           14,
+\ No newline at end of file
+@@ -1617,15 +1853,15 @@
+               "class"
+             ],
+             "motorway",
+-            5,
++            7,
+             [
+               "primary",
+               "trunk",
+               "secondary",
+               "tertiary"
+             ],
+-            1,
+-            0.5
++            4.5,
++            3.5
+           ],
+           16,
+           [
+\ No newline at end of file
+@@ -1635,15 +1871,15 @@
+               "class"
+             ],
+             "motorway",
+-            10,
++            12,
+             [
+               "primary",
+               "trunk",
+               "secondary",
+               "tertiary"
+             ],
+-            4.6,
+-            3
++            8,
++            6
+           ],
+           18,
+           [
+\ No newline at end of file
+@@ -1653,15 +1889,15 @@
+               "class"
+             ],
+             "motorway",
+-            12,
++            16,
+             [
+               "primary",
+               "trunk",
+               "secondary",
+               "tertiary"
+             ],
+-            5,
+-            7
++            11,
++            9
+           ],
+           20,
+           [
+\ No newline at end of file
+@@ -1671,15 +1907,15 @@
+               "class"
+             ],
+             "motorway",
+-            15,
++            19,
+             [
+               "primary",
+               "trunk",
+               "secondary",
+               "tertiary"
+             ],
+-            6.4,
+-            8
++            12,
++            10
+           ],
+           22,
+           [
+\ No newline at end of file
+@@ -1689,22 +1925,22 @@
+               "class"
+             ],
+             "motorway",
+-            16,
++            22,
+             [
+               "primary",
+               "trunk",
+               "secondary",
+               "tertiary"
+             ],
+-            12,
++            18,
+             [
+               "minor",
+               "service",
+               "pier",
+               "raceway"
+             ],
+-            11,
+-            9
++            16,
++            13
+           ]
+         ]
+       },
+\ No newline at end of file
+@@ -1742,177 +1978,206 @@
+       ]
+     },
+     {
+-      "id": "Steps",
++      "id": "Road network",
+       "type": "line",
+       "source": "maptiler_planet",
+       "source-layer": "transportation",
+-      "minzoom": 15.0,
++      "minzoom": 5.0,
+       "layout": {
++        "line-cap": "round",
+         "line-join": "round",
+         "visibility": "visible"
+       },
+       "paint": {
+-        "line-color": "hsl(24, 10%, 60%)",
+-        "line-width": {
+-          "base": 1.4,
+-          "stops": [
+-            [
+-              14.5,
+-              0
+-            ],
+-            [
+-              15,
+-              3
+-            ],
+-            [
+-              20,
+-              8
+-            ]
+-          ]
+-        },
+-        "line-dasharray": [
+-          0.5,
+-          1
+-        ]
+-      },
+-      "metadata": {},
+-      "filter": [
+-        "all",
+-        [
+-          "==",
+-          "$type",
+-          "LineString"
++        "line-color": [
++          "match",
++          [
++            "get",
++            "class"
++          ],
++          "motorway",
++          "hsl(35, 100%, 76%)",
++          "primary",
++          "hsl(48, 100%,76%)",
++          "hsl(0, 100%, 100%)"
          ],
+-        [
+-          "==",
+-          "class",
+-          "path"
+-        ],
+-        [
+-          "!=",
+-          "brunnel",
+-          "tunnel"
+-        ],
+-        [
+-          "==",
+-          "subclass",
+-          "steps"
+-        ]
+-      ]
+-    },
+-    {
+-      "id": "Track",
+-      "type": "line",
+-      "source": "maptiler_planet",
+-      "source-layer": "transportation",
+-      "minzoom": 12.0,
+-      "layout": {
+-        "line-join": "round",
+-        "visibility": "visible"
+-      },
+-      "paint": {
+-        "line-color": "hsl(24, 10%, 60%)",
+         "line-width": [
+           "interpolate",
+           [
+-            "exponential",
+-            1.2
++            "linear",
++            1
+           ],
+           [
+             "zoom"
+           ],
+-          13,
+-          0.5,
+-          16,
+-          1,
+-          20,
+-          2
+-        ],
+-        "line-dasharray": [
+           5,
+-          2
+-        ]
+-      },
+-      "metadata": {},
+-      "filter": [
+-        "all",
+-        [
+-          "==",
+-          "$type",
+-          "LineString"
+-        ],
+-        [
+-          "==",
+-          "class",
+-          "track"
+-        ],
+-        [
+-          "!=",
+-          "brunnel",
+-          "tunnel"
+-        ]
+-      ]
+-    },
+-    {
+-      "id": "Path",
+-      "type": "line",
+-      "source": "maptiler_planet",
+-      "source-layer": "transportation",
+-      "minzoom": 12.0,
+-      "layout": {
+-        "line-join": "round",
+-        "visibility": "visible"
+-      },
+-      "paint": {
+-        "line-color": "hsl(24, 10%, 60%)",
+-        "line-width": [
+-          "interpolate",
+           [
+-            "exponential",
+-            1.2
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "primary",
++            0.5,
++            "motorway",
++            1,
++            0
+           ],
++          7,
+           [
+-            "zoom"
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "primary",
++            1,
++            "motorway",
++            1.5,
++            0
+           ],
+-          13,
+-          0.5,
++          9,
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "primary",
++            1.5,
++            "motorway",
++            2,
++            0
++          ],
++          14,
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "motorway",
++            5,
++            [
++              "primary",
++              "trunk",
++              "secondary",
++              "tertiary"
++            ],
++            3,
++            2
++          ],
+           16,
+-          1,
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "motorway",
++            10,
++            [
++              "primary",
++              "trunk",
++              "secondary",
++              "tertiary"
++            ],
++            6,
++            4
++          ],
++          18,
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "motorway",
++            14,
++            [
++              "primary",
++              "trunk",
++              "secondary",
++              "tertiary"
++            ],
++            9,
++            7
++          ],
+           20,
+-          2
+-        ],
+-        "line-dasharray": [
+-          5,
+-          2
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "motorway",
++            17,
++            [
++              "primary",
++              "trunk",
++              "secondary",
++              "tertiary"
++            ],
++            10,
++            8
++          ],
++          22,
++          [
++            "match",
++            [
++              "get",
++              "class"
++            ],
++            "motorway",
++            20,
++            [
++              "primary",
++              "trunk",
++              "secondary",
++              "tertiary"
++            ],
++            16,
++            [
++              "minor",
++              "service",
++              "pier",
++              "raceway"
++            ],
++            14,
++            11
++          ]
+         ]
+       },
+       "metadata": {},
+       "filter": [
+         "all",
+         [
+-          "==",
+-          "$type",
+-          "LineString"
+-        ],
+-        [
+-          "==",
+-          "class",
+-          "path"
+-        ],
+-        [
+           "!=",
+-          "subclass",
+-          "steps"
+-        ],
+-        [
+-          "!=",
+-          "surface",
+-          "paved"
+-        ],
+-        [
+-          "!=",
+           "brunnel",
+           "tunnel"
++        ],
++        [
++          "!in",
++          "class",
++          "aerialway",
++          "bridge",
++          "bus_guideway",
++          "busway",
++          "ferry",
++          "minor_construction",
++          "motorway_construction",
++          "path",
++          "path_construction",
++          "primary_construction",
++          "raceway_construction",
++          "rail",
++          "secondary_construction",
++          "service_construction",
++          "tertiary_construction",
++          "track",
++          "track_construction",
++          "transit",
++          "trunk_construction"
+         ]
+       ]
+     },
 \ No newline at end of file
-@@ -2326,7 +2370,7 @@
+@@ -2326,7 +2591,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -205,7 +833,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -2454,7 +2498,7 @@
+@@ -2454,7 +2719,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -215,7 +843,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -2564,13 +2608,17 @@
+@@ -2564,13 +2829,17 @@
              "zoom"
            ],
            10,
@@ -237,7 +865,7 @@
        },
        "metadata": {},
 \ No newline at end of file
-@@ -2582,8 +2630,88 @@
+@@ -2582,8 +2851,88 @@
            "LineString"
          ],
          [
@@ -329,7 +957,7 @@
          [
            "!in",
 \ No newline at end of file
-@@ -2604,7 +2732,7 @@
+@@ -2604,7 +2953,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -339,7 +967,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -2675,7 +2803,7 @@
+@@ -2675,7 +3024,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -349,7 +977,7 @@
            "stops": [
              [
 \ No newline at end of file
-@@ -2770,7 +2898,7 @@
+@@ -2770,7 +3119,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -359,7 +987,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -2854,7 +2982,7 @@
+@@ -2854,7 +3203,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -369,7 +997,7 @@
            "stops": [
              [
 \ No newline at end of file
-@@ -2950,7 +3078,7 @@
+@@ -2950,7 +3299,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -379,7 +1007,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -3034,7 +3162,7 @@
+@@ -3034,7 +3383,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -389,7 +1017,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -3118,7 +3246,7 @@
+@@ -3118,7 +3467,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -399,7 +1027,7 @@
            "stops": [
              [
 \ No newline at end of file
-@@ -3213,7 +3341,7 @@
+@@ -3213,7 +3562,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -409,7 +1037,7 @@
            "stops": [
              [
 \ No newline at end of file
-@@ -3316,7 +3444,7 @@
+@@ -3316,7 +3665,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "bevel",
@@ -419,7 +1047,7 @@
            "stops": [
              [
 \ No newline at end of file
-@@ -3396,7 +3524,7 @@
+@@ -3396,7 +3745,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "round",
@@ -429,7 +1057,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -3448,7 +3576,7 @@
+@@ -3448,7 +3797,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -439,7 +1067,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -3637,7 +3765,7 @@
+@@ -3637,7 +3986,7 @@
        "layout": {
          "line-cap": "round",
          "line-join": "miter",
@@ -449,7 +1077,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -3725,9 +3853,20 @@
+@@ -3725,9 +4074,20 @@
          }
        },
        "filter": [
@@ -474,7 +1102,7 @@
      },
      {
 \ No newline at end of file
-@@ -3761,9 +3900,20 @@
+@@ -3761,9 +4121,20 @@
          ]
        },
        "filter": [
@@ -499,7 +1127,7 @@
      },
      {
 \ No newline at end of file
-@@ -3873,8 +4023,12 @@
+@@ -3873,8 +4244,12 @@
          [
            "!in",
            "subclass",
@@ -515,7 +1143,7 @@
          [
            "!in",
 \ No newline at end of file
-@@ -3891,7 +4045,7 @@
+@@ -3891,7 +4266,7 @@
        "source": "maptiler_planet",
        "source-layer": "boundary",
        "minzoom": 3.0,
@@ -525,7 +1153,7 @@
          "line-join": "round",
          "visibility": "visible"
 \ No newline at end of file
-@@ -3906,9 +4060,9 @@
+@@ -3906,9 +4281,9 @@
              "zoom"
            ],
            3,
@@ -538,7 +1166,7 @@
          "line-width": [
            "interpolate",
 \ No newline at end of file
-@@ -3926,10 +4080,12 @@
+@@ -3926,10 +4301,12 @@
            12,
            1
          ],
@@ -555,7 +1183,7 @@
        },
        "metadata": {},
 \ No newline at end of file
-@@ -3939,13 +4095,7 @@
+@@ -3939,13 +4316,7 @@
            "in",
            "admin_level",
            3,
@@ -571,7 +1199,7 @@
          [
            "==",
 \ No newline at end of file
-@@ -6511,7 +6661,7 @@
+@@ -6511,7 +6882,7 @@
            ],
            " ft"
          ],
@@ -581,7 +1209,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6585,10 +6735,6 @@
+@@ -6585,10 +6956,6 @@
          [
            "has",
            "name"
@@ -593,7 +1221,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6752,10 +6898,6 @@
+@@ -6752,10 +7119,6 @@
          [
            "has",
            "name"
@@ -605,7 +1233,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6764,7 +6906,7 @@
+@@ -6764,7 +7127,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -615,7 +1243,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -6845,7 +6987,7 @@
+@@ -6845,7 +7208,7 @@
            ],
            " ft"
          ],
@@ -625,7 +1253,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6874,6 +7016,8 @@
+@@ -6874,6 +7237,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -635,7 +1263,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -6919,10 +7063,6 @@
+@@ -6919,10 +7284,6 @@
          [
            "has",
            "name"
@@ -647,7 +1275,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6931,7 +7071,7 @@
+@@ -6931,7 +7292,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -657,7 +1285,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -7041,6 +7181,8 @@
+@@ -7041,6 +7402,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -667,7 +1295,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -7098,10 +7240,6 @@
+@@ -7098,10 +7461,6 @@
          [
            "has",
            "name"
@@ -679,7 +1307,7 @@
        ]
      },
 \ No newline at end of file
-@@ -7619,7 +7757,7 @@
+@@ -7619,7 +7978,7 @@
              "name"
            ]
          ],
@@ -689,7 +1317,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -7704,7 +7842,7 @@
+@@ -7704,7 +8063,7 @@
              "name"
            ]
          ],
@@ -699,7 +1327,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -8603,13 +8741,837 @@
+@@ -8603,13 +8962,842 @@
          "==",
          "class",
          "continent"
@@ -712,6 +1340,7 @@
 +      "source-layer": "trail",
 +      "layout": {
 +        "text-font": [
++          "Roboto Regular",
 +          "Noto Sans Regular"
 +        ],
 +        "text-size": {
@@ -838,7 +1467,7 @@
 +          "geometry-type"
 +        ],
 +        "Polygon"
-       ]
++      ]
 +    },
 +    {
 +      "id": "summits_az_border",
@@ -936,6 +1565,7 @@
 +      "layout": {
 +        "icon-size": 1,
 +        "text-font": [
++          "Roboto Regular",
 +          "Noto Sans Regular"
 +        ],
 +        "text-size": {
@@ -1166,7 +1796,7 @@
 +          "in",
 +          "code"
 +        ]
-+      ]
+       ]
 +    },
 +    {
 +      "id": "summits_activations",
@@ -1176,7 +1806,8 @@
 +      "minzoom": 10.0,
 +      "layout": {
 +        "text-font": [
-+          "Noto Sans Bold"
++          "Roboto Medium",
++          "Noto Sans Medium"
 +        ],
 +        "text-size": {
 +          "stops": [
@@ -1279,6 +1910,7 @@
 +      "layout": {
 +        "icon-size": 1,
 +        "text-font": [
++          "Roboto Regular",
 +          "Noto Sans Regular"
 +        ],
 +        "text-size": {
@@ -1466,6 +2098,7 @@
 +      "source-layer": "labels",
 +      "layout": {
 +        "text-font": [
++          "Roboto Regular",
 +          "Noto Sans Regular"
 +        ],
 +        "text-size": {
@@ -1538,7 +2171,7 @@
            "icon": "poi",
            "name": "POI",
 \ No newline at end of file
-@@ -8651,7 +9613,9 @@
+@@ -8651,7 +9839,9 @@
              "Bicycle longdistance",
              "Bicycle longdistance labels",
              "Longdistance trail labels",
@@ -1550,7 +2183,18 @@
          },
          {
 \ No newline at end of file
-@@ -8783,10 +9747,17 @@
+@@ -8715,7 +9905,8 @@
+             "Taxiway",
+             "Runway",
+             "Airport labels",
+-            "Aeroway"
++            "Aeroway",
++            "Road network casing"
+           ]
+         },
+         {
+\ No newline at end of file
+@@ -8783,10 +9974,17 @@
        ],
        "viewState": {
          "mapType": "Style",
@@ -1558,7 +2202,7 @@
 +        "activeBlock": null,
 +        "toolPanelType": "Layers",
 +        "selectedLayers": [
-+          "Other border"
++          "Road network casing"
 +        ],
 +        "propertyPanelType": "Edit",
 +        "editorFocusProperty": null,
