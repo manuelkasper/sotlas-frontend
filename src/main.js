@@ -86,7 +86,7 @@ let lastError = null
 axios.interceptors.response.use(response => {
   return response
 }, error => {
-  if ((!lastError || new Date().getTime() - lastError > 9000) && (!error.response || error.response.status !== 404) && myVue) {
+  if (!error.config.ignoreError && (!lastError || new Date().getTime() - lastError > 9000) && (!error.response || error.response.status !== 404) && myVue) {
     // SnackbarProgrammatic.open doesn't work with Webpack 5
     // See https://github.com/buefy/buefy/issues/2299
     myVue.$buefy.snackbar.open({

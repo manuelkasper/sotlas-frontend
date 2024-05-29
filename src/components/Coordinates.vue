@@ -128,7 +128,7 @@ export default {
       if (!this.reference) {
         return
       }
-      axios.head(this.makeAzUrlForType('gpx'))
+      axios.head(this.makeAzUrlForType('gpx'), { ignoreError: true })
         .then(response => {
           if (response.status === 200) {
             this.haveAz = true
