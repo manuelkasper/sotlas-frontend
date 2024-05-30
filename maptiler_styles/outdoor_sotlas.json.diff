@@ -1,5 +1,5 @@
 --- Outdoor/style.json	2024-05-30 07:10:16
-+++ SOTLAS_Outdoor_meters/style.json	2024-05-30 07:10:12
++++ SOTLAS_Outdoor_meters/style.json	2024-05-30 08:14:42
 @@ -1,7 +1,7 @@
  {
    "version": 8,
@@ -114,7 +114,7 @@
          "all",
          [
 \ No newline at end of file
-@@ -1555,7 +1590,186 @@
+@@ -1555,10 +1590,189 @@
        ]
      },
      {
@@ -234,9 +234,9 @@
 +    },
 +    {
 +      "id": "Path",
-+      "type": "line",
-+      "source": "maptiler_planet",
-+      "source-layer": "transportation",
+       "type": "line",
+       "source": "maptiler_planet",
+       "source-layer": "transportation",
 +      "minzoom": 12.0,
 +      "layout": {
 +        "line-join": "round",
@@ -299,9 +299,12 @@
 +    },
 +    {
 +      "id": "Road network casing",
-       "type": "line",
-       "source": "maptiler_planet",
-       "source-layer": "transportation",
++      "type": "line",
++      "source": "maptiler_planet",
++      "source-layer": "transportation",
+       "minzoom": 5.0,
+       "layout": {
+         "line-cap": "round",
 \ No newline at end of file
 @@ -1566,7 +1780,23 @@
          "visibility": "visible"
@@ -497,10 +500,11 @@
 -      "minzoom": 15.0,
 +      "minzoom": 5.0,
        "layout": {
--        "line-join": "round",
--        "visibility": "visible"
--      },
--      "paint": {
++        "line-cap": "round",
+         "line-join": "round",
+         "visibility": "visible"
+       },
+       "paint": {
 -        "line-color": "hsl(24, 10%, 60%)",
 -        "line-width": {
 -          "base": 1.4,
@@ -556,11 +560,10 @@
 -      "source-layer": "transportation",
 -      "minzoom": 12.0,
 -      "layout": {
-+        "line-cap": "round",
-         "line-join": "round",
-         "visibility": "visible"
-       },
-       "paint": {
+-        "line-join": "round",
+-        "visibility": "visible"
+-      },
+-      "paint": {
 -        "line-color": "hsl(24, 10%, 60%)",
 -        "line-width": [
 -          "interpolate",
@@ -640,6 +643,8 @@
            ],
 -          13,
 -          0.5,
+-          16,
+-          1,
 +          5,
 +          [
 +            "match",
@@ -706,8 +711,7 @@
 +            3,
 +            2
 +          ],
-           16,
--          1,
++          16,
 +          [
 +            "match",
 +            [
@@ -796,7 +800,7 @@
        "metadata": {},
        "filter": [
          "all",
--        [
+         [
 -          "==",
 -          "$type",
 -          "LineString"
@@ -807,12 +811,12 @@
 -          "path"
 -        ],
 -        [
--          "!=",
+           "!=",
 -          "subclass",
 -          "steps"
 -        ],
-         [
-           "!=",
+-        [
+-          "!=",
 -          "surface",
 -          "paved"
 -        ],
@@ -1225,7 +1229,28 @@
          [
            "==",
 \ No newline at end of file
-@@ -6511,7 +6905,7 @@
+@@ -5539,8 +5933,17 @@
+             "zoo"
+           ],
+           [
+-            "get",
+-            "class"
++            "match",
++            [
++              "get",
++              "subclass"
++            ],
++            "alpine_hut",
++            "shelter",
++            [
++              "get",
++              "class"
++            ]
+           ],
+           ""
+         ],
+\ No newline at end of file
+@@ -6511,7 +6914,7 @@
            ],
            " ft"
          ],
@@ -1235,7 +1260,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6585,10 +6979,6 @@
+@@ -6585,10 +6988,6 @@
          [
            "has",
            "name"
@@ -1247,7 +1272,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6752,10 +7142,6 @@
+@@ -6752,10 +7151,6 @@
          [
            "has",
            "name"
@@ -1259,7 +1284,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6764,7 +7150,7 @@
+@@ -6764,7 +7159,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -1269,7 +1294,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -6845,7 +7231,7 @@
+@@ -6845,7 +7240,7 @@
            ],
            " ft"
          ],
@@ -1279,7 +1304,7 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -6874,6 +7260,8 @@
+@@ -6874,6 +7269,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -1289,7 +1314,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -6919,10 +7307,6 @@
+@@ -6919,10 +7316,6 @@
          [
            "has",
            "name"
@@ -1301,7 +1326,7 @@
        ]
      },
 \ No newline at end of file
-@@ -6931,7 +7315,7 @@
+@@ -6931,7 +7324,7 @@
        "type": "symbol",
        "source": "maptiler_planet",
        "source-layer": "mountain_peak",
@@ -1311,7 +1336,7 @@
          "icon-size": [
            "interpolate",
 \ No newline at end of file
-@@ -7041,6 +7425,8 @@
+@@ -7041,6 +7434,8 @@
        "paint": {
          "icon-color": "hsl(23, 57%, 24%)",
          "text-color": "hsl(23, 57%, 24%)",
@@ -1321,7 +1346,7 @@
          "text-halo-blur": {
            "stops": [
 \ No newline at end of file
-@@ -7098,10 +7484,6 @@
+@@ -7098,10 +7493,6 @@
          [
            "has",
            "name"
@@ -1333,7 +1358,7 @@
        ]
      },
 \ No newline at end of file
-@@ -7619,7 +8001,7 @@
+@@ -7619,7 +8010,7 @@
              "name"
            ]
          ],
@@ -1343,7 +1368,7 @@
        },
        "paint": {
 \ No newline at end of file
-@@ -7704,7 +8086,7 @@
+@@ -7704,7 +8095,7 @@
              "name"
            ]
          ],
@@ -1353,11 +1378,10 @@
          "text-offset": [
            0,
 \ No newline at end of file
-@@ -8603,13 +8985,843 @@
-         "==",
+@@ -8604,12 +8995,842 @@
          "class",
          "continent"
-+      ]
+       ]
 +    },
 +    {
 +      "id": "SAC scale labels",
@@ -1823,7 +1847,7 @@
 +          "in",
 +          "code"
 +        ]
-       ]
++      ]
 +    },
 +    {
 +      "id": "summits_activations",
@@ -2198,7 +2222,7 @@
            "icon": "poi",
            "name": "POI",
 \ No newline at end of file
-@@ -8651,7 +9863,9 @@
+@@ -8651,7 +9872,9 @@
              "Bicycle longdistance",
              "Bicycle longdistance labels",
              "Longdistance trail labels",
@@ -2210,7 +2234,7 @@
          },
          {
 \ No newline at end of file
-@@ -8715,7 +9929,8 @@
+@@ -8715,7 +9938,8 @@
              "Taxiway",
              "Runway",
              "Airport labels",
@@ -2221,17 +2245,17 @@
          },
          {
 \ No newline at end of file
-@@ -8783,10 +9998,17 @@
+@@ -8783,10 +10007,17 @@
        ],
        "viewState": {
          "mapType": "Style",
 -        "toolPanelType": "QuickEdits"
-+        "activeBlock": null,
++        "activeBlock": "poi",
 +        "toolPanelType": "Layers",
 +        "selectedLayers": [
-+          "Road network casing"
++          "Tourism"
 +        ],
-+        "propertyPanelType": "Style",
++        "propertyPanelType": "Edit",
 +        "editorFocusProperty": null,
 +        "layersViewPanelType": "Verticality"
        },
