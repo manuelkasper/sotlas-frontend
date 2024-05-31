@@ -3,7 +3,7 @@
     <MglMap v-if="showMap && mapStyle" :apiKey="mapApiKey" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
-      <MglScaleControl position="bottom-left" />
+      <MglScaleControl position="bottom-left" :unit="mapUnits" />
       <MglAttributionControl :compact="$mq.mobile" position="bottom-right" />
 
       <!-- Note: these are not true Mapbox GL controls that get added via addControl(), as those don't mix well with Vue.js templating.

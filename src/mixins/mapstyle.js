@@ -40,6 +40,17 @@ export default {
       })
       style.glyphs = style.glyphs.replace('{key}', process.env.VUE_APP_MAPTILER_KEY)
 
+      // Patch units
+      if (this.$store.state.altitudeUnits === 'ft') {
+        style.layers.forEach(layer => {
+          if (layer.id === 'summits_names') {
+            layer.layout['text-field'] = ['concat', ['get', 'name'], '\n', ['get', 'code'], '\n', ['to-string', ['round', ['*', ['get', 'alt'], 3.28084]]], ' ft']
+          } else if (layer.id === 'summits_inactive_names') {
+            layer.layout['text-field'] = ['concat', ['get', 'name'], '\n', ['get', 'code'], '\n', ['to-string', ['round', ['*', ['get', 'alt'], 3.28084]]], ' ft\n(inactive)']
+          }
+        })
+      }
+
       return style
     },
     mapType () {
@@ -51,6 +62,13 @@ export default {
     },
     mapApiKey () {
       return process.env.VUE_APP_MAPTILER_KEY
+    },
+    mapUnits () {
+      if (this.$store.state.altitudeUnits === 'ft') {
+        return 'imperial'
+      } else {
+        return 'metric'
+      }
     }
   },
   methods: {

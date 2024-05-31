@@ -2,7 +2,7 @@
   <MglMap v-if="(mapCenter || bounds) && mapStyle" :apiKey="mapApiKey" :key="mapKey" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
     <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
     <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
-    <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" />
+    <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" :unit="mapUnits" />
     <div v-if="canEnlarge" class="maplibregl-ctrl-top-left">
       <MapEnlargeControl :isEnlarged="isEnlarged" @enlarge="$emit('enlarge')" />
     </div>
