@@ -81,7 +81,7 @@ export default {
       }
       if (this.direction) {
         let dir = parseFloat(this.direction)
-        if (dir < 0 || dir >= 360) {
+        if (dir < 0 || dir > 360) {
           return false
         }
       }
