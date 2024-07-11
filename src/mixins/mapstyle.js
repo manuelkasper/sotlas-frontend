@@ -23,7 +23,7 @@ export default {
 
       // Show/hide layers according to map options for initial render to save time
       style.layers.forEach(layer => {
-        if (layer.metadata && layer.metadata['sotlas-map-option']) {
+        if (layer.metadata && layer.metadata['sotlas-map-option'] && this.initialMapOptions) {
           if (this.initialMapOptions[layer.metadata['sotlas-map-option']]) {
             layer.layout.visibility = 'visible'
           } else {
