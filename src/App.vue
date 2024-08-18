@@ -16,13 +16,13 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bulma/sass/utilities/_all";
+@import "bulma/sass/utilities/_all";
 
 $link: $blue;
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
-@import "~flagpack/dist/flagpack.css";
-@import '~mapbox-gl/dist/mapbox-gl.css';
-@import '~@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+@import "bulma";
+@import "buefy/src/scss/buefy";
+@import "flagpack/dist/flagpack.css";
+@import '@maptiler/sdk/dist/maptiler-sdk.css';
+@import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 </style>

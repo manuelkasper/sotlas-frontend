@@ -63,7 +63,7 @@
             <div v-if="firstActivations">
               <span v-if="firstActivations.activators.length == 1">First activation: </span>
               <span v-else>First day's activations: </span>
-              <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><router-link :to="makeActivatorLinkUserId(activator.userId)"><strong>{{ activator.callsign }}</strong></router-link>{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
+              <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><FirstActivator :callsign="activator.callsign" :userId="activator.userId" />{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
             <SummitAttributes :attributes="summit.attributes" />
@@ -131,6 +131,7 @@
 
 <script>
 import axios from 'axios'
+import api from '../mixins/api.js'
 import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import coverphoto from '../mixins/coverphoto.js'
@@ -153,6 +154,7 @@ import SpotsList from '../components/SpotsList.vue'
 import AlertsList from '../components/AlertsList.vue'
 import EditAlert from '../components/EditAlert.vue'
 import EditSpot from '../components/EditSpot.vue'
+import FirstActivator from '../components/FirstActivator.vue'
 import HikrIcon from '../assets/hikr.png'
 import SACIcon from '../assets/sac.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
@@ -164,9 +166,9 @@ export default {
     summitCode: String
   },
   components: {
-    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot
+    SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot, FirstActivator
   },
-  mixins: [utils, smptracks, coverphoto],
+  mixins: [utils, api, smptracks, coverphoto],
   computed: {
     locator () {
       if (!this.summit.coordinates) {
@@ -590,7 +592,7 @@ export default {
   color: #777;
   text-align: right;
 }
->>> .mapboxgl-canvas-container.mapboxgl-interactive {
+>>> .maplibregl-canvas-container.maplibregl-interactive {
   cursor: auto;
 }
 .uploader-placeholder {

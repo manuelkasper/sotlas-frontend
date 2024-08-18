@@ -27,6 +27,12 @@ export default {
     },
     reorderPhotos (summitCode, filenames) {
       return this.axiosAuth.post(process.env.VUE_APP_API_URL + '/photos/summits/' + summitCode + '/reorder', { filenames })
+    },
+    loadActivator (userIdOrCallsign) {
+      return axios.get(process.env.VUE_APP_API_URL + '/activators/' + userIdOrCallsign)
+        .then(response => {
+          return response.data
+        })
     }
   }
 }

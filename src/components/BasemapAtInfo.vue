@@ -2,28 +2,19 @@
   <b-modal :active.sync="active" :on-cancel="cancelInfo" :can-cancel="false">
     <div class="box content">
       <div class="has-text-centered">
-        <span class="fp ch flag"></span>
+        <span class="fp at flag"></span>
       </div>
-      <h3>swisstopo map available</h3>
-      <p>The modern swisstopo map is much more accurate in Switzerland than the global map. Just switch the map type, done!</p>
+      <h3>basemap.at-Karte jetzt verfügbar</h3>
+      <p>Auf SOTLAS kann man auch die detailliertere basemap.at-Karte nutzen, inkl. Aktivierungszonen. Einfach den Kartentyp umstellen, fertig!</p>
       <div class="has-text-centered is-hidden-touch">
-        <img class="swisstopo-info" src="../assets/swisstopo-info.png" />
-      </div>
-      <div>
-        <h5>More features:</h5>
-        <ul>
-          <li>Ski routes</li>
-          <li>Snowshoe routes</li>
-          <li>Slope classes above 30°</li>
-          <li>Wildlife reserves and areas</li>
-        </ul>
+        <img class="basemapat-info" src="../assets/basemapat-info.png" />
       </div>
       <div class="action-buttons">
         <div class="has-text-centered">
-          <b-button type="is-info" size="is-medium" @click="switchMap">Switch now</b-button>
+          <b-button type="is-info" size="is-medium" @click="switchMap">Jetzt umstellen</b-button>
         </div>
         <div class="has-text-centered">
-          <b-button size="is-medium" @click="cancelInfo">Use global map</b-button>
+          <b-button size="is-medium" @click="cancelInfo">OK, cool!</b-button>
         </div>
       </div>
     </div>
@@ -34,13 +25,13 @@
 import axios from 'axios'
 
 export default {
-  name: 'SwisstopoInfo',
+  name: 'BasemapAtInfo',
   mounted () {
-    if (!localStorage.getItem('swisstopoInfoShown')) {
-      // Check if we are in Switzerland
+    if (!localStorage.getItem('basemapAtInfoShown')) {
+      // Check if we are in Austria
       axios.get(process.env.VUE_APP_API_URL + '/my_country')
         .then(response => {
-          if (response.data.country === 'CH') {
+          if (response.data.country === 'AT') {
             this.active = true
           }
         })
@@ -49,11 +40,11 @@ export default {
   methods: {
     cancelInfo () {
       this.active = false
-      localStorage.setItem('swisstopoInfoShown', true)
+      localStorage.setItem('basemapAtInfoShown', true)
     },
     switchMap () {
       this.cancelInfo()
-      this.$store.commit('setMapType', 'swisstopo')
+      this.$store.commit('setMapType', 'basemapat')
     }
   },
   data () {
@@ -81,7 +72,7 @@ export default {
 .flag {
   font-size: 3rem;
 }
-.swisstopo-info {
+.basemapat-info {
   max-width: 20rem;
   max-height: 30vh;
   margin: 0.5rem 0;

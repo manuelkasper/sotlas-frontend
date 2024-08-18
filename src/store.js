@@ -22,7 +22,7 @@ if (altitudeUnits !== 'ft' && altitudeUnits !== 'm') {
 
 let mapType = localStorage.getItem('mapType')
 if (!mapType) {
-  mapType = 'openmaptiles'
+  mapType = 'maptiler_outdoor'
 }
 
 let mapOptions = {

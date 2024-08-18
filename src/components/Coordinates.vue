@@ -15,6 +15,14 @@
         <p class="control">
           <b-button type="is-info" outlined size="is-small" v-clipboard:copy="latitude + ',' + longitude" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">Copy</b-button>
         </p>
+        <p v-if="haveAz" class="control">
+          <b-dropdown>
+            <b-button slot="trigger" type="is-info" outlined size="is-small" icon-left="file-download" icon-right="angle-down">AZ</b-button>
+            <b-dropdown-item custom disabled><b>Activation zone</b></b-dropdown-item>
+            <b-dropdown-item has-link><a :href="makeAzUrlForType('gpx')">GPX file</a></b-dropdown-item>
+            <b-dropdown-item has-link><a :href="makeAzUrlForType('geojson')">GeoJSON file</a></b-dropdown-item>
+          </b-dropdown>
+        </p>
       </b-field>
     </div>
     <div v-if="showMaidenhead" class="locator">Locator: {{ maidenhead }}</div>
@@ -52,6 +60,7 @@ export default {
   },
   mounted () {
     this.loadElevation()
+    this.checkAz()
   },
   created () {
     proj4.defs('EPSG:29900', '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +ellps=mod_airy +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs')
@@ -83,6 +92,9 @@ export default {
     },
     longitude () {
       this.loadElevation()
+    },
+    reference () {
+      this.checkAz()
     }
   },
   methods: {
@@ -111,11 +123,31 @@ export default {
     convertLatLonToGrid (lat, lon, epsg) {
       let inp = [lon, lat]
       return proj4(epsg, inp)
+    },
+    checkAz () {
+      if (!this.reference) {
+        return
+      }
+      axios.head(this.makeAzUrlForType('gpx'), { ignoreError: true })
+        .then(response => {
+          if (response.status === 200) {
+            this.haveAz = true
+          } else {
+            this.haveAz = false
+          }
+        })
+        .catch(e => {
+          this.haveAz = false
+        })
+    },
+    makeAzUrlForType (type) {
+      return process.env.VUE_APP_AZ_URL + '/' + this.reference.replace('-', '/') + '.' + type
     }
   },
   data () {
     return {
       elevation: null,
+      haveAz: false,
       actions: [
         {
           name: 'Geoportail (FR)',

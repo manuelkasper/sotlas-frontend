@@ -3,7 +3,7 @@
     <MglMarker :coordinates="photoCoordinates">
       <div slot="marker" class="marker-icon" @click="markerClicked">
         <font-awesome-layers slot="marker" class="fa-2x fa-fw">
-          <font-awesome-icon v-if="photo.direction" class="direction" :icon="['fas', 'location-arrow']" :transform="{ rotate: photo.direction - 45 }" :style="{ color: photo.highlight ? '#bb0000' : undefined, display: photo.highlight ? 'block' : undefined }" />
+          <font-awesome-icon v-if="photo.direction !== undefined" class="direction" :icon="['fas', 'location-arrow']" :transform="{ rotate: photo.direction - 45 }" :style="{ color: photo.highlight ? '#bb0000' : undefined, display: photo.highlight ? 'block' : undefined }" />
           <font-awesome-icon icon="circle" :style="{ color: photo.highlight ? 'red' : undefined }" />
           <font-awesome-icon :icon="['fas', 'camera']" transform="shrink-7" :style="{ color: 'white' }" />
         </font-awesome-layers>

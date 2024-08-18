@@ -14,6 +14,8 @@
       <div class="column is-half">
         <h4 class="title is-4">Activations by altitude</h4>
         <BarChart v-if="activationsPerAltitude" :data="activationsPerAltitude" labelField="altitude" valueField="activations" name="Activations" :xIsSeries="true" />
+        <h4 class="title is-4">Activations by month</h4>
+        <BarChart v-if="activationsPerMonth" :data="activationsPerMonth" labelField="month" valueField="activations" name="Activations" :xIsSeries="true" />
       </div>
       <div class="column is-half">
         <h4 class="title is-4 no-margin-bottom">Number of QSOs per activation</h4>
@@ -28,12 +30,6 @@
           <h4 class="title is-4 no-margin-bottom">Number of QSOs by band</h4>
           <PercentageChart :data="bands" labelField="band" valueField="qsos" name="QSOs" />
         </template>
-
-        <div v-if="!authenticated" class="stats-teaser">
-          <div>
-            <font-awesome-icon :icon="['far', 'chart-bar']" /> Log in for more statistics
-          </div>
-        </div>
       </div>
     </div>
     <div class="more-button" v-else>
@@ -79,6 +75,25 @@ export default {
 
       return Object.keys(years).sort().map(year => {
         return { year, activations: years[year], bonusActivations: yearsBonus[year] }
+      })
+    },
+    activationsPerMonth () {
+      if (this.activations.length === 0) {
+        return null
+      }
+
+      let months = {}
+      this.activations.forEach(activation => {
+        let month = moment.utc(activation.date).month()
+        if (!months[month]) {
+          months[month] = 0
+        }
+        months[month]++
+      })
+
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      return Object.keys(months).sort((a, b) => (a - b)).map(month => {
+        return { month: monthNames[month], activations: months[month] }
       })
     },
     activationsPerAssociation () {

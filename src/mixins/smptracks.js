@@ -51,6 +51,7 @@ export default {
             htmlDescription: '<p>' + this.escapeHtml(track.track_notes).replace(/\n/g, '<br />') + '</p><p><small>Track imported from <a href="https://www.sotamaps.org" target="_blank">SMP</a></small></p>',
             description: track.track_notes,
             author: track.callsign,
+            postedDate: track.posted_date,
             distance,
             ascent,
             ascentExcludesCounterAscents: (ascent > 0),

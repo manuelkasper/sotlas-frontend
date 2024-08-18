@@ -148,8 +148,12 @@ hr {
 }
 
 /* Fix for scale text selection */
-.mapboxgl-ctrl-scale {
+.maplibregl-ctrl-scale {
   user-select: none;
+}
+
+.maplibregl-popup-content {
+  padding-top: 10px;
 }
 
 /* Fix Buefy bug */

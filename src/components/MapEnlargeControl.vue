@@ -1,6 +1,6 @@
 <template>
-  <div class="mapboxgl-ctrl-group mapboxgl-ctrl">
-    <button :class="{ 'enlarge-control': true, 'mapboxgl-ctrl-fullscreen': !isEnlarged, 'mapboxgl-ctrl-shrink': isEnlarged }" type="button" :title="isEnlarged ? 'Shrink' : 'Enlarge'" @click="$emit('enlarge')"><span class="mapboxgl-ctrl-icon"></span></button>
+  <div class="maplibregl-ctrl-group maplibregl-ctrl">
+    <button :class="{ 'enlarge-control': true, 'maplibregl-ctrl-fullscreen': !isEnlarged, 'maplibregl-ctrl-shrink': isEnlarged }" type="button" :title="isEnlarged ? 'Shrink' : 'Enlarge'" @click="$emit('enlarge')"><span class="maplibregl-ctrl-icon"></span></button>
   </div>
 </template>
 

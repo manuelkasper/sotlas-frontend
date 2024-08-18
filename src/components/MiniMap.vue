@@ -1,12 +1,12 @@
 <template>
-  <MglMap v-if="(mapCenter || bounds) && mapStyle" :key="mapKey" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
+  <MglMap v-if="(mapCenter || bounds) && mapStyle" :apiKey="mapApiKey" :key="mapKey" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
     <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
     <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
-    <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" />
-    <div v-if="canEnlarge" class="mapboxgl-ctrl-top-left">
+    <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" :unit="mapUnits" />
+    <div v-if="canEnlarge" class="maplibregl-ctrl-top-left">
       <MapEnlargeControl :isEnlarged="isEnlarged" @enlarge="$emit('enlarge')" />
     </div>
-    <MglAttributionControl :compact="true" position="bottom-right" />
+    <MglAttributionControl :compact="$mq.mobile" position="bottom-right" />
 
     <MapRoute v-for="route in routes" :key="route.id" :route="route" />
     <MapPhoto v-for="photo in mapPhotos" :key="photo.filename" :summit="summit" :photo="photo" @photoClicked="photo => $emit('photoClicked', photo)" />
@@ -26,6 +26,7 @@ import MapWebcams from './MapWebcams.vue'
 import mapstyle from '../mixins/mapstyle.js'
 import utils from '../mixins/utils.js'
 import longtouch from '../mixins/longtouch.js'
+import reportMapSession from '../mapsession.js'
 
 export default {
   name: 'MiniMap',
@@ -171,6 +172,8 @@ export default {
         this.map.dragPan.disable()
       }
       this.highlightCurrentSummit()
+
+      reportMapSession()
     },
     onMapClicked (event) {
       if (event.mapboxEvent.originalEvent.hitMarker) {
@@ -241,10 +244,10 @@ export default {
 </script>
 
 <style scoped>
->>> .mapboxgl-canvas-container.mapboxgl-interactive {
+>>> .maplibregl-canvas-container.maplibregl-interactive {
   cursor: auto;
 }
-.map >>> .mapboxgl-popup {
+.map >>> .maplibregl-popup {
   max-width: 400px !important;
 }
 .zoom-warning {

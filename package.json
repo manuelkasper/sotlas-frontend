@@ -2,6 +2,9 @@
   "name": "sotlas",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "prebuild": "vsvg -s ./svg-icons -t ./src/compiled-icons",
@@ -18,19 +21,19 @@
     "@fortawesome/pro-regular-svg-icons": "^5.15.2",
     "@fortawesome/pro-solid-svg-icons": "^5.15.2",
     "@fortawesome/vue-fontawesome": "^0.1.10",
-    "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas",
+    "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas2",
+    "@maptiler/sdk": "^2.0.3",
     "@tmcw/togeojson": "^3.2.0",
-    "axios": "^1.6.3",
-    "buefy": "^0.9.28",
+    "axios": "^1.6.8",
+    "buefy": "^0.9.29",
     "cheap-ruler": "^2.5.1",
-    "core-js": "^2.6.12",
+    "core-js": "^3.37.0",
     "filepond": "^4.30.4",
     "filepond-plugin-file-validate-type": "^1.2.5",
     "flagpack": "^1.0.5",
     "frappe-charts": "^1.6.2",
     "haversine-distance": "^1.2.1",
     "maidenhead": "^1.0.7",
-    "mapbox-gl": "^1.13.1",
     "moment": "^2.29.4",
     "node-vincenty": "0.0.6",
     "photoswipe": "^4.1.3",
@@ -41,7 +44,7 @@
     "vue-filepond": "^6.0.3",
     "vue-infinite-loading": "^2.4.5",
     "vue-lazy-youtube-video": "^2.3.0",
-    "vue-mapbox": "github:manuelkasper/vue-mapbox#sotlas",
+    "vue-mapbox": "github:manuelkasper/vue-mapbox#10cb772",
     "vue-match-media": "^1.0.3",
     "vue-native-websocket": "github:nathantsoi/vue-native-websocket#a265da6",
     "vue-router": "^3.6.5",
@@ -49,17 +52,17 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
+    "@babel/eslint-parser": "^7.24.1",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "git-revision-webpack-plugin": "^3.0.6",
-    "node-sass": "^6.0.1",
-    "sass": "^1.62.1",
-    "sass-loader": "^10.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.24.0",
+    "git-revision-webpack-plugin": "^5.0.0",
+    "node-sass": "^9.0.0",
+    "sass": "^1.75.0",
+    "sass-loader": "^14.2.1",
     "vue-svgicon": "^3.2.9",
     "vue-template-compiler": "^2.7.14"
   },
@@ -68,13 +71,14 @@
     "env": {
       "node": true
     },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/standard"
-    ],
-    "rules": {},
+    "extends": ["plugin:vue/essential","@vue/standard"],
+    "rules": {
+      "vue/multi-word-component-names": "off",
+      "vue/no-reserved-component-names": "off",
+      "vue/no-unused-vars": "off"
+    },
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@babel/eslint-parser"
     },
     "globals": {
       "VERSION": true,
@@ -87,8 +91,5 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  "browserslist": ["> 1%","last 2 versions"]
 }

@@ -9,11 +9,13 @@
 
           <p>Code contributed by: <a href="https://github.com/m1hax">@m1hax</a>, <a href="https://github.com/summitsontheair">@summitsontheair</a>,
             <a href="https://github.com/vk3arr">@vk3arr</a>,
-            Simon G4TJC
+            Simon G4TJC,
+            <a href="https://github.com/g84ycm">@g84ycm</a>,
+            <a href="https://github.com/benmarwick">@benmarwick</a>
           </p>
 
           <p>
-            Summit database © 2002-2023 Summits on the Air.<br />
+            Summit database © 2002-2024 Summits on the Air.<br />
             Summits on the Air, SOTA and the SOTA Logo are trademarks of the Programme.
           </p>
 
@@ -37,8 +39,7 @@
 
           <p>Technologies used:
             <ul>
-              <li><a href="https://openmaptiles.org">OpenMapTiles</a></li>
-              <li><a href="https://docs.mapbox.com/mapbox-gl-js/overview/">Mapbox GL JS</a>
+              <li><a href="https://maptiler.com/">MapTiler</a></li>
               <li><a href="https://nodejs.org/">Node.js</a> server</li>
               <li>SPA built with <a href="https://vuejs.org">Vue.js</a>, <a href="https://vuex.vuejs.org">Vuex</a> and <a href="https://router.vuejs.org">Vue Router</a></li>
               <li><a href="https://buefy.org">Buefy</a> UI framework</li>

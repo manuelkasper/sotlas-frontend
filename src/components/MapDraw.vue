@@ -2,7 +2,9 @@
   <div>
     <div v-if="chartData || loading" class="elevation-chart">
       <div class="elevation-controls">
-        <div v-if="ascent !== null && descent !== null" class="adescent-info">↑ <DistanceLabel :distance="ascent" small-units /> ↓ <DistanceLabel :distance="descent" small-units /></div>
+        <div v-if="distance != null" class="distance-info">↔︎ <DistanceLabel :distance="distance" /></div>
+        <div v-if="ascent !== null" class="distance-info">↑ <DistanceLabel :distance="ascent" small-units /></div>
+        <div v-if="descent !== null" class="distance-info">↓ <DistanceLabel :distance="descent" small-units /></div>
         <b-button size="is-small" type="is-text" icon-left="window-close" @click="hideElevationProfile" />
       </div>
       <b-loading :active="loading" :is-full-page="false" />
@@ -153,112 +155,6 @@ export default {
         ]
       })
       this.map.addControl(this.draw, 'top-right')
-
-      this.map.addSource('_measurements', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: []
-        }
-      })
-
-      this.map.addLayer({
-        id: '_measurements_endpoint',
-        source: '_measurements',
-        type: 'symbol',
-        minzoom: 9,
-        filter: ['all', ['==', 'measType', 'endpoint']],
-        paint: {
-          'text-color': '#d20c0c',
-          'text-halo-color': '#fff',
-          'text-halo-width': 2
-        },
-        layout: {
-          'text-font': ['Open Sans Regular'],
-          'text-field': '{label}',
-          'text-size': { 'stops': [[9, 9], [12, 14]] },
-          'text-allow-overlap': true,
-          'text-ignore-placement': true,
-          'text-offset': [1.5, 1.5]
-        }
-      })
-
-      this.map.addLayer({
-        id: '_measurements_interval',
-        source: '_measurements',
-        type: 'symbol',
-        minzoom: 12.5,
-        filter: ['all', ['==', 'measType', 'interval']],
-        paint: {
-          'text-color': '#d20c0c'
-        },
-        layout: {
-          'text-font': ['Open Sans Regular'],
-          'text-field': '{label}',
-          'text-size': 10,
-          'icon-image': 'us-state_2'
-        }
-      })
-
-      // Update measurements on render
-      this.map.on('draw.render', e => {
-        let labelFeatures = []
-        let all = this.draw.getAll()
-        if (all && all.features) {
-          let selected = this.draw.getSelectedIds()
-          let ruler = cheapRuler(this.map.getCenter().lat, 'meters')
-          all.features.forEach(feature => {
-            if (feature.geometry.type === 'LineString') {
-              let distance = ruler.lineDistance(feature.geometry.coordinates)
-
-              if (distance > 0) {
-                // 1 km (or 1 mi) interval markers along line, unless selected
-                if (!selected.includes(feature.id) && distance < 100000) {
-                  let markerOffset = this.$store.state.altitudeUnits === 'ft' ? 1609.3445 : 1000
-                  let i = 1
-                  while (markerOffset < distance) {
-                    if (distance - markerOffset < 200) {
-                      break
-                    }
-                    let intervalCoords = ruler.along(feature.geometry.coordinates, markerOffset)
-                    labelFeatures.push({
-                      type: 'Feature',
-                      geometry: {
-                        type: 'Point',
-                        coordinates: intervalCoords
-                      },
-                      properties: {
-                        label: i,
-                        measType: 'interval'
-                      }
-                    })
-                    i++
-                    markerOffset = i * (this.$store.state.altitudeUnits === 'ft' ? 1609.3445 : 1000)
-                  }
-                }
-
-                // Total distance at endpoint
-                labelFeatures.push({
-                  type: 'Feature',
-                  geometry: {
-                    type: 'Point',
-                    coordinates: feature.geometry.coordinates[feature.geometry.coordinates.length - 1]
-                  },
-                  properties: {
-                    label: this.formatDistance(distance),
-                    measType: 'endpoint'
-                  }
-                })
-              }
-            }
-          })
-        }
-        this.map.getSource('_measurements').setData({
-          type: 'FeatureCollection',
-          features: labelFeatures
-        })
-        this.map.moveLayer('_measurements_interval')
-      })
 
       this.map.on('draw.open', e => {
         this.input = document.createElement('input')
@@ -420,6 +316,7 @@ export default {
           })
           this.ascent = ascent
           this.descent = descent
+          this.distance = distance
           this.loading = false
         })
         .finally(() => {
@@ -430,6 +327,7 @@ export default {
       this.chartData = null
       this.ascent = null
       this.descent = null
+      this.distance = null
     },
     renderElevation (elevation) {
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -471,6 +369,7 @@ export default {
       chartData: null,
       ascent: null,
       descent: null,
+      distance: null,
       loading: false,
       selectedFeatureId: null
     }
@@ -496,7 +395,8 @@ export default {
   right: 0px;
   z-index: 10;
 }
-.adescent-info {
+.distance-info {
+  padding-left: 0.5em;
   padding-top: 0.3em;
   color: #777;
   display: inline-block;

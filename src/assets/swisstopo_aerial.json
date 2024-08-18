@@ -1,7 +1,6 @@
 {
   "version": 8,
   "name": "swisstopo_aerial",
-  "metadata": {"maputnik:renderer": "mbgljs", "openmaptiles:version": "3.x"},
   "center": [7.969664962869274, 47.021278030856564],
   "zoom": 9.333879434342306,
   "bearing": 0,
@@ -73,23 +72,24 @@
     },
     "summits": {
       "type": "vector",
-      "url": "https://1.{mapServer}.map.sotl.as/data/summits.json"
+      "url": "https://api.maptiler.com/tiles/d6ccc3ec-a677-4fcd-a211-2f2da36965cb/tiles.json?key={key}"
     },
     "summits_inactive": {
       "type": "vector",
-      "url": "https://1.{mapServer}.map.sotl.as/data/summits_inactive.json"
+      "url": "https://api.maptiler.com/tiles/ac4e1bc3-fbfb-4830-8279-675cc18f86f0/tiles.json?key={key}"
     },
     "regions": {
       "type": "vector",
-      "url": "https://1.{mapServer}.map.sotl.as/data/regions.json"
+      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={key}"
     },
     "az": {
       "type": "vector",
-      "url": "https://1.{mapServer}.map.sotl.as/data/az.json"
+      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={key}"
     },
-    "openmaptiles": {
+    "v3": {
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
       "type": "vector",
-      "url": "https://0.{mapServer}.map.sotl.as/data/osm-sotlas.json"
+      "maxzoom": 10
     }
   },
   "sprite": "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/sprite/sprite",
@@ -103,22 +103,27 @@
       "paint": {"background-color": "rgba(255, 255, 255, 1)"}
     },
     {
-      "id": "water",
+      "id": "background_water",
       "type": "fill",
-      "metadata": {},
-      "source": "openmaptiles",
+      "source": "v3",
       "source-layer": "water",
-      "filter": ["all"],
-      "layout": {"visibility": "visible"},
-      "paint": {"fill-color": "rgba(103, 166, 196, 0.2)"}
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "fill-color": "rgba(103, 166, 196, 0.2)"
+      },
+      "filter": [
+        "==",
+        "$type",
+        "Polygon"
+      ]
     },
     {
-      "id": "boundary_2",
+      "id": "background_boundary",
       "type": "line",
-      "metadata": {},
-      "source": "openmaptiles",
+      "source": "v3",
       "source-layer": "boundary",
-      "filter": ["all", ["==", "admin_level", 2], ["==", "maritime", 0]],
       "layout": {
         "line-cap": "round",
         "line-join": "round",
@@ -126,9 +131,38 @@
       },
       "paint": {
         "line-color": "rgba(136, 136, 136, 1)",
-        "line-opacity": 0.2,
-        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
-      }
+        "line-width": {
+          "base": 1,
+          "stops": [
+            [
+              3,
+              1
+            ],
+            [
+              5,
+              1.2
+            ],
+            [
+              12,
+              3
+            ]
+          ]
+        },
+        "line-opacity": 0.2
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "admin_level",
+          2
+        ],
+        [
+          "==",
+          "maritime",
+          0
+        ]
+      ]
     },
     {
       "id": "swisstopo",
@@ -208,7 +242,7 @@
       "source": "slope_classes",
       "layout": {"visibility": "none"},
       "paint": {
-        "raster-opacity": 0.3,
+        "raster-opacity": 0.25,
         "raster-resampling": "nearest"
       }
     },
