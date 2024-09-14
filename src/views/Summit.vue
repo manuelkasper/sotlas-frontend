@@ -156,6 +156,7 @@ import EditAlert from '../components/EditAlert.vue'
 import EditSpot from '../components/EditSpot.vue'
 import FirstActivator from '../components/FirstActivator.vue'
 import HikrIcon from '../assets/hikr.png'
+import CampToCampIcon from '../assets/camptocamp.png'
 import SACIcon from '../assets/sac.png'
 import SotatrailsIcon from '../assets/sotatrails.png'
 import EventBus from '../event-bus'
@@ -233,13 +234,22 @@ export default {
           url: 'https://www.sac-cas.ch/de/suche/?tx_solr[filter][0]=type%3Atour_destination&tx_solr[q]=' + encodeURIComponent(this.summit.name)
         })
       }
-      if (this.summit.code && this.summit.code.match(/^(HB|OE|DL|DM)/)) {
+      if (this.summit.code && this.summit.code.match(/^(HB0?|OE|DL|DM|I)\//)) {
         let hikrSummitName = this.summit.name.replace(/\/.*$/, '')
         resources.push({
           iconImg: HikrIcon,
           prefix: 'Hikr.org',
           title: hikrSummitName + ' (' + this.summit.altitude + ' m)',
           url: 'https://www.hikr.org/dir/?adv=1&piz_name=' + encodeURIComponent(hikrSummitName) + '&piz_height_min=' + (this.summit.altitude - 50) + '&piz_height_max=' + (this.summit.altitude + 50) + '&piz_type=peak&piz_order=piz_name&action=search'
+        })
+      }
+      if (this.summit.code && this.summit.code.match(/^FL?\//)) {
+        let c2cSummitName = this.summit.name.replace(/\/.*$/, '')
+        resources.push({
+          iconImg: CampToCampIcon,
+          prefix: 'Camptocamp.org',
+          title: c2cSummitName + ' (' + this.summit.altitude + ' m)',
+          url: 'https://www.camptocamp.org/waypoints?q=' + encodeURIComponent(c2cSummitName) + '&walt=' + (this.summit.altitude - 50) + ',' + (this.summit.altitude + 50)
         })
       }
       resources.push({
