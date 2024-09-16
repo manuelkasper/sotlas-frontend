@@ -1,19 +1,17 @@
 {
   "version": 8,
   "name": "norkart",
-  "center": [15.956668, 65.400009],
+  "center": [15.956668,65.400009],
   "zoom": 4,
   "bearing": 0,
   "pitch": 0,
   "sources": {
     "norkart": {
       "type": "raster",
-      "tiles": [
-        "https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}"
-      ],
+      "tiles": ["https://cache.kartverket.no/v1/wmts/1.0.0/toporaster/default/webmercator/{z}/{y}/{x}.png"],
       "tileSize": 256,
-      "maxzoom": 20,
-      "bounds": [2, 57, 33, 72],
+      "maxzoom": 18,
+      "bounds": [2,57,33,72],
       "attribution": "© Kartverket"
     },
     "summits": {
@@ -45,8 +43,12 @@
     {
       "id": "background",
       "type": "background",
-      "layout": {"visibility": "visible"},
-      "paint": {"background-color": "rgba(255, 255, 255, 1)"}
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "background-color": "rgba(255, 255, 255, 1)"
+      }
     },
     {
       "id": "background_water",
@@ -59,11 +61,7 @@
       "paint": {
         "fill-color": "rgba(103, 166, 196, 0.2)"
       },
-      "filter": [
-        "==",
-        "$type",
-        "Polygon"
-      ]
+      "filter": ["==","$type","Polygon"]
     },
     {
       "id": "background_boundary",
@@ -80,41 +78,26 @@
         "line-width": {
           "base": 1,
           "stops": [
-            [
-              3,
-              1
-            ],
-            [
-              5,
-              1.2
-            ],
-            [
-              12,
-              3
-            ]
+            [3,1],
+            [5,1.2],
+            [12,3]
           ]
         },
         "line-opacity": 0.2
       },
       "filter": [
         "all",
-        [
-          "==",
-          "admin_level",
-          2
-        ],
-        [
-          "==",
-          "maritime",
-          0
-        ]
+        ["==","admin_level",2],
+        ["==","maritime",0]
       ]
     },
     {
       "id": "norkart",
       "type": "raster",
       "source": "norkart",
-      "layout": {"visibility": "visible"},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "raster-opacity": 0.75,
         "raster-resampling": "linear"
@@ -128,12 +111,19 @@
       },
       "source": "az",
       "source-layer": "az",
-      "layout": {"visibility": "none"},
+      "layout": {
+        "visibility": "none"
+      },
       "minzoom": 12,
       "paint": {
         "fill-antialias": false,
         "fill-color": "rgba(255, 255, 0, 1)",
-        "fill-opacity": {"stops": [[12, 0], [12.5, 0.5]]}
+        "fill-opacity": {
+          "stops": [
+            [12,0],
+            [12.5,0.5]
+          ]
+        }
       }
     },
     {
@@ -144,12 +134,24 @@
       },
       "source": "az",
       "source-layer": "az",
-      "layout": {"visibility": "none"},
+      "layout": {
+        "visibility": "none"
+      },
       "minzoom": 12,
       "paint": {
         "line-color": "rgba(235, 196, 0, 1)",
-        "line-opacity": {"stops": [[12, 0], [12.5, 0.5]]},
-        "line-width": {"stops": [[12, 1], [16, 3]]}
+        "line-opacity": {
+          "stops": [
+            [12,0],
+            [12.5,0.5]
+          ]
+        },
+        "line-width": {
+          "stops": [
+            [12,1],
+            [16,3]
+          ]
+        }
       }
     },
     {
@@ -157,11 +159,21 @@
       "type": "circle",
       "source": "summits",
       "source-layer": "summits",
-      "filter": ["all", ["in", "code"]],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "circle-color": "rgba(2, 153, 243, 1)",
-        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-radius": {
+          "stops": [
+            [6,15],
+            [20,50]
+          ]
+        },
         "circle-opacity": 0.75,
         "circle-stroke-color": "rgba(210, 255, 0, 0.05)",
         "circle-stroke-width": 0,
@@ -176,21 +188,45 @@
       "source-layer": "summits",
       "minzoom": 10,
       "maxzoom": 24,
-      "filter": ["all", ["in", "code"]],
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
       "layout": {
         "visibility": "visible",
         "text-field": "{name}\n{code}\n{alt} m",
-        "text-size": {"stops": [[10, 10], [20, 16]]},
+        "text-size": {
+          "stops": [
+            [10,10],
+            [20,16]
+          ]
+        },
         "text-font": ["Frutiger Neue Regular"],
         "text-anchor": "bottom",
-        "text-offset": {"stops": [[10, [0, -1]], [20, [0, -2]]]},
+        "text-offset": {
+          "stops": [
+            [
+              10,
+              [0,-1]
+            ],
+            [
+              20,
+              [0,-2]
+            ]
+          ]
+        },
         "icon-size": 1,
         "symbol-spacing": 250,
         "symbol-avoid-edges": false,
         "text-keep-upright": true,
         "text-transform": "none",
         "text-optional": false,
-        "text-allow-overlap": {"stops": [[18, false], [19, true]]},
+        "text-allow-overlap": {
+          "stops": [
+            [18,false],
+            [19,true]
+          ]
+        },
         "text-ignore-placement": false,
         "text-justify": "center",
         "text-rotate": 0
@@ -207,12 +243,14 @@
       "type": "circle",
       "source": "summits",
       "source-layer": "summits",
-      "layout": {"visibility": "none"},
+      "layout": {
+        "visibility": "none"
+      },
       "paint": {
         "circle-stroke-color": "rgba(255, 255, 255, 1)",
         "circle-color": [
           "match",
-          ["get", "points"],
+          ["get","points"],
           [1],
           "rgba(77, 122, 32, 0.5)",
           [2],
@@ -227,8 +265,19 @@
           "rgba(200, 16, 30, 0.5)",
           "#000"
         ],
-        "circle-stroke-width": {"stops": [[4, 0], [15, 1]]},
-        "circle-radius": {"stops": [[0, 0.05], [10, 2.5], [22, 12]]}
+        "circle-stroke-width": {
+          "stops": [
+            [4,0],
+            [15,1]
+          ]
+        },
+        "circle-radius": {
+          "stops": [
+            [0,0.05],
+            [10,2.5],
+            [22,12]
+          ]
+        }
       }
     },
     {
@@ -236,13 +285,18 @@
       "type": "circle",
       "source": "summits",
       "source-layer": "summits",
-      "filter": ["all", ["in", "code"]],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "circle-stroke-color": "rgba(255, 255, 255, 1)",
         "circle-color": [
           "match",
-          ["get", "points"],
+          ["get","points"],
           [1],
           "rgba(77, 122, 32, 1)",
           [2],
@@ -257,8 +311,19 @@
           "rgba(200, 16, 30, 1)",
           "#000"
         ],
-        "circle-stroke-width": {"stops": [[4, 0], [15, 2]]},
-        "circle-radius": {"stops": [[0, 0.1], [10, 8], [22, 20]]}
+        "circle-stroke-width": {
+          "stops": [
+            [4,0],
+            [15,2]
+          ]
+        },
+        "circle-radius": {
+          "stops": [
+            [0,0.1],
+            [10,8],
+            [22,20]
+          ]
+        }
       }
     },
     {
@@ -268,25 +333,45 @@
       "source-layer": "summits",
       "minzoom": 10,
       "maxzoom": 24,
-      "filter": ["all", ["in", "code"]],
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
       "layout": {
         "text-field": "{act}",
         "text-font": ["Frutiger Neue Bold"],
-        "text-size": {"stops": [[10, 8], [20, 16]]},
+        "text-size": {
+          "stops": [
+            [10,8],
+            [20,16]
+          ]
+        },
         "text-offset": [0,0.1]
       },
-      "paint": {"text-color": "rgba(255, 255, 255, 1)"}
+      "paint": {
+        "text-color": "rgba(255, 255, 255, 1)"
+      }
     },
     {
       "id": "summits_highlight",
       "type": "circle",
       "source": "summits",
       "source-layer": "summits",
-      "filter": ["all", ["in", "code"]],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "circle-color": "rgba(2, 243, 198, 1)",
-        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-radius": {
+          "stops": [
+            [6,15],
+            [20,50]
+          ]
+        },
         "circle-opacity": 0.75,
         "circle-blur": 0.7
       }
@@ -296,11 +381,21 @@
       "type": "circle",
       "source": "summits",
       "source-layer": "summits",
-      "filter": ["all", ["in", "code"]],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "circle-color": "rgba(210, 255, 0, 1)",
-        "circle-radius": {"stops": [[6, 15], [20, 50]]},
+        "circle-radius": {
+          "stops": [
+            [6,15],
+            [20,50]
+          ]
+        },
         "circle-opacity": 0.55,
         "circle-blur": 0.7
       }
@@ -315,21 +410,45 @@
       "source-layer": "summits_inactive",
       "minzoom": 10,
       "maxzoom": 24,
-      "filter": ["all", ["in", "code"]],
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
       "layout": {
         "visibility": "none",
         "text-field": "{name}\n{code}\n{alt} m\n(inactive)",
-        "text-size": {"stops": [[10, 10], [20, 16]]},
+        "text-size": {
+          "stops": [
+            [10,10],
+            [20,16]
+          ]
+        },
         "text-font": ["Frutiger Neue Regular"],
         "text-anchor": "bottom",
-        "text-offset": {"stops": [[10, [0, -1]], [20, [0, -2]]]},
+        "text-offset": {
+          "stops": [
+            [
+              10,
+              [0,-1]
+            ],
+            [
+              20,
+              [0,-2]
+            ]
+          ]
+        },
         "icon-size": 1,
         "symbol-spacing": 250,
         "symbol-avoid-edges": false,
         "text-keep-upright": true,
         "text-transform": "none",
         "text-optional": false,
-        "text-allow-overlap": {"stops": [[18, false], [19, true]]},
+        "text-allow-overlap": {
+          "stops": [
+            [18,false],
+            [19,true]
+          ]
+        },
         "text-ignore-placement": false,
         "text-justify": "center",
         "text-rotate": 0
@@ -350,13 +469,18 @@
       },
       "source": "summits_inactive",
       "source-layer": "summits_inactive",
-      "filter": ["all", ["in", "code"]],
-      "layout": {"visibility": "none"},
+      "filter": [
+        "all",
+        ["in","code"]
+      ],
+      "layout": {
+        "visibility": "none"
+      },
       "paint": {
         "circle-stroke-color": "rgba(255, 255, 255, 1)",
         "circle-color": [
           "match",
-          ["get", "points"],
+          ["get","points"],
           [1],
           "rgba(77, 122, 32, 0.5)",
           [2],
@@ -371,8 +495,19 @@
           "rgba(200, 16, 30, 0.5)",
           "#000"
         ],
-        "circle-stroke-width": {"stops": [[4, 0], [15, 2]]},
-        "circle-radius": {"stops": [[0, 0.1], [10, 8], [22, 20]]}
+        "circle-stroke-width": {
+          "stops": [
+            [4,0],
+            [15,2]
+          ]
+        },
+        "circle-radius": {
+          "stops": [
+            [0,0.1],
+            [10,8],
+            [22,20]
+          ]
+        }
       }
     },
     {
@@ -384,7 +519,9 @@
       "source": "regions",
       "source-layer": "areas",
       "minzoom": 0,
-      "layout": {"visibility": "none"},
+      "layout": {
+        "visibility": "none"
+      },
       "paint": {
         "fill-opacity": 0.1,
         "fill-antialias": false,
@@ -404,15 +541,20 @@
         "text-field": "{region}",
         "text-anchor": "top-left",
         "text-justify": "center",
-        "text-offset": [0.3, 0.3],
+        "text-offset": [0.3,0.3],
         "text-font": ["Frutiger Neue Regular"],
-        "text-size": {"stops": [[6, 8], [10, 16]]}
+        "text-size": {
+          "stops": [
+            [6,8],
+            [10,16]
+          ]
+        }
       },
       "paint": {
         "text-halo-color": "rgba(255, 255, 255, 1)",
         "text-halo-width": 0.5,
         "text-halo-blur": 1,
-        "text-translate": [0, 0]
+        "text-translate": [0,0]
       }
     }
   ]
