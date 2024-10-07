@@ -66,7 +66,7 @@
               <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><FirstActivator :callsign="activator.callsign" :userId="activator.userId" />{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
-            <SummitAttributes :attributes="summit.attributes" />
+            <SummitAttributes :summit-code="summit.code" />
 
             <template v-if="resources.length > 0">
               <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled">+ Article</span>)</span></h6>
