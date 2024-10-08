@@ -58,7 +58,7 @@ export default {
         '5': 'icons8-trekking',
         '6': 'icons8-camping',
         '7': 'icons8-barrier',
-        '8': 'icons8-jeep-wrangler',
+        '8': 'icons8-4wd',
         '9': 'icons8-mountain-biking',
         '10': 'icons8-climbing',
         '11': 'icons8-wheelchair',
