@@ -27,7 +27,7 @@
                   {{ props.row.summitCount }}
                 </b-table-column>
                 <b-table-column v-if="myActivationsPerRegion" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric sortable>
-                  {{ myActivationsPerRegion[associationCode + '/' + props.row.code] }}
+                  {{ myActivationsPerRegion[associationCode + '/' + props.row.code] ?? '' }}
                 </b-table-column>
               </template>
             </b-table>
