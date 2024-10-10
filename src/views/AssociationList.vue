@@ -19,10 +19,10 @@
             <b-table-column field="name" label="Name" sortable>
               <router-link :to="associationLink(props.row)">{{ props.row.name }}</router-link>
             </b-table-column>
-            <b-table-column field="summitCount" label="Summits" sortable>
+            <b-table-column field="summitCount" label="Summits" numeric sortable>
               {{ props.row.summitCount }}
             </b-table-column>
-            <b-table-column v-if="myActivationsPerAssociation" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric>
+            <b-table-column v-if="myActivationsPerAssociation" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric sortable>
               {{ myActivationsPerAssociation[props.row.code] }}
             </b-table-column>
           </template>
