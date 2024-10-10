@@ -22,6 +22,9 @@
             <b-table-column field="summitCount" label="Summits" sortable>
               {{ props.row.summitCount }}
             </b-table-column>
+            <b-table-column v-if="myActivationsPerAssociation" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric>
+              {{ myActivationsPerAssociation[props.row.code] }}
+            </b-table-column>
           </template>
         </b-table>
       </div>
@@ -31,12 +34,14 @@
 
 <script>
 import axios from 'axios'
+import sotadb from '../mixins/sotadb.js'
 
 import SummitDatabasePageLayout from '../components/SummitDatabasePageLayout.vue'
 import FilterInput from '../components/FilterInput.vue'
 
 export default {
   name: 'AssociationList',
+  mixins: [sotadb],
   components: {
     SummitDatabasePageLayout, FilterInput
   },
@@ -55,6 +60,10 @@ export default {
         this.loadingComponent.close()
         this.$root.$emit('triggerScroll')
       })
+
+    if (this.authenticated) {
+      this.loadMyActivatorUniques()
+    }
   },
   computed: {
     filteredAssociations () {
@@ -64,6 +73,21 @@ export default {
       return this.associations.filter(association => {
         return association.code.includes(this.filter.toUpperCase()) || association.name.toLowerCase().includes(this.filter.toLowerCase())
       })
+    },
+    myActivationsPerAssociation () {
+      if (!this.$store.state.myActivatedSummits) {
+        return null
+      }
+      let activationsPerAssociation = {}
+      this.$store.state.myActivatedSummits.forEach(summitCode => {
+        let association = summitCode.substring(0, summitCode.indexOf('/'))
+        if (!activationsPerAssociation[association]) {
+          activationsPerAssociation[association] = 1
+        } else {
+          activationsPerAssociation[association]++
+        }
+      })
+      return activationsPerAssociation
     }
   },
   data () {
