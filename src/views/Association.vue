@@ -23,11 +23,11 @@
                 <b-table-column field="name" label="Name" sortable>
                   <router-link :to="regionLink(props.row)">{{ props.row.name }}</router-link>
                 </b-table-column>
-                <b-table-column field="summitCount" label="Summits" numeric sortable>
+                <b-table-column field="summitCount" label="Summits" sortable numeric>
                   {{ props.row.summitCount }}
                 </b-table-column>
-                <b-table-column v-if="myActivationsPerRegion" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric sortable>
-                  {{ myActivationsPerRegion[associationCode + '/' + props.row.code] ?? '' }}
+                <b-table-column v-if="myActivationsPerRegion" :label="$mq.mobile ? 'Act. by me' : 'Activated by me'" numeric>
+                  {{ myActivationsPerRegion[associationCode + '/' + props.row.code] }}
                 </b-table-column>
               </template>
             </b-table>
