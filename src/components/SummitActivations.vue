@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     loadBandstats () {
-      axios.get('https://api2.sota.org.uk/api/bandstats/' + this.summitCode)
+      axios.get('https://api-db2.sota.org.uk/api/bandstats/' + this.summitCode)
         .then(response => {
           this.bandstats = response.data
         })

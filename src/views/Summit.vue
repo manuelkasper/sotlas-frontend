@@ -330,7 +330,7 @@ export default {
       return videos
     },
     addArticleLink () {
-      return 'https://summits.sota.org.uk/article/new/' + this.summit.code
+      return 'https://www.sotadata.org.uk/en/summits/article/new/' + this.summit.code
     }
   },
   watch: {
@@ -385,17 +385,17 @@ export default {
           this.association = response.data
         }))
 
-      loads.push(axios.get('https://api2.sota.org.uk/api/activations/' + this.summitCode)
+      loads.push(axios.get('https://api-db2.sota.org.uk/api/activations/' + this.summitCode)
         .then(response => {
           this.activations = response.data
         }))
 
-      loads.push(axios.get('https://api2.sota.org.uk/api/resources/' + this.summitCode)
+      loads.push(axios.get('https://api-db2.sota.org.uk/api/resources/' + this.summitCode)
         .then(response => {
           this.sotaResources = response.data.map(resource => {
             return {
               title: resource.title,
-              url: resource.url ? resource.url : ('https://summits.sota.org.uk/article/' + resource.resourceId + '/view'),
+              url: resource.url ? resource.url : ('https://www.sotadata.org.uk/en/summits/article/' + resource.resourceId + '/view'),
               author: resource.callsign,
               date: resource.dateSubmitted,
               icon: resource.url ? 'link' : 'quote-right'
@@ -413,7 +413,7 @@ export default {
         }))
 
       if (this.myUserId) {
-        loads.push(axios.get('https://api2.sota.org.uk/api/qsos/user-chases-by-summit/' + this.summitCode + '/' + this.myUserId)
+        loads.push(axios.get('https://api-db2.sota.org.uk/api/qsos/user-chases-by-summit/' + this.summitCode + '/' + this.myUserId)
           .then(response => {
             this.myChases = response.data
           }))

@@ -469,7 +469,7 @@ export default {
           name: 'SOTA Summits',
           url: () => {
             if (this.reference) {
-              return `https://summits.sota.org.uk/summit/${this.reference}`
+              return `https://www.sotadata.org.uk/en/summit/${this.reference}`
             }
           }
         },
