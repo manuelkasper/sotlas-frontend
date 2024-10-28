@@ -1,6 +1,7 @@
 <template>
   <b-tag v-if="!type || type === 'NORMAL'" type="is-dark" :class="tagClass">{{ mode.toUpperCase() }}</b-tag>
-  <b-tag v-else type="is-dark" :class="tagClass">{{ type.toUpperCase() }}</b-tag>
+  <b-tag v-else-if="type === 'QRT'" type="is-warning">{{ type.toUpperCase() }}</b-tag>
+  <b-tag v-else-if="type === 'TEST'" type="is-dark" class="test">{{ type.toUpperCase() }}</b-tag>
 </template>
 
 <script>
@@ -40,5 +41,8 @@ export default {
 }
 .tag.mode-fm {
   background-color: #a7385a;
+}
+.tag.test {
+  background-color: #aaa;
 }
 </style>

@@ -27,7 +27,7 @@
           </template>
         </b-table-column>
         <b-table-column field="frequency" label="Frequency" sortable :custom-sort="sortFrequency" numeric>
-          {{ props.row.frequency | formatFrequency }}
+          <span v-if="!props.row.type || props.row.type === 'NORMAL'">{{ props.row.frequency | formatFrequency }}</span>
         </b-table-column>
         <b-table-column field="mode" label="Mode" sortable>
           <ModeLabel :mode="props.row.mode" :type="props.row.type" />
