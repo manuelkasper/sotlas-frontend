@@ -16,7 +16,8 @@ const KEY_DECOMPRESSION_MAP = {
   p: 'points',
   s: 'summit',
   t: 'spotter',
-  ts: 'timeStamp'
+  ts: 'timeStamp',
+  y: 'type'
 }
 
 let KEY_COMPRESSION_MAP = null
