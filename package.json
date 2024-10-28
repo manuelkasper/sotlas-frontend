@@ -13,7 +13,7 @@
     "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
   },
   "dependencies": {
-    "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#sotlas",
+    "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#sotlas2",
     "@dwayneparton/geojson-to-gpx": "^0.0.30",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
