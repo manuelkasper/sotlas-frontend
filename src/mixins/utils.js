@@ -68,10 +68,13 @@ export default {
         return frequency
       }
       frequency = String(frequency)
-      let matches = frequency.match(/^(\d+)\.(\d+)$/)
+      let matches = frequency.match(/^(\d+)(?:\.(\d+))?$/)
       if (matches) {
         let mhz = matches[1]
         let khz = matches[2]
+        if (!khz) {
+          khz = '0'
+        }
         while (khz.length < 3) {
           khz += '0'
         }

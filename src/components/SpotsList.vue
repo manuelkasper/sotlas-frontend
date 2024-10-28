@@ -30,7 +30,7 @@
           {{ props.row.frequency | formatFrequency }}
         </b-table-column>
         <b-table-column field="mode" label="Mode" sortable>
-          <ModeLabel :mode="props.row.mode" />
+          <ModeLabel :mode="props.row.mode" :type="props.row.type" />
         </b-table-column>
         <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable>
           <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />

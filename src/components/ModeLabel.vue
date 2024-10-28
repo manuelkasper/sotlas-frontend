@@ -1,5 +1,6 @@
 <template>
-  <b-tag type="is-dark" :class="tagClass">{{ mode.toUpperCase() }}</b-tag>
+  <b-tag v-if="!type || type === 'NORMAL'" type="is-dark" :class="tagClass">{{ mode.toUpperCase() }}</b-tag>
+  <b-tag v-else type="is-dark" :class="tagClass">{{ type.toUpperCase() }}</b-tag>
 </template>
 
 <script>
@@ -9,6 +10,10 @@ export default {
     mode: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      required: false
     }
   },
   computed: {
