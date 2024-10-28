@@ -55,8 +55,7 @@ if (sessionStorage.getItem('wantSso') || localStorage.getItem('wantSso')) {
     config: {
       realm: 'SOTA',
       url: 'https://sso.sota.org.uk/auth',
-      clientId: 'sotlas',
-      useNonce: false
+      clientId: 'sotlas'
     },
     init: {
       onLoad: 'check-sso',
