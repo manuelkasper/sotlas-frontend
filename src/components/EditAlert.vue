@@ -243,8 +243,7 @@ export default {
         activatingCallsign: this.callsign.toUpperCase(),
         associationCode: this.summitCode.substring(0, this.summitCode.indexOf('/')),
         summitCode: this.summitCode.substring(this.summitCode.indexOf('/') + 1),
-        dateActivated: moment(utcDate).format('DD/MM/YYYY'),
-        eta: utcTime.replace(':', ''),
+        dateActivated: moment(utcDate).format('YYYY-MM-DD') + 'T' + utcTime + ':00Z',
         frequency: freqMode,
         comments: this.comments,
         posterCallsign: this.myCallsign
