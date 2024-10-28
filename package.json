@@ -13,7 +13,6 @@
     "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
   },
   "dependencies": {
-    "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#f9a3399",
     "@dwayneparton/geojson-to-gpx": "^0.0.30",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -23,6 +22,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.10",
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas2",
     "@maptiler/sdk": "^2.0.3",
+    "@pvale/vue-keycloak-js": "^2.4.0-0.update-keycloak-23",
     "@tmcw/togeojson": "^3.2.0",
     "axios": "^1.7.4",
     "buefy": "^0.8.20",
