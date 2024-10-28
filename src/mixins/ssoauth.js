@@ -9,11 +9,11 @@ export default {
           reject(new Error('not logged in'))
         } else {
           this.$keycloak.updateToken(60)
-            .success(() => {
+            .then(() => {
               config.headers.Authorization = 'Bearer ' + this.$keycloak.token
               resolve(config)
             })
-            .error(e => {
+            .catch(e => {
               reject(e)
             })
         }
@@ -27,12 +27,12 @@ export default {
           reject(new Error('not logged in'))
         } else {
           this.$keycloak.updateToken(60)
-            .success(() => {
+            .then(() => {
               config.headers.Authorization = 'Bearer ' + this.$keycloak.token
               config.headers.id_token = this.$keycloak.idToken
               resolve(config)
             })
-            .error(e => {
+            .catch(e => {
               reject(e)
             })
         }

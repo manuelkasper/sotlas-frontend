@@ -29,9 +29,9 @@ export default {
   mounted () {
     if (this.homeQth === null) {
       this.$keycloak.updateToken(60)
-        .success(() => {
+        .then(() => {
           this.$keycloak.loadUserProfile()
-            .success(profile => {
+            .then(profile => {
               if (profile.attributes.Lat && profile.attributes.Lat[0] && profile.attributes.Lon && profile.attributes.Lon[0]) {
                 this.$store.commit('setHomeQth', {
                   latitude: parseFloat(profile.attributes.Lat[0]),
