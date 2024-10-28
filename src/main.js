@@ -6,7 +6,7 @@ import VueSVGIcon from 'vue-svgicon'
 import vueDebounce from 'vue-debounce'
 import VueClipboard from 'vue-clipboard2'
 import MatchMedia from 'vue-match-media/src'
-import VueKeyCloak from '@pvale/vue-keycloak-js'
+import VueKeyCloak from '@dsb-norge/vue-keycloak-js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle, faArrowUp, faPlus, faCheckDouble,
   faAngleRight, faAngleLeft, faAngleDown, faAngleUp, faEye, faEyeSlash, faCaretUp, faUpload, faLink, faHistory, faThList, faImages,

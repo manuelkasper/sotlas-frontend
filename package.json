@@ -13,6 +13,7 @@
     "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
   },
   "dependencies": {
+    "@dsb-norge/vue-keycloak-js": "github:manuelkasper/vue-keycloak-js#sotlas3",
     "@dwayneparton/geojson-to-gpx": "^0.0.30",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -22,7 +23,6 @@
     "@fortawesome/vue-fontawesome": "^2.0.10",
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas2",
     "@maptiler/sdk": "^2.0.3",
-    "@pvale/vue-keycloak-js": "^2.4.0-0.update-keycloak-23",
     "@tmcw/togeojson": "^3.2.0",
     "axios": "^1.7.4",
     "buefy": "^0.8.20",
@@ -50,11 +50,6 @@
     "vue-router": "^3.6.5",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
-  },
-  "overrides": {
-    "@pvale/vue-keycloak-js": {
-      "keycloak-js": "25.0.6"
-    }
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.1",
