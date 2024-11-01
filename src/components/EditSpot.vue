@@ -222,7 +222,7 @@ export default {
             summit: this.summit,
             activatorCallsign: response.data.activatorCallsign,
             callsign: response.data.callsign,
-            comments: response.data.comments
+            comments: response.data.comments,
             type: response.data.type
           })
 
