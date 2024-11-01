@@ -123,9 +123,18 @@ export default {
       }
     },
     bands () {
-      return this.bandstats.map(bandstat => {
-        return { band: bandstat.wavelength, qsos: bandstat.qsos }
-      })
+      const bandOrder = ['160m', '80m', '60m', '40m', '30m', '20m', '17m', '15m', '12m', '10m', '6m', '4m', '2m', '70cm', 'Microwave']
+      let statsPerBand = {}
+      for (let band of bandOrder) {
+        statsPerBand[band] = { band, qsos: 0 }
+      }
+      for (let bandstat of this.bandstats) {
+        if (!statsPerBand[bandstat.wavelength]) {
+          statsPerBand[bandstat.wavelength] = { band: bandstat.wavelength, qsos: 0 }
+        }
+        statsPerBand[bandstat.wavelength].qsos += bandstat.qsos
+      }
+      return Object.values(statsPerBand).filter(stat => stat.qsos > 0)
     },
     modes () {
       let modeStats = {}
