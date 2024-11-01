@@ -19,16 +19,19 @@
 
       <b-field label="Frequency" :message="maybeKhz ? 'Do you really mean ' + frequency + ' MHz, or are you missing a dot?' : ''" :type="maybeKhz ? 'is-warning' : ''">
         <b-field :type="maybeKhz ? 'is-warning' : ''">
-          <FrequencyInput v-model="frequency" />
+          <FrequencyInput v-model="frequency" :disabled="type !== 'NORMAL'" />
           <p class="control">
-            <span class="button is-static">MHz</span>
+            <b-button @click="setType('QRT')" :type="type === 'QRT' ? 'is-primary' : ''">QRT</b-button>
+          </p>
+          <p class="control">
+            <b-button  @click="setType('TEST')" :type="type === 'TEST' ? 'is-primary' : ''">Test</b-button>
           </p>
         </b-field>
       </b-field>
 
       <b-field label="Mode">
         <b-field>
-          <b-radio-button v-for="(curModeDisp, curMode) in allModes()" :key="curMode" v-model="mode" :size="$mq.mobile ? 'is-small' : ''" :native-value="curMode">{{ curModeDisp }}</b-radio-button>
+          <b-radio-button v-for="(curModeDisp, curMode) in allModes()" :key="curMode" v-model="mode" :size="$mq.mobile ? 'is-small' : ''" :native-value="curMode" :disabled="type !== 'NORMAL'">{{ curModeDisp }}</b-radio-button>
         </b-field>
       </b-field>
 
@@ -106,7 +109,7 @@ export default {
       }
     },
     isInputValid () {
-      return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) && this.summit !== null && this.isSummitValid(this.summit) && this.frequency && this.mode
+      return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) && this.summit !== null && this.isSummitValid(this.summit) && (this.type !== 'NORMAL' || (this.frequency && this.mode))
     },
     summitLabelClass () {
       if (!this.summit || this.isSummitValid(this.summit)) {
@@ -171,6 +174,7 @@ export default {
           this.frequency = this.spot.frequency
           this.mode = this.spot.mode.toLowerCase()
           this.comments = (this.spot.comments ? this.spot.comments.replace('[sotl.as]', '').trim() : '')
+          this.type = this.spot.type ?? 'NORMAL'
         }
       }
     }
@@ -197,10 +201,15 @@ export default {
         summitCode: this.summitCode.substring(this.summitCode.indexOf('/') + 1),
         frequency: this.frequency,
         mode: this.allModes()[this.mode],
+        type: this.type,
         comments
       }
       if (this.spot && this.spot.id) {
         params.id = this.spot.id
+      }
+      if (this.type !== 'NORMAL') {
+        delete params.mode
+        delete params.frequency
       }
       this.posting = true
       this.postSotaWatchSpot(params)
@@ -214,6 +223,7 @@ export default {
             activatorCallsign: response.data.activatorCallsign,
             callsign: response.data.callsign,
             comments: response.data.comments
+            type: response.data.type
           })
 
           this.$parent.close()
@@ -240,6 +250,13 @@ export default {
       this.$nextTick(() => {
         this.$refs.summitCode.checkHtml5Validity()
       })
+    },
+    setType (type) {
+      if (this.type === type) {
+        this.type = 'NORMAL'
+      } else {
+        this.type = type
+      }
     }
   },
   data () {
@@ -255,7 +272,8 @@ export default {
       summit: null,
       summitInvalid: false,
       summitLoading: false,
-      posting: false
+      posting: false,
+      type: 'NORMAL'
     }
   }
 }
