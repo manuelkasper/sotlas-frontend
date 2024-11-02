@@ -199,7 +199,7 @@ export default {
         activatorCallsign: this.callsign.toUpperCase(),
         associationCode: this.summitCode.substring(0, this.summitCode.indexOf('/')),
         summitCode: this.summitCode.substring(this.summitCode.indexOf('/') + 1),
-        frequency: this.frequency,
+        frequency: String(this.frequency),
         mode: this.allModes()[this.mode],
         type: this.type,
         comments
