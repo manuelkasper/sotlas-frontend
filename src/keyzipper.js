@@ -17,6 +17,7 @@ const KEY_DECOMPRESSION_MAP = {
   s: 'summit',
   t: 'spotter',
   ts: 'timeStamp',
+  ui: 'userID',
   y: 'type'
 }
 

@@ -147,11 +147,11 @@ export default {
       }
     },
     canEditAlert (alert) {
-      if (!this.myCallsign) {
+      if (!this.myUserId) {
         return false
       }
 
-      return (alert.posterCallsign === this.myCallsign)
+      return (alert.userID === this.myUserId)
     },
     addAlert () {
       this.alertToEdit = null

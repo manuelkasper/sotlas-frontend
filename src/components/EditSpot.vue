@@ -207,6 +207,10 @@ export default {
       if (this.spot && this.spot.id) {
         params.id = this.spot.id
       }
+      if (this.spot && this.spot.userID) {
+        // Must pass userID to SOTAwatch when editing spots, or else "User does not own spot!" error gets returned
+        params.userID = this.spot.userID
+      }
       if (this.type !== 'NORMAL') {
         delete params.mode
         delete params.frequency

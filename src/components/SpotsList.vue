@@ -161,11 +161,11 @@ export default {
       }
     },
     canEditSpot (spot) {
-      if (!this.myCallsign) {
+      if (!this.myUserId) {
         return false
       }
 
-      return (spot.callsign === this.myCallsign)
+      return (spot.userID === this.myUserId)
     },
     addSpot () {
       this.spotToEdit = null
