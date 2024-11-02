@@ -220,6 +220,7 @@ export default {
         .then(response => {
           this.$store.commit('updateSpot', {
             id: (this.spot && this.spot.id) ? this.spot.id : response.data.id,
+            userID: response.data.userID,
             timeStamp: response.data.timeStamp,
             frequency: response.data.frequency,
             mode: response.data.mode,
