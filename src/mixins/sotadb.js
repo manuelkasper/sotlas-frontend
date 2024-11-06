@@ -12,13 +12,13 @@ export default {
         })
     },
     loadActivationDetails (activationId) {
-      return this.axiosAuth.get('https://api-db.sota.org.uk/admin/secure/my_activator_log_detailed', { params: { id: this.activationId } })
+      return this.axiosAuth.get('https://api-db2.sota.org.uk/logs/activation/detailed/' + this.activationId)
         .then(response => {
           return response.data[0]
         })
     },
     loadS2SLog (userId, year) {
-      return this.axiosAuth.get('https://api-db.sota.org.uk/admin/secure/s2s_log_by_id', { params: { id: userId, year } })
+      return this.axiosAuth.get('https://api-db2.sota.org.uk/logs/s2s/' + userId + '/' + year + '/0')
         .then(response => {
           return response.data
         })
@@ -27,7 +27,7 @@ export default {
       if (this.$store.state.myChasedSummits) {
         return Promise.resolve(this.$store.state.myChasedSummits)
       } else {
-        return this._loadMore('https://api-db.sota.org.uk/admin/secure/my_chaser_uniques', [], 1)
+        return this._loadMore('https://api-db2.sota.org.uk/logs/uniques/chaser/' + this.myUserId, [], 1)
           .then(myChaserUniques => {
             let myChasedSummits = new Set()
             myChaserUniques.forEach(ent => {
@@ -42,7 +42,7 @@ export default {
       if (this.$store.state.myActivatedSummits) {
         return Promise.resolve(this.$store.state.myActivatedSummits)
       } else {
-        return this._loadMore('https://api-db.sota.org.uk/admin/secure/my_activator_uniques', [], 1)
+        return this._loadMore('https://api-db2.sota.org.uk/logs/uniques/activator/' + this.myUserId, [], 1)
           .then(myActivatorUniques => {
             let myActivatedSummits = new Set()
             myActivatorUniques.forEach(ent => {
@@ -57,7 +57,7 @@ export default {
       if (this.$store.state.myActivatedSummitsThisYear) {
         return Promise.resolve(this.$store.state.myActivatedSummitsThisYear)
       } else {
-        return this.axiosAuth.get('https://api-db.sota.org.uk/admin/secure/my_activator_log', { params: { year: new Date().getUTCFullYear() } })
+        return this.axiosAuth.get('https://api-db2.sota.org.uk/logs/activator/' + this.myUserId + '/' + new Date().getUTCFullYear() + '/0')
           .then(response => {
             let myActivatedSummitsThisYear = new Set()
             response.data.forEach(ent => {
@@ -69,7 +69,7 @@ export default {
       }
     },
     _loadMore (url, data, start) {
-      return this.axiosAuth.get(url, { params: { start } })
+      return this.axiosAuth.get(url + '/' + start + '/0')
         .then(response => {
           data = data.concat(response.data)
           if (response.data.length > 0) {
