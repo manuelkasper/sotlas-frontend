@@ -69,7 +69,7 @@
             <SummitAttributes :summit-code="summit.code" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled">+ Article</span>)</span></h6>
+              <h6 class="title is-6">Resources<span v-if="1 || $keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -104,7 +104,7 @@
     <section v-if="summit" class="section">
       <div class="container">
         <h4 class="title is-4">Photos</h4>
-        <SummitPhotos ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
+        <SummitPhotos v-if="summit.photos && summit.photos.length > 0" ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
 
         <PhotosUploader v-if="$keycloak && $keycloak.authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
         <div v-else class="uploader-placeholder box"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
@@ -331,6 +331,9 @@ export default {
     },
     addArticleLink () {
       return 'https://www.sotadata.org.uk/en/summits/article/new/' + this.summit.code
+    },
+    addRouteLink () {
+      return 'https://www.sotamaps.org/tracks'
     }
   },
   watch: {
