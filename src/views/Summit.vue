@@ -69,7 +69,7 @@
             <SummitAttributes :summit-code="summit.code" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources<span v-if="1 || $keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
+              <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
