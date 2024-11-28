@@ -1,5 +1,5 @@
 <template>
-  <file-pond name="photo" ref="filePond" class-name="box" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" :server="uploadServer()" @processfile="onProcessFile" />
+  <file-pond name="photo" ref="filePond" class-name="box" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" :accepted-file-types="acceptedFileTypes" :server="uploadServer()" @processfile="onProcessFile" />
 </template>
 
 <script>
@@ -32,6 +32,15 @@ export default {
       } else {
         return '<div>Drag & Drop your photos or <span class="filepond--label-action">Browse</span> to upload</div><div style="font-size: 0.8em">By uploading your photos, you allow SOTLAS to publish them. You can delete your photos at any time.</div>'
       }
+    },
+    acceptedFileTypes () {
+      if (/Chrome/.test(navigator.userAgent)) {
+        // Omit accepted-file-types for (mobile) Chrome, as it will cause it to strip GPS metadata
+        // See https://stackoverflow.com/questions/61482589/chrome-on-android-10-image-uploading-strips-gps-exif-data
+        return ''
+      } else {
+        return 'image/jpeg, image/png, image/heic'
+      }
     }
   },
   methods: {
@@ -47,7 +56,7 @@ export default {
               if (res.data.length > 0 && !res.data[0].coordinates && !this.gpsNotificationShown) {
                 this.$buefy.dialog.alert({
                   title: 'No GPS information',
-                  message: '<p>Your photo has been uploaded successfully, but did not contain GPS coordinates in its metadata (Exif header). If possible, try uploading original full-resolution files from your camera, and use your computer instead of your mobile phone to upload the photos (as mobile browsers will often strip metadata while uploading).</p><p>SOTLAS will automatically reduce the resolution if needed, and will use the GPS coordinates to show the photos on the map if the position is accurate enough.</p><p><small>This alert will not appear again for future uploads with missing GPS information.</small></p>',
+                  message: '<p>Your photo has been uploaded successfully, but did not contain GPS coordinates in its metadata (Exif header). If possible, try uploading original full-resolution files from your camera, and use your computer instead of your mobile phone to upload the photos (as mobile browsers will often strip metadata while uploading).</p><p>iPhone users uploading directly from their phone can choose to include the location when selecting the photos to upload.</p><p>SOTLAS will automatically reduce the resolution if needed, and will use the GPS coordinates to show the photos on the map if the position is accurate enough.</p><p><small>This alert will not appear again for future uploads with missing GPS information.</small></p>',
                   type: 'is-info',
                   hasIcon: true,
                   icon: 'info-circle',
