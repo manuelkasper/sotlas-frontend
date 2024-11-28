@@ -37,7 +37,7 @@ export default {
       if (/Chrome/.test(navigator.userAgent)) {
         // Omit accepted-file-types for (mobile) Chrome, as it will cause it to strip GPS metadata
         // See https://stackoverflow.com/questions/61482589/chrome-on-android-10-image-uploading-strips-gps-exif-data
-        return ''
+        return undefined
       } else {
         return 'image/jpeg, image/png, image/heic'
       }
