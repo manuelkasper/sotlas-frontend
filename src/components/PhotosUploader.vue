@@ -1,5 +1,5 @@
 <template>
-  <file-pond name="photo" ref="filePond" class-name="box" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" accepted-file-types="image/jpeg, image/png, image/heic" :server="uploadServer()" @processfile="onProcessFile" />
+  <file-pond name="photo" ref="filePond" class-name="box" :label-idle="labelIdle" :allow-multiple="true" :allow-replace="false" :allow-revert="false" :allow-paste="false" :server="uploadServer()" @processfile="onProcessFile" />
 </template>
 
 <script>
