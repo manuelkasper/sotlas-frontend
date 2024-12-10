@@ -99,7 +99,7 @@ export default {
       if (!this.authenticated || !this.$keycloak.tokenParsed.callsign) {
         return null
       }
-      return this.homeCallsign(this.$keycloak.tokenParsed.callsign)
+      return this.homeCallsign(this.$keycloak.tokenParsed.callsign, false)
     },
     myUserId () {
       if (!this.authenticated || !this.$keycloak.tokenParsed.userid) {
