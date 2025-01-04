@@ -422,18 +422,6 @@ export default {
           }
         },
         {
-          name: 'FatMap',
-          url: () => {
-            let cameraAltitude = 10000
-            if (this.altitude) {
-              cameraAltitude = Math.round((this.altitude * 2) * 3.28)
-            } else if (this.elevation) {
-              cameraAltitude = Math.round((this.elevation * 2) * 3.28)
-            }
-            return `https://fatmap.com/adventures/@${this.latitude},${this.longitude},${cameraAltitude},-66,-12,satellite`
-          }
-        },
-        {
           name: 'OpenStreetMap',
           url: () => {
             return `https://www.openstreetmap.org/?mlat=${this.latitude}&mlon=${this.longitude}&zoom=16`
@@ -485,12 +473,6 @@ export default {
           name: 'aprs.fi',
           url: () => {
             return `https://aprs.fi/#!lat=${this.latitude}&lng=${this.longitude}&z=14`
-          }
-        },
-        {
-          name: 'APRS Direct',
-          url: () => {
-            return `https://www.aprsdirect.com/center/${this.latitude},${this.longitude}/zoom/14`
           }
         }
       ]
