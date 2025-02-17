@@ -406,10 +406,10 @@ export default {
         if (this.summit && this.summit.code) {
           hash = '#/summits/' + this.summit.code
         }
-        let fullPath = url + hash
-        if (!this.leavingRoute && this.$router.currentRoute.fullPath !== fullPath) {
+        let path = url + hash
+        if (!this.leavingRoute && this.$router.currentRoute.path !== path) {
           this.lastSetUrl = url
-          this.$router.replace(fullPath)
+          this.$router.replace({ path, query: this.$router.currentRoute.query })
         }
       }
     },

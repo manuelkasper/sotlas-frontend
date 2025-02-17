@@ -116,6 +116,17 @@ export default {
     }
   },
   mounted () {
+    if (this.$route.query.activatedBy) {
+      this.clearFilter()
+      this.activatedByEnabled = true
+      this.activatedBy = this.$route.query.activatedBy
+      this.$router.replace({ path: this.$route.path })
+    } else if (this.$route.query.notActivatedBy) {
+      this.clearFilter()
+      this.notActivatedByEnabled = true
+      this.notActivatedBy = this.$route.query.notActivatedBy
+      this.$router.replace({ path: this.$route.path })
+    }
     this.updateFilter()
   },
   watch: {
