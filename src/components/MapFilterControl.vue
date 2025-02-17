@@ -116,15 +116,20 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.query.activatedBy) {
+    // Check if any common filters have been specified in the URL query
+    if (this.$route.query.activatedBy || this.$route.query.notActivatedBy || this.$route.query.altitudeFrom) {
       this.clearFilter()
-      this.activatedByEnabled = true
-      this.activatedBy = this.$route.query.activatedBy
-      this.$router.replace({ path: this.$route.path })
-    } else if (this.$route.query.notActivatedBy) {
-      this.clearFilter()
-      this.notActivatedByEnabled = true
-      this.notActivatedBy = this.$route.query.notActivatedBy
+      if (this.$route.query.activatedBy) {
+        this.activatedByEnabled = true
+        this.activatedBy = this.$route.query.activatedBy
+      } else if (this.$route.query.notActivatedBy) {
+        this.notActivatedByEnabled = true
+        this.notActivatedBy = this.$route.query.notActivatedBy
+      }
+      if (this.$route.query.altitudeFrom) {
+        this.altitudeEnabled = true
+        this.altitudeFrom = this.$route.query.altitudeFrom
+      }
       this.$router.replace({ path: this.$route.path })
     }
     this.updateFilter()
