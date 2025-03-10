@@ -290,7 +290,7 @@ export default {
           url: () => {
             if (this.reference && this.reference.match('^OE/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3857')
-              return `https://basemap.at/bmapp/index.html#{%22center%22:[${p[0]},${p[1]}],%22zoom%22:16,%22rotation%22:0,%22layers%22:%220100000000%22}`
+              return `https://stp.wien.gv.at/basemap/#{%22center%22:[${p[0]},${p[1]}],%22zoom%22:16,%22rotation%22:0,%22layers%22:%220100000000%22}`
             }
           }
         },
