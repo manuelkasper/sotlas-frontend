@@ -34,7 +34,8 @@ let mapOptions = {
   spots: false,
   inactive: false,
   webcams: false,
-  webcamsType: 'daylight'
+  webcamsType: 'daylight',
+  alertDays: 7
 }
 let mapOptionsSettings = localStorage.getItem('mapOptions')
 if (mapOptionsSettings) {

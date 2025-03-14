@@ -53,7 +53,9 @@
           <b-checkbox v-model="mapOptions.spots" size="is-small" @input="setMapOption('spots', $event)">Recent spots</b-checkbox>
         </b-field>
         <b-field grouped>
-          <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts</b-checkbox>
+          <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts for next</b-checkbox>
+          <b-input v-model="mapOptions.alertDays" class="alertDays" placeholder="3" size="is-small" type="number" :disabled="!mapOptions.alerts" @input="setMapOption('alertDays', $event)" />
+          <div class="tlabel">day(s)</div>
         </b-field>
         <b-field grouped>
           <b-checkbox v-model="mapOptions.inactive" size="is-small" @input="setMapOption('inactive', $event)">Inactive summits</b-checkbox>
@@ -112,7 +114,8 @@ export default {
     alerts () {
       let now = moment.utc()
       return this.$store.state.alerts.filter(alert => {
-        return (now.diff(alert.dateActivated) < MAX_ALERT_AGE)
+        let alertAge = now.diff(alert.dateActivated)
+        return (alertAge < MAX_ALERT_AGE && -alertAge <= this.mapOptions.alertDays * 24 * 60 * 60 * 1000)
       }).map(alert => {
         return alert.summit.code
       })
@@ -229,6 +232,22 @@ export default {
   padding: 0.4em;
   background-color: #eee;
   font-size: 0.8rem;
+}
+.map-option .field {
+  margin: 0.2rem 0.2rem 0.5rem 0.2rem;
+  line-height: 1;
+  align-items: center;
+}
+.map-option div.tlabel {
+  display: inline-block;
+  font-size: 0.75rem;
+}
+.map-option .alertDays {
+  margin-right: 0.5rem !important;
+}
+.map-option .alertDays >>> input {
+  width: 5em;
+  vertical-align: baseline;
 }
 .maplibre-gl-map-options-container .map-options-container {
   display: none;
