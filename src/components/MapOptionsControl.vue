@@ -54,7 +54,7 @@
         </b-field>
         <b-field grouped>
           <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts for next</b-checkbox>
-          <b-input v-model="mapOptions.alertDays" class="alertDays" placeholder="3" size="is-small" type="number" :disabled="!mapOptions.alerts" @input="setMapOption('alertDays', $event)" />
+          <b-input v-model="mapOptions.alertDays" class="alertDays" size="is-small" type="number" min="1" :disabled="!mapOptions.alerts" @input="setMapOption('alertDays', $event)" />
           <div class="tlabel">day(s)</div>
         </b-field>
         <b-field grouped>
