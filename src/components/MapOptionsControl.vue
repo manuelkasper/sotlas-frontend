@@ -52,9 +52,9 @@
         <b-field grouped>
           <b-checkbox v-model="mapOptions.spots" size="is-small" @input="setMapOption('spots', $event)">Recent spots</b-checkbox>
         </b-field>
-        <b-field grouped>
+        <b-field class="alert-days" grouped>
           <b-checkbox v-model="mapOptions.alerts" size="is-small" @input="setMapOption('alerts', $event)">Alerts for next</b-checkbox>
-          <b-input v-model="mapOptions.alertDays" class="alertDays" size="is-small" type="number" min="1" :disabled="!mapOptions.alerts" @input="setMapOption('alertDays', $event)" />
+          <b-input v-model="mapOptions.alertDays" size="is-small" type="number" min="1" :disabled="!mapOptions.alerts" @input="setMapOption('alertDays', $event)" />
           <div class="tlabel">day(s)</div>
         </b-field>
         <b-field grouped>
@@ -233,8 +233,11 @@ export default {
   background-color: #eee;
   font-size: 0.8rem;
 }
-.map-option .field {
-  margin: 0.2rem 0.2rem 0.5rem 0.2rem;
+.map-option .field:has(+ .alert-days) {
+  margin-bottom: 0.5rem;
+}
+.map-option .field.alert-days {
+  margin-bottom: 0.5rem;
   line-height: 1;
   align-items: center;
 }
@@ -242,10 +245,10 @@ export default {
   display: inline-block;
   font-size: 0.75rem;
 }
-.map-option .alertDays {
+.map-option .alert-days .control {
   margin-right: 0.5rem !important;
 }
-.map-option .alertDays >>> input {
+.map-option .alert-days .control >>> input {
   width: 5em;
   vertical-align: baseline;
 }
