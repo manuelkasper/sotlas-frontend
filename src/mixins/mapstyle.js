@@ -197,14 +197,6 @@ export default {
           slope_classes: true,
           wildlife: true
         },
-        'swisstopo_snowcover': {
-          name: 'swisstopo (Snow cover)',
-          difficulty: true,
-          skiing: true,
-          snowshoe: true,
-          slope_classes: true,
-          wildlife: true
-        },
         'basemapat': {
           name: 'basemap.at'
         },
