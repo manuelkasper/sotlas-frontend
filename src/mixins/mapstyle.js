@@ -87,6 +87,73 @@ export default {
           }
         }
       })
+
+      if (this.mapOptions['snow_depth']) {
+        if (!map.getSource('snowcover')) {
+          map.addSource('snowcover', {
+            type: 'geojson',
+            data: 'https://snow-maps-hs.slf.ch/public/hs/map/HS1D-v2/current/geojson'
+          })
+          let snowcoverPattern = new Image()
+          snowcoverPattern.src = require('../assets/partial-snowcover-dots.png')
+          snowcoverPattern.onload = () => {
+            map.addImage('partial-snowcover-pattern', snowcoverPattern, {
+              pixelRatio: 2
+            })
+            map.addLayer({
+              id: 'snowcover-partial-background',
+              type: 'fill',
+              source: 'snowcover',
+              filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
+              layout: {
+                'fill-sort-key': ['get', 'zIndex']
+              },
+              paint: {
+                'fill-color': ['get', 'fill'],
+                'fill-opacity': 1.0
+              }
+            }, 'scree_z17')
+            map.addLayer({
+              id: 'snowcover-partial',
+              type: 'fill',
+              source: 'snowcover',
+              filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
+              layout: {
+                'fill-sort-key': ['get', 'zIndex']
+              },
+              paint: {
+                'fill-pattern': 'partial-snowcover-pattern',
+                'fill-opacity': 0.2
+              }
+            }, 'scree_z17')
+            map.addLayer({
+              id: 'snowcover',
+              type: 'fill',
+              source: 'snowcover',
+              filter: ['any', ['!', ['get', 'partialSnowCover']], ['>', ['get', 'value'], 1]],
+              layout: {
+                'fill-sort-key': ['get', 'zIndex']
+              },
+              paint: {
+                'fill-color': ['get', 'fill'],
+                'fill-opacity': 1.0
+              }
+            }, 'scree_z17')
+          }
+        } else {
+          map.setLayoutProperty('snowcover-partial-background', 'visibility', 'visible')
+          map.setLayoutProperty('snowcover-partial', 'visibility', 'visible')
+          map.setLayoutProperty('snowcover', 'visibility', 'visible')
+        }
+        map.setLayoutProperty('water_polygon', 'visibility', 'none')
+      } else {
+        if (map.getLayer('snowcover')) {
+          map.setLayoutProperty('snowcover-partial-background', 'visibility', 'none')
+          map.setLayoutProperty('snowcover-partial', 'visibility', 'none')
+          map.setLayoutProperty('snowcover', 'visibility', 'none')
+        }
+        map.setLayoutProperty('water_polygon', 'visibility', 'visible')
+      }
     }
   },
   data () {
@@ -111,7 +178,8 @@ export default {
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true
+          wildlife: true,
+          snow_depth: true
         },
         'swisstopo_raster': {
           name: 'swisstopo (Raster)',
@@ -123,6 +191,14 @@ export default {
         },
         'swisstopo_aerial': {
           name: 'swisstopo (Aerial)',
+          difficulty: true,
+          skiing: true,
+          snowshoe: true,
+          slope_classes: true,
+          wildlife: true
+        },
+        'swisstopo_snowcover': {
+          name: 'swisstopo (Snow cover)',
           difficulty: true,
           skiing: true,
           snowshoe: true,

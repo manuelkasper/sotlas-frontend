@@ -27,6 +27,9 @@
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
           </b-checkbox>
         </b-field>
+        <b-field v-if="mapTypes[mapType].snow_depth" grouped>
+          <b-checkbox v-model="mapOptions.snow_depth" size="is-small" @input="setMapOption('snow_depth', $event)">Snow depth</b-checkbox>
+        </b-field>
       </div>
       <div class="map-option" v-if="mapTypes[mapType].difficulty">
         <b-field grouped>
