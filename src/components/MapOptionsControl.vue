@@ -28,7 +28,9 @@
           </b-checkbox>
         </b-field>
         <b-field v-if="mapTypes[mapType].snow_depth" grouped>
-          <b-checkbox v-model="mapOptions.snow_depth" size="is-small" @input="setMapOption('snow_depth', $event)">Snow depth</b-checkbox>
+          <b-checkbox v-model="mapOptions.snow_depth" size="is-small" @input="setMapOption('snow_depth', $event)">Snow depth
+            <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showSnowDepthInfo" />
+          </b-checkbox>
         </b-field>
       </div>
       <div class="map-option" v-if="mapTypes[mapType].difficulty">
@@ -214,6 +216,44 @@ export default {
       this.$buefy.dialog.alert({
         title: 'Hiking difficulty',
         message: '<p style="margin-bottom: 0.5em">The hiking difficulty grading uses the <a href="https://www.sac-cas.ch/fileadmin/Ausbildung_und_Wissen/Sicher_unterwegs/Sicher_unterwegs_Wandern/2020_Berg_Alpinwanderskala_EN.pdf" target="_blank">SAC scale</a>. Colors shown are as follows:</p><ul><li><span style="color: #cccc00">Yellow</span>: T1</li><li><span style="color: #cc0000">Red</span>: T2…T3</li><li><span style="color: #3333cc">Blue</span>: T4…T6</li></ul>',
+        type: 'is-info',
+        hasIcon: true,
+        icon: 'info-circle',
+        iconPack: 'fas'
+      })
+    },
+    showSnowDepthInfo (event) {
+      event.preventDefault()
+      this.$buefy.dialog.alert({
+        title: 'Snow depth',
+        message: `
+        <p style="margin-bottom: 0.5em"><a href="https://www.slf.ch/en/avalanche-bulletin-and-snow-situation/snow-maps/information-about-snow-depth/" target="_blank">Snow depth map from SLF</a>, published from 1 November to 30 June.</p>
+        <div class="color-scale" style="margin-top: 1em; margin-bottom: 0.5em;">
+          <div class="cscolor" style="background-color: rgb(205, 255, 205); grid-column-start: 1; grid-column-end: 3;"></div>
+          <div class="cscolor" style="background-color: rgb(153, 240, 178); grid-column-start: 3; grid-column-end: 5;"></div>
+          <div class="cslabel" style="grid-column-start: 2; grid-column-end: 4;">20 </div>
+          <div class="cstick" style="grid-column-start: 2; grid-column-end: 4;"></div>
+          <div class="cscolor" style="background-color: rgb(83, 189, 159); grid-column-start: 5; grid-column-end: 7;"></div>
+          <div class="cslabel" style="grid-column-start: 4; grid-column-end: 6;">50 </div>
+          <div class="cstick" style="grid-column-start: 4; grid-column-end: 6;"></div>
+          <div class="cscolor" style="background-color: rgb(50, 150, 180); grid-column-start: 7; grid-column-end: 9;"></div>
+          <div class="cslabel" style="grid-column-start: 6; grid-column-end: 8;">80 </div>
+          <div class="cstick" style="grid-column-start: 6; grid-column-end: 8;"></div>
+          <div class="cscolor" style="background-color: rgb(6, 112, 176); grid-column-start: 9; grid-column-end: 11;"></div>
+          <div class="cslabel" style="grid-column-start: 8; grid-column-end: 10;">120 </div>
+          <div class="cstick" style="grid-column-start: 8; grid-column-end: 10;"></div>
+          <div class="cscolor" style="background-color: rgb(5, 79, 140); grid-column-start: 11; grid-column-end: 13;"></div>
+          <div class="cslabel" style="grid-column-start: 10; grid-column-end: 12;">200 </div>
+          <div class="cstick" style="grid-column-start: 10; grid-column-end: 12;"></div>
+          <div class="cscolor" style="background-color: rgb(97, 4, 50); grid-column-start: 13; grid-column-end: 15;"></div>
+          <div class="cslabel" style="grid-column-start: 12; grid-column-end: 14;">300 </div>
+          <div class="cstick" style="grid-column-start: 12; grid-column-end: 14;"></div>
+          <div class="cscolor" style="background-color: rgb(77, 2, 15); grid-column-start: 15; grid-column-end: 17;"></div>
+          <div class="cslabel" style="grid-column-start: 14; grid-column-end: 16;">400 </div>
+          <div class="cstick" style="grid-column-start: 14; grid-column-end: 16;"></div>
+          <div class="csunit">cm </div>
+        </div>
+        <svg role="img" class="svg-inline--fa fa-grid-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="margin-right: 0.2em;"><path fill="currentColor" d="M128 96A64 64 0 1 1 0 96a64 64 0 1 1 128 0zm0 160A64 64 0 1 1 0 256a64 64 0 1 1 128 0zM64 480a64 64 0 1 1 0-128 64 64 0 1 1 0 128zM288 96A64 64 0 1 1 160 96a64 64 0 1 1 128 0zM224 320a64 64 0 1 1 0-128 64 64 0 1 1 0 128zm64 96a64 64 0 1 1 -128 0 64 64 0 1 1 128 0zm96-256a64 64 0 1 1 0-128 64 64 0 1 1 0 128zm64 96a64 64 0 1 1 -128 0 64 64 0 1 1 128 0zM384 480a64 64 0 1 1 0-128 64 64 0 1 1 0 128z"></path></svg> partially snow-covered`,
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',

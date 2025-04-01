@@ -162,3 +162,39 @@ hr {
     padding: 1rem 1.5rem;
   }
 }
+
+.color-scale {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto;
+  color: #262626;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  grid-template-columns: repeat(16, 1fr) auto;
+}
+.color-scale .cscolor {
+  grid-row: 1/2;
+  align-self: start;
+  min-width: 1.9rem;
+  height: .75rem;
+}
+.color-scale .cslabel {
+  grid-row: 2/3;
+  justify-self: center;
+}
+.color-scale .cstick {
+  grid-row: 1/2;
+  background-color: #262626;
+  width: 1px;
+  height: 1rem;
+  justify-self: center;
+}
+.color-scale .csunit {
+  grid-column: -2/-1;
+  grid-row: 2/3;
+  padding: 0 .5rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  font-weight: bold;
+}
