@@ -88,72 +88,74 @@ export default {
         }
       })
 
-      if (this.mapOptions['snow_depth']) {
-        if (!map.getSource('snowcover')) {
-          map.addSource('snowcover', {
-            type: 'geojson',
-            data: 'https://snow-maps-hs.slf.ch/public/hs/map/HS1D-v2/current/geojson'
-          })
-          let snowcoverPattern = new Image()
-          snowcoverPattern.src = require('../assets/partial-snowcover-dots.png')
-          snowcoverPattern.onload = () => {
-            map.addImage('partial-snowcover-pattern', snowcoverPattern, {
-              pixelRatio: 2
+      if (this.mapTypes[this.mapType].snow_depth) {
+        if (this.mapOptions['snow_depth']) {
+          if (!map.getSource('snowcover')) {
+            map.addSource('snowcover', {
+              type: 'geojson',
+              data: 'https://snow-maps-hs.slf.ch/public/hs/map/HS1D-v2/current/geojson'
             })
-            map.addLayer({
-              id: 'snowcover-partial-background',
-              type: 'fill',
-              source: 'snowcover',
-              filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
-              layout: {
-                'fill-sort-key': ['get', 'zIndex']
-              },
-              paint: {
-                'fill-color': ['get', 'fill'],
-                'fill-opacity': 1.0
-              }
-            }, 'scree_z17')
-            map.addLayer({
-              id: 'snowcover-partial',
-              type: 'fill',
-              source: 'snowcover',
-              filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
-              layout: {
-                'fill-sort-key': ['get', 'zIndex']
-              },
-              paint: {
-                'fill-pattern': 'partial-snowcover-pattern',
-                'fill-opacity': 0.2
-              }
-            }, 'scree_z17')
-            map.addLayer({
-              id: 'snowcover',
-              type: 'fill',
-              source: 'snowcover',
-              filter: ['any', ['!', ['get', 'partialSnowCover']], ['>', ['get', 'value'], 1]],
-              layout: {
-                'fill-sort-key': ['get', 'zIndex']
-              },
-              paint: {
-                'fill-color': ['get', 'fill'],
-                'fill-opacity': 1.0
-              }
-            }, 'scree_z17')
+            let snowcoverPattern = new Image()
+            snowcoverPattern.src = require('../assets/partial-snowcover-dots.png')
+            snowcoverPattern.onload = () => {
+              map.addImage('partial-snowcover-pattern', snowcoverPattern, {
+                pixelRatio: 2
+              })
+              map.addLayer({
+                id: 'snowcover-partial-background',
+                type: 'fill',
+                source: 'snowcover',
+                filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
+                layout: {
+                  'fill-sort-key': ['get', 'zIndex']
+                },
+                paint: {
+                  'fill-color': ['get', 'fill'],
+                  'fill-opacity': 1.0
+                }
+              }, 'scree_z17')
+              map.addLayer({
+                id: 'snowcover-partial',
+                type: 'fill',
+                source: 'snowcover',
+                filter: ['all', ['get', 'partialSnowCover'], ['==', ['get', 'value'], 1]],
+                layout: {
+                  'fill-sort-key': ['get', 'zIndex']
+                },
+                paint: {
+                  'fill-pattern': 'partial-snowcover-pattern',
+                  'fill-opacity': 0.2
+                }
+              }, 'scree_z17')
+              map.addLayer({
+                id: 'snowcover',
+                type: 'fill',
+                source: 'snowcover',
+                filter: ['any', ['!', ['get', 'partialSnowCover']], ['>', ['get', 'value'], 1]],
+                layout: {
+                  'fill-sort-key': ['get', 'zIndex']
+                },
+                paint: {
+                  'fill-color': ['get', 'fill'],
+                  'fill-opacity': 1.0
+                }
+              }, 'scree_z17')
+            }
+          } else {
+            map.setLayoutProperty('snowcover-partial-background', 'visibility', 'visible')
+            map.setLayoutProperty('snowcover-partial', 'visibility', 'visible')
+            map.setLayoutProperty('snowcover', 'visibility', 'visible')
           }
+          map.setLayoutProperty('water_polygon', 'visibility', 'none')
         } else {
-          map.setLayoutProperty('snowcover-partial-background', 'visibility', 'visible')
-          map.setLayoutProperty('snowcover-partial', 'visibility', 'visible')
-          map.setLayoutProperty('snowcover', 'visibility', 'visible')
-        }
-        map.setLayoutProperty('water_polygon', 'visibility', 'none')
-      } else {
-        if (map.getLayer('snowcover')) {
-          map.setLayoutProperty('snowcover-partial-background', 'visibility', 'none')
-          map.setLayoutProperty('snowcover-partial', 'visibility', 'none')
-          map.setLayoutProperty('snowcover', 'visibility', 'none')
-        }
-        if (map.getLayer('water_polygon')) {
-          map.setLayoutProperty('water_polygon', 'visibility', 'visible')
+          if (map.getLayer('snowcover')) {
+            map.setLayoutProperty('snowcover-partial-background', 'visibility', 'none')
+            map.setLayoutProperty('snowcover-partial', 'visibility', 'none')
+            map.setLayoutProperty('snowcover', 'visibility', 'none')
+          }
+          if (map.getLayer('water_polygon')) {
+            map.setLayoutProperty('water_polygon', 'visibility', 'visible')
+          }
         }
       }
     }
