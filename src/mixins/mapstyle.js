@@ -152,7 +152,9 @@ export default {
           map.setLayoutProperty('snowcover-partial', 'visibility', 'none')
           map.setLayoutProperty('snowcover', 'visibility', 'none')
         }
-        map.setLayoutProperty('water_polygon', 'visibility', 'visible')
+        if (map.getLayer('water_polygon')) {
+          map.setLayoutProperty('water_polygon', 'visibility', 'visible')
+        }
       }
     }
   },
