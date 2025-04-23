@@ -396,7 +396,7 @@ export default {
       if (summitCode.match(/^HB0?\//)) {
         return 'https://map.geo.admin.ch/?swisssearch=' + latitude + ',' + longitude
       } else {
-        return 'https://www.openstreetmap.org/?mlat=' + latitude + '&mlon=' + longitude + '&zoom=14'
+        return 'https://www.openstreetmap.org/#map=14/' + latitude + '/' + longitude + ''
       }
     },
     updateMapURL () {

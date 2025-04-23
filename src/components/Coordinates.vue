@@ -424,7 +424,7 @@ export default {
         {
           name: 'OpenStreetMap',
           url: () => {
-            return `https://www.openstreetmap.org/?mlat=${this.latitude}&mlon=${this.longitude}&zoom=16`
+            return `https://www.openstreetmap.org/#map=16/${this.latitude}/${this.longitude}`
           }
         },
         {
