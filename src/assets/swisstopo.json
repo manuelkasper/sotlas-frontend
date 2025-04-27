@@ -3248,32 +3248,6 @@
       ]
     },
     {
-      "id": "skiing_trails_raster",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "skiing"
-      },
-      "source": "skiing_trails_raster",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
-      }
-    },
-    {
-      "id": "snowshoe_trails_raster",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "snowshoe"
-      },
-      "source": "snowshoe_trails_raster",
-      "layout": {"visibility": "none"},
-      "paint": {
-        "raster-opacity": 0.6,
-        "raster-resampling": "linear"
-      }
-    },
-    {
       "id": "landcover_pt",
       "type": "symbol",
       "source": "base_v1.0.0",
@@ -9395,6 +9369,32 @@
         true,
         false
       ]
+    },
+    {
+      "id": "skiing_trails_raster",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "skiing"
+      },
+      "source": "skiing_trails_raster",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "snowshoe_trails_raster",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "snowshoe"
+      },
+      "source": "snowshoe_trails_raster",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.6,
+        "raster-resampling": "linear"
+      }
     },
     {
       "id": "contour_line_pt_20",
