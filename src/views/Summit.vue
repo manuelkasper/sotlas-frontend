@@ -61,9 +61,11 @@
             <div>Locator: <span class="locator">{{ locator }}</span></div>
             <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">
-              <span v-if="firstActivations.activators.length == 1">First activation: </span>
-              <span v-else>First day's activations: </span>
-              <span v-for="(activator, index) in firstActivations.activators" :key="activator.userId"><FirstActivator :callsign="activator.callsign" :userId="activator.userId" />{{ index !== firstActivations.activators.length - 1 ? ' & ' : '' }}</span>
+              First activation:
+              <FirstActivator :callsign="firstActivations.activators[0].callsign" :userId="firstActivations.activators[0].userId" />
+              <span v-if="firstActivations.activators.length > 1"> (with
+                <span v-for="(activator, index) in firstActivations.activators.slice(1)" :key="activator.userId"><FirstActivator :callsign="activator.callsign" :userId="activator.userId" />{{ index !== firstActivations.activators.length - 2 ? ' & ' : '' }}</span>)
+              </span>
             <span class="has-text-grey"> on {{ firstActivations.date | formatActivationDate }}</span></div>
 
             <SummitAttributes :summit-code="summit.code" />
@@ -179,19 +181,27 @@ export default {
       return summitMaidenhead.locator
     },
     firstActivations () {
-      if (!this.activations || this.activations.length === 0) {
+      if (!this.activations || this.activations.length === 0 || !this.firstActivation) {
         return null
       }
 
-      let firstActivationDate = this.activations[this.activations.length - 1].activationDate
+      // Sort callsigns: "true" first activator (i.e. who made the first QSO) first,
+      // the rest that activated on the same day sorted alphabetically
+      let firstActivationDate = this.firstActivation.activationDate
       let firstActivationCallsigns = []
       for (let i = this.activations.length - 1; i >= 0 && this.activations[i].activationDate === firstActivationDate; i--) {
-        firstActivationCallsigns.push({
-          callsign: this.activations[i].ownCallsign,
-          userId: this.activations[i].userId
-        })
+        if (this.activations[i].userId !== this.firstActivation.userId) {
+          firstActivationCallsigns.push({
+            callsign: this.activations[i].ownCallsign,
+            userId: this.activations[i].userId
+          })
+        }
       }
       firstActivationCallsigns.sort((a, b) => (a.callsign > b.callsign) ? 1 : -1)
+      firstActivationCallsigns.unshift({
+        callsign: this.firstActivation.ownCallsign,
+        userId: this.firstActivation.userId
+      })
       return { activators: firstActivationCallsigns, date: firstActivationDate }
     },
     region () {
@@ -415,6 +425,16 @@ export default {
           }
         }))
 
+      loads.push(axios.get('https://api-db2.sota.org.uk/api/activations/first/' + this.summitCode)
+        .then(response => {
+          this.firstActivation = response.data
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 404) {
+            this.firstActivation = null
+          }
+        }))
+
       if (this.myUserId) {
         loads.push(axios.get('https://api-db2.sota.org.uk/api/qsos/user-chases-by-summit/' + this.summitCode + '/' + this.myUserId)
           .then(response => {
@@ -492,7 +512,8 @@ export default {
       isAddSpotActive: false,
       enlargeMap: false,
       alwaysLoadWikipedia: true,
-      bonusSeason: null
+      bonusSeason: null,
+      firstActivation: null
     }
   }
 }
