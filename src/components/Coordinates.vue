@@ -391,7 +391,7 @@ export default {
           url: () => {
             if (this.reference && this.reference.match('^SM/')) {
               let p = this.convertLatLonToGrid(this.latitude, this.longitude, 'EPSG:3006')
-              return `https://minkarta.lantmateriet.se/plats/3006/v2.0/?e=${p[0].toFixed(0)}&n=${p[1].toFixed(0)}&z=10&mapprofile=karta&layers=%5B%5B%223%22%5D%2C%5B%221%22%5D%5D`
+              return `https://minkarta.lantmateriet.se/plats/3006/v2.0/?e=${p[0].toFixed(0)}&n=${p[1].toFixed(0)}&z=10`
             }
           }
         },
