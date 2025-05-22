@@ -172,7 +172,7 @@
       "source": "slope_classes",
       "layout": {"visibility": "none"},
       "paint": {
-        "raster-opacity": 0.3,
+        "raster-opacity": 0.25,
         "raster-resampling": "nearest"
       }
     },
