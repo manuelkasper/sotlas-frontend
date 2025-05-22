@@ -211,7 +211,8 @@ export default {
           name: 'TopoSvalbard'
         },
         'norkart': {
-          name: 'Kartverket.no'
+          name: 'Kartverket.no',
+          slope_classes: true
         }
       },
       initialMapOptions: null

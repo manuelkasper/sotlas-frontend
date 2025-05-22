@@ -34,6 +34,15 @@
       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
       "type": "vector",
       "maxzoom": 10
+    },
+    "slope_classes": {
+      "type": "raster",
+      "tiles": [
+        "https://gis3.nve.no/arcgis/rest/services/wmts/Bratthet_2024/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16,
+      "bounds": [2,57,33,72]
     }
   },
   "sprite": "https://sotl.as/sprites",
@@ -152,6 +161,19 @@
             [16,3]
           ]
         }
+      }
+    },
+    {
+      "id": "slope_classes",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "slope_classes"
+      },
+      "source": "slope_classes",
+      "layout": {"visibility": "none"},
+      "paint": {
+        "raster-opacity": 0.3,
+        "raster-resampling": "nearest"
       }
     },
     {

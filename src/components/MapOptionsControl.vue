@@ -27,6 +27,9 @@
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showActivationZoneInfo" />
           </b-checkbox>
         </b-field>
+        <b-field v-if="mapTypes[mapType].slope_classes" grouped>
+          <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes</b-checkbox>
+        </b-field>
         <b-field v-if="mapTypes[mapType].snow_depth" grouped>
           <b-checkbox v-model="mapOptions.snow_depth" size="is-small" @input="setMapOption('snow_depth', $event)">Snow depth
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click.native="showSnowDepthInfo" />
@@ -45,9 +48,6 @@
         </b-field>
         <b-field v-if="mapTypes[mapType].snowshoe" grouped>
           <b-checkbox v-model="mapOptions.snowshoe" size="is-small" @input="setMapOption('snowshoe', $event)">Snowshoe routes</b-checkbox>
-        </b-field>
-        <b-field v-if="mapTypes[mapType].slope_classes" grouped>
-          <b-checkbox v-model="mapOptions.slope_classes" size="is-small" @input="setMapOption('slope_classes', $event)">Slope classes over 30°</b-checkbox>
         </b-field>
         <b-field v-if="mapTypes[mapType].wildlife" grouped>
           <b-checkbox v-model="mapOptions.wildlife" size="is-small" @input="setMapOption('wildlife', $event)">Wildlife reserves and areas</b-checkbox>
