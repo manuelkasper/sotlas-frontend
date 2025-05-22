@@ -8,7 +8,7 @@
   "sources": {
     "norkart": {
       "type": "raster",
-      "tiles": ["https://cache.kartverket.no/v1/wmts/1.0.0/toporaster/default/webmercator/{z}/{y}/{x}.png"],
+      "tiles": ["https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png"],
       "tileSize": 256,
       "maxzoom": 18,
       "bounds": [2,57,33,72],

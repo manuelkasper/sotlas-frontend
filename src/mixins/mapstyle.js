@@ -211,7 +211,7 @@ export default {
           name: 'TopoSvalbard'
         },
         'norkart': {
-          name: 'Norkart'
+          name: 'Kartverket.no'
         }
       },
       initialMapOptions: null
