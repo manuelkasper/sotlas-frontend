@@ -41,7 +41,8 @@ export default {
       let values = []
       let valuesB = []
       this.data.forEach(row => {
-        labels.push(row[this.labelField])
+        // Note: Frappe Charts needs string labels to correctly deal with the situation when there is not enough space for all labels
+        labels.push(row[this.labelField].toString())
         values.push(row[this.valueField])
       })
 
