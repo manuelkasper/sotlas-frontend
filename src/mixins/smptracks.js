@@ -29,21 +29,17 @@ export default {
         this.smpTracks.forEach(track => {
           // Calculate total distance
           let distance = 0
-          let ascent
-          let minAltitude, maxAltitude
+          let ascent = 0
+          let lastAltitude
           track.points.forEach(point => {
             distance += parseFloat(point.distance)
             let pointAltitude = parseFloat(point.altitude)
-            if (minAltitude === undefined || pointAltitude < minAltitude) {
-              minAltitude = pointAltitude
+            if (lastAltitude !== undefined && lastAltitude < pointAltitude) {
+              ascent += (pointAltitude - lastAltitude)
             }
-            if (maxAltitude === undefined || pointAltitude > maxAltitude) {
-              maxAltitude = pointAltitude
-            }
+            lastAltitude = pointAltitude
           })
-          if (minAltitude !== undefined && maxAltitude !== undefined) {
-            ascent = Math.round(maxAltitude - minAltitude)
-          }
+          ascent = Math.round(ascent)
 
           routes.push({
             id: track.hdr_id,
@@ -54,7 +50,6 @@ export default {
             postedDate: track.posted_date,
             distance,
             ascent,
-            ascentExcludesCounterAscents: (ascent > 0),
             track: {
               points: track.points
             }

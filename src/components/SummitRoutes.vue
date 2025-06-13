@@ -8,13 +8,10 @@
         {{ renderDifficulty(props.row) }}
       </b-table-column>
       <b-table-column field="ascent" label="Ascent" numeric :sortable="routes.length > 1">
-        <span><AltitudeLabel v-if="props.row.ascent" :altitude="props.row.ascent" /> <span v-if="props.row.ascentExcludesCounterAscents" class="star"> (*)</span></span>
+        <span><AltitudeLabel v-if="props.row.ascent" :altitude="props.row.ascent" /></span>
       </b-table-column>
       <b-table-column field="distance" label="Distance" numeric :sortable="routes.length > 1">
         <DistanceLabel v-if="props.row.distance" :distance="props.row.distance" />
-      </b-table-column>
-      <b-table-column field="duration" label="Duration" numeric :sortable="routes.length > 1">
-        {{ props.row.duration | formatDuration }}
       </b-table-column>
     </template>
 
@@ -38,10 +35,6 @@
         <TrackLink :route="props.row" :summit="summit"><font-awesome-icon :icon="['far', 'file-download']" class="fa-icon" /> Download track (.gpx)</TrackLink>
       </div>
     </template>
-
-    <template v-if="anyCounterAscentExcludes" slot="footer">
-        (*) Difference between highest and lowest elevation, excluding counter-ascents
-    </template>
   </b-table>
 </template>
 
@@ -62,11 +55,6 @@ export default {
     RouteAttributes, AltitudeLabel, DistanceLabel, TrackLink
   },
   mixins: [utils],
-  computed: {
-    anyCounterAscentExcludes () {
-      return this.routes.some(el => el.ascentExcludesCounterAscents)
-    }
-  },
   methods: {
     toggle (row) {
       this.$refs.routesTable.toggleDetails(row)
