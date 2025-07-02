@@ -140,6 +140,9 @@ export default {
       localStorage.setItem('bounds', JSON.stringify(Array.isArray(val) ? val : val.toArray()))
       this.updateMapURL()
       if (this.map) {
+        const center = this.map.getCenter()
+        this.$store.commit('setMapCenter', { latitude: center.lat, longitude: center.lng })
+
         this.zoomWarning = (this.map.getZoom() < 3 && (this.$refs.filterControl.isActive() || this.$refs.optionsControl.spotsShown()))
       }
     },

@@ -71,6 +71,7 @@ import * as maptilersdk from '@maptiler/sdk'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
 import utils from '../mixins/utils.js'
+import haversine from 'haversine-distance'
 
 const MIN_QUERY_LENGTH = 4
 
@@ -152,17 +153,34 @@ export default {
       }
       return null
     },
-    makeSummitResults (data) {
-      const all = (data || []).map(s => ({
+    makeSummitResults (data, proximity = null) {
+      let all = (data || []).map(s => ({
         type: 'summit',
         label: s.name,
         detail: s.code,
         summit: s
       }))
+      // If proximity is set, sort by distance
+      if (proximity) {
+        const [lon, lat] = proximity.map(Number)
+        all.forEach(opt => {
+          if (opt.summit && opt.summit.coordinates) {
+            opt._distance = haversine(
+              { lat, lon },
+              { lat: opt.summit.coordinates.latitude, lon: opt.summit.coordinates.longitude }
+            )
+          } else {
+            opt._distance = Infinity
+          }
+        })
+        all.sort((a, b) => a._distance - b._distance)
+      }
       // Use isSummitValid to split active/inactive
       const active = all.filter(opt => this.isSummitValid(opt.summit))
       const inactive = all.filter(opt => !this.isSummitValid(opt.summit))
-      return active.concat(inactive)
+      // Cap to 5 total
+      const combined = active.concat(inactive).slice(0, 5)
+      return combined
     },
     makeActivatorResults (data) {
       return (data.activators || []).map(a => ({
@@ -191,6 +209,13 @@ export default {
     async onInput (value) {
       this.myQuery = value
       this.autocompleteResults = []
+
+      // Use current map center as proximity if available
+      let proximity = null
+      if (this.$store.state.mapCenter) {
+        proximity = [this.$store.state.mapCenter.longitude, this.$store.state.mapCenter.latitude]
+      }
+
       const coordResult = this.makeCoordinateResult(value)
       const regionResult = this.makeRegionResult(value)
       if (coordResult || !value || value.length < MIN_QUERY_LENGTH) {
@@ -207,10 +232,12 @@ export default {
         let activatorResults = []
         let summitResults = []
         try {
-          const geoResp = await maptilersdk.geocoding.forward(value, {
+          let geoOpts = {
             limit: 5,
-            language: 'en'
-          })
+            language: 'en',
+            proximity
+          }
+          const geoResp = await maptilersdk.geocoding.forward(value, geoOpts)
           geoResults = this.makeGeonameResults(geoResp.features)
         } catch (e) {
           // Ignore geocoding errors (e.g., coordinates entered)
@@ -218,10 +245,10 @@ export default {
         }
         const [activatorResp, summitResp] = await Promise.all([
           axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
-          axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q: value, limit: 5 } })
+          axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q: value, limit: 50 } })
         ])
         activatorResults = this.makeActivatorResults(activatorResp.data)
-        summitResults = this.makeSummitResults(summitResp.data)
+        summitResults = this.makeSummitResults(summitResp.data, proximity)
         // Compose results
         let results = []
         if (coordResult) results.push(coordResult)

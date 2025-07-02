@@ -65,7 +65,8 @@ const store = new Vuex.Store({
     alertPage: 1,
     activatorPage: 1,
     mapType,
-    mapOptions
+    mapOptions,
+    mapCenter: { latitude: null, longitude: null }
   },
   mutations: {
     SOCKET_ONOPEN (state, event) {
@@ -153,6 +154,9 @@ const store = new Vuex.Store({
     setMapOption (state, mutation) {
       state.mapOptions[mutation.option] = mutation.value
       localStorage.setItem('mapOptions', JSON.stringify(state.mapOptions))
+    },
+    setMapCenter (state, center) {
+      state.mapCenter = center
     }
   },
   actions: {
