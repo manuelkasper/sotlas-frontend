@@ -265,39 +265,31 @@ export default {
       }
     },
     onSelect (option) {
+      if (option === null) {
+        return
+      }
       if (option.type === 'geoname' && option.coordinates) {
         // Go to map at coordinates
         this.$router.push(`/map/coordinates/${option.coordinates[1]},${option.coordinates[0]}/14.0?popup=1`)
         this.myQuery = ''
         this.$emit('search')
-        return
-      }
-      if (option.type === 'activator' && option.activator) {
+      } else if (option.type === 'activator' && option.activator) {
         this.$router.push(`/activators/${option.activator.callsign}`)
         this.myQuery = ''
         this.$emit('search')
-        return
-      }
-      if (option.type === 'summit' && option.summit) {
+      } else if (option.type === 'summit' && option.summit) {
         this.$router.push(`/summits/${option.summit.code}`)
         this.myQuery = ''
         this.$emit('search')
-        return
-      }
-      if (option.type === 'coordinates' && option.coordinates) {
+      } else if (option.type === 'coordinates' && option.coordinates) {
         this.$router.push(`/map/coordinates/${option.coordinates[0]},${option.coordinates[1]}/16.0?popup=1`)
         this.myQuery = ''
         this.$emit('search')
-        return
-      }
-      if (option.type === 'region' && option.region) {
+      } else if (option.type === 'region' && option.region) {
         this.$router.push(`/summits/${option.region}`)
         this.myQuery = ''
         this.$emit('search')
-        return
       }
-      // fallback: treat as normal search
-      this.doSearch(option.label || this.myQuery)
     },
     iconForPlaceType (type) {
       return PLACE_TYPE_ICONS[type] || 'map-marker-alt'

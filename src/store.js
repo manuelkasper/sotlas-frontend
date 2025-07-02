@@ -66,7 +66,7 @@ const store = new Vuex.Store({
     activatorPage: 1,
     mapType,
     mapOptions,
-    mapCenter: { latitude: null, longitude: null }
+    mapCenter: null
   },
   mutations: {
     SOCKET_ONOPEN (state, event) {
