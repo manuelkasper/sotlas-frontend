@@ -9,7 +9,7 @@
       :open-on-focus="true"
       :clear-on-select="false"
       :keep-first="true"
-      placeholder="Summit, Callsign, Coords, Placename..."
+      placeholder="Summit, Callsign, Coords, Place..."
       field="label"
       icon-pack="far"
       icon="search"
@@ -20,7 +20,8 @@
       @blur="searchBlur"
     >
       <template slot="empty">
-        <span v-if="showNoResults">No results found</span>
+        <span v-if="isLoading">Searching...</span>
+        <span v-else-if="showNoResults">No results found</span>
         <span v-else>Type some more to search...</span>
       </template>
       <template slot="default" slot-scope="props">
@@ -35,8 +36,11 @@
           <span class="is-size-7 has-text-grey"> ({{ props.option.detail }})</span>
         </span>
         <span v-else-if="props.option.type === 'summit'">
-          <b-icon icon="mountains" size="is-small" class="has-text-grey search-result-icon" pack="fas" />
-          <span>{{ props.option.label }}</span>
+          <b-icon icon="mountains"
+                  size="is-small"
+                  :class="['search-result-icon', { 'summit-inactive': !isSummitValid(props.option.summit) }]"
+                  pack="fas" />
+          <span :class="{'summit-inactive': !isSummitValid(props.option.summit)}">{{ props.option.label }}</span>
           <span v-if="props.option.detail" class="is-size-7 has-text-grey"> ({{ props.option.detail }})</span>
         </span>
         <span v-else-if="props.option.type === 'activator'">
@@ -66,6 +70,7 @@ import prefs from '../mixins/prefs.js'
 import * as maptilersdk from '@maptiler/sdk'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
+import utils from '../mixins/utils.js'
 
 const MIN_QUERY_LENGTH = 4
 
@@ -91,7 +96,7 @@ export default {
       default: ''
     }
   },
-  mixins: [prefs],
+  mixins: [prefs, utils],
   prefs: {
     key: 'searchField',
     props: ['searchTooltipShown']
@@ -148,12 +153,16 @@ export default {
       return null
     },
     makeSummitResults (data) {
-      return (data || []).map(s => ({
+      const all = (data || []).map(s => ({
         type: 'summit',
         label: s.name,
         detail: s.code,
         summit: s
       }))
+      // Use isSummitValid to split active/inactive
+      const active = all.filter(opt => this.isSummitValid(opt.summit))
+      const inactive = all.filter(opt => !this.isSummitValid(opt.summit))
+      return active.concat(inactive)
     },
     makeActivatorResults (data) {
       return (data.activators || []).map(a => ({
@@ -292,5 +301,9 @@ export default {
 .search-result-icon {
   vertical-align: text-bottom;
   margin-right: 0.5em;
+}
+.summit-inactive {
+  color: #bbb;
+  text-decoration: line-through;
 }
 </style>
