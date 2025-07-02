@@ -34,6 +34,17 @@
       <div class="track-download" v-if="props.row.track">
         <TrackLink :route="props.row" :summit="summit"><font-awesome-icon :icon="['far', 'file-download']" class="fa-icon" /> Download track (.gpx)</TrackLink>
       </div>
+      <LineChart
+        v-if="props.row.track && hasValidAltitudes(props.row.track.points)"
+        :data="getElevationProfileChartData(props.row.track.points)"
+        labelField="distance"
+        valueField="elevation"
+        name="Elevation"
+        :xIsSeries="true"
+        :animate="false"
+        :suffixX="$store && $store.state.altitudeUnits === 'ft' ? ' mi' : ' km'"
+        :suffixY="$store && $store.state.altitudeUnits === 'ft' ? ' ft' : ' m'"
+      />
     </template>
   </b-table>
 </template>
@@ -43,6 +54,8 @@ import RouteAttributes from './RouteAttributes.vue'
 import AltitudeLabel from './AltitudeLabel.vue'
 import DistanceLabel from './DistanceLabel.vue'
 import TrackLink from './TrackLink.vue'
+import LineChart from './LineChart.vue'
+import haversineDistance from 'haversine-distance'
 import utils from '../mixins/utils.js'
 
 export default {
@@ -52,10 +65,14 @@ export default {
     routes: Array
   },
   components: {
-    RouteAttributes, AltitudeLabel, DistanceLabel, TrackLink
+    RouteAttributes, AltitudeLabel, DistanceLabel, TrackLink, LineChart
   },
   mixins: [utils],
   methods: {
+    hasValidAltitudes (points) {
+      return Array.isArray(points) && points.length > 1 &&
+        points.every(pt => pt.altitude !== undefined && pt.altitude !== null && !isNaN(Number(pt.altitude)) && Number(pt.altitude) !== 0)
+    },
     toggle (row) {
       this.$refs.routesTable.toggleDetails(row)
     },
@@ -77,6 +94,37 @@ export default {
     },
     linkifyCoordinates (description) {
       return description.replace(/(?:^|\s)([-+]?[1-8]?\d\.\d+),\s*([-+]?(?:(?:1[0-7]\d)|(?:[1-9]?\d))\.\d+)\b/g, '<a href="/map/coordinates/$1,$2/16.0?popup=1">$&</a>')
+    },
+    getElevationProfileChartData (points) {
+      if (!this.hasValidAltitudes(points)) return []
+      let distances = [0]
+      let totalDist = 0
+      for (let i = 1; i < points.length; i++) {
+        const d = haversineDistance(
+          { lat: points[i - 1].latitude, lng: points[i - 1].longitude },
+          { lat: points[i].latitude, lng: points[i].longitude }
+        )
+        totalDist += d
+        distances.push(totalDist)
+      }
+      return points.map((pt, i) => ({
+        distance: this.renderDistance(distances[i]),
+        elevation: this.renderElevation(Number(pt.altitude))
+      }))
+    },
+    renderElevation (elevation) {
+      if (this.$store && this.$store.state.altitudeUnits === 'ft') {
+        return Math.round(elevation * 3.28084)
+      } else {
+        return Math.round(elevation)
+      }
+    },
+    renderDistance (distance) {
+      if (this.$store && this.$store.state.altitudeUnits === 'ft') {
+        return (distance * 0.000621371).toFixed(1)
+      } else {
+        return (distance / 1000).toFixed(1)
+      }
     }
   }
 }
