@@ -7,7 +7,6 @@ import AssociationList from './views/AssociationList.vue'
 import Association from './views/Association.vue'
 import Region from './views/Region.vue'
 import NotFound from './views/NotFound.vue'
-import SearchAnything from './views/SearchAnything.vue'
 import Activator from './views/Activator.vue'
 import Activators from './views/Activators.vue'
 import Summit from './views/Summit.vue'
@@ -69,11 +68,6 @@ let router = new Router({
       path: '/map/regions/:region([A-Z0-9]{1,3}/[A-Z]{2})',
       component: Map,
       meta: { savePath: '/map' }
-    },
-    {
-      path: '/search',
-      component: SearchAnything,
-      meta: { savePath: null }
     },
     {
       path: '/summits/',
