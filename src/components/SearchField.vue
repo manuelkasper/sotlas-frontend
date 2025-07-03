@@ -206,6 +206,20 @@ export default {
         results.push(...newResults)
       }
     },
+    // Helper to normalize SOTA summit references
+    normalizeSummitRef (value) {
+      // Accepts e.g. HBVS123 or HB9VS123, HB/VS-123, HB VS 123, etc.
+      // Converts to HB/VS-123
+      let ref = value.trim().toUpperCase()
+      // Already in correct format
+      if (/^[A-Z0-9]{1,8}\/[A-Z]{2}-[0-9]{3}$/.test(ref)) return ref
+      // Try to match without slashes/dashes
+      let m = ref.match(/^([A-Z0-9]{1,8})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/)
+      if (m) {
+        return `${m[1]}/${m[2]}-${m[3]}`
+      }
+      return value
+    },
     async onInput (value) {
       this.myQuery = value
       this.autocompleteResults = []
@@ -245,7 +259,7 @@ export default {
         }
         const [activatorResp, summitResp] = await Promise.all([
           axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
-          axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q: value, limit: 50 } })
+          axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q: this.normalizeSummitRef(value), limit: 50 } })
         ])
         activatorResults = this.makeActivatorResults(activatorResp.data)
         summitResults = this.makeSummitResults(summitResp.data, proximity)
