@@ -208,12 +208,9 @@ export default {
     },
     // Helper to normalize SOTA summit references
     normalizeSummitRef (value) {
-      // Accepts e.g. HBVS123 or HB9VS123, HB/VS-123, HB VS 123, etc.
+      // Accepts e.g. HBVS123, HB/VS-123, HB VS 123, etc.
       // Converts to HB/VS-123
       let ref = value.trim().toUpperCase()
-      // Already in correct format
-      if (/^[A-Z0-9]{1,8}\/[A-Z]{2}-[0-9]{3}$/.test(ref)) return ref
-      // Try to match without slashes/dashes
       let m = ref.match(/^([A-Z0-9]{1,8})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/)
       if (m) {
         return `${m[1]}/${m[2]}-${m[3]}`
