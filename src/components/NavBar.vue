@@ -1,5 +1,5 @@
 <template>
-  <b-navbar wrapper-class="container" :fixed-top="true" :close-on-click="false" :isActive.sync="burgerActive">
+  <b-navbar wrapper-class="container" :class="{ 'search-focused': searchFocused }" :fixed-top="true" :close-on-click="false" :isActive.sync="burgerActive">
     <template #brand>
       <b-navbar-item tag="router-link" to="/about">
         <img v-if="$mq.widescreen" src="../assets/sotlas.svg" alt="Logo">
@@ -8,14 +8,16 @@
       <b-navbar-item class="clock" tag="div">
         <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
       </b-navbar-item>
-      <b-navbar-item tag="router-link" to="/solar_history">
+      <b-navbar-item class="solar-data" tag="router-link" to="/solar_history">
         <SolarData />
       </b-navbar-item>
     </template>
-    <template #end>
+    <template #start>
       <b-navbar-item tag="div">
-        <SearchField :query="query" @search="closeBurger" />
+        <SearchField :query="query" @search="closeBurger" @focus="searchFocused = true" @blur="searchFocused = false" />
       </b-navbar-item>
+    </template>
+    <template #end>
       <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click.native="closeBurger">
         <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
         {{ link.text }}
@@ -125,6 +127,7 @@ export default {
   data () {
     return {
       burgerActive: false,
+      searchFocused: false,
       clock: ''
     }
   }
@@ -149,6 +152,11 @@ export default {
 @media (max-width: 768px) {
   .navbar {
     font-size: 1rem !important;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .search-focused .clock, .search-focused .solar-data {
+    display: none;
   }
 }
 .router-link-active:not(:focus):not(:hover) {

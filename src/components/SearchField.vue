@@ -1,19 +1,20 @@
 <template>
   <b-tooltip type="is-info" position="is-bottom" :active="searchTooltipActive" always animated multilined label="Enter a (partial) callsign, summit name, reference, region or coordinates here">
     <b-autocomplete
-      class="search-input"
+      :class="['search-input', { 'search-input-focused': isFocused }]"
       ref="query"
       v-model="myQuery"
       :data="autocompleteResults"
       :loading="isLoading"
       :open-on-focus="true"
-      :clear-on-select="false"
+      :clear-on-select="true"
       :keep-first="true"
       placeholder="Summit, Callsign, Coords, Place..."
       field="label"
       icon-pack="far"
       icon="search"
       rounded
+      clearable
       @input="debouncedOnInput"
       @select="onSelect"
       @focus="searchFocus"
@@ -108,7 +109,8 @@ export default {
       searchTooltipActive: false,
       searchTooltipShown: false,
       autocompleteResults: [],
-      isLoading: false
+      isLoading: false,
+      isFocused: false
     }
   },
   created () {
@@ -121,11 +123,15 @@ export default {
   },
   methods: {
     searchFocus () {
+      this.isFocused = true
+      this.$emit('focus')
       if (!this.searchTooltipShown) {
         this.searchTooltipActive = true
       }
     },
     searchBlur () {
+      this.isFocused = false
+      this.$emit('blur')
       if (this.searchTooltipActive) {
         this.searchTooltipActive = false
         this.searchTooltipShown = true
@@ -282,25 +288,16 @@ export default {
       if (option.type === 'geoname' && option.coordinates) {
         // Go to map at coordinates
         this.$router.push(`/map/coordinates/${option.coordinates[1]},${option.coordinates[0]}/14.0?popup=1`)
-        this.myQuery = ''
-        this.$emit('search')
       } else if (option.type === 'activator' && option.activator) {
         this.$router.push(`/activators/${option.activator.callsign}`)
-        this.myQuery = ''
-        this.$emit('search')
       } else if (option.type === 'summit' && option.summit) {
         this.$router.push(`/summits/${option.summit.code}`)
-        this.myQuery = ''
-        this.$emit('search')
       } else if (option.type === 'coordinates' && option.coordinates) {
         this.$router.push(`/map/coordinates/${option.coordinates[0]},${option.coordinates[1]}/16.0?popup=1`)
-        this.myQuery = ''
-        this.$emit('search')
       } else if (option.type === 'region' && option.region) {
         this.$router.push(`/summits/${option.region}`)
-        this.myQuery = ''
-        this.$emit('search')
       }
+      this.$emit('search')
     },
     iconForPlaceType (type) {
       return PLACE_TYPE_ICONS[type] || 'map-marker-alt'
@@ -311,21 +308,34 @@ export default {
 
 <style scoped>
 .search-input {
-  width: 22rem;
+  width: 26rem;
+  max-width: calc(50vw - 24rem);
 }
 @media screen and (max-width: 1023px) {
   .search-input {
     width: 100%;
+    max-width: 100%;
   }
 }
 @media screen and (min-width: 1024px) and (max-width: 1215px) {
   .search-input {
-    max-width: 14rem;
+    max-width: calc(50vw - 21rem);
+  }
+  .search-input-focused {
+    max-width: calc(50vw - 6rem);
   }
 }
-@media screen and (min-width: 1216px) and (max-width: 1360px) {
+@media screen and (min-width: 1216px) and (max-width: 1439px) {
   .search-input {
-    max-width: 18rem;
+    max-width: calc(50vw - 24rem);
+  }
+  .search-input-focused {
+    max-width: calc(50vw - 6rem);
+  }
+}
+@media screen and (min-width: 1440px) {
+  .search-input {
+    max-width: 26rem;
   }
 }
 .search-result-icon {

@@ -61,7 +61,7 @@ export default {
   line-height: 1.05rem;
   background-color: #eee;
   border-radius: 10px;
-  padding: 0.15rem 0.4rem;
+  padding: 0.10rem 0.4rem;
   font-weight: bold;
   text-align: right;
 }
