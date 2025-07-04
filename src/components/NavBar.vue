@@ -14,7 +14,7 @@
     </template>
     <template #start>
       <b-navbar-item tag="div">
-        <SearchField :query="query" @search="closeBurger" @focus="searchFocused = true" @blur="searchFocused = false" />
+        <SearchField class="search-field" :query="query" @search="closeBurger" @focus="searchFocused = true" @blur="searchFocused = false" />
       </b-navbar-item>
     </template>
     <template #end>
@@ -157,6 +157,37 @@ export default {
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
   .search-focused .clock, .search-focused .solar-data {
     display: none;
+  }
+}
+.search-field {
+  width: 26rem;
+  max-width: calc(50vw - 24rem);
+}
+@media screen and (max-width: 1023px) {
+  .search-field {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1215px) {
+  .search-field {
+    max-width: calc(50vw - 21rem);
+  }
+  .search-focused .search-field {
+    max-width: calc(50vw - 6rem);
+  }
+}
+@media screen and (min-width: 1216px) and (max-width: 1439px) {
+  .search-field {
+    max-width: calc(50vw - 24rem);
+  }
+  .search-focused .search-field {
+    max-width: calc(50vw - 6rem);
+  }
+}
+@media screen and (min-width: 1440px) {
+  .search-field {
+    max-width: 26rem;
   }
 }
 .router-link-active:not(:focus):not(:hover) {

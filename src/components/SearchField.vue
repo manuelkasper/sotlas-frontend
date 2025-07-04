@@ -1,7 +1,7 @@
 <template>
   <b-tooltip type="is-info" position="is-bottom" :active="searchTooltipActive" always animated multilined label="Enter a (partial) callsign, summit name, reference, region or coordinates here">
     <b-autocomplete
-      :class="['search-input', { 'search-input-focused': isFocused }]"
+      class="search-input"
       ref="query"
       v-model="myQuery"
       :data="autocompleteResults"
@@ -109,8 +109,7 @@ export default {
       searchTooltipActive: false,
       searchTooltipShown: false,
       autocompleteResults: [],
-      isLoading: false,
-      isFocused: false
+      isLoading: false
     }
   },
   created () {
@@ -123,15 +122,15 @@ export default {
   },
   methods: {
     searchFocus () {
-      this.isFocused = true
       this.$emit('focus')
       if (!this.searchTooltipShown) {
         this.searchTooltipActive = true
       }
     },
     searchBlur () {
-      this.isFocused = false
-      this.$emit('blur')
+      setTimeout(() => {
+        this.$emit('blur')
+      }, 100)
       if (this.searchTooltipActive) {
         this.searchTooltipActive = false
         this.searchTooltipShown = true
@@ -307,37 +306,6 @@ export default {
 </script>
 
 <style scoped>
-.search-input {
-  width: 26rem;
-  max-width: calc(50vw - 24rem);
-}
-@media screen and (max-width: 1023px) {
-  .search-input {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-@media screen and (min-width: 1024px) and (max-width: 1215px) {
-  .search-input {
-    max-width: calc(50vw - 21rem);
-  }
-  .search-input-focused {
-    max-width: calc(50vw - 6rem);
-  }
-}
-@media screen and (min-width: 1216px) and (max-width: 1439px) {
-  .search-input {
-    max-width: calc(50vw - 24rem);
-  }
-  .search-input-focused {
-    max-width: calc(50vw - 6rem);
-  }
-}
-@media screen and (min-width: 1440px) {
-  .search-input {
-    max-width: 26rem;
-  }
-}
 .search-result-icon {
   vertical-align: text-bottom;
   margin-right: 0.5em;
