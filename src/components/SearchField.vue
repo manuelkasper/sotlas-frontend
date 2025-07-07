@@ -8,7 +8,7 @@
       :loading="isLoading"
       :open-on-focus="true"
       :clear-on-select="true"
-      :keep-first="true"
+      :keep-first="false"
       placeholder="Summit, Callsign, Coords, Place..."
       field="label"
       icon-pack="far"
@@ -19,6 +19,7 @@
       @select="onSelect"
       @focus="searchFocus"
       @blur="searchBlur"
+      @keydown.native.enter="doSearch"
     >
       <template slot="empty">
         <span v-if="isLoading">Searching...</span>
@@ -88,6 +89,12 @@ const PLACE_TYPE_ICONS = {
   poi: 'landmark'
 }
 
+const COORDINATE_REGEX = /^\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*$/
+const REGION_REGEX = /^[A-Z0-9]{1,3}\/[A-Z]{2}$/i
+const SUMMIT_REF_EXACT_REGEX = /^([A-Z0-9]{1,3})\/([A-Z]{2})-([0-9]{3})$/i
+const SUMMIT_REF_RELAXED_REGEX = /^([A-Z0-9]{1,3})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/i
+const REGION_NUM_REGEX = /^([A-Z]{2})[ -]?([0-9]{3})$/i
+
 maptilersdk.config.apiKey = process.env.VUE_APP_MAPTILER_KEY
 
 export default {
@@ -137,7 +144,7 @@ export default {
       }
     },
     makeCoordinateResult (value) {
-      const coordMatches = value.match(/^\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*$/)
+      const coordMatches = value.match(COORDINATE_REGEX)
       if (coordMatches) {
         return {
           type: 'coordinates',
@@ -148,7 +155,7 @@ export default {
       return null
     },
     makeRegionResult (value) {
-      const regionMatches = value.match(/^[A-Z0-9]{1,3}\/[A-Z]{2}$/i)
+      const regionMatches = value.match(REGION_REGEX)
       if (regionMatches) {
         return {
           type: 'region',
@@ -216,7 +223,7 @@ export default {
       // Accepts e.g. HBVS123, HB/VS-123, HB VS 123, etc.
       // Converts to HB/VS-123
       let ref = value.trim().toUpperCase()
-      let m = ref.match(/^([A-Z0-9]{1,8})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/)
+      let m = ref.match(SUMMIT_REF_RELAXED_REGEX)
       if (m) {
         return `${m[1]}/${m[2]}-${m[3]}`
       }
@@ -295,6 +302,41 @@ export default {
         this.$router.push(`/map/coordinates/${option.coordinates[0]},${option.coordinates[1]}/16.0?popup=1`)
       } else if (option.type === 'region' && option.region) {
         this.$router.push(`/summits/${option.region}`)
+      }
+      this.$emit('search')
+    },
+    doSearch () {
+      let targetUrl = null
+      if (this.myQuery.length > 0) {
+        // Coordinates?
+        let coordMatches = this.myQuery.match(COORDINATE_REGEX)
+        if (coordMatches) {
+          targetUrl = '/map/coordinates/' + coordMatches[1] + ',' + coordMatches[2] + '/16.0?popup=1'
+        } else {
+          // Full summit reference?
+          let normalizedRef = this.normalizeSummitRef(this.myQuery)
+          if (SUMMIT_REF_EXACT_REGEX.test(normalizedRef)) {
+            targetUrl = '/summits/' + normalizedRef
+          } else {
+            // Region?
+            let regionMatches = this.myQuery.match(REGION_REGEX)
+            if (regionMatches) {
+              targetUrl = '/summits/' + this.myQuery.toUpperCase()
+            } else {
+              // Region + number without dash (and without association?)
+              let regionNumMatches = this.myQuery.match(REGION_NUM_REGEX)
+              if (regionNumMatches) {
+                this.myQuery = regionNumMatches[1].toUpperCase() + '-' + regionNumMatches[2]
+              }
+              targetUrl = '/search?q=' + encodeURIComponent(this.myQuery)
+            }
+          }
+        }
+        if (targetUrl) {
+          this.$refs.query.isActive = false
+          this.myQuery = ''
+          this.$router.push(targetUrl)
+        }
       }
       this.$emit('search')
     },
