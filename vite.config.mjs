@@ -18,22 +18,10 @@ export default defineConfig(({ mode }) => {
         'vue/dist/vue.esm': 'vue'
       },
     },
-    publicDir: 'public',
-    build: {
-      outDir: 'dist',
-    },
     optimizeDeps: {
       include: [
-        'vue-svgicon',
-        'vue-clipboard2',
-        'vue-debounce',
-        'vue-match-media',
-        '@dsb-norge/vue-keycloak-js',
         'map-promisified'
       ]
-    },
-    server: {
-      historyApiFallback: true
     },
     define: {
       COMMITHASH,

@@ -1,6 +1,6 @@
 {
   "name": "sotlas",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": "20.x"
@@ -85,9 +85,7 @@
       "parser": "@babel/eslint-parser"
     },
     "globals": {
-      "VERSION": true,
-      "COMMITHASH": true,
-      "BRANCH": true
+      "COMMITHASH": true
     }
   },
   "postcss": {
