@@ -15,7 +15,8 @@
       icon="search"
       rounded
       clearable
-      @input="debouncedOnInput"
+      v-debounce:300ms="onInput"
+      :debounce-events="'input'"
       @select="onSelect"
       @focus="searchFocus"
       @blur="searchBlur"
@@ -71,7 +72,6 @@
 import prefs from '../mixins/prefs.js'
 import * as maptilersdk from '@maptiler/sdk'
 import axios from 'axios'
-import debounce from 'lodash.debounce'
 import utils from '../mixins/utils.js'
 import haversine from 'haversine-distance'
 
@@ -118,9 +118,6 @@ export default {
       autocompleteResults: [],
       isLoading: false
     }
-  },
-  created () {
-    this.debouncedOnInput = debounce(this.onInput, 300)
   },
   computed: {
     showNoResults () {
@@ -230,9 +227,6 @@ export default {
       return value
     },
     async onInput (value) {
-      this.myQuery = value
-      this.autocompleteResults = []
-
       // Use current map center as proximity if available
       let proximity = null
       if (this.$store.state.mapCenter) {
@@ -304,6 +298,7 @@ export default {
         this.$router.push(`/summits/${option.region}`)
       }
       this.$emit('search')
+      this.autocompleteResults = []
     },
     doSearch () {
       let targetUrl = null

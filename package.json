@@ -27,13 +27,11 @@
     "buefy": "^0.8.20",
     "bulma": "^0.7.5",
     "cheap-ruler": "^2.5.1",
-    "core-js": "^3.37.0",
     "filepond": "^4.30.4",
     "filepond-plugin-file-validate-type": "^1.2.5",
     "flagpack": "^1.0.5",
     "frappe-charts": "^1.6.2",
     "haversine-distance": "^1.2.1",
-    "lodash.debounce": "^4.0.8",
     "maidenhead": "^1.0.7",
     "moment": "^2.29.4",
     "node-vincenty": "0.0.6",
@@ -41,7 +39,6 @@
     "proj4": "^2.7.2",
     "vue": "^2.7.16",
     "vue-clipboard2": "^0.3.1",
-    "vue-debounce": "^2.6.0",
     "vue-filepond": "^6.0.3",
     "vue-infinite-loading": "^2.4.5",
     "vue-lazy-youtube-video": "^2.3.0",
@@ -49,6 +46,7 @@
     "vue-match-media": "^1.0.3",
     "vue-native-websocket": "github:nathantsoi/vue-native-websocket#a265da6",
     "vue-router": "^3.6.5",
+    "vue2-debounce": "^1.0.1",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
@@ -60,29 +58,6 @@
     "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1",
     "vue-template-compiler": "^2.7.14"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true,
-      "es2022": true,
-      "browser": true
-    },
-    "extends": [
-      "plugin:vue/essential"
-    ],
-    "rules": {
-      "vue/multi-word-component-names": "off",
-      "vue/no-reserved-component-names": "off",
-      "vue/no-unused-vars": "off"
-    },
-    "parserOptions": {
-      "ecmaVersion": 2022,
-      "sourceType": "module"
-    },
-    "globals": {
-      "COMMITHASH": true
-    }
   },
   "browserslist": [
     "> 1%",
