@@ -11,6 +11,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     base,
+    build: {
+      target: 'es2015',
+      assetsInlineLimit: (filePath, content) => {
+        if (filePath.includes('flagpack')) {
+          return false
+        }
+        return true
+      }
+    },
     plugins: [vue()],
     resolve: {
       alias: {
