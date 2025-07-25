@@ -163,7 +163,7 @@ export default {
             } else {
               this.summitLoading = true
               this.summitCodeXxx = false
-              axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
+              axios.get(import.meta.env.VITE_API_URL + '/summits/' + this.summitCode)
                 .then(response => {
                   this.summitLoading = false
                   this.summitInvalid = false

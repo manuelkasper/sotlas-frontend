@@ -35,10 +35,10 @@ export default {
       // Patch MapTiler key
       Object.values(style.sources).forEach(source => {
         if (source.url) {
-          source.url = source.url.replace('{key}', process.env.VUE_APP_MAPTILER_KEY)
+          source.url = source.url.replace('{key}', import.meta.env.VITE_MAPTILER_KEY)
         }
       })
-      style.glyphs = style.glyphs.replace('{key}', process.env.VUE_APP_MAPTILER_KEY)
+      style.glyphs = style.glyphs.replace('{key}', import.meta.env.VITE_MAPTILER_KEY)
 
       // Patch units
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -61,7 +61,7 @@ export default {
       return mapType
     },
     mapApiKey () {
-      return process.env.VUE_APP_MAPTILER_KEY
+      return import.meta.env.VITE_MAPTILER_KEY
     },
     mapUnits () {
       if (this.$store.state.altitudeUnits === 'ft') {

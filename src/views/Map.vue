@@ -43,7 +43,6 @@ import utils from '../mixins/utils.js'
 import smptracks from '../mixins/smptracks.js'
 import mapstyle from '../mixins/mapstyle.js'
 import longtouch from '../mixins/longtouch.js'
-import reportMapSession from '../mapsession.js'
 
 import { MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl } from 'vue-mapbox'
 import MapFilterControl from '../components/MapFilterControl.vue'
@@ -98,7 +97,7 @@ export default {
         } catch (e) {}
         this.showMap = true
       } else {
-        axios.get(process.env.VUE_APP_API_URL + '/my_coordinates')
+        axios.get(import.meta.env.VITE_API_URL + '/my_coordinates')
           .then(response => {
             if (response.data.latitude && response.data.longitude) {
               this.center = [response.data.longitude, response.data.latitude]
@@ -244,8 +243,6 @@ export default {
         }
       })
       this.updateRoute()
-
-      reportMapSession()
     },
     onMapClicked (event) {
       if (this.$refs.draw.isDrawing() || event.mapboxEvent.originalEvent.hitMarker) {
@@ -348,7 +345,7 @@ export default {
         })
     },
     fetchSummit (summitCode) {
-      return axios.get(process.env.VUE_APP_API_URL + '/summits/' + summitCode)
+      return axios.get(import.meta.env.VITE_API_URL + '/summits/' + summitCode)
         .then(response => {
           let summit = response.data
           summit.photo = null
@@ -356,7 +353,7 @@ export default {
         })
     },
     fetchAssociation (associationCode) {
-      return axios.get(process.env.VUE_APP_API_URL + '/associations/' + associationCode)
+      return axios.get(import.meta.env.VITE_API_URL + '/associations/' + associationCode)
         .then(response => {
           return response.data
         })
@@ -394,13 +391,6 @@ export default {
     jumpToSummit (summit) {
       this.map.fitBounds([[summit.coordinates.longitude, summit.coordinates.latitude], [summit.coordinates.longitude, summit.coordinates.latitude]], this.makeFitBoundsOptions())
       this.summit = summit
-    },
-    makeCoordinateLink (summitCode, longitude, latitude) {
-      if (summitCode.match(/^HB0?\//)) {
-        return 'https://map.geo.admin.ch/?swisssearch=' + latitude + ',' + longitude
-      } else {
-        return 'https://www.openstreetmap.org/#map=14/' + latitude + '/' + longitude + ''
-      }
     },
     updateMapURL () {
       if (this.map) {

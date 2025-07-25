@@ -6,7 +6,7 @@
       <div v-if="activator" class="subtitle is-size-7-mobile">
         <div class="activator-info">
           <span><strong>{{ activator.points + activator.bonusPoints }} points</strong><template v-if="activator.bonusPoints > 0"> ({{ activator.bonusPoints }} bonus)</template></span>
-          <span v-if="mountainGoats > 0"><b-tooltip class="goat-tooltip" label="mountain goat"><svgicon class="goat-icon" icon="goat" /></b-tooltip> x {{ mountainGoats }}</span>
+          <span v-if="mountainGoats > 0"><b-tooltip class="goat-tooltip" label="mountain goat"><img src="@/assets/svg-icons/goat.svg" class="goat-icon" /></b-tooltip> x {{ mountainGoats }}</span>
         </div>
         <div class="activator-info">
           <span><font-awesome-icon :icon="['far', 'chevron-circle-up']" class="faicon" /> {{ activator.summits }} activations<template v-if="activationsThisYear"> ({{ activationsThisYear }} this year)</template></span>

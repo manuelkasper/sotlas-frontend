@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import Buefy from 'buefy'
-import VueSVGIcon from 'vue-svgicon'
 import vueDebounce from 'vue-debounce'
 import VueClipboard from 'vue-clipboard2'
 import MatchMedia from 'vue-match-media/src'
@@ -36,7 +35,6 @@ library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faP
 library.add(faWikipediaW, faGoogle, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
-Vue.use(VueSVGIcon)
 Vue.use(vueDebounce)
 Vue.use(VueClipboard)
 Vue.use(Buefy, {

@@ -6,7 +6,7 @@ export default {
   mixins: [ssoauth, utils],
   methods: {
     loadActivations (callsign) {
-      return axios.get(process.env.VUE_APP_API_URL + '/activations/' + callsign)
+      return axios.get(import.meta.env.VITE_API_URL + '/activations/' + callsign)
         .then(response => {
           return response.data
         })

@@ -1,14 +1,13 @@
 <template>
   <div v-if="attributes && Object.keys(attributes).length > 0" class="attribute-list">
     <ul>
-      <li v-for="item in attributes" :key="item.icon"><div><svgicon :icon="item.icon" color="#555" />{{ item.text }}</div></li>
+      <li v-for="item in attributes" :key="item.icon"><div><img :src="getIconUrl(item.icon)" class="svg-icon" />{{ item.text }}</div></li>
     </ul>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import '../compiled-icons'
 
 export default {
   name: 'SummitAttributes',
@@ -45,6 +44,9 @@ export default {
         .then(response => {
           this.tagData = response.data.filter(tag => { return tag.Active && this.tagIconMap[tag.TagID] })
         })
+    },
+    getIconUrl(icon) {
+      return new URL(`../assets/svg-icons/${icon}.svg`, import.meta.url).href
     }
   },
   data () {

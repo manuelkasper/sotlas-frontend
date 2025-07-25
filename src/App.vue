@@ -16,11 +16,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "bulma/sass/utilities/_all";
+@import "bulma/bulma.sass";
 
 $link: $blue;
 
-@import "bulma";
 @import "buefy/src/scss/buefy";
 @import "flagpack/dist/flagpack.css";
 @import '@maptiler/sdk/dist/maptiler-sdk.css';

@@ -96,12 +96,12 @@ export default {
       let loads = []
       let q = this.$route.query.q.trim()
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-      loads.push(axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q, limit: this.limit } })
+      loads.push(axios.get(import.meta.env.VITE_API_URL + '/activators/search', { params: { q, limit: this.limit } })
         .then(response => {
           this.activators = response.data.activators
         }))
 
-      loads.push(axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q, limit: this.limit } })
+      loads.push(axios.get(import.meta.env.VITE_API_URL + '/summits/search', { params: { q, limit: this.limit } })
         .then(response => {
           let now = moment()
           response.data.forEach(summit => {
@@ -120,7 +120,7 @@ export default {
         language: 'en',
         proximity
       }
-      maptilersdk.config.apiKey = process.env.VUE_APP_MAPTILER_KEY
+      maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
       loads.push(
         maptilersdk.geocoding.forward(q, geoOpts)
           .then(geoResp => {

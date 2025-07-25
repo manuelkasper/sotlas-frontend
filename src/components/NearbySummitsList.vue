@@ -28,7 +28,7 @@ export default {
           this.loading = true
           navigator.geolocation.getCurrentPosition(
             position => {
-              axios.get(process.env.VUE_APP_API_URL + '/summits/near', { params: { lat: position.coords.latitude, lon: position.coords.longitude, limit: 5, maxDistance: 100000 } })
+              axios.get(import.meta.env.VITE_API_URL + '/summits/near', { params: { lat: position.coords.latitude, lon: position.coords.longitude, limit: 5, maxDistance: 100000 } })
                 .then(response => {
                   if (response.data.length === 0) {
                     alert('No summits within 100 km.')

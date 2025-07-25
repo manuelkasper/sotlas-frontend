@@ -104,7 +104,7 @@ export default {
       if (!this.latitude || !this.longitude || !this.showElevation) {
         return
       }
-      axios.post(process.env.VUE_APP_ELEVATION_API_URL, [[this.latitude, this.longitude]])
+      axios.post(import.meta.env.VITE_ELEVATION_API_URL, [[this.latitude, this.longitude]])
         .then(result => {
           this.elevation = Math.round(result.data[0])
         })
@@ -130,7 +130,7 @@ export default {
         })
     },
     makeAzUrlForType (type) {
-      return process.env.VUE_APP_AZ_URL + '/' + this.reference.replace('-', '/') + '.' + type
+      return import.meta.env.VITE_AZ_URL + '/' + this.reference.replace('-', '/') + '.' + type
     }
   },
   data () {

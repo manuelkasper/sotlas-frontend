@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     loadSolarData () {
-      axios.get(process.env.VUE_APP_API_URL + '/solardata/latest', { ignoreError: true })
+      axios.get(import.meta.env.VITE_API_URL + '/solardata/latest', { ignoreError: true })
         .then(response => {
           this.latest = response.data
         })

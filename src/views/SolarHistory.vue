@@ -26,7 +26,7 @@ export default {
   methods: {
     loadHistory () {
       // Fetch data from last 30 days
-      axios.get(process.env.VUE_APP_API_URL + '/solardata/history/720')
+      axios.get(import.meta.env.VITE_API_URL + '/solardata/history/720')
         .then(response => {
           this.loadingComponent.close()
 

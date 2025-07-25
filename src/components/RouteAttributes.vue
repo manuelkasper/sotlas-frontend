@@ -10,7 +10,7 @@
       </font-awesome-layers>
     </b-tooltip>
     <b-tooltip v-if="route.cableCar" :active="!$mq.mobile" label="Cable car/funicular available" type="is-info" position="is-bottom">
-      <svgicon icon="icons8-cable-car" />
+      <img src="@/assets/svg-icons/icons8-cable-car.svg" class="svg-icon" />
     </b-tooltip>
     <b-tooltip v-if="route.track" :active="!$mq.mobile" label="GPS track available" type="is-info" position="is-bottom">
       <TrackLink :route="route" :summit="summit"><font-awesome-icon class="fa-icon" :icon="['far', 'location']" /></TrackLink>
@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import '../compiled-icons'
 import TrackLink from './TrackLink.vue'
 
 export default {

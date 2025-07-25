@@ -144,7 +144,7 @@ export default {
           if (matches) {
             this.summitCode = (matches[1] + '/' + matches[2] + '-' + matches[3]).toUpperCase()
             this.summitLoading = true
-            axios.get(process.env.VUE_APP_API_URL + '/summits/' + this.summitCode)
+            axios.get(import.meta.env.VITE_API_URL + '/summits/' + this.summitCode)
               .then(response => {
                 this.summitLoading = false
                 this.summitInvalid = false

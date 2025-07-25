@@ -64,7 +64,7 @@ export default {
       if (this.selectedAssociations.length > 0) {
         associations = this.selectedAssociations.join('|')
       }
-      axios.get(process.env.VUE_APP_API_URL + '/summits/recent_photos/' + associations + '/' + this.days, { params: recentPhotosParams })
+      axios.get(import.meta.env.VITE_API_URL + '/summits/recent_photos/' + associations + '/' + this.days, { params: recentPhotosParams })
         .then(response => {
           this.loadingComponent.close()
           this.summits = response.data.slice(0, -1)
@@ -72,7 +72,7 @@ export default {
         })
     },
     loadAssociations () {
-      axios.get(process.env.VUE_APP_API_URL + '/associations/all')
+      axios.get(import.meta.env.VITE_API_URL + '/associations/all')
         .then(response => {
           this.associations = response.data
         })

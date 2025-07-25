@@ -79,7 +79,7 @@ export default {
     },
     loadAssociation () {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-      axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.associationCode)
+      axios.get(import.meta.env.VITE_API_URL + '/associations/' + this.associationCode)
         .then(response => {
           this.association = response.data
           document.title = this.association.name + ' (' + this.associationCode + ') - SOTLAS'
@@ -104,7 +104,7 @@ export default {
       })
     },
     exportUrlPrefix () {
-      return process.env.VUE_APP_API_URL + '/geoexport/associations/' + this.associationCode
+      return import.meta.env.VITE_API_URL + '/geoexport/associations/' + this.associationCode
     },
     myActivationsPerRegion () {
       if (!this.$store.state.myActivatedSummits) {

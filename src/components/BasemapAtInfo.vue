@@ -29,7 +29,7 @@ export default {
   mounted () {
     if (!localStorage.getItem('basemapAtInfoShown')) {
       // Check if we are in Austria
-      axios.get(process.env.VUE_APP_API_URL + '/my_country')
+      axios.get(import.meta.env.VITE_API_URL + '/my_country')
         .then(response => {
           if (response.data.country === 'AT') {
             this.active = true

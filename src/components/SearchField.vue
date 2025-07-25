@@ -95,7 +95,7 @@ const SUMMIT_REF_EXACT_REGEX = /^([A-Z0-9]{1,3})\/([A-Z]{2})-([0-9]{3})$/i
 const SUMMIT_REF_RELAXED_REGEX = /^([A-Z0-9]{1,3})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/i
 const REGION_NUM_REGEX = /^([A-Z]{2})[ -]?([0-9]{3})$/i
 
-maptilersdk.config.apiKey = process.env.VUE_APP_MAPTILER_KEY
+maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
 
 export default {
   name: 'NavBar',
@@ -267,8 +267,8 @@ export default {
           geoResults = []
         }
         const [activatorResp, summitResp] = await Promise.all([
-          axios.get(process.env.VUE_APP_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
-          axios.get(process.env.VUE_APP_API_URL + '/summits/search', { params: { q: this.normalizeSummitRef(value), limit: 50 } })
+          axios.get(import.meta.env.VITE_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
+          axios.get(import.meta.env.VITE_API_URL + '/summits/search', { params: { q: this.normalizeSummitRef(value), limit: 50 } })
         ])
         activatorResults = this.makeActivatorResults(activatorResp.data)
         summitResults = this.makeSummitResults(summitResp.data, proximity)

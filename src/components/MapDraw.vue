@@ -293,7 +293,7 @@ export default {
       }
 
       this.loading = true
-      axios.post(process.env.VUE_APP_ELEVATION_API_URL, eleCoordinates)
+      axios.post(import.meta.env.VITE_ELEVATION_API_URL, eleCoordinates)
         .then(result => {
           this.chartData = result.data.map((elevation, i) => {
             return {
@@ -353,7 +353,7 @@ export default {
         }
 
         let coordsSwapped = feature.geometry.coordinates.map(coord => [coord[1], coord[0]])
-        return axios.post(process.env.VUE_APP_ELEVATION_API_URL, coordsSwapped)
+        return axios.post(import.meta.env.VITE_ELEVATION_API_URL, coordsSwapped)
           .then(result => {
             result.data.forEach((elevation, index) => {
               if (feature.geometry.coordinates[index].length === 2) {

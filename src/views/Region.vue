@@ -74,7 +74,7 @@ export default {
       })
     },
     exportUrlPrefix () {
-      return process.env.VUE_APP_API_URL + '/geoexport/regions/' + this.regionCode
+      return import.meta.env.VITE_API_URL + '/geoexport/regions/' + this.regionCode
     },
     exportUrlParams () {
       return (this.showInactive ? { inactive: 1 } : {})
@@ -125,7 +125,7 @@ export default {
     loadRegion () {
       let loads = []
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
-      loads.push(axios.get(process.env.VUE_APP_API_URL + '/associations/' + this.associationCode)
+      loads.push(axios.get(import.meta.env.VITE_API_URL + '/associations/' + this.associationCode)
         .then(response => {
           this.association = response.data
           document.title = this.region.name + ' (' + this.associationCode + '/' + this.region.code + ') - SOTLAS'
@@ -136,7 +136,7 @@ export default {
           }
         }))
 
-      loads.push(axios.get(process.env.VUE_APP_API_URL + '/regions/' + this.regionCode)
+      loads.push(axios.get(import.meta.env.VITE_API_URL + '/regions/' + this.regionCode)
         .then(response => {
           let now = moment()
           if (response.data.length === 0) {
