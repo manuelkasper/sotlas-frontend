@@ -19,9 +19,11 @@ export default {
 @import "bulma/bulma.sass";
 
 $link: $blue;
+$fp-enable-1x1: false;
+$fp-4x3-path: "../node_modules/flagpack/flags/4x3/";
 
 @import "buefy/src/scss/buefy";
-@import "flagpack/dist/flagpack.css";
+@import "flagpack/src/flagpack.scss";
 @import '@maptiler/sdk/dist/maptiler-sdk.css';
 @import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 </style>
