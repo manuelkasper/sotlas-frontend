@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue2';
 import path from 'path';
+import eslint from 'vite-plugin-eslint'
 import { execSync } from 'child_process';
 
 const COMMITHASH = JSON.stringify(execSync('git rev-parse HEAD').toString().trim());
@@ -11,7 +12,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     base,
-    plugins: [vue()],
+    plugins: [vue(), eslint()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),

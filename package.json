@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --ext .js,.vue src",
     "serve": "vite preview"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "flagpack": "^1.0.5",
     "frappe-charts": "^1.6.2",
     "haversine-distance": "^1.2.1",
+    "lodash.debounce": "^4.0.8",
     "maidenhead": "^1.0.7",
     "moment": "^2.29.4",
     "node-vincenty": "0.0.6",
@@ -52,29 +53,23 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.24.1",
     "@vitejs/plugin-vue2": "^2.3.3",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@vue/eslint-config-standard": "^4.0.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-vue": "^9.24.0",
-    "git-revision-webpack-plugin": "^5.0.0",
-    "node-sass": "^9.0.0",
     "sass": "^1.75.0",
-    "sass-loader": "^14.2.1",
     "vite": "^6.3.5",
+    "vite-plugin-eslint": "^1.8.1",
     "vue-template-compiler": "^2.7.14"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es2022": true,
+      "browser": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "@vue/standard"
+      "plugin:vue/essential"
     ],
     "rules": {
       "vue/multi-word-component-names": "off",
@@ -82,15 +77,11 @@
       "vue/no-unused-vars": "off"
     },
     "parserOptions": {
-      "parser": "@babel/eslint-parser"
+      "ecmaVersion": 2022,
+      "sourceType": "module"
     },
     "globals": {
       "COMMITHASH": true
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
     }
   },
   "browserslist": [
