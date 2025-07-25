@@ -1,3 +1,12 @@
+import basemapatStyle from '../assets/basemapat.json'
+import caltopoStyle from '../assets/caltopo.json'
+import norkartStyle from '../assets/norkart.json'
+import swisstopoStyle from '../assets/swisstopo.json'
+import swisstopoAerialStyle from '../assets/swisstopo_aerial.json'
+import swisstopoRasterStyle from '../assets/swisstopo_raster.json'
+import toposvalbardStyle from '../assets/toposvalbard.json'
+import partialSnowcoverDots from '../assets/partial-snowcover-dots.png'
+
 export default {
   mounted () {
     this.initialMapOptions = { ...this.mapOptions }
@@ -18,8 +27,7 @@ export default {
         }
       }
 
-      let style = require('../assets/' + this.mapType + '.json')
-      style = JSON.parse(JSON.stringify(style))
+      let style = this.mapTypes[this.mapType].style
 
       // Show/hide layers according to map options for initial render to save time
       style.layers.forEach(layer => {
@@ -96,7 +104,7 @@ export default {
               data: 'https://snow-maps-hs.slf.ch/public/hs/map/HS1D-v2/current/geojson'
             })
             let snowcoverPattern = new Image()
-            snowcoverPattern.src = require('../assets/partial-snowcover-dots.png')
+            snowcoverPattern.src = partialSnowcoverDots
             snowcoverPattern.onload = () => {
               map.addImage('partial-snowcover-pattern', snowcoverPattern, {
                 pixelRatio: 2
@@ -183,7 +191,8 @@ export default {
           snowshoe: true,
           slope_classes: true,
           wildlife: true,
-          snow_depth: true
+          snow_depth: true,
+          style: swisstopoStyle
         },
         'swisstopo_raster': {
           name: 'swisstopo (Raster)',
@@ -191,7 +200,8 @@ export default {
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true
+          wildlife: true,
+          style: swisstopoRasterStyle
         },
         'swisstopo_aerial': {
           name: 'swisstopo (Aerial)',
@@ -199,20 +209,25 @@ export default {
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true
+          wildlife: true,
+          style: swisstopoAerialStyle
         },
         'basemapat': {
-          name: 'basemap.at'
+          name: 'basemap.at',
+          style: basemapatStyle
         },
         'caltopo': {
-          name: 'CalTopo'
+          name: 'CalTopo',
+          style: caltopoStyle
         },
         'toposvalbard': {
-          name: 'TopoSvalbard'
+          name: 'TopoSvalbard',
+          style: toposvalbardStyle
         },
         'norkart': {
           name: 'Kartverket.no',
-          slope_classes: true
+          slope_classes: true,
+          style: norkartStyle
         }
       },
       initialMapOptions: null

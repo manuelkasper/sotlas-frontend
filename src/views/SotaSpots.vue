@@ -51,6 +51,7 @@ import FilterInput from '../components/FilterInput.vue'
 import SpotsList from '../components/SpotsList.vue'
 import LiveFeedIndicator from '../components/LiveFeedIndicator.vue'
 import EventBus from '../event-bus'
+import sotaMp3 from '../assets/sota.mp3'
 
 export default {
   name: 'SotaSpots',
@@ -139,7 +140,7 @@ export default {
       return new RegExp(this.spotFilter, 'i')
     },
     spotSound () {
-      return new Audio(require('../assets/sota.mp3'))
+      return new Audio(sotaMp3)
     }
   },
   data () {
