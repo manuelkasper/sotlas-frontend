@@ -4,11 +4,11 @@
       <b-table-column field="title" label="Title" :sortable="routes.length > 1">
         <span><a @click="toggle(props.row)"><strong>{{ props.row.title }}</strong></a> <RouteAttributes class="route-attributes" :route="props.row" :summit="summit" @mapReposition="coordinates => $emit('mapReposition', coordinates)" /></span>
       </b-table-column>
-      <b-table-column field="difficulty" label="Difficulty" :sortable="routes.length > 1">
-        {{ renderDifficulty(props.row) }}
-      </b-table-column>
       <b-table-column field="ascent" label="Ascent" numeric :sortable="routes.length > 1">
         <span><AltitudeLabel v-if="props.row.ascent" :altitude="props.row.ascent" /></span>
+      </b-table-column>
+      <b-table-column field="descent" label="Descent" numeric :sortable="routes.length > 1">
+        <span><AltitudeLabel v-if="props.row.descent" :altitude="props.row.descent" /></span>
       </b-table-column>
       <b-table-column field="distance" label="Distance" numeric :sortable="routes.length > 1">
         <DistanceLabel v-if="props.row.distance" :distance="props.row.distance" />
@@ -81,16 +81,6 @@ export default {
     },
     detailsClose (row) {
       this.$emit('detailsClose', row)
-    },
-    renderDifficulty (row) {
-      let fields = ['hikingDifficulty', 'snowshoeDifficulty', 'alpineDifficulty', 'skiDifficulty', 'climbingDifficulty']
-      let difficulties = []
-      fields.forEach(field => {
-        if (row[field]) {
-          difficulties.push(row[field])
-        }
-      })
-      return difficulties.join(' ')
     },
     linkifyCoordinates (description) {
       return description.replace(/(?:^|\s)([-+]?[1-8]?\d\.\d+),\s*([-+]?(?:(?:1[0-7]\d)|(?:[1-9]?\d))\.\d+)\b/g, '<a href="/map/coordinates/$1,$2/16.0?popup=1">$&</a>')

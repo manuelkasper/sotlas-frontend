@@ -30,6 +30,7 @@ export default {
           // Calculate total distance
           let distance = 0
           let ascent = 0
+          let descent = 0
           let lastAltitude
           track.points.forEach(point => {
             distance += parseFloat(point.distance)
@@ -37,10 +38,14 @@ export default {
             if (lastAltitude !== undefined && lastAltitude < pointAltitude) {
               ascent += (pointAltitude - lastAltitude)
             }
+            if (lastAltitude !== undefined && lastAltitude > pointAltitude) {
+              descent += (lastAltitude - pointAltitude)
+            }
             lastAltitude = pointAltitude
           })
           ascent = Math.round(ascent)
-
+          descent = Math.round(descent)
+          
           routes.push({
             id: track.hdr_id,
             title: track.track_title,
@@ -50,6 +55,7 @@ export default {
             postedDate: track.posted_date,
             distance,
             ascent,
+            descent,
             track: {
               points: track.points
             }
