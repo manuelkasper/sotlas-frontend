@@ -8,9 +8,15 @@
         </font-awesome-layers>
         <div v-if="webcam.clusterSize > 1" class="clustersize">+{{ webcam.clusterSize - 1 }}</div>
       </div>
-      <MglPopup :closeButton="false" @added="popupAdded">
+      <MglPopup :closeButton="false" @added="popupAdded" @open="popupOpened" @close="popupClosed">
         <div :class="['thumbwrapper', size]">
-          <a :href="thumbnailHref" target="_blank"><img class="thumb" :src="thumbnailSrc" /></a>
+          <a :href="thumbnailHref" target="_blank">
+            <img v-if="isPopupOpen && thumbnailSrc" class="thumb" :src="thumbnailSrc" />
+            <div v-else class="thumb-placeholder">
+              <font-awesome-icon :icon="['far', 'spinner']" spin />
+              <span>Loading...</span>
+            </div>
+          </a>
           <div class="caption">{{ title }}</div>
           <template v-if="webcam.clusterSize > 1 && size != 'is-small'">
             <div class="clustercaption">{{ webcam.clusterSize - 1 }} more webcam{{ webcam.clusterSize > 2 ? 's' : '' }}</div>
@@ -35,6 +41,11 @@ export default {
   components: {
     MglMarker, MglPopup
   },
+  data() {
+    return {
+      isPopupOpen: false
+    }
+  },
   computed: {
     coordinates () {
       return [this.webcam.location.longitude, this.webcam.location.latitude]
@@ -55,6 +66,12 @@ export default {
     },
     popupAdded (popup) {
       popup.popup.options.focusAfterOpen = false
+    },
+    popupOpened () {
+      this.isPopupOpen = true
+    },
+    popupClosed () {
+      this.isPopupOpen = false
     }
   }
 }
@@ -104,6 +121,17 @@ export default {
 }
 .thumb {
   vertical-align: bottom;
+}
+.thumb-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 0.8rem;
+  gap: 0.5rem;
 }
 .caption {
   font-size: 0.75rem;
