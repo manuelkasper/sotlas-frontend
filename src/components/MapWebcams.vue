@@ -7,6 +7,7 @@
 <script>
 import MapWebcam from '../components/MapWebcam.vue'
 import axios from 'axios'
+import { debounce } from 'vue2-debounce'
 
 export default {
   name: 'MapWebcams',
@@ -19,18 +20,71 @@ export default {
     }
   },
   methods: {
+    hasSignificantChanges() {
+      if (!this.map) return false
+      
+      const currentZoom = Math.floor(this.map.getZoom())
+      const currentBounds = this.map.getBounds()
+      
+      // First load - always load webcams
+      if (this.lastZoom === null || this.lastBounds === null) {
+        return true
+      }
+      
+      // Check zoom level change (more than 0.1 level)
+      if (Math.abs(currentZoom - this.lastZoom) > 0.1) {
+        return true
+      }
+      
+      // Check if map center has moved significantly
+      const currentCenter = currentBounds.getCenter()
+      const lastCenter = this.lastBounds.getCenter()
+      const currentSpan = Math.abs(currentBounds.getNorthEast().lat - currentBounds.getSouthWest().lat)
+      
+      const centerLatDiff = Math.abs(currentCenter.lat - lastCenter.lat)
+      const centerLngDiff = Math.abs(currentCenter.lng - lastCenter.lng)
+      
+      // Load if center moved more than 1% of current map span
+      if (centerLatDiff > currentSpan * 0.01 || centerLngDiff > currentSpan * 0.01) {
+        return true
+      }
+      
+      return false
+    },
     setupMap () {
       if (!this.map || this.setup) {
         return
       }
 
-      this.map.on('idle', e => {
+      // Remove any existing idle listener to prevent duplicates
+      if (this.idleListener) {
+        this.map.off('idle', this.idleListener)
+      }
+
+      // Create a debounced version of loadWebcams using vue2-debounce
+      this.idleListener = debounce(() => {
         this.loadWebcams()
-      })
+      }, 300)
+
+      this.map.on('idle', this.idleListener)
+      
+      // Initial load
       this.loadWebcams()
       this.setup = true
     },
     loadWebcams () {
+      // Check if changes are significant enough to warrant loading new webcams
+      if (!this.hasSignificantChanges()) {
+        return
+      }
+      
+      // Prevent multiple simultaneous requests
+      if (this.loading) {
+        return
+      }
+      
+      this.loading = true
+      
       // Convert MapBox zoom level to Google Maps like zoom level
       let mapZoom = Math.floor(Math.min(this.map.getZoom() + 1, 18))
 
@@ -51,6 +105,7 @@ export default {
       if (mapZoom <= 4) {
         // We have reached the limit of what we can request via the API - so don't request anything
         this.webcams = []
+        this.loading = false
         return
       }
 
@@ -67,21 +122,58 @@ export default {
       })
         .then(response => {
           this.webcams = response.data.filter(webcam => { return webcam.status === 'active' })
+          
+          // Update stored values after successful load
+          this.lastZoom = Math.floor(this.map.getZoom())
+          this.lastBounds = this.map.getBounds()
         })
+        .catch(error => {
+          console.error('Error loading webcams:', error)
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    cleanup() {
+      if (this.map && this.idleListener) {
+        this.map.off('idle', this.idleListener)
+        this.idleListener = null
+      }
+      this.setup = false
+      this.lastZoom = null
+      this.lastBounds = null
+      this.loading = false
     }
   },
   watch: {
     map: {
-      handler () {
+      handler (newMap, oldMap) {
+        // Clean up old map listeners
+        if (oldMap && this.idleListener) {
+          oldMap.off('idle', this.idleListener)
+          this.idleListener = null
+        }
+        this.setup = false
+        this.lastZoom = null
+        this.lastBounds = null
+        this.loading = false
         this.setupMap()
       },
       immediate: true
     }
   },
+  beforeDestroy() {
+    this.cleanup()
+  },
   data () {
     return {
       windyApiKey: 'FIHFGWMrA0iF5Wz4fnBIR8Sb0GRUUeQY',
-      webcams: []
+      webcams: [],
+      setup: false,
+      idleListener: null,
+      lastZoom: null,
+      lastBounds: null,
+      loading: false
     }
   }
 }
