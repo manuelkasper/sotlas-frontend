@@ -265,7 +265,6 @@ export default {
         }
       },
       initialMapOptions: null,
-      mapTilerApiKey: null,
       mapTilerApiKeyFailed: false
     }
   }
