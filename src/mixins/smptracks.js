@@ -26,6 +26,15 @@ export default {
         routes = [...this.summit.routes]
       }
       if (this.smpTracks) {
+        // Convert km to m if necessary (some tracks have got this wrong)
+        this.smpTracks.forEach(track => {
+          if (track.points.every(point => point.altitude < 9)) {
+            track.points.forEach(point => {
+              point.altitude *= 1000
+            })
+          }
+        })
+
         this.smpTracks.forEach(track => {
           // Calculate total distance
           let distance = 0
