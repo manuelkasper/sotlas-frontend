@@ -26,6 +26,7 @@ import MapWebcams from './MapWebcams.vue'
 import mapstyle from '../mixins/mapstyle.js'
 import utils from '../mixins/utils.js'
 import longtouch from '../mixins/longtouch.js'
+import reportMapSession from '../mapsession.js'
 
 export default {
   name: 'MiniMap',
@@ -171,6 +172,8 @@ export default {
         this.map.dragPan.disable()
       }
       this.highlightCurrentSummit()
+
+      reportMapSession('mini', this.map.getMaptilerSessionId())
     },
     onMapClicked (event) {
       if (event.mapboxEvent.originalEvent.hitMarker) {
