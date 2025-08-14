@@ -55,13 +55,14 @@ export default defineConfig(async ({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        'vue/dist/vue.esm': 'vue'
+        '@': path.resolve(__dirname, 'src')
       },
     },
     optimizeDeps: {
       include: [
-        'map-promisified'
+        'map-promisified',
+        'events',
+        'maplibre-gl'
       ]
     },
     define: {

@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted () {
-    if (this.homeQth === null) {
+    if (this.homeQth === null && this.authenticated) {
       this.$keycloak.updateToken(60)
         .then(() => {
           this.$keycloak.loadUserProfile()

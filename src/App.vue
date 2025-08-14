@@ -4,14 +4,28 @@
     <keep-alive include="Map">
       <router-view />
     </keep-alive>
+    <vue-turnstile v-if="!authenticated" :site-key="siteKey" @verified="turnstileVerified" />
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
+import VueTurnstile from '@gaviti/vue-turnstile'
+import utils from './mixins/utils.js'
 
 export default {
-  components: { NavBar }
+  mixins: [utils],
+  components: { NavBar, VueTurnstile },
+  computed: {
+    siteKey () {
+      return import.meta.env.VITE_TURNSTILE_SITE_KEY
+    }
+  },
+  methods: {
+    turnstileVerified(token) {
+      this.$store.commit('setTurnstileToken', token)
+    }
+  }
 }
 </script>
 

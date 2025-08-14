@@ -1,3 +1,4 @@
+import api from './api.js'
 import basemapatStyle from '../assets/basemapat.json'
 import caltopoStyle from '../assets/caltopo.json'
 import norkartStyle from '../assets/norkart.json'
@@ -8,11 +9,17 @@ import toposvalbardStyle from '../assets/toposvalbard.json'
 import partialSnowcoverDots from '../assets/partial-snowcover-dots.png'
 
 export default {
+  mixins: [api],
   mounted () {
     this.initialMapOptions = { ...this.mapOptions }
+    this.updateMapTilerApiKey()
   },
   computed: {
     mapStyle () {
+      if (!this.mapTilerApiKey) {
+        return null
+      }
+
       if (this.mapType === 'maptiler_outdoor') {
         if (this.$store.state.altitudeUnits === 'ft') {
           return 'dc9edd90-1320-4fa4-98ba-ad2d4efe5998'
@@ -43,10 +50,10 @@ export default {
       // Patch MapTiler key
       Object.values(style.sources).forEach(source => {
         if (source.url) {
-          source.url = source.url.replace('{key}', import.meta.env.VITE_MAPTILER_KEY)
+          source.url = source.url.replace('{key}', this.mapTilerApiKey)
         }
       })
-      style.glyphs = style.glyphs.replace('{key}', import.meta.env.VITE_MAPTILER_KEY)
+      style.glyphs = style.glyphs.replace('{key}', this.mapTilerApiKey)
 
       // Patch units
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -68,8 +75,8 @@ export default {
       }
       return mapType
     },
-    mapApiKey () {
-      return import.meta.env.VITE_MAPTILER_KEY
+    mapTilerApiKey () {
+      return this.$store.state.mapTilerApiKey
     },
     mapUnits () {
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -80,6 +87,26 @@ export default {
     }
   },
   methods: {
+    updateMapTilerApiKey () {
+      if (this.$store.state.mapTilerApiKey) {
+        return
+      }
+
+      // If we are logged in via SSO, then there's no need for Turnstile
+      if ((this.$keycloak && this.$keycloak.authenticated) || this.$store.state.turnstileToken) {
+        this.loadMapTilerApiKey(this.$store.state.turnstileToken)
+          .then(response => {
+            this.$store.commit('setMapTilerApiKey', response.mapTilerApiKey)
+            if (this.$store.state.turnstileToken) {
+              this.$store.commit('setTurnstileToken', null)
+            }
+          })
+          .catch(error => {
+            console.error(error)
+            this.mapTilerApiKeyFailed = true
+          })
+      }
+    },
     updateLayers (map) {
       if (!map) {
         return
@@ -168,6 +195,13 @@ export default {
       }
     }
   },
+  watch: {
+    '$store.state.turnstileToken': {
+      handler () {
+        this.updateMapTilerApiKey()
+      }
+    }
+  },
   data () {
     return {
       mapTypes: {
@@ -230,7 +264,9 @@ export default {
           style: norkartStyle
         }
       },
-      initialMapOptions: null
+      initialMapOptions: null,
+      mapTilerApiKey: null,
+      mapTilerApiKeyFailed: false
     }
   }
 }

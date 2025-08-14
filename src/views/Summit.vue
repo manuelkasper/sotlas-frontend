@@ -59,7 +59,7 @@
           <div v-if="!enlargeMap" class="column">
             <div>Coordinates: <Coordinates v-if="summit.coordinates" :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" :altitude="summit.altitude" :reference="summit.code" /></div>
             <div>Locator: <span class="locator">{{ locator }}</span></div>
-            <div v-if="$keycloak && $keycloak.authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
+            <div v-if="authenticated && summit.coordinates">Distance/Bearing: <Bearing :latitude="summit.coordinates.latitude" :longitude="summit.coordinates.longitude" /></div>
             <div v-if="firstActivations">
               First activation:
               <FirstActivator :callsign="firstActivations.activators[0].callsign" :userId="firstActivations.activators[0].userId" />
@@ -71,7 +71,7 @@
             <SummitAttributes :summit-code="summit.code" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources<span v-if="$keycloak && $keycloak.authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
+              <h6 class="title is-6">Resources<span v-if="authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -108,7 +108,7 @@
         <h4 class="title is-4">Photos</h4>
         <SummitPhotos v-if="summit.photos && summit.photos.length > 0" ref="summitPhotos" :summit="summit" :editable="true" :showWaypointButton="true" @photoDeleted="reloadPhotos" @photoEdited="reloadPhotos" @photosReordered="reloadPhotos" />
 
-        <PhotosUploader v-if="$keycloak && $keycloak.authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
+        <PhotosUploader v-if="authenticated" :summitCode="summitCode" @upload="reloadPhotos" />
         <div v-else class="uploader-placeholder box"><font-awesome-icon :icon="['far', 'images']" size="lg" /> Log in and upload your photos of this summit!</div>
       </div>
     </section>

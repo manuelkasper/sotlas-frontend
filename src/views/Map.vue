@@ -1,6 +1,6 @@
 <template>
   <div class="map-layout" ref="mapLayout">
-    <MglMap v-if="showMap && mapStyle" :apiKey="mapApiKey" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
+    <MglMap v-if="showMap && mapStyle" :apiKey="mapTilerApiKey" :mapStyle="mapStyle" :bounds.sync="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" class="map" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
       <MglScaleControl position="bottom-left" :unit="mapUnits" />
@@ -33,7 +33,8 @@
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
     <SwisstopoInfo />
     <BasemapAtInfo />
-    <b-loading :is-full-page="false" :active="filtering || !showMap || !mapStyle" />
+    <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
+    <b-loading :is-full-page="false" :active="(filtering || !showMap || !mapStyle) && !mapTilerApiKeyFailed" />
   </div>
 </template>
 
@@ -57,11 +58,12 @@ import MapDraw from '../components/MapDraw.vue'
 import MapWebcams from '../components/MapWebcams.vue'
 import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 import BasemapAtInfo from '../components/BasemapAtInfo.vue'
+import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
 
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo, BasemapAtInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   created () {

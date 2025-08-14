@@ -1,19 +1,28 @@
 <template>
-  <MglMap v-if="(mapCenter || bounds) && mapStyle" :apiKey="mapApiKey" :key="mapKey" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5" :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked" @idle="onMapIdle">
-    <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
-    <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
-    <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" :unit="mapUnits" />
-    <div v-if="canEnlarge" class="maplibregl-ctrl-top-left">
-      <MapEnlargeControl :isEnlarged="isEnlarged" @enlarge="$emit('enlarge')" />
-    </div>
-    <MglAttributionControl :compact="$mq.mobile" position="bottom-right" />
+  <div>
+    <MglMap v-if="(mapCenter || bounds) && mapStyle" :apiKey="mapTilerApiKey" :key="mapKey"
+      :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5"
+      :attributionControl="false" @load="onMapLoaded" @click="onMapClicked" @contextmenu="onMapRightClicked"
+      @idle="onMapIdle">
+      <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }"
+        :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
+      <MglNavigationControl v-if="!$mq.mobile" position="top-right" :showCompass="false" />
+      <MglScaleControl v-if="!$mq.mobile || isEnlarged" position="bottom-left" :unit="mapUnits" />
+      <div v-if="canEnlarge" class="maplibregl-ctrl-top-left">
+        <MapEnlargeControl :isEnlarged="isEnlarged" @enlarge="$emit('enlarge')" />
+      </div>
+      <MglAttributionControl :compact="$mq.mobile" position="bottom-right" />
 
-    <MapRoute v-for="route in routes" :key="route.id" :route="route" />
-    <MapPhoto v-for="photo in mapPhotos" :key="photo.filename" :summit="summit" :photo="photo" @photoClicked="photo => $emit('photoClicked', photo)" />
-    <MapInfoPopup v-if="infoCoordinates !== null" :coordinates="infoCoordinates" @close="infoCoordinates = null" />
-    <MapWebcams v-if="mapOptions.webcams" size="is-small" />
-    <div v-if="zoomWarningVisible" class="zoom-warning">Zoom in to see all activations</div>
-  </MglMap>
+      <MapRoute v-for="route in routes" :key="route.id" :route="route" />
+      <MapPhoto v-for="photo in mapPhotos" :key="photo.filename" :summit="summit" :photo="photo"
+        @photoClicked="photo => $emit('photoClicked', photo)" />
+      <MapInfoPopup v-if="infoCoordinates !== null" :coordinates="infoCoordinates" @close="infoCoordinates = null" />
+      <MapWebcams v-if="mapOptions.webcams" size="is-small" />
+      <div v-if="zoomWarningVisible" class="zoom-warning">Zoom in to see all activations</div>
+    </MglMap>
+    <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
+    <b-loading class="mini-map-loading" :is-full-page="false" :active="!mapStyle && !mapTilerApiKeyFailed" />
+  </div>
 </template>
 
 <script>
@@ -27,6 +36,7 @@ import mapstyle from '../mixins/mapstyle.js'
 import utils from '../mixins/utils.js'
 import longtouch from '../mixins/longtouch.js'
 import reportMapSession from '../mapsession.js'
+import MapKeyFailedInfo from './MapKeyFailedInfo.vue'
 
 export default {
   name: 'MiniMap',
@@ -45,7 +55,7 @@ export default {
     overviewMap: Boolean
   },
   components: {
-    MglMap, MglGeolocateControl, MglNavigationControl, MapEnlargeControl, MglScaleControl, MglAttributionControl, MapRoute, MapPhoto, MapInfoPopup, MapWebcams
+    MglMap, MglGeolocateControl, MglNavigationControl, MapEnlargeControl, MglScaleControl, MglAttributionControl, MapRoute, MapPhoto, MapInfoPopup, MapWebcams, MapKeyFailedInfo
   },
   mixins: [utils, mapstyle, longtouch],
   watch: {
@@ -260,5 +270,10 @@ export default {
   border-radius: 0.5em;
   text-align: center;
   opacity: 0.9;
+}
+.mini-map-loading {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -33,6 +33,16 @@ export default {
         .then(response => {
           return response.data
         })
+    },
+    loadMapTilerApiKey (turnstileToken = null) {
+      let params = {}
+      if (turnstileToken) {
+        params.token = turnstileToken
+      }
+      return this.axiosAuthOptional.get(import.meta.env.VITE_API_URL + '/mapkey/get', { params })
+        .then(response => {
+          return response.data
+        })
     }
   }
 }

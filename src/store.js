@@ -66,7 +66,9 @@ const store = new Vuex.Store({
     activatorPage: 1,
     mapType,
     mapOptions,
-    mapCenter: null
+    mapCenter: null,
+    mapTilerApiKey: null,
+    turnstileToken: null
   },
   mutations: {
     SOCKET_ONOPEN (state, event) {
@@ -157,6 +159,12 @@ const store = new Vuex.Store({
     },
     setMapCenter (state, center) {
       state.mapCenter = center
+    },
+    setMapTilerApiKey (state, key) {
+      state.mapTilerApiKey = key
+    },
+    setTurnstileToken (state, token) {
+      state.turnstileToken = token
     }
   },
   actions: {
