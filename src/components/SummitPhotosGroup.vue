@@ -172,18 +172,18 @@ export default {
 </script>
 
 <style scoped>
-.photos >>> figure {
+.photos :deep(figure) {
   margin: 0 0.75rem 0.75rem 0;
 }
-.photos >>> figure img {
+.photos :deep(figure img) {
   max-height: 128px;
   max-width: 300px;
   background-color: #e7e7e7;
 }
->>> .photo-title {
+:deep(.photo-title) {
   font-size: 1rem;
 }
->>> .photo-title .author {
+:deep(.photo-title .author) {
   font-size: 0.8rem;
   margin-top: 0.2em;
 }
@@ -208,10 +208,10 @@ export default {
   color: #3273dc;
 }
 @media (max-width: 768px) {
-  .photos >>> figure {
+  .photos :deep(figure) {
     margin: 0 0.5rem 0.5rem 0;
   }
-  .photos >>> figure img {
+  .photos :deep(figure img) {
     max-height: 104px;
     max-width: 242px;
   }

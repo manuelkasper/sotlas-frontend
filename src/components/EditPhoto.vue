@@ -177,16 +177,16 @@ export default {
   display: flex;
   margin-bottom: 1em;
 }
-.title-area >>> .textarea {
+.title-area :deep(.textarea) {
   min-height: 5em !important;
 }
 @media (max-width: 1023px) {
-  >>> .datepicker .dropdown.is-mobile-modal .dropdown-menu {
+  :deep(.datepicker .dropdown.is-mobile-modal .dropdown-menu) {
     width: calc(100vw - 40px);
   }
 }
 @media (min-width: 769px) {
-  .title-area >>> .textarea {
+  .title-area :deep(.textarea) {
     min-width: 24em;
   }
   .image-info {

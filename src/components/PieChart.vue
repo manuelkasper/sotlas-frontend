@@ -51,11 +51,11 @@ export default {
 </script>
 
 <style scoped>
->>> .graph-svg-tip .title {
+:deep(.graph-svg-tip .title) {
   color: #fff;
 }
 @media (max-width: 1216px) {
-  >>> svg.chart {
+  :deep(svg.chart) {
     height: 300px;
   }
 }

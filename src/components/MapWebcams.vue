@@ -110,7 +110,7 @@ export default {
       }
 
       axios.get('https://api.windy.com/webcams/api/v3/map/clusters', {
-        headers: { 'X-WINDY-API-KEY': this.windyApiKey },
+        headers: { 'X-WINDY-API-KEY': import.meta.env.VITE_WINDY_API_KEY },
         params: {
           northLat: this.map.getBounds().getNorthEast().lat,
           eastLon: this.map.getBounds().getNorthEast().lng,
@@ -167,7 +167,6 @@ export default {
   },
   data () {
     return {
-      windyApiKey: 'FIHFGWMrA0iF5Wz4fnBIR8Sb0GRUUeQY',
       webcams: [],
       setup: false,
       idleListener: null,

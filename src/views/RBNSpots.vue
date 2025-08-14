@@ -230,7 +230,7 @@ export default {
 .dropdown + .dropdown {
   margin-left: 0;
 }
-.b-table >>> .level {
+.b-table :deep(.level) {
   padding-bottom: 0;
 }
 .filter-hint {

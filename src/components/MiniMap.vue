@@ -244,10 +244,10 @@ export default {
 </script>
 
 <style scoped>
->>> .maplibregl-canvas-container.maplibregl-interactive {
+:deep(.maplibregl-canvas-container.maplibregl-interactive) {
   cursor: auto;
 }
-.map >>> .maplibregl-popup {
+.map :deep(.maplibregl-popup) {
   max-width: 400px !important;
 }
 .zoom-warning {

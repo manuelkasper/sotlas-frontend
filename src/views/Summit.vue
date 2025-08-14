@@ -556,7 +556,7 @@ export default {
 .summit-info .points {
   margin-right: 0.3em;
 }
-.summit-info .points >>> .tag {
+.summit-info .points :deep(.tag) {
   vertical-align: baseline;
   padding-top: 0.15em;
   padding-bottom: 0.15em;
@@ -566,10 +566,10 @@ export default {
   margin-right: 0.1em;
   opacity: 0.5;
 }
->>> .coordinates {
+:deep(.coordinates) {
   font-weight: bold;
 }
->>> .coordinates + .actions {
+:deep(.coordinates + .actions) {
   margin-top: -0.375em;
   margin-bottom: -0.375em;
 }
@@ -626,7 +626,7 @@ export default {
   color: #777;
   text-align: right;
 }
->>> .maplibregl-canvas-container.maplibregl-interactive {
+:deep(.maplibregl-canvas-container.maplibregl-interactive) {
   cursor: auto;
 }
 .uploader-placeholder {

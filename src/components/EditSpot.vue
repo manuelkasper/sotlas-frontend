@@ -285,32 +285,32 @@ export default {
 </script>
 
 <style scoped>
-.callsign >>> input {
+.callsign :deep(input) {
   text-transform: uppercase;
 }
-.invalid >>> .help {
+.invalid :deep(.help) {
   text-decoration: line-through;
 }
->>> input::-webkit-outer-spin-button,
->>> input::-webkit-inner-spin-button {
+:deep(input::-webkit-outer-spin-button),
+:deep(input::-webkit-inner-spin-button) {
   -webkit-appearance: none;
   margin: 0;
 }
->>> input[type=number] {
+:deep(input[type=number]) {
   -moz-appearance:textfield;
 }
 .summitref .field {
   margin-bottom: 0;
 }
->>> .help.is-warning {
+:deep(.help.is-warning) {
   color: #cda400;
 }
 
 /* Fix from https://github.com/buefy/buefy/issues/1932#issuecomment-551453842 */
->>> .field.has-addons {
+:deep(.field.has-addons) {
   flex-wrap: wrap;
 }
->>> .field.has-addons .help {
+:deep(.field.has-addons .help) {
   width: 100%;
 }
 </style>

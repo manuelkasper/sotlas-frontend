@@ -110,10 +110,10 @@ export default {
 </script>
 
 <style scoped>
->>> .filepond--root {
+:deep(.filepond--root) {
   margin-bottom: 0;
 }
->>> .filepond--panel-root {
+:deep(.filepond--panel-root) {
   background-color: #f7f7f7;
 }
 </style>

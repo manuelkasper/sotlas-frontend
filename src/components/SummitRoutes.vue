@@ -121,14 +121,14 @@ export default {
 </script>
 
 <style scoped>
->>> .routeDescr p, >>> .routeDescr ul {
+:deep(.routeDescr p), :deep(.routeDescr ul) {
   margin-bottom: 1em;
 }
->>> .routeDescr ul {
+:deep(.routeDescr ul) {
   list-style-type: disc;
   margin-left: 1.5em;
 }
->>> .table-wrapper {
+:deep(.table-wrapper) {
   overflow-x: initial;
 }
 .route-attributes {
@@ -165,7 +165,7 @@ export default {
   font-size: 95%;
   font-style: italic;
 }
->>> .table-footer th {
+:deep(.table-footer th) {
   font-weight: normal;
   font-size: 0.9em;
   padding-top: 0.5em;

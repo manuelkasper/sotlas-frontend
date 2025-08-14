@@ -160,7 +160,7 @@ export default {
 .dropdown + .dropdown {
   margin-left: 0;
 }
-.button.unmuted >>> .icon {
+.button.unmuted :deep(.icon) {
   color: #1496ed;
 }
 </style>

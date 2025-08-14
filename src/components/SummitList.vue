@@ -127,7 +127,7 @@ export default {
 </script>
 
 <style scoped>
-.summits >>> .is-invalid {
+.summits :deep(.is-invalid) {
   opacity: 0.5;
 }
 @media (max-width: 414px) {

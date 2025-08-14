@@ -229,7 +229,7 @@ export default {
 .filter {
   width: 10em
 }
-.stats >>> .chart-container {
+.stats :deep(.chart-container) {
   margin-bottom: 1em
 }
 </style>

@@ -449,7 +449,7 @@ export default {
   bottom: 0;
   left: 0;
 }
-.map >>> .maplibregl-popup {
+.map :deep(.maplibregl-popup) {
   max-width: 600px !important;
 }
 .loading-ring-wrapper {

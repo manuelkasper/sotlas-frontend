@@ -414,7 +414,7 @@ export default {
 </script>
 
 <style scoped>
-.b-table >>> .level {
+.b-table :deep(.level) {
   padding-bottom: 0;
 }
 .activator-info > span {

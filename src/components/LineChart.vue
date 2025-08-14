@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style scoped>
->>> .graph-svg-tip .title {
+:deep(.graph-svg-tip .title) {
   color: #fff;
 }
 </style>

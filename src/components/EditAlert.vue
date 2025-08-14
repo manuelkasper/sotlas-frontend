@@ -363,22 +363,22 @@ export default {
 </script>
 
 <style scoped>
-.callsign >>> input {
+.callsign :deep(input) {
   text-transform: uppercase;
 }
 @media (max-width: 1023px) {
-  >>> .datepicker .dropdown.is-mobile-modal .dropdown-menu {
+  :deep(.datepicker .dropdown.is-mobile-modal .dropdown-menu) {
     width: calc(100vw - 40px);
   }
 }
->>> .datepicker .dropdown.is-active .dropdown-menu {
+:deep(.datepicker .dropdown.is-active .dropdown-menu) {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%);
   z-index: 100;
 }
-.invalid >>> .help {
+.invalid :deep(.help) {
   text-decoration: line-through;
 }
 .taginput {
@@ -387,7 +387,7 @@ export default {
 .eta .field {
   margin-bottom: 0;
 }
-.eta >>> .time-input {
+.eta :deep(.time-input) {
   width: 8em;
 }
 .summitref .field {
@@ -395,10 +395,10 @@ export default {
 }
 
 /* Fix from https://github.com/buefy/buefy/issues/1932#issuecomment-551453842 */
->>> .field.has-addons {
+:deep(.field.has-addons) {
   flex-wrap: wrap;
 }
->>> .field.has-addons .help {
+:deep(.field.has-addons .help) {
   width: 100%;
 }
 </style>

@@ -33,7 +33,7 @@ export default {
 .popup-content {
   margin-top: 7px;
 }
->>> .coordinates {
+:deep(.coordinates) {
   vertical-align: middle;
   font-weight: bold;
   font-size: 1rem;

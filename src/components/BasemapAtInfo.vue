@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped>
->>> .modal-content {
+:deep(.modal-content) {
   max-width: 40rem !important;
   max-height: calc(100vh - 80px);
 }

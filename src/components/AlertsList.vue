@@ -259,7 +259,7 @@ export default {
 .date-change td {
   border-top: 3px solid #dbdbdb;
 }
->>> .dropdown-item .icon {
+:deep(.dropdown-item .icon) {
   vertical-align: middle;
 }
 .dropdown-item .dropdown-label {

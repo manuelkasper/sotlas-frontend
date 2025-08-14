@@ -38,10 +38,10 @@ export default {
     width: 70vw;
   }
 }
->>> .video-title {
+:deep(.video-title) {
   font-size: 1rem;
 }
->>> .video-title .author {
+:deep(.video-title .author) {
   font-size: 0.8rem;
   margin-top: 0.2em;
 }

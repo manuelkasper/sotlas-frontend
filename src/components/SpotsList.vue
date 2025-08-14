@@ -274,7 +274,7 @@ tr.recent2 .timestamp {
 .card .actions {
   margin-top: 0.5em;
 }
->>> .dropdown-item .icon {
+:deep(.dropdown-item .icon) {
   vertical-align: middle;
 }
 .dropdown-item .dropdown-label {

@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
->>> .checkbox .control-label {
+:deep(.checkbox .control-label) {
   white-space: nowrap;
 }
 </style>

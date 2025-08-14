@@ -355,13 +355,13 @@ export default {
 .filter-criterion .field:last-child {
   margin-bottom: 0.2rem;
 }
-.filter-criterion .callsign >>> input {
+.filter-criterion .callsign :deep(input) {
   text-transform: uppercase;
 }
-.filter-criterion .count >>> input {
+.filter-criterion .count :deep(input) {
   width: 4em;
 }
-.filter-criterion .altitude >>> input {
+.filter-criterion .altitude :deep(input) {
   width: 5em;
 }
 .filter-criterion .field input, .filter-criterion .field select {

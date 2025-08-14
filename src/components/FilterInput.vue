@@ -43,7 +43,7 @@ export default {
 .filter {
   max-width: 20em;
 }
-.filter.invalid >>> input {
+.filter.invalid :deep(input) {
   background-color: #ffeeee;
 }
 </style>

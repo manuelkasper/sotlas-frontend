@@ -99,7 +99,7 @@ export default {
 .summitPopup.minimize .summitCode {
   display: none;
 }
-.summitPopup .nextAlert >>> .date-small {
+.summitPopup .nextAlert :deep(.date-small) {
   font-size: 100%;
   min-width: 0;
 }

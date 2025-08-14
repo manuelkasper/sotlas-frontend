@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-.freqinput >>> input {
+.freqinput :deep(input) {
   width: 10em;
 }
 </style>

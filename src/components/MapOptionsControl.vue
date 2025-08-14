@@ -291,7 +291,7 @@ export default {
 .map-option .alert-days .control {
   margin-right: 0.5rem !important;
 }
-.map-option .alert-days .control >>> input {
+.map-option .alert-days .control :deep(input) {
   width: 5em;
   vertical-align: baseline;
 }
