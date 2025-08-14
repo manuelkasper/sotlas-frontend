@@ -30,7 +30,7 @@
       <template slot="default" slot-scope="props">
         <span v-if="props.option.type === 'geoname'">
           <b-icon
-            :icon="iconForPlaceType(props.option.placeType)"
+            :icon="iconForFeatureClass(props.option.featureClass)"
             size="is-small"
             class="has-text-grey search-result-icon"
             pack="fas"
@@ -70,32 +70,17 @@
 
 <script>
 import prefs from '../mixins/prefs.js'
-import * as maptilersdk from '@maptiler/sdk'
 import axios from 'axios'
 import utils from '../mixins/utils.js'
 import haversine from 'haversine-distance'
+import geonames from '../mixins/geonames.js'
 
 const MIN_QUERY_LENGTH = 4
-
-const PLACE_TYPE_ICONS = {
-  country: 'flag',
-  region: 'map',
-  postcode: 'envelope',
-  district: 'layer-group',
-  place: 'city',
-  locality: 'building',
-  neighborhood: 'home',
-  address: 'map-marker-alt',
-  poi: 'landmark'
-}
-
 const COORDINATE_REGEX = /^\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*$/
 const REGION_REGEX = /^[A-Z0-9]{1,3}\/[A-Z]{2}$/i
 const SUMMIT_REF_EXACT_REGEX = /^([A-Z0-9]{1,3})\/([A-Z]{2})-([0-9]{3})$/i
 const SUMMIT_REF_RELAXED_REGEX = /^([A-Z0-9]{1,3})[/ ]?([A-Z]{2})[- ]?([0-9]{3})$/i
 const REGION_NUM_REGEX = /^([A-Z]{2})[ -]?([0-9]{3})$/i
-
-maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
 
 export default {
   name: 'NavBar',
@@ -105,7 +90,7 @@ export default {
       default: ''
     }
   },
-  mixins: [prefs, utils],
+  mixins: [prefs, utils, geonames],
   prefs: {
     key: 'searchField',
     props: ['searchTooltipShown']
@@ -199,15 +184,6 @@ export default {
         activator: a
       }))
     },
-    makeGeonameResults (features) {
-      return (features || []).map(f => ({
-        type: 'geoname',
-        label: f.text,
-        detail: f.place_name.replace(f.text + ', ', ''),
-        coordinates: f.geometry.coordinates,
-        placeType: Array.isArray(f.place_type) ? f.place_type[0] : (f.place_type || 'unknown')
-      }))
-    },
     // Helper to add results and dividers
     addResultsWithDivider (results, newResults) {
       if (newResults && newResults.length > 0) {
@@ -244,22 +220,18 @@ export default {
       }
       this.isLoading = true
       try {
-        // Parallel: MapTiler geocoding, activator search, and summit search
+        // Parallel: GeoNames geocoding, activator search, and summit search
         let geoResults = []
         let activatorResults = []
         let summitResults = []
-        /* try {
-          let geoOpts = {
-            limit: 5,
-            language: 'en',
-            proximity
-          }
-          const geoResp = await maptilersdk.geocoding.forward(value, geoOpts)
-          geoResults = this.makeGeonameResults(geoResp.features)
+        
+        try {
+          geoResults = await this.searchGeoNames(value, proximity, 5)
         } catch (e) {
           // Ignore geocoding errors (e.g., coordinates entered)
           geoResults = []
-        } */
+        }
+        
         const [activatorResp, summitResp] = await Promise.all([
           axios.get(import.meta.env.VITE_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
           axios.get(import.meta.env.VITE_API_URL + '/summits/search', { params: { q: this.normalizeSummitRef(value), limit: 50 } })
@@ -335,9 +307,6 @@ export default {
       }
       this.$emit('search')
     },
-    iconForPlaceType (type) {
-      return PLACE_TYPE_ICONS[type] || 'map-marker-alt'
-    }
   }
 }
 </script>

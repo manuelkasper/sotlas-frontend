@@ -16,7 +16,8 @@ import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamat
 import { faMap, faCheckCircle as fasCheckCircle, faChevronCircleDown as fasChevronCircleDown, faChevronCircleUp as fasChevronCircleUp,
   faParking, faSquare, faBus, faHiking, faCircle, faCamera, faCameraHome, faVolume, faVolumeMute, faCog, faCaretDown as fasCaretDown,
   faLocationArrow as fasLocationArrow, faInfoCircle as fasInfoCircle,
-  faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, faUser as fasUser, faMountains as fasMountains, faLocation as fasLocation } from '@fortawesome/pro-solid-svg-icons'
+  faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, faUser as fasUser, faMountains as fasMountains,
+  faLocation as fasLocation, faWater, faTree, faRoad } from '@fortawesome/pro-solid-svg-icons'
 import { faWikipediaW, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 import '@/assets/global.css'
@@ -31,7 +32,8 @@ library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExcla
   faBookUser, faTimesCircle)
 library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faParking, faSquare, faBus, faHiking, faCircle, faCamera,
   faCameraHome, faVolume, faVolumeMute, faCog, fasCaretDown, fasLocationArrow, fasInfoCircle,
-  faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, fasUser, fasMountains, fasLocation)
+  faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, fasUser, fasMountains,
+  fasLocation, faWater, faTree, faRoad)
 library.add(faWikipediaW, faGoogle, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)

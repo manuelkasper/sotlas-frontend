@@ -57,6 +57,7 @@
           <b-table class="auto-width" :narrowed="true" :striped="true" :data="places" :mobile-cards="false">
             <template slot-scope="props">
               <b-table-column field="label" label="Name">
+                <b-icon :icon="iconForFeatureClass(props.row.featureClass)" size="is-small" class="has-text-grey search-result-icon" pack="fas" />
                 <a @click="goToPlace(props.row)">{{ props.row.label }}</a>
               </b-table-column>
               <b-table-column field="detail" label="Detail">
@@ -82,7 +83,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import utils from '../mixins/utils.js'
-import * as maptilersdk from '@maptiler/sdk'
+import geonames from '../mixins/geonames.js'
 
 import PageLayout from '../components/PageLayout.vue'
 import SummitList from '../components/SummitList.vue'
@@ -90,7 +91,7 @@ import SummitList from '../components/SummitList.vue'
 export default {
   name: 'SearchAnything',
   components: { PageLayout, SummitList },
-  mixins: [utils],
+  mixins: [utils, geonames],
   methods: {
     doSearch () {
       let loads = []
@@ -110,28 +111,17 @@ export default {
           this.summits = response.data
         }))
 
-      // Places search (MapTiler geocoding)
+      // Places search (GeoNames geocoding)
       let proximity = null
       if (this.$store.state.mapCenter) {
         proximity = [this.$store.state.mapCenter.longitude, this.$store.state.mapCenter.latitude]
       }
-      let geoOpts = {
-        limit: 10,
-        language: 'en',
-        proximity
-      }
-      /* maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
-      loads.push(
-        maptilersdk.geocoding.forward(q, geoOpts)
-          .then(geoResp => {
-            this.places = (geoResp.features || []).map(f => ({
-              label: f.text,
-              detail: f.place_name.replace(f.text + ', ', ''),
-              coordinates: f.geometry.coordinates
-            }))
-          })
-          .catch(() => { this.places = [] })
-      ) */
+      loads.push(this.searchGeoNames(q, proximity, 10)
+        .then(geoResults => {
+          this.places = geoResults
+        })
+        .catch(() => { this.places = [] })
+      )
 
       Promise.all(loads)
         .then(() => {
@@ -146,7 +136,7 @@ export default {
     },
     goToPlace (place) {
       if (place && place.coordinates) {
-        // MapTiler returns [lon, lat]
+        // GeoNames returns [lon, lat]
         this.$router.push(`/map/coordinates/${place.coordinates[1]},${place.coordinates[0]}/14.0?popup=1`)
       }
     }
@@ -223,5 +213,9 @@ export default {
 }
 .title.is-4 {
   margin-bottom: 1rem;
+}
+.search-result-icon {
+  vertical-align: text-bottom;
+  margin-right: 0.75em;
 }
 </style>
