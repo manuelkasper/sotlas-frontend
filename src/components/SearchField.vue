@@ -248,7 +248,7 @@ export default {
         let geoResults = []
         let activatorResults = []
         let summitResults = []
-        try {
+        /* try {
           let geoOpts = {
             limit: 5,
             language: 'en',
@@ -259,7 +259,7 @@ export default {
         } catch (e) {
           // Ignore geocoding errors (e.g., coordinates entered)
           geoResults = []
-        }
+        } */
         const [activatorResp, summitResp] = await Promise.all([
           axios.get(import.meta.env.VITE_API_URL + '/activators/search', { params: { q: value, limit: 5 } }),
           axios.get(import.meta.env.VITE_API_URL + '/summits/search', { params: { q: this.normalizeSummitRef(value), limit: 50 } })

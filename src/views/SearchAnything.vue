@@ -120,7 +120,7 @@ export default {
         language: 'en',
         proximity
       }
-      maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
+      /* maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_KEY
       loads.push(
         maptilersdk.geocoding.forward(q, geoOpts)
           .then(geoResp => {
@@ -131,7 +131,7 @@ export default {
             }))
           })
           .catch(() => { this.places = [] })
-      )
+      ) */
 
       Promise.all(loads)
         .then(() => {
