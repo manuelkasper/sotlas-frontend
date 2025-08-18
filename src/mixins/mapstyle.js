@@ -88,22 +88,25 @@ export default {
   },
   methods: {
     updateMapTilerApiKey () {
-      if (this.$store.state.mapTilerApiKey) {
+      if (this.$store.state.mapTilerApiKey || this.$store.state.mapTilerApiKeyLoading) {
         return
       }
 
       // If we are logged in via SSO, then there's no need for Turnstile
       if ((this.$keycloak && this.$keycloak.authenticated) || this.$store.state.turnstileToken) {
+        this.$store.commit('setMapTilerApiKeyLoading', true)
         this.loadMapTilerApiKey(this.$store.state.turnstileToken)
           .then(response => {
             this.$store.commit('setMapTilerApiKey', response.mapTilerApiKey)
             if (this.$store.state.turnstileToken) {
               this.$store.commit('setTurnstileToken', null)
             }
+            this.$store.commit('setMapTilerApiKeyLoading', false)
           })
           .catch(error => {
             console.error(error)
             this.mapTilerApiKeyFailed = true
+            this.$store.commit('setMapTilerApiKeyLoading', false)
           })
       }
     },

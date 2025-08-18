@@ -68,6 +68,7 @@ const store = new Vuex.Store({
     mapOptions,
     mapCenter: null,
     mapTilerApiKey: null,
+    mapTilerApiKeyLoading: false,
     turnstileToken: null
   },
   mutations: {
@@ -162,6 +163,9 @@ const store = new Vuex.Store({
     },
     setMapTilerApiKey (state, key) {
       state.mapTilerApiKey = key
+    },
+    setMapTilerApiKeyLoading (state, loading) {
+      state.mapTilerApiKeyLoading = loading
     },
     setTurnstileToken (state, token) {
       state.turnstileToken = token
