@@ -17,6 +17,7 @@ import vincenty from 'node-vincenty'
 export default {
   name: 'Bearing',
   components: { DistanceLabel },
+  mixins: [utils],
   props: {
     latitude: Number,
     longitude: Number
