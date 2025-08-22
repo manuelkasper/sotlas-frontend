@@ -13,6 +13,7 @@
 <script>
 import DistanceLabel from './DistanceLabel.vue'
 import vincenty from 'node-vincenty'
+import utils from '../mixins/utils'
 
 export default {
   name: 'Bearing',
