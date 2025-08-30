@@ -432,6 +432,12 @@ export default {
           }
         },
         {
+          name: 'meteoblue',
+          url: () => {
+            return `https://www.meteoblue.com/en/weather/week/${this.latitude}N${this.longitude}E`
+          }
+        },
+        {
           name: 'Activation Zone Estimator',
           url: () => {
             if (this.reference) {
