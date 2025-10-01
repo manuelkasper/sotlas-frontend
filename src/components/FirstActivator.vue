@@ -20,12 +20,11 @@ export default {
   mixins: [utils, api],
   methods: {
     loadDatabaseCallsign () {
+      this.databaseCallsign = null
       this.loadActivator(this.userId)
         .then(activator => {
           if (this.homeCallsign(this.callsign) !== this.homeCallsign(activator.callsign)) {
             this.databaseCallsign = this.homeCallsign(activator.callsign)
-          } else {
-            this.databaseCallsign = null
           }
         })
     }
