@@ -474,6 +474,14 @@ export default {
           }
         },
         {
+          name: 'pota-map.fr',
+          url: () => {
+            if (this.reference) {
+              return `https://pota-map.fr/?sota=${this.reference}`
+            }
+          }
+        },
+        {
           name: 'aprs.fi',
           url: () => {
             return `https://aprs.fi/#!lat=${this.latitude}&lng=${this.longitude}&z=14`
