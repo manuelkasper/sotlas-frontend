@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm'
+import { Chart } from 'frappe-charts/src/js/chart'
 
 export default {
   props: {
@@ -88,7 +88,8 @@ export default {
           formatTooltipX: d => d + this.suffixX,
           formatTooltipY: d => d + this.suffixY
         },
-        animate: this.animate
+        animate: this.animate,
+        y_axis_exp_based_on_range: true
       })
     }
   },

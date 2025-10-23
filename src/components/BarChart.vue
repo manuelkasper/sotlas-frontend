@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm'
+import { Chart } from 'frappe-charts/src/js/chart'
 
 export default {
   props: {
