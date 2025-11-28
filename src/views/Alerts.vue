@@ -1,6 +1,17 @@
 <template>
   <PageLayout>
-    <template v-slot:title>Alerts</template>
+    <template v-slot:title>
+      <h1 class="title is-size-1 is-size-3-mobile">
+        Alerts
+
+        <div class="action-button">
+          <b-button tag="a" :href="icalFeedUrl" type="is-info" size="is-small" outlined icon-left="calendar-day"
+            title="The calendar feed will use your current filter settings. Click to open in your calendar app.">
+            Add to Calendar
+          </b-button>
+        </div>
+      </h1>
+    </template>
     <template v-slot:title-right>
       <div class="action-button">
         <b-button type="is-info" icon-left="plus" @click="$refs.alertsList.addAlert()">Add</b-button>
@@ -90,6 +101,24 @@ export default {
     },
     modes () {
       return this.allModes()
+    },
+    icalFeedUrl () {
+      // Use webcal:// protocol to trigger calendar subscription instead of download
+      const baseUrl = 'webcal://sotl.as/api/sotacal'
+      const params = new URLSearchParams()
+      
+      if (this.alertFilter) {
+        params.append('filter', this.alertFilter)
+      }
+      if (this.selectedModes.length > 0) {
+        params.append('modes', this.selectedModes.join(','))
+      }
+      if (this.selectedContinents.length > 0) {
+        params.append('continents', this.selectedContinents.join(','))
+      }
+      
+      const queryString = params.toString()
+      return queryString ? `${baseUrl}?${queryString}` : baseUrl
     }
   },
   methods: {

@@ -119,8 +119,11 @@ hr {
 }
 @media (max-width: 768px) {
   .action-button {
-    margin-left: 0.5rem;
+    margin-left: 1rem;
     float: right;
+  }
+  .action-button a[type="button"] {
+    vertical-align: baseline;
   }
 }
 @media (min-width: 768px) {
@@ -128,7 +131,7 @@ hr {
     margin-left: 1rem;
     display: inline-block;
   }
-  .action-button button {
+  .action-button button, .action-button a[type="button"] {
     vertical-align: baseline;
   }
 }
