@@ -365,6 +365,7 @@ export default {
       this.myChases = null
       this.sotaResources = null
       this.enlargeMap = false
+      this.firstActivation = null
       this.$refs.map.resize()
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
 
