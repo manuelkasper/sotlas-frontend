@@ -414,9 +414,9 @@ export default {
           }
         },
         {
-          name: 'Mapy.cz',
+          name: 'Mapy.com',
           url: () => {
-            return `https://en.mapy.cz/turisticka?x=${this.longitude}&y=${this.latitude}&z=17`
+            return `https://mapy.com/en/turisticka?x=${this.longitude}&y=${this.latitude}&z=17`
           }
         },
         {
