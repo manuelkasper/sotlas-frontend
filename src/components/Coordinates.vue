@@ -440,7 +440,7 @@ export default {
         {
           name: 'NWS Hourly Forecast',
           url: () => {
-            if (this.reference && this.reference.match('^(W[0-9]\w?|K0M|KH2|KH6|KLA|KLF|KLS|KP4)/')) {
+            if (this.reference && this.reference.match(/^(W[0-9]\w?|K0M|KH2|KH6|KLA|KLF|KLS|KP4)\//)) {
               return `https://forecast.weather.gov/MapClick.php?FcstType=graphical&lat=${this.latitude}&lon=${this.longitude}`
             }
           }
