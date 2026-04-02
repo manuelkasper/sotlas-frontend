@@ -10,6 +10,9 @@
       <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="name">Summit Name</b-checkbox></b-dropdown-item>
       <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="altitude">Summit Altitude</b-checkbox></b-dropdown-item>
       <b-dropdown-item custom><b-checkbox v-model="nameopts" native-value="points">Summit Points</b-checkbox></b-dropdown-item>
+      <b-dropdown-item separator />
+      <b-dropdown-item custom disabled><b>GPX options</b></b-dropdown-item>
+      <b-dropdown-item custom><b-checkbox v-model="garminsym">Garmin triangle symbols</b-checkbox></b-dropdown-item>
     </b-dropdown>
   </div>
 </template>
@@ -31,6 +34,9 @@ export default {
       if (this.nameopts.length > 0) {
         params.nameopts = this.nameopts.join(',')
       }
+      if (this.garminsym && type === 'gpx') {
+        params.garminsym = 1
+      }
 
       let url = this.exportUrlPrefix + '.' + type
       if (Object.keys(params).length > 0) {
@@ -41,7 +47,8 @@ export default {
   },
   data () {
     return {
-      nameopts: []
+      nameopts: [],
+      garminsym: false
     }
   }
 }
