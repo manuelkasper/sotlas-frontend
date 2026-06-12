@@ -82,10 +82,10 @@ export default {
     },
 
     logSpotToDb(spot) {
-      console.log('SPOTLOGGING: ', spot)
-
-      // TODO: actual post to sota db
-      return this.axiosAuth.post()
+      return this.axiosAuthId.post('https://api-db2.sota.org.uk/api/uploads', spot)
+        .then(response => {
+          return response.data
+        })
     }
   }
 }

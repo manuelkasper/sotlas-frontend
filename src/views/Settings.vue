@@ -17,6 +17,12 @@
           <b-field label="Alert default comments">
             <b-input v-model="alertDefaultComments" type="text" maxlength="60" />
           </b-field>
+          <b-field label="QTH Logging Latitude">
+            <b-input v-model="loggingLatitude" type="number" step="0.0001" />
+          </b-field>
+          <b-field label="QTH Logging Longitude">
+            <b-input v-model="loggingLongitude" type="number" step="0.0001" />
+          </b-field>
         </div>
       </section>
     </template>
@@ -75,6 +81,41 @@ export default {
         }
         prefs.defaultComments = newSpotDefaultComments
         this.setPrefs('editAlertPrefs', prefs)
+      }
+    },
+    loggingLatitude: {
+      get () {
+        let prefs = this.getPrefs('loggingPrefs')
+        if (prefs) {
+          return prefs.qth_latitude
+        }
+        return ''
+      },
+      set (newLoggingLatitude) {
+        let prefs = this.getPrefs('loggingPrefs')
+        if (!prefs) {
+          prefs = {}
+        }
+        prefs.qth_latitude = newLoggingLatitude
+        this.setPrefs('loggingPrefs', prefs)
+        console.log('Set logging latitude to ', newLoggingLatitude)
+      }
+    },
+    loggingLongitude: {
+      get () {
+        let prefs = this.getPrefs('loggingPrefs')
+        if (prefs) {
+          return prefs.qth_longitude
+        }
+        return ''
+      },
+      set (newLoggingLongitude) {
+        let prefs = this.getPrefs('loggingPrefs')
+        if (!prefs) {
+          prefs = {}
+        }
+        prefs.qth_longitude = newLoggingLongitude
+        this.setPrefs('loggingPrefs', prefs)
       }
     }
   }

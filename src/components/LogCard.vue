@@ -30,6 +30,15 @@
         </b-field>
       </b-field>
 
+      <b-field grouped>
+        <b-field label="QTH Latitude">
+          <b-input v-model="latitude" type="number" step="0.0001" />
+        </b-field>
+        <b-field label="QTH Longitude">
+          <b-input v-model="longitude" type="number" step="0.0001" />
+        </b-field>
+      </b-field>
+
     </section>
     <footer class="modal-card-foot">
       <b-button @click="$parent.close()">Cancel</b-button>
@@ -55,8 +64,8 @@ export default {
     spot: Object
   },
   prefs: {
-    key: 'spotPrefs',
-    props: ['lastCallsign', 'lastSummitCode', 'defaultComments']
+    key: 'loggingPrefs',
+    props: ['lastCallsign', 'lastSummitCode', 'qth_latitude', 'qth_longitude']
   },
   mounted () {
     if (!this.other_callsign) {
@@ -74,8 +83,10 @@ export default {
         this.summitCode = this.lastSummitCode
       }
     }
-    if (!this.comments && this.defaultComments) {
-      this.comments = this.defaultComments
+
+    if (!this.latitude || !this.longitude) {
+      this.latitude = this.qth_latitude
+      this.longitude = this.qth_longitude
     }
   },
   computed: {
@@ -172,30 +183,34 @@ export default {
   },
   methods: {
     logSpot () {
-      this.lastCallsign = this.other_callsign.toUpperCase()
-      this.lastSummitCode = this.summitCode
+      let logTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
 
       let params = {
-        callsign: this.myCallsign,
-        activatorCallsign: this.other_callsign.toUpperCase(),
-        associationCode: this.summitCode.substring(0, this.summitCode.indexOf('/')),
-        summitCode: this.summitCode.substring(this.summitCode.indexOf('/') + 1),
-        frequency: String(this.frequency),
-        mode: this.allModes()[this.mode],
-        type: this.type,
+        activations: [],
+        chases: [{
+          band: String(this.frequency) + "MHz",
+          // date format is "DD/MM/YYY"
+          date: new Date().toLocaleDateString('en-GB'),
+          latitude: this.latitude,
+          longitude: this.longitude,
+          // location format: "lat, lon" e.g. "12.3456, -1.2345"
+          location: `${this.latitude},${this.longitude}`,
+          mode: this.allModes()[this.mode],
+          otherCallsign: this.other_callsign.toUpperCase(),
+          ownCallsign: this.myCallsign,
+          s2s: false,
+          s2sSummitCode: this.summitCode,
+          summitCode: "",
+          swl: false,
+          // time format is "HH:MM"
+          time: logTime,
+          timeStr: logTime,
+        }],
+        s2s: []
       }
-      if (this.spot && this.spot.id) {
-        params.id = this.spot.id
-      }
-      if (this.spot && this.spot.userID) {
-        // Must pass userID to SOTAwatch when editing spots, or else "User does not own spot!" error gets returned
-        params.userID = this.spot.userID
-      }
-      if (this.type !== 'NORMAL') {
-        delete params.mode
-        delete params.frequency
-      }
+
       this.logging = true
+      console.log('SPOTLOGGING: ', params)
       this.logSpotToDb(params)
         .then(response => {
           this.$store.commit('logSpot', {
@@ -245,6 +260,8 @@ export default {
   },
   data () {
     return {
+      qth_latitude: null,
+      qth_longitude: null,
       other_callsign: '',
       lastCallsign: null,
       defaultComments: '',
