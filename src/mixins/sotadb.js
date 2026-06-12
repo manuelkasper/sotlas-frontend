@@ -79,6 +79,13 @@ export default {
             return data
           }
         })
+    },
+
+    logSpotToDb(spot) {
+      console.log('SPOTLOGGING: ', spot)
+
+      // TODO: actual post to sota db
+      return this.axiosAuth.post()
     }
   }
 }
