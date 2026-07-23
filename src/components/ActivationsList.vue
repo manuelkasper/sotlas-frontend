@@ -9,11 +9,11 @@
       <b-table-column field="date" label="Date" sortable v-slot="props">
         {{ formatActivationDate(props.row.date) }}
       </b-table-column>
-      <b-table-column field="summit.code" label="Summit" class="code" sortable v-slot="props">
+      <b-table-column field="summit.code" label="Summit" cell-class="code" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode" :country="props.row.summit.isoCode" class="flag" />
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
       </b-table-column>
-      <b-table-column field="summit.name" label="Name" class="name" sortable v-slot="props">
+      <b-table-column field="summit.name" label="Name" cell-class="name" sortable v-slot="props">
         <router-link :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.name }}</router-link>
         <font-awesome-icon v-if="hasOwnPhotos(props.row.summit)" class="photos-icon" :icon="['far', 'images']" />
         <font-awesome-icon v-else-if="props.row.summit.photoAuthors && props.row.summit.photoAuthors.length > 0" class="photos-icon-others" :icon="['far', 'images']" />
@@ -132,7 +132,10 @@ export default {
   margin-left: 0.5em;
   color: #aaa;
 }
-.invalid .code, .invalid .name {
+/* :deep() is required because <tr>/<td> are rendered by Buefy's <b-table>, not by
+   this component's template, so Vue's scoped-CSS data-v-* attribute is never applied
+   to them (only to elements written directly in the v-slot content). */
+:deep(.invalid .code), :deep(.invalid .name) {
   opacity: 0.7;
   text-decoration: line-through;
 }

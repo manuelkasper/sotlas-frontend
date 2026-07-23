@@ -384,6 +384,15 @@ export default {
   float: right;
   margin-left: 0.5em;
   margin-top: 0.2em;
+  /* Bulma 1.0 moved the .button background-color declaration onto the bare .button
+     selector (specificity 0,1,0) and left .button.is-link/.is-danger only overriding
+     CSS custom properties. That's lower specificity than maplibre-gl's
+     ".maplibregl-ctrl-group button { background-color: transparent }" (0,1,1), which
+     wins and makes Update/Clear render with no fill. Re-declare using the same custom
+     properties so is-link/is-danger colors (including the App.vue :root override) still apply. */
+  background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-background-l));
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l));
+  border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-border-l));
 }
 .maplibre-gl-filter-container .filter-container {
   display: none;

@@ -30,6 +30,30 @@
 .th-wrap .is-invisible {
   display: none;
 }
+
+/* Bulma/Buefy 3 fix: .th-wrap is display:flex but sized to its text content only
+   (width:auto), while its .sort-icon child is position:absolute (Buefy's own
+   _table.scss puts it at right:0/bottom:50%, or left:0 for .is-numeric columns) and
+   thus doesn't participate in that width calculation. The icon ends up positioned
+   right against (overlapping) the header text instead of after it. Reserve space for
+   the absolutely-positioned icon with padding on the side it's anchored to. */
+.th-wrap {
+  padding-right: 1.5rem;
+}
+.th-wrap.is-numeric {
+  padding-right: 0;
+  padding-left: 1.5rem;
+}
+
+/* Bulma 1.0 fix: Buefy renders buttons as <button class="button control is-small">.
+   .button.is-small only overrides the --bulma-control-size custom property; the actual
+   font-size declaration lives on the bare .button selector. Bulma's own .control rule
+   (same 0,1,0 specificity, but later in the stylesheet) sets font-size directly to
+   --bulma-size-normal, which wins and makes every is-small/is-medium/is-large button
+   render at the normal size regardless of the size modifier. */
+.button.control {
+  font-size: var(--bulma-control-size);
+}
 .message-body .icon svg {
   height: 2.5rem;
 }

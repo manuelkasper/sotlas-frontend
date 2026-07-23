@@ -30,9 +30,12 @@
       </b-field>
 
       <b-field label="Mode">
-        <b-field>
+        <!-- plain markup instead of nested <b-field>: Vue 3 compiles v-for into a single
+             Fragment vnode, so BField's hasAddons() (which counts rendered vnodes) sees one
+             node instead of many and never adds has-addons -->
+        <div class="field has-addons">
           <b-radio-button v-for="(curModeDisp, curMode) in allModes()" :key="curMode" v-model="mode" :size="$mq.mobile ? 'is-small' : ''" :native-value="curMode" :disabled="type !== 'NORMAL'">{{ curModeDisp }}</b-radio-button>
-        </b-field>
+        </div>
       </b-field>
 
       <b-field label="Comments">

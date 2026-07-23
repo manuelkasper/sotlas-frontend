@@ -351,7 +351,7 @@ export default {
       time: '',
       freqMode: [],
       freqModeSuggestions: [],
-      freqModeConfirmKeys: [',', 'Tab', 'Enter', ' '],
+      freqModeConfirmKeys: ['Tab', 'Enter'],
       comments: '',
       summit: null,
       summitInvalid: false,

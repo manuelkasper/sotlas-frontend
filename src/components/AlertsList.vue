@@ -18,7 +18,7 @@
     </CardPagination>
     <p v-else-if="!$mq.desktop && cardAlerts.length === 0">No matching alerts found.</p>
     <b-table v-else default-sort="dateActivated" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" v-model:current-page="curPage" :row-class="rowClass">
-      <b-table-column field="dateActivated" class="timestamp" label="Date/Time" sortable v-slot="props">
+      <b-table-column field="dateActivated" cell-class="timestamp" label="Date/Time" sortable v-slot="props">
         <span v-html="formatDateTimeRelative(props.row.dateActivated)" />
       </b-table-column>
       <b-table-column v-if="showCallsign" field="activatorCallsign" label="Callsign" sortable v-slot="props">
@@ -29,7 +29,7 @@
           {{ props.row.activatorCallsign }}
         </template>
       </b-table-column>
-      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." class="nowrap" sortable v-slot="props">
+      <b-table-column v-if="showSummitInfo" field="summit.code" label="Summit Ref." cell-class="nowrap" sortable v-slot="props">
         <CountryFlag v-if="props.row.summit.isoCode && $mq.fullhd" :country="props.row.summit.isoCode" class="flag" />
         <router-link v-if="props.row.summit.name" :to="makeSummitLink(props.row.summit.code)">{{ props.row.summit.code }}</router-link>
         <span v-else>{{ props.row.summit.code }}</span>
@@ -227,7 +227,12 @@ export default {
 
 <style scoped>
 @media (min-width: 769px) {
-  .table .comments {
+  /* Targeting the .comments-cell element directly (rather than the .comments class
+     passed to <b-table-column>) because Buefy 3's table rendering no longer forwards
+     that class onto the rendered <td> (only a data-label attribute is), unlike
+     Buefy 0.8. SpotsList.vue's equivalent column doesn't have this problem because it
+     already targets .comments-tooltip, a real rendered element. */
+  .comments-cell {
     font-size: 0.8rem;
     max-width: 30em;
   }
