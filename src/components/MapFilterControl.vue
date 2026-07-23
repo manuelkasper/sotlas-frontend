@@ -223,6 +223,13 @@ export default {
           this.setSummitFilter(null)
           this.active = false
         }
+      }).catch(() => {
+        this.filterLoadingCount = 0
+        this.$buefy.snackbar.open({
+          message: 'SOTA database error, try again later',
+          type: 'is-warning',
+          position: 'is-bottom'
+        })
       })
     },
     setActivations (from, to) {
@@ -379,6 +386,9 @@ export default {
 .filter-criterion button {
   border: 1px solid #dbdbdb;
   background-color: #fff;
+}
+.action-buttons {
+  overflow: hidden; /* clearfix: the floated buttons below would otherwise collapse this row's height */
 }
 .action-buttons button {
   float: right;

@@ -308,6 +308,6 @@ export default {
   vertical-align: bottom;
 }
 .b-tooltip {
-  vertical-align: bottom;
+  vertical-align: top;
 }
 </style>
