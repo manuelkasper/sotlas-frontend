@@ -12,11 +12,14 @@
             Simon G4TJC,
             <a href="https://github.com/g84ycm">@g84ycm</a>,
             <a href="https://github.com/benmarwick">@benmarwick</a>,
-            <a href="https://github.com/roleohibachi">@roleohibachi</a>
+            <a href="https://github.com/roleohibachi">@roleohibachi</a>,
+            Michal OM1PU,
+            Octavian ER1SKI,
+            <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>
           </p>
 
           <p>
-            Summit database © 2002-2025 Summits on the Air.<br />
+            Summit database © 2002-2026 Summits on the Air.<br />
             Summits on the Air, SOTA and the SOTA Logo are trademarks of the Programme.
           </p>
 
