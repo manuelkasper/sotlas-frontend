@@ -79,6 +79,13 @@ export default {
             return data
           }
         })
+    },
+
+    logSpotToDb(spot) {
+      return this.axiosAuthId.post('https://api-db2.sota.org.uk/api/uploads', spot)
+        .then(response => {
+          return response.data
+        })
     }
   }
 }
