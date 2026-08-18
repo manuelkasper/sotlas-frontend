@@ -15,7 +15,8 @@
             <a href="https://github.com/roleohibachi">@roleohibachi</a>,
             Michal OM1PU,
             Octavian ER1SKI,
-            <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>
+            <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>,
+            <a href="https://github.com/majkrzak">@majkrzak</a>
           </p>
 
           <p>
