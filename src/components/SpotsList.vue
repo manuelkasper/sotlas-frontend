@@ -64,6 +64,10 @@
             </b-dropdown>
           </div>
         </b-table-column>
+        <!-- TODO: add v-if=authenticated -->
+        <b-table-column  field="logspot" class="logspot" label="Log">
+          <b-button class="control" size="is-small" outlined @click="logSpot(props.row)">Log</b-button>
+        </b-table-column>
       </template>
       <template v-if="paginated" v-slot:bottom-left>
         <b-select v-model="perPage">
@@ -73,6 +77,9 @@
     </b-table>
     <b-modal v-if="isEditSpotActive" :active="true" has-modal-card :can-cancel="['escape']" @close="isEditSpotActive = false">
       <EditSpot :spot="spotToEdit" />
+    </b-modal>
+    <b-modal v-if="isLogSpotActive" :active="true" has-modal-card :can-cancel="['escape']" @close="isLogSpotActive = false">
+      <LogCard :spot="spotToLog" />
     </b-modal>
   </div>
 </template>
@@ -90,11 +97,12 @@ import ActivationCount from '../components/ActivationCount.vue'
 import CountryFlag from '../components/CountryFlag.vue'
 import AltitudeLabel from '../components/AltitudeLabel.vue'
 import EditSpot from '../components/EditSpot.vue'
+import LogCard from '../components/LogCard.vue'
 
 export default {
   name: 'SpotsList',
   components: {
-    ModeLabel, SummitPointsLabel, CardPagination, SpotCard, ActivationCount, CountryFlag, AltitudeLabel, EditSpot
+    ModeLabel, SummitPointsLabel, CardPagination, SpotCard, ActivationCount, CountryFlag, AltitudeLabel, EditSpot, LogCard
   },
   mixins: [utils, prefs, nowticker, sotawatch],
   prefs: {
@@ -175,6 +183,10 @@ export default {
       this.spotToEdit = spot
       this.isEditSpotActive = true
     },
+    logSpot (spot) {
+      this.spotToLog = spot
+      this.isLogSpotActive = true
+    },
     cloneSpot (spot) {
       let newSpot = Object.assign({}, spot)
       delete newSpot.id
@@ -210,7 +222,9 @@ export default {
       perPage: 15,
       perPageOptions: [10, 15, 20, 30, 50, 100],
       isEditSpotActive: false,
-      spotToEdit: null
+      spotToEdit: null,
+      isLogSpotActive: false,
+      spotToLog: null,
     }
   }
 }
