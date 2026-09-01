@@ -16,7 +16,8 @@
             Michal OM1PU,
             Octavian ER1SKI,
             <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>,
-            <a href="https://github.com/majkrzak">@majkrzak</a>
+            <a href="https://github.com/majkrzak">@majkrzak</a>,
+            Mirek OK1CYC
           </p>
 
           <p>
