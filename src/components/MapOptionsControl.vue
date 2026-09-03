@@ -204,7 +204,7 @@ export default {
       event.preventDefault()
       this.$buefy.dialog.alert({
         title: 'Activation zones',
-        message: '<p>Activation zone boundaries are typically calculated from LiDAR data. See the <a href="https://github.com/manuelkasper/sotlas-tiles/blob/master/az/README.md#source-data" target="_blank">repository</a> for a list of associations for which activation zone boundaries are available, and their data sources.</p><hr /><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
+        message: '<p>Activation zone boundaries are typically calculated from LiDAR data. See the <a href="https://github.com/manuelkasper/sotlas-tiles/blob/master/az/README.md#source-data" target="_blank">repository</a> for a list of associations for which activation zone boundaries are available, and their data sources.</p><hr /><p style="font-size: 0.8em"><strong>The activation zone boundaries shown on SOTLAS are provided on a best-effort basis only and are not endorsed by the SOTA MT.</strong> The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
