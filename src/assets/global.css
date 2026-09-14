@@ -155,6 +155,34 @@
 .switch {
   --bulma-switch-background-color: var(--bulma-grey-light);
 }
+/* 0.7's $shadow / $box-shadow / $card-shadow: 0 2px 3px rgba(#0a0a0a,.1), 0 0 0 1px
+   rgba(#0a0a0a,.1). Bulma 1.0's --bulma-shadow (boxes, cards, dropdowns) is a much
+   larger 0 .5em 1em blur. */
+:root {
+  --bulma-shadow: 0 2px 3px hsla(0, 0%, 4%, 0.1), 0 0 0 1px hsla(0, 0%, 4%, 0.1);
+}
+/* 0.7's .hero.is-light .subtitle was rgba($light-invert, .9); 1.0 makes it opaque. */
+.hero.is-light .subtitle {
+  --bulma-subtitle-color: hsla(0, 0%, 21%, 0.9);
+  --bulma-subtitle-strong-color: hsla(0, 0%, 21%, 0.9);
+}
+/* 0.7's .columns.is-variable only applied the gap horizontally (padding-left/right
+   and the negative side margins), leaving the vertical 0.75rem rhythm; 1.0 applies
+   --bulma-column-gap on all four sides, so the is-5 columns on the summit page got
+   20px instead of 12px top/bottom. */
+.columns.is-variable {
+  margin-top: -0.75rem;
+}
+.columns.is-variable:last-child {
+  margin-bottom: -0.75rem;
+}
+.columns.is-variable:not(:last-child) {
+  margin-bottom: calc(1.5rem - 0.75rem);
+}
+.columns.is-variable > .column {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
 
 /* Bulma 1.0 fix: a type-less outlined button (`<b-button outlined>` with no `type`,
    e.g. SpotsList.vue's Edit/Clone) lost its text and border color. Bulma's own

@@ -37,9 +37,16 @@ library.add(faWikipediaW, faGoogle, faGithub)
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('font-awesome-layers', FontAwesomeLayers)
+// Buefy 3 shifted its FontAwesome size table down one notch (default: fa-lg -> none,
+// is-medium: 2x -> lg, is-large: 3x -> 2x; buefy/src/utils/icons.ts vs 0.8.20's
+// icons.js), so every b-icon / input icon rendered ~25% smaller than on the Vue 2 site.
+// Restore 0.8's table for the packs this app uses. Values are FontAwesomeIcon `size`
+// props (no "fa-" prefix) because defaultIconComponent is set.
+const faSizes = { sizes: { default: 'lg', 'is-small': null, 'is-medium': '2x', 'is-large': '3x' } }
 app.use(Buefy, {
   defaultIconComponent: 'font-awesome-icon',
-  defaultIconPack: 'far'
+  defaultIconPack: 'far',
+  customIconPacks: { far: faSizes, fas: faSizes, fab: faSizes }
 })
 app.use(MatchMedia)
 app.use(store)
