@@ -62,6 +62,17 @@ export default {
   // *-invert-l is a constant lookup into the same lightness scale, not a function of
   // the base color). Bulma 0.7 always used white text on danger buttons; pin it back.
   --bulma-danger-invert-l: 100%;
+  // Bulma 1.0 tints its whole greyscale (text, borders, backgrounds, shadows) with a
+  // blue cast: --bulma-scheme-h/-s = 221deg/14% and the same for --bulma-text-h/-s
+  // and --bulma-shadow-h/-s, giving body text rgb(64,70,84) and borders rgb(214,217,224).
+  // Bulma 0.7's greys were neutral ($grey-dark #4a4a4a, $grey-lighter #dbdbdb,
+  // $background whitesmoke...). The lightness stops already match 0.7 (text 29%,
+  // text-strong 21%, text-weak 48%, border 86%, background 96%), so zeroing the
+  // saturation is enough to restore the exact 0.7 values site-wide; hue is then moot.
+  // Measured on sotl.as (Vue2) vs. this branch before/after, see the PR.
+  --bulma-scheme-s: 0%;
+  --bulma-text-s: 0%;
+  --bulma-shadow-s: 0%;
 }
 
 $fp-enable-1x1: false;
