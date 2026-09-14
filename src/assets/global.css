@@ -31,18 +31,43 @@
   display: none;
 }
 
-/* Bulma/Buefy 3 fix: .th-wrap is display:flex but sized to its text content only
-   (width:auto), while its .sort-icon child is position:absolute (Buefy's own
-   _table.scss puts it at right:0/bottom:50%, or left:0 for .is-numeric columns) and
-   thus doesn't participate in that width calculation. The icon ends up positioned
-   right against (overlapping) the header text instead of after it. Reserve space for
-   the absolutely-positioned icon with padding on the side it's anchored to. */
-.th-wrap {
-  padding-right: 1.5rem;
+/* Bulma/Buefy 3 fix: Buefy 3's .sort-icon is position:absolute (Buefy's own
+   _table.scss: `bottom:50%; right:0; transform:translateY(50%)`, or
+   `left:0;right:auto` for .is-numeric columns), so it doesn't participate in
+   .th-wrap's flex layout or in the <table>'s table-layout:auto width
+   calculation — that calculation sizes each column from the header TEXT
+   alone. Reserving room for the icon afterwards with padding (an earlier,
+   reverted version of this fix) then eats into that same text width instead
+   of adding to it, so multi-word headers like "Bonus points" wrapped even
+   though visually there was room. Buefy 0.8 (Vue2) instead laid the icon out
+   as a normal flex child (confirmed by measuring sotl.as production:
+   `.sort-icon` is `position:static`), so table-layout:auto naturally counted
+   it. Restore that: un-set Buefy 3's absolute positioning so the icon
+   (already given `margin-left`/`margin-right` by Buefy's own CSS) takes part
+   in the flex flow again, and neutralize the `transform: translateY(...)`
+   that positioned it for the absolute case — vertical centering now comes
+   from .th-wrap's `align-items: center` instead. `.is-invisible` icons stay
+   `display:none` (existing rule above) so an un-sorted column's reserved-but-
+   hidden icon still doesn't affect layout, matching Vue2. Selector
+   specificity has to match or beat Buefy's own `.b-table .table th
+   .sort-icon` (3 classes + 1 tag) — a plain `th.is-sortable .sort-icon` (2
+   classes + 1 tag) loses the cascade to it despite coming later in source
+   order, and the position:absolute above silently keeps winning. */
+.b-table .table th.is-sortable .sort-icon {
+  position: static;
+  transform: none;
 }
-.th-wrap.is-numeric {
-  padding-right: 0;
-  padding-left: 1.5rem;
+.b-table .table th.is-sortable .sort-icon.is-desc {
+  transform: rotate(180deg);
+}
+/* Buefy also caps `.th-wrap.is-numeric` at width:95% (`.b-table .table th
+   .th-wrap.is-numeric`), presumably to keep the absolutely-positioned icon
+   from overlapping the last character. With the icon back in normal flow
+   (above) that headroom is no longer needed and instead steals ~5% of the
+   column's already-tight text width, which is what caused "Bonus points" to
+   still wrap after the position fix alone. */
+.b-table .table th.is-sortable .th-wrap.is-numeric {
+  width: auto;
 }
 
 /* Bulma 1.0 fix: Buefy renders buttons as <button class="button control is-small">.
