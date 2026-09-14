@@ -79,6 +79,25 @@
 .button.control {
   font-size: var(--bulma-control-size);
 }
+
+/* Bulma 1.0 fix: a type-less outlined button (`<b-button outlined>` with no `type`,
+   e.g. SpotsList.vue's Edit/Clone) lost its text and border color. Bulma's own
+   `.button.is-outlined` rule sets `color`/`border-color` from --bulma-button-l — but
+   that variable holds the FILLED button's *background* lightness for a type-less
+   button (`--bulma-button-l: var(--bulma-scheme-main-l)`, i.e. white), not a text
+   color; the rule assumes a color modifier (is-primary etc.) always overrides it to
+   something readable, so white text on transparent background if there isn't one.
+   Bulma 0.7 used $button-color #363636 / $button-border-color #dbdbdb here; restore
+   that. A typed variant (`.button.is-danger.is-outlined`, 3 classes) still wins the
+   cascade over this 2-class rule regardless of source order, so this is safe to keep
+   ahead of or behind those. */
+.button.is-outlined {
+  color: #363636;
+  border-color: #dbdbdb;
+}
+.button.is-outlined:hover {
+  border-color: #b5b5b5;
+}
 .message-body .icon svg {
   height: 2.5rem;
 }

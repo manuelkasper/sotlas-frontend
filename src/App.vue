@@ -56,6 +56,12 @@ export default {
   // --bulma-danger-l is 70%, which is what made the Clear button (type="is-danger")
   // look different after the migration. Hue/saturation already match (348deg/100%).
   --bulma-danger-l: 61%;
+  // Bulma 1.0's .button.is-danger takes its text color from --bulma-button-color-l,
+  // which resolves to --bulma-danger-invert-l — a FIXED 5% lightness (near-black),
+  // unrelated to --bulma-danger-l above (confirmed in bulma-no-dark-mode.css: every
+  // *-invert-l is a constant lookup into the same lightness scale, not a function of
+  // the base color). Bulma 0.7 always used white text on danger buttons; pin it back.
+  --bulma-danger-invert-l: 100%;
 }
 
 $fp-enable-1x1: false;
