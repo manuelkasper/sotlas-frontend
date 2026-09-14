@@ -73,6 +73,21 @@ export default {
   --bulma-scheme-s: 0%;
   --bulma-text-s: 0%;
   --bulma-shadow-s: 0%;
+  // Same story as --bulma-danger-* above for the other two Bulma color tokens this
+  // app uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
+  // `npm pack bulma@0.7.5`): $info = $cyan hsl(204, 86%, 53%) with white text
+  // (findColorInvert), $warning = $yellow hsl(48, 100%, 67%). 1.0.4: info
+  // hsl(198, 100%, 70%) with dark text, warning hsl(42, 100%, 53%). is-info is this
+  // app's main accent (Add/Login/Update buttons, tooltips, messages), so the lighter
+  // cyan + dark text read as a different design rather than a shade. $primary and
+  // $success are unchanged between the versions and unused here respectively.
+  --bulma-info-h: 204deg;
+  --bulma-info-s: 86%;
+  --bulma-info-l: 53%;
+  --bulma-info-invert-l: 100%;
+  --bulma-warning-h: 48deg;
+  --bulma-warning-s: 100%;
+  --bulma-warning-l: 67%;
 }
 
 $fp-enable-1x1: false;
