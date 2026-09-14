@@ -307,8 +307,8 @@ export default {
       }, 100)
     },
     onFreqModeKeyDown (event) {
-      // Hack to allow us to get keep-first behavior on autocomplete despite the fact
-      // that b-taginput sets keepFirst = !allowNew
+      // Confirm the typed text ourselves on Enter/Tab (this taginput runs with
+      // autocomplete on and allowNew off, and no keep-first/open-on-focus).
       // Buefy's Taginput skips its own confirm-key handling when autocomplete is on and
       // allowNew is off (see Taginput.vue's keydown: `if (this.autocomplete &&
       // !this.allowNew) return`), so this handler is the only path that confirms typed

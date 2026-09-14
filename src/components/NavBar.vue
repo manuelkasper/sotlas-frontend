@@ -18,12 +18,12 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :active="link.active" @click="closeBurger">
+      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active }" @click="closeBurger">
         <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
         {{ link.text }}
       </b-navbar-item>
       <b-navbar-dropdown label="More">
-        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :active="link.active" @click="closeBurger">
+        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active }" @click="closeBurger">
           <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
       </b-navbar-dropdown>
@@ -96,9 +96,11 @@ export default {
           // migration. /map, /map/summits/:summitCode etc. are separate sibling
           // routes in router.js (not nested via `children`), so router-link-active
           // never applies while browsing a /map/... sub-path; check the path prefix
-          // ourselves and feed it to b-navbar-item's own `active` prop instead
-          // (mapLink itself is dynamic above, so prefix-check the fixed '/map', not
-          // mapLink).
+          // ourselves and set our own `is-current` class (see the <style> below for
+          // why not Buefy's `active` prop). mapLink itself is dynamic above, so
+          // prefix-check the fixed '/map', not mapLink. Like Vue Router 3's prefix
+          // match this also holds on unknown /map/... paths that fall through to
+          // NotFound — same behavior as before the migration.
           active: this.$route.path === '/map' || this.$route.path.startsWith('/map/')
         },
         {
@@ -210,14 +212,15 @@ export default {
     max-width: 26rem;
   }
 }
-/* .is-active is Buefy's own class from b-navbar-item's `active` prop (set explicitly
-   in links()/moreLinks() above for routes vue-router 4 can't auto-highlight); keep
-   .router-link-active too for the routes that ARE nested (e.g. /spots) where Buefy's
-   `active` prop is redundant with vue-router's own class. Restrict to the <a> links:
-   b-navbar-dropdown ("More") also puts `is-active` on its own root div while open,
-   and that one should keep Bulma's dropdown styling. */
+/* .is-current is our own class (set from links()/moreLinks() above for the route
+   families vue-router 4 can't auto-highlight). Deliberately NOT Buefy's `active` prop /
+   Bulma's `.is-active`: Bulma 1.0 gives `.navbar-item.is-active` its own selected-item
+   colors on hover/focus (link-blue background), which would make the highlighted item
+   behave differently from the plain router-link-active ones. Keep .router-link-active
+   too for the routes that ARE nested (e.g. /spots), where vue-router's class already
+   applies and .is-current is merely redundant. */
 .router-link-active:not(:focus):not(:hover),
-a.navbar-item.is-active:not(:focus):not(:hover) {
+.navbar-item.is-current:not(:focus):not(:hover) {
   background-color: whitesmoke;
 }
 .navbar-item .icon {

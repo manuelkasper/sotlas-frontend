@@ -57,8 +57,13 @@
   position: static;
   transform: none;
 }
+/* Buefy's own descending rule is `.b-table .sort-icon.icon.is-desc { transform:
+   rotate(180deg) translateY(-50%) !important }` — the translateY half-height nudge
+   was meant for the absolute-positioned icon and, being !important, would beat a
+   plain declaration here and shift every descending arrow up by half its height now
+   that the icon is in normal flow. Has to be !important too. */
 .b-table .table th.is-sortable .sort-icon.is-desc {
-  transform: rotate(180deg);
+  transform: rotate(180deg) !important;
 }
 /* Buefy also caps `.th-wrap.is-numeric` at width:95% (`.b-table .table th
    .th-wrap.is-numeric`), presumably to keep the absolutely-positioned icon
@@ -78,6 +83,77 @@
    render at the normal size regardless of the size modifier. */
 .button.control {
   font-size: var(--bulma-control-size);
+}
+
+/* Bulma 1.0's .has-text-grey helper is a literal `hsl(221, 14%, 48%) !important`, not
+   a variable, so the neutral-greyscale overrides in App.vue's :root don't reach it.
+   Restate 0.7's $grey (#7a7a7a). It's the only grey helper this app uses. */
+.has-text-grey {
+  color: #7a7a7a !important;
+}
+
+/* Bulma 0.7.5 geometry and type weights, part 2 (part 1 — radii, strong — is in
+   App.vue's :root; see the note there). A full-page computed-style diff against
+   sotl.as showed every control drifting by the same Bulma 1.0 defaults: controls
+   2px taller (padding calc(.5em - 1px) vs calc(.375em - 1px)), buttons wider
+   (1em vs .75em) and heavier (500 vs 400) with a new drop shadow, titles 800 vs
+   600, section/hero side padding 3rem vs 1.5rem on desktop/tablet, a lighter input
+   inset shadow. Bulma 1.0 declares these variables on the component selectors, so
+   :root overrides don't reach them; and Buefy's stylesheet, bundled after App.vue's,
+   re-emits Bulma's --bulma-control-* :root block, so those need to come from this
+   file (imported last in main.js). Values: 0.7.5's utilities/controls.sass,
+   elements/button.sass, elements/title.sass, layout/section.sass, layout/hero.sass,
+   form/shared.sass, components/pagination.sass; Buefy 0.8's switch used $grey-light. */
+:root {
+  --bulma-control-height: 2.25em;
+  --bulma-control-padding-vertical: calc(0.375em - 1px);
+  --bulma-control-padding-horizontal: calc(0.625em - 1px);
+}
+.button {
+  /* Bulma 1.0 subtracts --bulma-button-border-width from these itself (padding-top:
+     calc(var(--bulma-button-padding-vertical) - var(--bulma-button-border-width))),
+     whereas 0.7's values already had the 1px border taken out. So state the raw 0.7
+     amounts (.375em, .75em + 1px) rather than 0.7's calc(... - 1px) literals; typed
+     buttons (border-width 0 in 1.0, 1px transparent in 0.7) then land on the same
+     text offset either way. */
+  --bulma-button-padding-vertical: 0.375em;
+  --bulma-button-padding-horizontal: calc(0.75em + 1px);
+  --bulma-button-weight: var(--bulma-weight-normal);
+  --bulma-button-outer-shadow-a: 0;
+}
+.title,
+.subtitle {
+  --bulma-title-weight: var(--bulma-weight-semibold);
+}
+.section {
+  --bulma-section-padding-desktop: 3rem 1.5rem;
+}
+.hero {
+  --bulma-hero-body-padding-tablet: 3rem 1.5rem;
+}
+/* Buefy's stylesheet carries its own compiled copy of Bulma's input rules with the
+   shadow color baked in as a literal, so the --bulma-input-shadow variable alone
+   doesn't reach the rendered box-shadow; restate the declaration itself (0.7's
+   $input-shadow: inset 0 1px 2px rgba($black, 0.1)) and 0.7's $input-icon-color
+   ($grey-lighter) the same way. */
+.input,
+.textarea {
+  box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, 0.1);
+}
+.control.has-icons-left .icon,
+.control.has-icons-right .icon {
+  color: #dbdbdb;
+}
+.pagination {
+  --bulma-pagination-ellipsis-color: var(--bulma-grey-light);
+  --bulma-pagination-item-outer-shadow-a: 0;
+  /* Buefy 0.8 rendered the icon-only previous/next links with 4px side padding
+     (measured on sotl.as); Bulma 1.0's default is .75em. */
+  --bulma-pagination-nav-padding-left: 0.25em;
+  --bulma-pagination-nav-padding-right: 0.25em;
+}
+.switch {
+  --bulma-switch-background-color: var(--bulma-grey-light);
 }
 
 /* Bulma 1.0 fix: a type-less outlined button (`<b-button outlined>` with no `type`,

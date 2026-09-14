@@ -86,21 +86,51 @@ export default {
   --bulma-black-s: 0%;
   --bulma-light-s: 0%;
   --bulma-dark-s: 0%;
-  // Same story as --bulma-danger-* above for the other two Bulma color tokens this
-  // app uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
+  // Same story as --bulma-danger-* above for the other Bulma color tokens this app
+  // uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
   // `npm pack bulma@0.7.5`): $info = $cyan hsl(204, 86%, 53%) with white text
-  // (findColorInvert), $warning = $yellow hsl(48, 100%, 67%). 1.0.4: info
-  // hsl(198, 100%, 70%) with dark text, warning hsl(42, 100%, 53%). is-info is this
-  // app's main accent (Add/Login/Update buttons, tooltips, messages), so the lighter
-  // cyan + dark text read as a different design rather than a shade. $primary and
-  // $success are unchanged between the versions and unused here respectively.
+  // (findColorInvert), $success = $green hsl(141, 71%, 48%) with white text,
+  // $warning = $yellow hsl(48, 100%, 67%). 1.0.4: info hsl(198, 100%, 70%) and
+  // success hsl(153, 53%, 53%), both with dark text, warning hsl(42, 100%, 53%).
+  // is-info is this app's main accent (Add/Login/Update buttons, tooltips, messages),
+  // so the lighter cyan + dark text read as a different design rather than a shade;
+  // is-success is the live-feed CONNECTED tag and dynamic point/mode tags. $primary
+  // is unchanged between the versions.
   --bulma-info-h: 204deg;
   --bulma-info-s: 86%;
   --bulma-info-l: 53%;
   --bulma-info-invert-l: 100%;
+  --bulma-success-h: 141deg;
+  --bulma-success-s: 71%;
+  --bulma-success-l: 48%;
+  --bulma-success-invert-l: 100%;
   --bulma-warning-h: 48deg;
   --bulma-warning-s: 100%;
   --bulma-warning-l: 67%;
+  // Bulma 1.0 also ships the classic grey palette as literal hsl(221, 14%, L) values
+  // that do NOT go through --bulma-scheme-*; Buefy 3 reads some of them directly
+  // (table.scss: sortable/current-sort header border via --bulma-grey, switch track,
+  // datepicker). Lightness stops equal 0.7's, so restate them neutral.
+  --bulma-black-bis: hsl(0, 0%, 7%);
+  --bulma-black-ter: hsl(0, 0%, 14%);
+  --bulma-grey-darker: hsl(0, 0%, 21%);
+  --bulma-grey-dark: hsl(0, 0%, 29%);
+  --bulma-grey: hsl(0, 0%, 48%);
+  --bulma-grey-light: hsl(0, 0%, 71%);
+  --bulma-grey-lighter: hsl(0, 0%, 86%);
+  --bulma-white-ter: hsl(0, 0%, 96%);
+  --bulma-white-bis: hsl(0, 0%, 98%);
+  // Geometry and type weights. A full-page computed-style diff against sotl.as
+  // showed every control, tag, table and section drifting by the same Bulma 1.0
+  // defaults. The globals that Bulma keeps on :root are restored here (0.7.5's
+  // initial-variables.sass / elements/title.sass values); the rest of that set lives
+  // in assets/global.css because Bulma declares them on the component selectors
+  // (.button, .title, .section, .hero, .input...) or Buefy's own stylesheet — which
+  // is bundled after this one — re-emits them (the --bulma-control-* block).
+  --bulma-radius-small: 2px;
+  --bulma-radius: 4px;
+  --bulma-radius-large: 6px;
+  --bulma-strong-weight: var(--bulma-weight-bold);
 }
 
 $fp-enable-1x1: false;
