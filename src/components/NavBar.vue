@@ -18,12 +18,12 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click="closeBurger">
+      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :active="link.active" @click="closeBurger">
         <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
         {{ link.text }}
       </b-navbar-item>
       <b-navbar-dropdown label="More">
-        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click="closeBurger">
+        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :active="link.active" @click="closeBurger">
           <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
       </b-navbar-dropdown>
@@ -88,15 +88,32 @@ export default {
       return [
         {
           target: mapLink,
-          text: 'Map'
+          text: 'Map',
+          // vue-router 4's RouterLink only auto-highlights a link when the current
+          // route's `matched` records include the link's own record (a strict
+          // parent/child relationship) — Vue Router 3 instead did a plain string
+          // prefix check on `path`, which is what made this "just work" before the
+          // migration. /map, /map/summits/:summitCode etc. are separate sibling
+          // routes in router.js (not nested via `children`), so router-link-active
+          // never applies while browsing a /map/... sub-path; check the path prefix
+          // ourselves and feed it to b-navbar-item's own `active` prop instead
+          // (mapLink itself is dynamic above, so prefix-check the fixed '/map', not
+          // mapLink).
+          active: this.$route.path === '/map' || this.$route.path.startsWith('/map/')
         },
         {
           target: '/summits',
-          text: 'Summits'
+          text: 'Summits',
+          // Same sibling-routes issue as Map: /summits/, /summits/:associationCode
+          // etc. aren't nested under /summits in router.js.
+          active: this.$route.path === '/summits' || this.$route.path.startsWith('/summits/')
         },
         {
           target: '/spots',
-          text: 'Spots'
+          text: 'Spots',
+          // /spots' sub-routes ARE nested via router.js `children`, so
+          // router-link-active already applies here; this is redundant but harmless.
+          active: this.$route.path === '/spots' || this.$route.path.startsWith('/spots/')
         },
         {
           target: '/alerts',
@@ -112,7 +129,10 @@ export default {
         },
         {
           target: '/activators',
-          text: 'Activators'
+          text: 'Activators',
+          // Same sibling-routes issue as Map/Summits: /activators/,
+          // /activators/:callsign etc. aren't nested under /activators.
+          active: this.$route.path === '/activators' || this.$route.path.startsWith('/activators/')
         },
         {
           target: '/settings',
@@ -190,7 +210,12 @@ export default {
     max-width: 26rem;
   }
 }
-.router-link-active:not(:focus):not(:hover) {
+/* .is-active is Buefy's own class from b-navbar-item's `active` prop (set explicitly
+   in links()/moreLinks() above for routes vue-router 4 can't auto-highlight); keep
+   .router-link-active too for the routes that ARE nested (e.g. /spots) where Buefy's
+   `active` prop is redundant with vue-router's own class. */
+.router-link-active:not(:focus):not(:hover),
+.is-active:not(:focus):not(:hover) {
   background-color: whitesmoke;
 }
 .navbar-item .icon {
