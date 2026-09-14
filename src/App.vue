@@ -86,6 +86,14 @@ export default {
   --bulma-black-s: 0%;
   --bulma-light-s: 0%;
   --bulma-dark-s: 0%;
+  // ...and their *-invert counterparts are literal hsl(221, 14%, L) values, not
+  // derived from the -s variables above: Buefy's light tooltip text and the
+  // snackbar body color read them (light-invert / dark-invert). Same lightness
+  // stops as 0.7's findColorInvert() results.
+  --bulma-white-invert: hsl(0, 0%, 4%);
+  --bulma-black-invert: hsl(0, 0%, 100%);
+  --bulma-light-invert: hsl(0, 0%, 21%);
+  --bulma-dark-invert: hsl(0, 0%, 96%);
   // Same story as --bulma-danger-* above for the other Bulma color tokens this app
   // uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
   // `npm pack bulma@0.7.5`): $info = $cyan hsl(204, 86%, 53%) with white text
@@ -94,8 +102,8 @@ export default {
   // success hsl(153, 53%, 53%), both with dark text, warning hsl(42, 100%, 53%).
   // is-info is this app's main accent (Add/Login/Update buttons, tooltips, messages),
   // so the lighter cyan + dark text read as a different design rather than a shade;
-  // is-success is the live-feed CONNECTED tag and dynamic point/mode tags. $primary
-  // is unchanged between the versions.
+  // is-success is the live-feed CONNECTED tag (LiveFeedIndicator.vue). $primary is
+  // unchanged between the versions.
   --bulma-info-h: 204deg;
   --bulma-info-s: 86%;
   --bulma-info-l: 53%;

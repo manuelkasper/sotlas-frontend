@@ -41,8 +41,10 @@ app.component('font-awesome-layers', FontAwesomeLayers)
 // is-medium: 2x -> lg, is-large: 3x -> 2x; buefy/src/utils/icons.ts vs 0.8.20's
 // icons.js), so every b-icon / input icon rendered ~25% smaller than on the Vue 2 site.
 // Restore 0.8's table for the packs this app uses. Values are FontAwesomeIcon `size`
-// props (no "fa-" prefix) because defaultIconComponent is set.
-const faSizes = { sizes: { default: 'lg', 'is-small': null, 'is-medium': '2x', 'is-large': '3x' } }
+// props (no "fa-" prefix) because defaultIconComponent is set. `is-small` is left
+// out on purpose: it is null in both tables, and Buefy's deep merge turns a null
+// merged onto a null into `{}`, which would then be passed as the `size` prop.
+const faSizes = { sizes: { default: 'lg', 'is-medium': '2x', 'is-large': '3x' } }
 app.use(Buefy, {
   defaultIconComponent: 'font-awesome-icon',
   defaultIconPack: 'far',
