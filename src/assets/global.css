@@ -161,10 +161,10 @@
 :root {
   --bulma-shadow: 0 2px 3px hsla(0, 0%, 4%, 0.1), 0 0 0 1px hsla(0, 0%, 4%, 0.1);
 }
-/* 0.7's .hero.is-light .subtitle was rgba($light-invert, .9); 1.0 makes it opaque. */
+/* 0.7's .hero.is-light .subtitle was rgba($light-invert, .9) with <strong> back at
+   the opaque $light-invert; 1.0 makes the subtitle itself opaque. */
 .hero.is-light .subtitle {
   --bulma-subtitle-color: hsla(0, 0%, 21%, 0.9);
-  --bulma-subtitle-strong-color: hsla(0, 0%, 21%, 0.9);
 }
 /* 0.7's .columns.is-variable only applied the gap horizontally (padding-left/right
    and the negative side margins), leaving the vertical 0.75rem rhythm; 1.0 applies
