@@ -284,6 +284,17 @@ export default {
   line-height: 1;
   align-items: center;
 }
+/* Bulma/Buefy 3 fix: a non-horizontal `grouped` b-field now wraps its content in an
+   extra `.field-body > .field.is-grouped` layer (Field.vue's `hasInnerField` branch;
+   Buefy 0.8/Vue2 rendered a single flat `.field.is-grouped`). The checkbox/input/label
+   here are children of that INNER field, not of `.field.alert-days` above, so the
+   align-items:center on the outer element (which only affects its own direct children,
+   `.field-body` here) never reached them — .tlabel's box stayed as tall as its sibling
+   checkbox and top-aligned its text instead of centering it, visually offsetting
+   "day(s)" from the input's vertical center. */
+.map-option .field.alert-days :deep(.field-body .field) {
+  align-items: center;
+}
 .map-option div.tlabel {
   display: inline-block;
   font-size: 0.75rem;
