@@ -213,9 +213,11 @@ export default {
 /* .is-active is Buefy's own class from b-navbar-item's `active` prop (set explicitly
    in links()/moreLinks() above for routes vue-router 4 can't auto-highlight); keep
    .router-link-active too for the routes that ARE nested (e.g. /spots) where Buefy's
-   `active` prop is redundant with vue-router's own class. */
+   `active` prop is redundant with vue-router's own class. Restrict to the <a> links:
+   b-navbar-dropdown ("More") also puts `is-active` on its own root div while open,
+   and that one should keep Bulma's dropdown styling. */
 .router-link-active:not(:focus):not(:hover),
-.is-active:not(:focus):not(:hover) {
+a.navbar-item.is-active:not(:focus):not(:hover) {
   background-color: whitesmoke;
 }
 .navbar-item .icon {
