@@ -88,14 +88,19 @@
    color; the rule assumes a color modifier (is-primary etc.) always overrides it to
    something readable, so white text on transparent background if there isn't one.
    Bulma 0.7 used $button-color #363636 / $button-border-color #dbdbdb here; restore
-   that. A typed variant (`.button.is-danger.is-outlined`, 3 classes) still wins the
-   cascade over this 2-class rule regardless of source order, so this is safe to keep
-   ahead of or behind those. */
-.button.is-outlined {
+   that — but only for type-less buttons. A typed outlined button (`.button.is-info
+   .is-outlined` etc.) has NO 3-class rule of its own in Bulma 1.0: `.button.is-info`
+   only sets --bulma-button-l, and the same 2-class `.button.is-outlined` rule above
+   reads it back as the text/border color. A plain `.button.is-outlined { color }`
+   override here would therefore win over the typed ones too (same specificity, later
+   in source) and turn e.g. Summit.vue's is-info Alert/Spot buttons dark grey. Exclude
+   every Bulma color modifier explicitly so the typed path keeps flowing through the
+   variable. */
+.button.is-outlined:not(.is-white):not(.is-black):not(.is-light):not(.is-dark):not(.is-text):not(.is-ghost):not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
   color: #363636;
   border-color: #dbdbdb;
 }
-.button.is-outlined:hover {
+.button.is-outlined:not(.is-white):not(.is-black):not(.is-light):not(.is-dark):not(.is-text):not(.is-ghost):not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger):hover {
   border-color: #b5b5b5;
 }
 .message-body .icon svg {

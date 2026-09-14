@@ -52,6 +52,9 @@ export default {
   --bulma-link-s: 71%;
   --bulma-link-l: 53%;
   --bulma-link-on-scheme-l: 53%;
+  // 0.7's $link-invert was findColorInvert($blue) = #fff; 1.0's --bulma-link-invert-l
+  // resolves to a near-white tint (rgb(246,249,254) on .button.is-link). Pin it.
+  --bulma-link-invert-l: 100%;
   // Bulma 0.7.5's default $red (is-danger) was hsl(348, 100%, 61%); Bulma 1.0's default
   // --bulma-danger-l is 70%, which is what made the Clear button (type="is-danger")
   // look different after the migration. Hue/saturation already match (348deg/100%).
@@ -73,6 +76,16 @@ export default {
   --bulma-scheme-s: 0%;
   --bulma-text-s: 0%;
   --bulma-shadow-s: 0%;
+  // The four shade tokens carry their own copies of that 221deg/14% cast rather than
+  // deriving from --bulma-scheme-*, and .hero.is-light (every page header here, see
+  // PageLayout.vue) takes its background and title color from --bulma-light-*:
+  // 1.0 rendered the header hsl(221,14%,96%) with hsl(221,14%,21%) titles where 0.7
+  // had whitesmoke #f5f5f5 with #363636 (measured on sotl.as). Lightness stops match,
+  // so zero these too.
+  --bulma-white-s: 0%;
+  --bulma-black-s: 0%;
+  --bulma-light-s: 0%;
+  --bulma-dark-s: 0%;
   // Same story as --bulma-danger-* above for the other two Bulma color tokens this
   // app uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
   // `npm pack bulma@0.7.5`): $info = $cyan hsl(204, 86%, 53%) with white text
