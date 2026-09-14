@@ -33,6 +33,14 @@ export default {
   line-height: 1em;
   height: auto;
 }
+/* In the Vue 2 build Bulma's `.tag.is-warning { color: $warning-invert }` (0,2,0)
+   happened to come after this scoped `.tag[data-v-…]` (also 0,2,0) and won, so the
+   QRT tag rendered 0.7's rgba(#000, .7) on yellow. The Vue 3 bundle orders the
+   stylesheets the other way round and the white above wins — white on #ffdd57 is
+   barely legible. Pin the production look for that one variant. */
+.tag.is-warning {
+  color: rgba(0, 0, 0, 0.7);
+}
 .tag.mode-cw {
   background-color: #2b4970;
 }
