@@ -7,7 +7,9 @@
         <div class="container content">
           <p>SOTA Atlas (SOTLAS) is created and maintained by Manuel Kasper, HB9DQM (<a href="mailto:mk@neon1.net">mk@neon1.net</a>).</p>
 
-          <p>Code contributed by: <a href="https://github.com/m1hax">@m1hax</a>, <a href="https://github.com/summitsontheair">@summitsontheair</a>,
+          <p>Code contributed by:
+            <a href="https://github.com/m1hax">@m1hax</a>,
+            <a href="https://github.com/summitsontheair">@summitsontheair</a>,
             <a href="https://github.com/vk3arr">@vk3arr</a>,
             Simon G4TJC,
             <a href="https://github.com/g84ycm">@g84ycm</a>,
@@ -17,7 +19,8 @@
             Octavian ER1SKI,
             <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>,
             <a href="https://github.com/majkrzak">@majkrzak</a>,
-            Mirek OK1CYC
+            Mirek OK1CYC,
+            <a href="https://github.com/jj1xgo">@jj1xgo</a>
           </p>
 
           <p>
