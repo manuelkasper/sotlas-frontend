@@ -15,12 +15,19 @@ export default {
         } else {
           this.smpTracks = null
         }
+        this.rebuildRoutes()
       }
+    },
+    smpTracks () {
+      this.rebuildRoutes()
     }
   },
-  computed: {
-    routes () {
-      // Merge summit routes and SMP tracks
+  methods: {
+    rebuildRoutes () {
+      // Keep merged route objects in data (not a computed) so highlight
+      // mutations from Summit.vue stay reactive. Vue 3 does not observe
+      // plain objects created inside a computed, which is why $set →
+      // assignment during the Vue 3 migration stopped updating the mini map.
       let routes = []
       if (this.summit && this.summit.routes) {
         routes = [...this.summit.routes]
@@ -54,7 +61,7 @@ export default {
           })
           ascent = Math.round(ascent)
           descent = Math.round(descent)
-          
+
           routes.push({
             id: track.hdr_id,
             title: track.track_title,
@@ -65,6 +72,7 @@ export default {
             distance,
             ascent,
             descent,
+            highlight: null,
             track: {
               points: track.points
             }
@@ -72,12 +80,13 @@ export default {
         })
       }
 
-      return routes
+      this.routes = routes
     }
   },
   data () {
     return {
-      smpTracks: null
+      smpTracks: null,
+      routes: []
     }
   }
 }

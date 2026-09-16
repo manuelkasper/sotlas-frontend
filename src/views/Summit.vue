@@ -479,8 +479,8 @@ export default {
     routeDetailsClose (route) {
       route.highlight = false
 
-      // If all route highlights are false, set them all to null
-      if (this.routes.every(curRoute => curRoute.highlight === false)) {
+      // If no route is expanded, restore the default (unhighlighted) style
+      if (this.routes.every(curRoute => curRoute.highlight !== true)) {
         this.routes.forEach(curRoute => {
           curRoute.highlight = null
         })
