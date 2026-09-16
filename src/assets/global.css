@@ -1,21 +1,9 @@
 .nowrap {
   white-space: nowrap;
 }
-.section {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-.hero-body {
-  margin-top: 0.5rem;
-  padding-bottom: 1.5rem;
-}
-.title.is-6 {
-  margin-top: 1em;
-  margin-bottom: 0;
-}
 .subdued {
   font-size: 0.8em;
-  color: #7a7a7a;
+  color: var(--bulma-text-weak);
 }
 .subtitle {
   margin-top: 0.2em;
@@ -74,97 +62,6 @@
   width: auto;
 }
 
-/* Bulma 1.0 fix: Buefy renders buttons as <button class="button control is-small">.
-   .button.is-small only overrides the --bulma-control-size custom property; the actual
-   font-size declaration lives on the bare .button selector. Bulma's own .control rule
-   (same 0,1,0 specificity, but later in the stylesheet) sets font-size directly to
-   --bulma-size-normal, which wins and makes every is-small/is-medium/is-large button
-   render at the normal size regardless of the size modifier. */
-.button.control {
-  font-size: var(--bulma-control-size);
-}
-
-/* Bulma 1.0's .has-text-grey helper is a literal `hsl(221, 14%, 48%) !important`, not
-   a variable, so the neutral-greyscale overrides in App.vue's :root don't reach it.
-   Restate 0.7's $grey (#7a7a7a). It's the only grey helper this app uses. */
-.has-text-grey {
-  color: #7a7a7a !important;
-}
-
-/* Bulma 0.7.5 geometry and type weights, part 2 (part 1 — radii, strong — is in
-   App.vue's :root; see the note there). A full-page computed-style diff against
-   sotl.as showed every control drifting by the same Bulma 1.0 defaults: controls
-   2px taller (padding calc(.5em - 1px) vs calc(.375em - 1px)), buttons wider
-   (1em vs .75em) and heavier (500 vs 400) with a new drop shadow, titles 800 vs
-   600, section/hero side padding 3rem vs 1.5rem on desktop/tablet, a lighter input
-   inset shadow. Bulma 1.0 declares these variables on the component selectors, so
-   :root overrides don't reach them; and Buefy's stylesheet, bundled after App.vue's,
-   re-emits Bulma's --bulma-control-* :root block, so those need to come from this
-   file (imported last in main.js). Values: 0.7.5's utilities/controls.sass,
-   elements/button.sass, elements/title.sass, layout/section.sass, layout/hero.sass,
-   form/shared.sass, components/pagination.sass; Buefy 0.8's switch used $grey-light. */
-:root {
-  --bulma-control-height: 2.25em;
-  --bulma-control-padding-vertical: calc(0.375em - 1px);
-  --bulma-control-padding-horizontal: calc(0.625em - 1px);
-}
-.button {
-  /* Bulma 1.0 subtracts --bulma-button-border-width from these itself (padding-top:
-     calc(var(--bulma-button-padding-vertical) - var(--bulma-button-border-width))),
-     whereas 0.7's values already had the 1px border taken out. So state the raw 0.7
-     amounts (.375em, .75em + 1px) rather than 0.7's calc(... - 1px) literals; typed
-     buttons (border-width 0 in 1.0, 1px transparent in 0.7) then land on the same
-     text offset either way. */
-  --bulma-button-padding-vertical: 0.375em;
-  --bulma-button-padding-horizontal: calc(0.75em + 1px);
-  --bulma-button-weight: var(--bulma-weight-normal);
-  --bulma-button-outer-shadow-a: 0;
-}
-.title,
-.subtitle {
-  --bulma-title-weight: var(--bulma-weight-semibold);
-}
-.section {
-  --bulma-section-padding-desktop: 3rem 1.5rem;
-}
-.hero {
-  --bulma-hero-body-padding-tablet: 3rem 1.5rem;
-}
-/* Buefy's stylesheet carries its own compiled copy of Bulma's input rules with the
-   shadow color baked in as a literal, so the --bulma-input-shadow variable alone
-   doesn't reach the rendered box-shadow; restate the declaration itself (0.7's
-   $input-shadow: inset 0 1px 2px rgba($black, 0.1)) and 0.7's $input-icon-color
-   ($grey-lighter) the same way. */
-.input,
-.textarea {
-  box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, 0.1);
-}
-.control.has-icons-left .icon,
-.control.has-icons-right .icon {
-  color: #dbdbdb;
-}
-.pagination {
-  --bulma-pagination-ellipsis-color: var(--bulma-grey-light);
-  --bulma-pagination-item-outer-shadow-a: 0;
-  /* Buefy 0.8 rendered the icon-only previous/next links with 4px side padding
-     (measured on sotl.as); Bulma 1.0's default is .75em. */
-  --bulma-pagination-nav-padding-left: 0.25em;
-  --bulma-pagination-nav-padding-right: 0.25em;
-}
-.switch {
-  --bulma-switch-background-color: var(--bulma-grey-light);
-}
-/* 0.7's $shadow / $box-shadow / $card-shadow: 0 2px 3px rgba(#0a0a0a,.1), 0 0 0 1px
-   rgba(#0a0a0a,.1). Bulma 1.0's --bulma-shadow (boxes, cards, dropdowns) is a much
-   larger 0 .5em 1em blur. */
-:root {
-  --bulma-shadow: 0 2px 3px hsla(0, 0%, 4%, 0.1), 0 0 0 1px hsla(0, 0%, 4%, 0.1);
-}
-/* 0.7's .hero.is-light .subtitle was rgba($light-invert, .9) with <strong> back at
-   the opaque $light-invert; 1.0 makes the subtitle itself opaque. */
-.hero.is-light .subtitle {
-  --bulma-subtitle-color: hsla(0, 0%, 21%, 0.9);
-}
 /* 0.7's .columns.is-variable only applied the gap horizontally (padding-left/right
    and the negative side margins), leaving the vertical 0.75rem rhythm; 1.0 applies
    --bulma-column-gap on all four sides, so the is-5 columns on the summit page got
@@ -183,29 +80,6 @@
   padding-bottom: 0.75rem;
 }
 
-/* Bulma 1.0 fix: a type-less outlined button (`<b-button outlined>` with no `type`,
-   e.g. SpotsList.vue's Edit/Clone) lost its text and border color. Bulma's own
-   `.button.is-outlined` rule sets `color`/`border-color` from --bulma-button-l — but
-   that variable holds the FILLED button's *background* lightness for a type-less
-   button (`--bulma-button-l: var(--bulma-scheme-main-l)`, i.e. white), not a text
-   color; the rule assumes a color modifier (is-primary etc.) always overrides it to
-   something readable, so white text on transparent background if there isn't one.
-   Bulma 0.7 used $button-color #363636 / $button-border-color #dbdbdb here; restore
-   that — but only for type-less buttons. A typed outlined button (`.button.is-info
-   .is-outlined` etc.) has NO 3-class rule of its own in Bulma 1.0: `.button.is-info`
-   only sets --bulma-button-l, and the same 2-class `.button.is-outlined` rule above
-   reads it back as the text/border color. A plain `.button.is-outlined { color }`
-   override here would therefore win over the typed ones too (same specificity, later
-   in source) and turn e.g. Summit.vue's is-info Alert/Spot buttons dark grey. Exclude
-   every Bulma color modifier explicitly so the typed path keeps flowing through the
-   variable. */
-.button.is-outlined:not(.is-white):not(.is-black):not(.is-light):not(.is-dark):not(.is-text):not(.is-ghost):not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
-  color: #363636;
-  border-color: #dbdbdb;
-}
-.button.is-outlined:not(.is-white):not(.is-black):not(.is-light):not(.is-dark):not(.is-text):not(.is-ghost):not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger):hover {
-  border-color: #b5b5b5;
-}
 .message-body .icon svg {
   height: 2.5rem;
 }
@@ -249,15 +123,6 @@
     width: calc(100vw - 120px);
   }
 }
-.hero-head {
-  background-color: #ddd;
-}
-.hero .navbar-item.is-active {
-  background-color: whitesmoke !important;
-}
-.hero-body {
-  padding-top: 0.75rem;
-}
 h4 > .icon {
   margin-left: 0.3rem;
   margin-right: 0.7rem;
@@ -266,14 +131,14 @@ h4 > .icon {
 }
 .date-small {
   font-size: 80%;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-right: 0.3em;
   min-width: 2em;
   display: inline-block;
 }
 .time-weekday {
   font-size: 80%;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-left: 0.3em;
 }
 @media (min-width: 769px) {
@@ -284,7 +149,7 @@ h4 > .icon {
   }
 }
 .fp.unknown {
-  background-color: #ddd;
+  background-color: var(--bulma-scheme-main-ter);
 }
 hr {
   margin: 0.75rem 0;
@@ -313,9 +178,7 @@ hr {
   }
 }
 .modal {
-  --bulma-modal-card-head-padding: 1rem;
-  --bulma-modal-card-body-padding: 1.2rem;
-  --bulma-modal-card-head-background-color: #f5f5f5;
+  --bulma-modal-card-head-background-color: var(--bulma-scheme-main-ter);
 }
 .modal-card {
   max-height: calc(90vh - 80px);
@@ -326,10 +189,6 @@ hr {
 .modal-card-foot .button:not(:last-child) {
   margin-right: .5em;
 }
-.card {
-  --bulma-card-radius: 0;
-}
-
 /* Fix to keep Iceland flag from appearing in pagination buttons */
 .pagination .icon.is {
   background-image: none;
@@ -351,6 +210,7 @@ hr {
   }
 }
 
+/* Snow depth scale (used in popup from MapOptionsControl, but cannot be defined there due to use of $buefy.dialog.alert) */
 .color-scale {
   overflow: hidden;
   display: grid;

@@ -241,7 +241,7 @@ export default {
   margin-right: 0.4em;
 }
 .comments-text {
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .comments-cell {
   display: flex;

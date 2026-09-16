@@ -188,23 +188,23 @@ export default {
   margin-top: 0.2em;
 }
 .photo-group {
-  background: whitesmoke;
+  background: var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-bottom: 0.75rem;
   margin-right: 0.75rem;
 }
 .photo-group-title {
-  color: #777;
+  color: var(--bulma-text-weak);
   font-size: 0.8em;
   font-weight: bold;
   margin-bottom: 0.2rem;
   margin-right: 0.75rem;
 }
-.photo-group-title a {
-  color: #777;
+:deep(.photo-group-title a) {
+  color: var(--bulma-text-weak);
 }
-.photo-group-title a:hover {
+:deep(.photo-group-title a:hover) {
   color: #3273dc;
 }
 @media (max-width: 768px) {

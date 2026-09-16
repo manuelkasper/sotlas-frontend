@@ -59,7 +59,7 @@ export default {
   grid-column-gap: 0.3rem;
   font-size: 0.8rem;
   line-height: 1.05rem;
-  background-color: #eee;
+  background-color: var(--bulma-scheme-main-bis);
   border-radius: 10px;
   padding: 0.10rem 0.4rem;
   font-weight: bold;

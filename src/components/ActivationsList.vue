@@ -126,7 +126,7 @@ export default {
 }
 .photos-icon {
   margin-left: 0.5em;
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .photos-icon-others {
   margin-left: 0.5em;

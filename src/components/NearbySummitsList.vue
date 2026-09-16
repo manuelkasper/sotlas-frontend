@@ -86,7 +86,7 @@ export default {
 .summit-alt {
   display: inline-block;
   font-size: 0.9em;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-left: 0.5em;
 }
 @media (min-width: 1024px) {
@@ -95,7 +95,7 @@ export default {
   }
 }
 .summit-info {
-  color: #777;
+  color: var(--bulma-text-weak);
   font-size: 0.9em;
 }
 .dropdown-item {

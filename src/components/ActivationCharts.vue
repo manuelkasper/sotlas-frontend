@@ -240,7 +240,7 @@ export default {
   text-align: center;
 }
 .no-margin-bottom {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 .stats-teaser {
   text-align: center;

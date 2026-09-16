@@ -87,7 +87,7 @@ export default {
 }
 .card-content .comments {
   font-size: 0.75rem;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-top: 0.1em;
 }
 .card-content .spotter {
@@ -96,7 +96,7 @@ export default {
   margin-left: 0.3em;
   font-size: 0.75rem;
   clear: right;
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .card-content .flag {
   margin-right: 0.5em;

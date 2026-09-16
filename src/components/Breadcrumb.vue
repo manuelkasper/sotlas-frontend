@@ -43,6 +43,6 @@ export default {
   padding-left: 0.5em;
 }
 .breadcrumb-label {
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 </style>

@@ -159,7 +159,7 @@ export default {
 }
 .author {
   float: right;
-  color: #7a7a7a;
+  color: var(--bulma-text-weak);
   font-size: 95%;
   font-style: italic;
 }
@@ -167,10 +167,10 @@ export default {
   font-weight: normal;
   font-size: 0.9em;
   padding-top: 0.5em;
-  color: #7a7a7a;
+  color: var(--bulma-text-weak);
   text-align: right;
 }
 .star {
-  color: #7a7a7a;
+  color: var(--bulma-text-weak);
 }
 </style>

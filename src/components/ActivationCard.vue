@@ -75,7 +75,7 @@ export default {
 }
 .card-content .altitude {
   font-size: 0.75rem;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-left: 0.3em;
 }
 .card-content .activation-count {
@@ -86,7 +86,7 @@ export default {
 .photos-icon {
   margin-left: 0.5em;
   margin-right: 0.1em;
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .photos-icon-others {
   margin-left: 0.5em;

@@ -1,12 +1,12 @@
 <template>
   <footer class="footer">
     <div class="content has-text-centered">
-      <p>
+      <div>
         <strong>SOTA Atlas</strong> by Manuel HB9DQM. <router-link to="/about">About</router-link>
-      </p>
-      <p class="version">
+      </div>
+      <div class="version">
         {{ version }}
-      </p>
+      </div>
     </div>
   </footer>
 </template>
@@ -25,9 +25,6 @@ export default {
 <style scoped>
 .version {
   font-size: 0.8em;
-  color: #777;
-}
-.content p {
-  margin-bottom: 0;
+  color: var(--bulma-text-weak);
 }
 </style>

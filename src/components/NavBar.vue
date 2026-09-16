@@ -6,7 +6,7 @@
         <img v-else src="../assets/sotlas-icon.svg" alt="Logo">
       </b-navbar-item>
       <b-navbar-item class="clock" tag="div">
-        <font-awesome-icon :icon="['far', 'clock']" class="faicon" /> {{ clock }}
+        <font-awesome-icon :icon="['far', 'clock']" class="faicon" />{{ clock }}
       </b-navbar-item>
       <b-navbar-item class="solar-data" tag="router-link" to="/solar_history">
         <SolarData />
@@ -158,8 +158,8 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #ddd;
-  border-bottom: 1px solid #ccc;
+  background-color: var(--bulma-scheme-main-ter);
+  border-bottom: 1px solid var(--bulma-border);
 }
 @media print {
   .navbar {
@@ -221,7 +221,7 @@ export default {
    applies and .is-current is merely redundant. */
 .router-link-active:not(:focus):not(:hover),
 .navbar-item.is-current:not(:focus):not(:hover) {
-  background-color: whitesmoke;
+  background-color: var(--bulma-scheme-main);
 }
 .navbar-item .icon {
   vertical-align: middle;
@@ -231,6 +231,6 @@ export default {
   font-size: 1rem;
 }
 .clock .faicon {
-  margin-right: 0.3em;
+  margin-right: -0.3em;
 }
 </style>

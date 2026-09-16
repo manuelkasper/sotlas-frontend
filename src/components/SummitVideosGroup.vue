@@ -53,20 +53,20 @@ export default {
   margin-top: 0.2em;
 }
 .video-group {
-  background: whitesmoke;
+  background: var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-right: 0.75rem;
 }
 .video-group-title {
-  color: #777;
+  color: var(--bulma-text-weak);
   font-size: 0.8em;
   font-weight: bold;
   margin-bottom: 0.2rem;
   margin-right: 0.75rem;
 }
 .video-group-title a {
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .video-group-title a:hover {
   color: #3273dc;

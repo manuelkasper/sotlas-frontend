@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 .activation-date {
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .hero a {
   color: #3273dc !important;

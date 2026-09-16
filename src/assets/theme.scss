@@ -1,0 +1,35 @@
+// Buefy 3 / Bulma 1 theming: compile-time Sass `with()` (see
+// https://buefy.org/documentation/sass). Do not also import
+// buefy/dist/css/buefy.css — this file is the stylesheet.
+//
+// `bulma/sass` includes light + dark themes (prefers-color-scheme and
+// [data-theme=dark] / .theme-dark). Geometry and type tokens here are
+// mode-agnostic; colors flow through Bulma's HSL CSS variables so dark
+// mode can restyle them.
+
+@use "bulma/sass" with (
+  $family-sans-serif: (BlinkMacSystemFont, "-apple-system", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif),
+  $link: #3273dc,
+  $strong-weight: 700,
+  $control-height: 2.25em,
+  $button-padding-vertical: 0.375em,
+  $button-padding-horizontal: calc(0.75em + 1px),
+  $title-weight: 600,
+  $section-padding-desktop: 1.5rem 1.5rem,
+  $hero-body-padding: 1.5rem 1.5rem,
+  $hero-body-padding-tablet: 1.5rem 1.5rem,
+  $pagination-nav-padding-left: 0.25em,
+  $pagination-nav-padding-right: 0.25em,
+  $modal-card-head-padding: 1rem,
+  $modal-card-body-padding: 1.2rem,
+  $card-radius: 0
+);
+
+@use "buefy/src/scss/buefy";
+
+$fp-enable-1x1: false;
+$fp-4x3-path: "../../node_modules/flagpack/flags/4x3/";
+
+@import "flagpack/src/flagpack.scss";
+@import "@maptiler/sdk/dist/maptiler-sdk.css";
+@import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";

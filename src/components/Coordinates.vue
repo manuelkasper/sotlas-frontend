@@ -539,7 +539,7 @@ export default {
   margin-right: 0.75em;
 }
 .locator {
-  color: #777;
+  color: var(--bulma-text-weak);
 }
 .actions {
   display: inline-block;

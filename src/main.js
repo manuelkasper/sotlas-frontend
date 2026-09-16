@@ -18,6 +18,7 @@ import { faMap, faCheckCircle as fasCheckCircle, faChevronCircleDown as fasChevr
   faLocation as fasLocation, faWater, faTree, faRoad } from '@fortawesome/pro-solid-svg-icons'
 import { faWikipediaW, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
+import '@/assets/theme.scss'
 import '@/assets/global.css'
 import store from './store'
 import axios from 'axios'

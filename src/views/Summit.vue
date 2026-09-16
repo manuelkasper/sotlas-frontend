@@ -589,7 +589,7 @@ export default {
 }
 .photo {
   width: 320px;
-  background-color: whitesmoke;
+  background-color: var(--bulma-scheme-main-ter);
   margin-right: 0.5em;
   margin-top: 0.5em;
   padding: 0.75rem;
@@ -614,7 +614,7 @@ export default {
 .photo .description {
   font-size: 9pt;
   line-height: 1.4;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-top: 0.5em;
 }
 .photo a {
@@ -624,7 +624,7 @@ export default {
   font-size: 8pt;
   line-height: 1.4;
   font-style: italic;
-  color: #777;
+  color: var(--bulma-text-weak);
   text-align: right;
 }
 :deep(.maplibregl-canvas-container.maplibregl-interactive) {

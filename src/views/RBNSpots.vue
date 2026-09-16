@@ -239,7 +239,7 @@ export default {
 }
 .filter-hint {
   font-size: 80%;
-  color: #777;
+  color: var(--bulma-text-weak);
   margin-top: 1.5em;
 }
 .switch-wrapper {
