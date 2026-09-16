@@ -58,13 +58,13 @@ export default {
     props: ['selectedAssociations']
   },
   methods: {
-    loadNewPhotos () {
+    loadNewPhotos (selected = this.selectedAssociations) {
       this.loadingComponent = this.$buefy.loading.open({ canCancel: true })
 
       let recentPhotosParams = { limit: this.limit + 1 }
       let associations = '*'
-      if (this.selectedAssociations.length > 0) {
-        associations = this.selectedAssociations.join('|')
+      if (selected.length > 0) {
+        associations = selected.join('|')
       }
       axios.get(import.meta.env.VITE_API_URL + '/summits/recent_photos/' + associations + '/' + this.days, { params: recentPhotosParams })
         .then(response => {

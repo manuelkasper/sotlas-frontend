@@ -631,8 +631,7 @@ export default {
   cursor: auto;
 }
 .uploader-placeholder {
-  background: #f7f7f7;
-  color: #999;
+  color: var(--bulma-text-weak);
   height: 3em;
   border-radius: 0.5em;
   display: flex;

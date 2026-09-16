@@ -19,52 +19,12 @@
         </template>
       </draggable>
     </div>
-
-    <div ref="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="pswp__bg"></div>
-      <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-          <div class="pswp__item"></div>
-          <div class="pswp__item"></div>
-          <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-          <div class="pswp__top-bar">
-            <div class="pswp__counter"></div>
-            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-            <button class="pswp__button pswp__button--share" title="Share"></button>
-            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-            <div class="pswp__preloader">
-              <div class="pswp__preloader__icn">
-                <div class="pswp__preloader__cut">
-                  <div class="pswp__preloader__donut"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-            <div class="pswp__share-tooltip"></div>
-          </div>
-          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-          </button>
-          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-          </button>
-          <div class="pswp__caption">
-            <div class="pswp__caption__center"></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import PhotoSwipe from 'photoswipe/dist/photoswipe'
-import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default'
-import 'photoswipe/dist/photoswipe.css'
-import 'photoswipe/dist/default-skin/default-skin.css'
+import PhotoSwipe from 'photoswipe'
+import 'photoswipe/style.css'
 import draggable from 'vuedraggable'
 
 export default {
@@ -90,33 +50,87 @@ export default {
   },
   methods: {
     open (index, disableAnimation = false) {
-      let that = this
-      let gallery
       let options = {
+        dataSource: this.myItems.map(item => ({
+          src: item.src,
+          msrc: item.msrc,
+          osrc: item.osrc,
+          width: item.width || item.w,
+          height: item.height || item.h,
+          title: item.title,
+          alt: item.thumbTitle || ''
+        })),
         index,
-        getThumbBoundsFn (index) {
-          let thumbnail = Array.from(that.$refs.container.getElementsByTagName('img')).find(tag => tag.src === that.myItems[index].msrc)
-          let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
-          let rect = thumbnail.getBoundingClientRect()
-
-          return { x: rect.left, y: rect.top + pageYScroll, w: rect.width }
-        },
-        shareButtons: [
-          { id: 'download', label: 'Download original', url: '{{raw_image_url}}', download: true }
-        ],
-        getImageURLForShare: () => {
-          return gallery.currItem.osrc || ''
-        }
+        ...this.options
       }
 
       if (disableAnimation) {
+        options.showHideAnimationType = 'none'
         options.showAnimationDuration = 0
         // Hide animation duration not 0 to prevent close click event from bubbling through
         options.hideAnimationDuration = 1
       }
 
-      gallery = new PhotoSwipe(this.$refs.pswp, PhotoSwipeUIDefault, this.myItems, Object.assign(options, this.options))
+      let gallery = new PhotoSwipe(options)
+
+      gallery.addFilter('thumbEl', (thumbEl, itemData, itemIndex) => {
+        return this.thumbnailEl(itemIndex) || thumbEl
+      })
+
+      gallery.on('uiRegister', () => {
+        gallery.ui.registerElement({
+          name: 'download-button',
+          ariaLabel: 'Download original',
+          title: 'Download original',
+          order: 8,
+          isButton: true,
+          tagName: 'a',
+          html: {
+            isCustomSVG: true,
+            inner: '<path d="M20.5 14.3 17.1 18V10h-2.2v7.9l-3.4-3.6L10 16l6 6.1 6-6.1ZM23 23H9v2h14Z" id="pswp__icn-download"/>',
+            outlineID: 'pswp__icn-download'
+          },
+          onInit: (el, pswp) => {
+            el.setAttribute('download', '')
+            el.setAttribute('target', '_blank')
+            el.setAttribute('rel', 'noopener')
+            let setHref = () => {
+              el.href = (pswp.currSlide && pswp.currSlide.data.osrc) || (pswp.currSlide && pswp.currSlide.data.src) || ''
+            }
+            pswp.on('change', setHref)
+            setHref()
+          }
+        })
+
+        gallery.ui.registerElement({
+          name: 'custom-caption',
+          order: 9,
+          isButton: false,
+          appendTo: 'root',
+          onInit: (el, pswp) => {
+            let updateCaption = () => {
+              let title = pswp.currSlide && pswp.currSlide.data.title
+              el.innerHTML = title || ''
+              el.hidden = !title
+            }
+            pswp.on('change', updateCaption)
+            updateCaption()
+          }
+        })
+      })
+
+      gallery.on('destroy', () => {
+        if (this.gallery === gallery) {
+          this.gallery = null
+        }
+      })
+
+      this.gallery = gallery
       gallery.init()
+    },
+    thumbnailEl (index) {
+      let images = this.$refs.container && this.$refs.container.getElementsByTagName('img')
+      return images && images[index]
     },
     dragChange (event) {
       // Should not get any other type of event
@@ -140,7 +154,8 @@ export default {
   },
   data () {
     return {
-      myItems: []
+      myItems: [],
+      gallery: null
     }
   },
   watch: {
@@ -150,16 +165,15 @@ export default {
       },
       immediate: true
     }
+  },
+  unmounted () {
+    if (this.gallery) {
+      this.gallery.destroy()
+    }
   }
 }
 </script>
 <style>
-.pswp__top-bar {
-  text-align: right;
-}
-.pswp__caption__center {
-  text-align: center
-}
 .picture-swipe figure {
   display: inline-block;
   margin: 5px;
@@ -167,9 +181,6 @@ export default {
 }
 .picture-swipe figure img {
   vertical-align: middle;
-}
-.pswp__caption__center {
-  max-width: 90vw;
 }
 .move-button {
   position: absolute;
@@ -191,5 +202,34 @@ export default {
   color: white;
   filter: drop-shadow(0 0 0.15em #000);
   pointer-events: none;
+}
+.pswp__custom-caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: .75em;
+  color: #eee;
+  text-align: center;
+  font-size: 13px;
+  line-height: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.pswp__custom-caption .photo-title {
+  max-width: 90vw;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+.pswp__custom-caption .photo-title .author {
+  font-size: 0.8rem;
+  margin-top: 0.2em;
+  color: #ddd;
+}
+.pswp__custom-caption a {
+  color: #fff;
 }
 </style>
