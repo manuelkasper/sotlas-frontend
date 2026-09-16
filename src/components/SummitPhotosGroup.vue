@@ -189,7 +189,6 @@ export default {
   margin-top: 0.2em;
 }
 .photo-group.box {
-  border: .5px solid var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-bottom: 0.75rem;

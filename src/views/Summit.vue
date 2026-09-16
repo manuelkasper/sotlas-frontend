@@ -47,7 +47,7 @@
 
         <div class="columns">
           <div v-if="coverPhoto && !enlargeMap" class="photo-column column is-narrow">
-            <div class="photo">
+            <div class="photo box">
               <div style="text-align: center">
                 <a v-if="coverPhoto.photo" href="#" @click="photoClicked(coverPhoto.photo)"><img :src="coverPhoto.src" /></a>
                 <a v-else :href="coverPhoto.mediaLink" target="_blank"><img :src="coverPhoto.src" /></a>
@@ -76,7 +76,7 @@
             </template>
           </div>
           <div class="column">
-            <MiniMap :class="{ map: true, enlarge: enlargeMap }" :summit="summit" :routes="routes" :canEnlarge="true" :isEnlarged="enlargeMap" :showInactiveSummits="!isValid" ref="map" @enlarge="toggleEnlargeMap" @photoClicked="photoClicked" />
+            <MiniMap :class="{ map: true, enlarge: enlargeMap, box: true }" :summit="summit" :routes="routes" :canEnlarge="true" :isEnlarged="enlargeMap" :showInactiveSummits="!isValid" ref="map" @enlarge="toggleEnlargeMap" @photoClicked="photoClicked" />
           </div>
         </div>
       </div>
@@ -524,7 +524,8 @@ export default {
 .map {
   width: 100%;
   height: 300px;
-  border: 1px solid #ccc;
+  overflow: hidden;
+  padding: 0;
 }
 @media (min-width: 769px) {
   .map.enlarge {
@@ -574,6 +575,10 @@ export default {
   margin-top: -0.375em;
   margin-bottom: -0.375em;
 }
+.title.is-6 {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
 .locator {
   font-weight: bold;
 }
@@ -589,7 +594,6 @@ export default {
 }
 .photo {
   width: 320px;
-  background-color: var(--bulma-scheme-main-ter);
   margin-right: 0.5em;
   margin-top: 0.5em;
   padding: 0.75rem;

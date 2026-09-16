@@ -92,6 +92,10 @@
   padding-bottom: 0.75rem;
 }
 
+.box {
+  border: .5px solid var(--bulma-scheme-main-ter);
+}
+
 .message-body .icon svg {
   height: 2.5rem;
 }
