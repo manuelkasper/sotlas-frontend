@@ -2,7 +2,7 @@
   <div class="action-button download-button">
     <b-dropdown>
       <template v-slot:trigger>
-        <b-button type="is-info" size="is-small" outlined icon-left="file-download" icon-right="angle-down">Download</b-button>
+        <b-button type="is-link" size="is-small" outlined icon-left="file-download" icon-right="angle-down">Download</b-button>
       </template>
       <b-dropdown-item has-link><a :href="makeUrlForType('gpx')">GPX file</a></b-dropdown-item>
       <b-dropdown-item has-link><a :href="makeUrlForType('kml')">KML file</a></b-dropdown-item>

@@ -7,10 +7,10 @@
         <div class="action-button">
           <b-field>
             <p class="control">
-              <b-button type="is-info" size="is-small" outlined icon-left="plus" @click="addAlert()" :disabled="!authenticated">Alert</b-button>
+              <b-button type="is-link" size="is-small" outlined icon-left="plus" @click="addAlert()" :disabled="!authenticated">Alert</b-button>
             </p>
             <p class="control">
-              <b-button type="is-info" size="is-small" outlined icon-left="plus" @click="addSpot()" :disabled="!authenticated">Spot</b-button>
+              <b-button type="is-link" size="is-small" outlined icon-left="plus" @click="addSpot()" :disabled="!authenticated">Spot</b-button>
             </p>
           </b-field>
         </div>

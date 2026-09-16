@@ -6,7 +6,7 @@
         <p class="control">
           <b-dropdown aria-role="list">
             <template v-slot:trigger>
-              <b-button type="is-info" outlined size="is-small" icon-right="angle-down">
+              <b-button type="is-link" outlined size="is-small" icon-right="angle-down">
                 Open
               </b-button>
             </template>
@@ -15,12 +15,12 @@
           </b-dropdown>
         </p>
         <p class="control">
-          <b-button type="is-info" outlined size="is-small" @click="copyCoordinates">Copy</b-button>
+          <b-button type="is-link" outlined size="is-small" @click="copyCoordinates">Copy</b-button>
         </p>
         <p v-if="haveAz" class="control">
           <b-dropdown>
             <template v-slot:trigger>
-              <b-button type="is-info" outlined size="is-small" icon-left="file-download" icon-right="angle-down">AZ</b-button>
+              <b-button type="is-link" outlined size="is-small" icon-left="file-download" icon-right="angle-down">AZ</b-button>
             </template>
             <b-dropdown-item custom disabled><b>Activation zone</b></b-dropdown-item>
             <b-dropdown-item has-link><a :href="makeAzUrlForType('gpx')">GPX file</a></b-dropdown-item>

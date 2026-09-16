@@ -5,7 +5,7 @@
         Alerts
 
         <div class="action-button">
-          <b-button tag="a" :href="icalFeedUrl" type="is-info" size="is-small" outlined icon-left="calendar-day"
+          <b-button tag="a" :href="icalFeedUrl" type="is-link" size="is-small" outlined icon-left="calendar-day"
             title="The calendar feed will use your current filter settings. Click to open in your calendar app.">
             Add to Calendar
           </b-button>
