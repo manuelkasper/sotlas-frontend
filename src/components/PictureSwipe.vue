@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="picture-swipe">
     <div ref="container">
       <draggable v-model="myItems" item-key="src" handle=".handle" @change="dragChange">
         <template #item="{ element: item, index }">
@@ -160,12 +160,12 @@ export default {
 .pswp__caption__center {
   text-align: center
 }
-figure {
+.picture-swipe figure {
   display: inline-block;
   margin: 5px;
   position: relative;
 }
-figure img {
+.picture-swipe figure img {
   vertical-align: middle;
 }
 .pswp__caption__center {

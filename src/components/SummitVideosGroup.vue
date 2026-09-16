@@ -52,7 +52,7 @@ export default {
   font-size: 0.8rem;
   margin-top: 0.2em;
 }
-.video-group {
+.video-group.box {
   background: var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;

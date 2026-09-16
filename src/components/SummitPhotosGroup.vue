@@ -173,6 +173,7 @@ export default {
 
 <style scoped>
 .photos :deep(figure) {
+  display: inline-block;
   margin: 0 0.75rem 0.75rem 0;
 }
 .photos :deep(figure img) {
@@ -187,8 +188,8 @@ export default {
   font-size: 0.8rem;
   margin-top: 0.2em;
 }
-.photo-group {
-  background: var(--bulma-scheme-main-ter);
+.photo-group.box {
+  border: .5px solid var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-bottom: 0.75rem;
@@ -215,7 +216,7 @@ export default {
     max-height: 104px;
     max-width: 242px;
   }
-  .photo-group {
+  .photo-group.box {
     padding: 0.25rem 0 0 0.5rem;
   }
 }
