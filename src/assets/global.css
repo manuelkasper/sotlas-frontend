@@ -1,9 +1,6 @@
 .nowrap {
   white-space: nowrap;
 }
-.subtitle {
-  line-height: 1.5em;
-}
 .subdued {
   font-size: 0.8em;
   color: var(--bulma-text-weak);

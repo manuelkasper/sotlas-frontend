@@ -48,7 +48,7 @@
         <div class="columns">
           <div v-if="coverPhoto && !enlargeMap" class="photo-column column is-narrow">
             <div class="photo box">
-              <div style="text-align: center">
+              <div class="photo-image">
                 <a v-if="coverPhoto.photo" href="#" @click="photoClicked(coverPhoto.photo)"><img :src="coverPhoto.src" /></a>
                 <a v-else :href="coverPhoto.mediaLink" target="_blank"><img :src="coverPhoto.src" /></a>
               </div>
@@ -589,14 +589,11 @@ export default {
 .subtitle {
   margin-top: 0.3rem;
 }
-.photo-column {
-  padding: 0;
-}
 .photo {
   width: 320px;
   margin-right: 0.5em;
-  margin-top: 0.5em;
-  padding: 0.75rem;
+  padding: 0;
+  overflow: hidden;
 }
 @media (min-width: 768px) and (max-width: 1407px) {
   .photo {
@@ -611,15 +608,24 @@ export default {
     right: 1360px;
   }
 }
+.photo-image,
+.photo-image a {
+  display: block;
+  line-height: 0;
+  font-size: 0;
+}
 .photo img {
-  border: 1px solid #aaa;
-  text-align: center;
+  display: block;
+  width: 100%;
+  vertical-align: top;
 }
 .photo .description {
   font-size: 9pt;
   line-height: 1.4;
-  color: var(--bulma-text-weak);
-  margin-top: 0.5em;
+  padding: 0.5em 1em;
+}
+.photo .description:last-child {
+  margin-bottom: .5em;
 }
 .photo a {
   color: #3f5da7;
@@ -628,7 +634,7 @@ export default {
   font-size: 8pt;
   line-height: 1.4;
   font-style: italic;
-  color: var(--bulma-text-weak);
+  padding: .5em 1em .75em 1em;
   text-align: right;
 }
 :deep(.maplibregl-canvas-container.maplibregl-interactive) {
