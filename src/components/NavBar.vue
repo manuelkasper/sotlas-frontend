@@ -23,7 +23,7 @@
         {{ link.text }}
       </b-navbar-item>
       <b-navbar-dropdown label="More">
-        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active }" @click="closeBurger">
+        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active, 'more-link': true }" @click="closeBurger">
           <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
       </b-navbar-dropdown>
@@ -219,12 +219,16 @@ export default {
    behave differently from the plain router-link-active ones. Keep .router-link-active
    too for the routes that ARE nested (e.g. /spots), where vue-router's class already
    applies and .is-current is merely redundant. */
-.router-link-active:not(:focus):not(:hover),
-.navbar-item.is-current:not(:focus):not(:hover) {
+.router-link-active:not(:focus),
+.navbar-item.is-current:not(:focus) {
   background-color: var(--bulma-scheme-main);
+}
+.navbar-item.more-link {
+  gap: 0;
 }
 .navbar-item .icon {
   vertical-align: middle;
+  margin-right: .3em !important;
 }
 .clock {
   opacity: 0.7;

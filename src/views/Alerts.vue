@@ -14,7 +14,7 @@
     </template>
     <template v-slot:title-right>
       <div class="action-button">
-        <b-button type="is-info" icon-left="plus" @click="$refs.alertsList.addAlert()">Add</b-button>
+        <b-button type="is-info" icon-left="plus" @click="$refs.alertsList.addAlert()" :disabled="!authenticated">Add</b-button>
       </div>
     </template>
 

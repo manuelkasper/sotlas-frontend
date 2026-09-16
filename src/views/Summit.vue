@@ -637,6 +637,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 0.75rem;
 }
 .uploader-placeholder .fa-images {
   margin-right: 0.5em;

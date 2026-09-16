@@ -1,6 +1,9 @@
 .nowrap {
   white-space: nowrap;
 }
+.subtitle {
+  line-height: 1.5em;
+}
 .subdued {
   font-size: 0.8em;
   color: var(--bulma-text-weak);
@@ -60,6 +63,15 @@
    still wrap after the position fix alone. */
 .b-table .table th.is-sortable .th-wrap.is-numeric {
   width: auto;
+}
+/* Buefy 3 always renders a hidden .touch-dragged-cell as the last child of
+   .b-table, so `_table.scss`'s `.table-wrapper:not(:last-child) { margin-bottom:
+   1.5rem }` now fires on every table — including ones with no pagination. That
+   margin collapses out of the table and shows up as a gap before the next
+   section (Routes → Photos on summit pages). Drop it only when the wrapper's
+   next sibling is the drag helper; paginated tables keep the spacing. */
+.b-table > .table-wrapper:has(+ .touch-dragged-cell) {
+  margin-bottom: 0;
 }
 
 /* 0.7's .columns.is-variable only applied the gap horizontally (padding-left/right
@@ -155,6 +167,17 @@ hr {
   margin: 0.75rem 0;
 }
 
+/* Bulma 1.0's .button.is-outlined uses --bulma-button-l for text and border.
+   On a default (untyped) button that variable is scheme-main-l — ~100% in
+   light mode, ~14% in dark — i.e. the page background, so Actions/Edit/Clone
+   in SpotsList and AlertsList render as white-on-white (or dark-on-dark).
+   Colored types (is-info, is-danger, …) override --bulma-button-l to the
+   color's own lightness and are fine. Restore 0.x's outlined default: dark
+   (or scheme-appropriate) text and a gray border. */
+.button.is-outlined:not(.is-white):not(.is-black):not(.is-light):not(.is-dark):not(.is-text):not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l));
+  border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-border-l));
+}
 .action-button {
   font-weight: normal;
 }

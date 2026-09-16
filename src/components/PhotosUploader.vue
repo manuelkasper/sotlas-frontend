@@ -112,6 +112,7 @@ export default {
 <style scoped>
 :deep(.filepond--root) {
   margin-bottom: 0;
+  margin-right: 0.75rem;
 }
 :deep(.filepond--panel-root) {
   background-color: #f7f7f7;
