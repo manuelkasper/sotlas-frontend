@@ -12,8 +12,12 @@
           <b-input v-model="activationsTo" class="count" placeholder="max." size="is-small" :disabled="!activationsEnabled" />
         </b-field>
         <b-field grouped>
-          <b-button class="control" size="is-small" @click="setActivations(0, 0)">Never</b-button>
-          <b-button class="control" size="is-small" @click="setActivations(0, 3)">Rarely</b-button>
+          <p class="control">
+            <b-button size="is-small" @click="setActivations(0, 0)">Never</b-button>
+          </p>
+          <p class="control">
+            <b-button size="is-small" @click="setActivations(0, 3)">Rarely</b-button>
+          </p>
         </b-field>
       </div>
       <div class="filter-criterion">
@@ -47,7 +51,9 @@
         </b-field>
         <b-field grouped>
           <b-input v-model="activatedBy" class="callsign" placeholder="Callsign, Callsign, ..." size="is-small" :disabled="!activatedByEnabled" />
-          <b-button v-if="myCallsign" class="control" size="is-small" @click="activatedBy = myCallsign" :disabled="!activatedByEnabled">Me</b-button>
+          <p v-if="myCallsign" class="control">
+            <b-button size="is-small" @click="activatedBy = myCallsign" :disabled="!activatedByEnabled">Me</b-button>
+          </p>
           <b-checkbox v-model="activatedByThisYear" size="is-small">This year</b-checkbox>
         </b-field>
       </div>
@@ -57,7 +63,9 @@
         </b-field>
         <b-field grouped>
           <b-input v-model="notActivatedBy" class="callsign" placeholder="Callsign, Callsign, ..." size="is-small" :disabled="!notActivatedByEnabled" />
-          <b-button v-if="myCallsign" class="control" size="is-small" @click="notActivatedBy = myCallsign" :disabled="!notActivatedByEnabled">Me</b-button>
+          <p v-if="myCallsign" class="control">
+            <b-button size="is-small" @click="notActivatedBy = myCallsign" :disabled="!notActivatedByEnabled">Me</b-button>
+          </p>
           <b-checkbox v-model="notActivatedByThisYear" size="is-small">This year</b-checkbox>
         </b-field>
       </div>
@@ -374,10 +382,17 @@ export default {
 .filter-criterion .field input, .filter-criterion .field select {
   vertical-align: baseline;
 }
-/* Fix overrides from mapbox-gl.css */
+/* Fix overrides from maplibre-gl.css / Bulma 1.0.
+   .maplibregl-ctrl-group button sets display:block; width/height:29px (MapTiler: 33px);
+   padding:0. Restore shrink-wrapped is-small sizing. font-size uses
+   --bulma-control-size because Bulma 1.0's .button.is-small only sets that
+   variable, while .control { font-size: 1rem } wins if class="control" is on
+   the button itself. */
 .filter-container button {
   width: auto;
   height: auto;
+  display: inline-flex;
+  font-size: var(--bulma-control-size);
   padding-bottom: calc(.375em - 1px);
   padding-left: .75em;
   padding-right: .75em;
@@ -409,7 +424,7 @@ export default {
   padding: 0 0.5em 0.5em 0.5em;
   display: inline-block;
 }
-.maplibre-gl-filter-container button {
+.maplibre-gl-filter-container > button {
   display: inline-block;
   vertical-align: top;
 }
