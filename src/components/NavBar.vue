@@ -18,12 +18,12 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click="closeBurger">
+      <b-navbar-item v-for="link in links" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active }" @click="closeBurger">
         <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />
         {{ link.text }}
       </b-navbar-item>
       <b-navbar-dropdown label="More">
-        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" @click="closeBurger">
+        <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active }" @click="closeBurger">
           <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
       </b-navbar-dropdown>
@@ -88,15 +88,34 @@ export default {
       return [
         {
           target: mapLink,
-          text: 'Map'
+          text: 'Map',
+          // vue-router 4's RouterLink only auto-highlights a link when the current
+          // route's `matched` records include the link's own record (a strict
+          // parent/child relationship) — Vue Router 3 instead did a plain string
+          // prefix check on `path`, which is what made this "just work" before the
+          // migration. /map, /map/summits/:summitCode etc. are separate sibling
+          // routes in router.js (not nested via `children`), so router-link-active
+          // never applies while browsing a /map/... sub-path; check the path prefix
+          // ourselves and set our own `is-current` class (see the <style> below for
+          // why not Buefy's `active` prop). mapLink itself is dynamic above, so
+          // prefix-check the fixed '/map', not mapLink. Like Vue Router 3's prefix
+          // match this also holds on unknown /map/... paths that fall through to
+          // NotFound — same behavior as before the migration.
+          active: this.$route.path === '/map' || this.$route.path.startsWith('/map/')
         },
         {
           target: '/summits',
-          text: 'Summits'
+          text: 'Summits',
+          // Same sibling-routes issue as Map: /summits/, /summits/:associationCode
+          // etc. aren't nested under /summits in router.js.
+          active: this.$route.path === '/summits' || this.$route.path.startsWith('/summits/')
         },
         {
           target: '/spots',
-          text: 'Spots'
+          text: 'Spots',
+          // /spots' sub-routes ARE nested via router.js `children`, so
+          // router-link-active already applies here; this is redundant but harmless.
+          active: this.$route.path === '/spots' || this.$route.path.startsWith('/spots/')
         },
         {
           target: '/alerts',
@@ -112,7 +131,10 @@ export default {
         },
         {
           target: '/activators',
-          text: 'Activators'
+          text: 'Activators',
+          // Same sibling-routes issue as Map/Summits: /activators/,
+          // /activators/:callsign etc. aren't nested under /activators.
+          active: this.$route.path === '/activators' || this.$route.path.startsWith('/activators/')
         },
         {
           target: '/settings',
@@ -190,7 +212,15 @@ export default {
     max-width: 26rem;
   }
 }
-.router-link-active:not(:focus):not(:hover) {
+/* .is-current is our own class (set from links()/moreLinks() above for the route
+   families vue-router 4 can't auto-highlight). Deliberately NOT Buefy's `active` prop /
+   Bulma's `.is-active`: Bulma 1.0 gives `.navbar-item.is-active` its own selected-item
+   colors on hover/focus (link-blue background), which would make the highlighted item
+   behave differently from the plain router-link-active ones. Keep .router-link-active
+   too for the routes that ARE nested (e.g. /spots), where vue-router's class already
+   applies and .is-current is merely redundant. */
+.router-link-active:not(:focus):not(:hover),
+.navbar-item.is-current:not(:focus):not(:hover) {
   background-color: whitesmoke;
 }
 .navbar-item .icon {

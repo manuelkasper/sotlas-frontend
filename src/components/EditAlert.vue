@@ -307,9 +307,20 @@ export default {
       }, 100)
     },
     onFreqModeKeyDown (event) {
-      // Hack to allow us to get keep-first behavior on autocomplete despite the fact
-      // that b-taginput sets keepFirst = !allowNew
+      // Confirm the typed text ourselves on Enter/Tab (this taginput runs with
+      // autocomplete on and allowNew off, and no keep-first/open-on-focus).
+      // Buefy's Taginput skips its own confirm-key handling when autocomplete is on and
+      // allowNew is off (see Taginput.vue's keydown: `if (this.autocomplete &&
+      // !this.allowNew) return`), so this handler is the only path that confirms typed
+      // text. But when a suggestion is highlighted (arrow keys), Buefy's own Autocomplete
+      // already adds it on Enter (Autocomplete.vue's keydown calls setSelected(hovered)
+      // for any confirmKey, Tab included); adding the raw text here as well produced two
+      // tags, e.g. "14" and "14-cw".
       if (this.freqModeConfirmKeys.indexOf(event.key) >= 0) {
+        const autocomplete = this.$refs.freqMode.$refs.autocomplete
+        if (autocomplete && autocomplete.hovered) {
+          return
+        }
         event.preventDefault()
         this.$refs.freqMode.addTag()
       }

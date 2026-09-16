@@ -204,7 +204,7 @@ export default {
       event.preventDefault()
       this.$buefy.dialog.alert({
         title: 'Activation zones',
-        message: '<p style="margin-bottom: 0.5em">Activation zone boundaries are currently available for the following associations/regions:</p><ul><li style="margin-bottom: 0.5em"><strong>ER</strong><br />Derived from 1 arc-second SRTM data.</li><li style="margin-bottom: 0.5em"><strong>HB/HB0</strong><br />Calculated using <a href="https://www.swisstopo.admin.ch/de/geodata/height/alti3d.html" target="_blank">swissALTI3D</a> data from swisstopo (spatial resolution 0.5 m, accuracy ± 0.3 – 3 m (1σ) depending on the region).</li><li style="margin-bottom: 0.5em"><strong>OE</strong><br />Calculated using <a href="https://data.bev.gv.at/geonetwork/srv/ger/catalog.search;jsessionid=1F5F6A9D0278E6871FEDB6B87EE0936B#/metadata/eae5f98d-d605-4783-8292-8b913d163cac" target="_blank">BEV ALS DTM</a> data (spatial resolution 1 m, accuracy generally ± 0.5 m, may vary in high altitude).</li><li style="margin-bottom: 0.5em"><strong>OM</strong><br />Calculated using LiDAR DTM data (spatial resolution 20 m).</li><li style="margin-bottom: 0.5em"><strong>W7W</strong><br />Calculated using data from <a href="https://lidarportal.dnr.wa.gov/" target="_blank">Washington State’s Department of Natural Resources public LiDAR portal</a>.</li><li style="margin-bottom: 0.5em"><strong>ZL</strong><br />Based on LiDAR data (generalised to a 4m x 4m grid) where available, or NZSoSDEM 15m contour-derived DEM grid otherwise.</li></ul><hr /><p style="font-size: 0.8em">The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
+        message: '<p>Activation zone boundaries are typically calculated from LiDAR data. See the <a href="https://github.com/manuelkasper/sotlas-tiles/blob/master/az/README.md#source-data" target="_blank">repository</a> for a list of associations for which activation zone boundaries are available, and their data sources.</p><hr /><p style="font-size: 0.8em"><strong>The activation zone boundaries shown on SOTLAS are provided on a best-effort basis only and are not endorsed by the SOTA MT.</strong> The activator is always responsible for ensuring that the operation takes place within the activation zone.</p>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',
@@ -282,6 +282,17 @@ export default {
 .map-option .field.alert-days {
   margin-bottom: 0.5rem;
   line-height: 1;
+  align-items: center;
+}
+/* Bulma/Buefy 3 fix: a non-horizontal `grouped` b-field now wraps its content in an
+   extra `.field-body > .field.is-grouped` layer (Field.vue's `hasInnerField` branch;
+   Buefy 0.8/Vue2 rendered a single flat `.field.is-grouped`). The checkbox/input/label
+   here are children of that INNER field, not of `.field.alert-days` above, so the
+   align-items:center on the outer element (which only affects its own direct children,
+   `.field-body` here) never reached them — .tlabel's box stayed as tall as its sibling
+   checkbox and top-aligned its text instead of centering it, visually offsetting
+   "day(s)" from the input's vertical center. */
+.map-option .field.alert-days :deep(.field-body .field) {
   align-items: center;
 }
 .map-option div.tlabel {

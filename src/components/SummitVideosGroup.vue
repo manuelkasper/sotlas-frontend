@@ -25,14 +25,22 @@ export default {
 </script>
 
 <style scoped>
-.y-video {
+/* This targets LazyYoutubeVideo.vue's root element by class (Vue's scoped CSS applies a
+   parent's scoped attribute to a child component's root element too, so a plain class
+   selector here reaches across the component boundary without :deep()). It used to read
+   `.y-video` to match vue-lazy-youtube-video's root element class, but LazyYoutubeVideo.vue
+   (our Vue 3-native replacement, see its own file) renders `.lazy-youtube` at the root and
+   `.y-video` only on its <iframe> once playback starts. The stale selector matched nothing
+   before playback, so this width never applied and the preview shrank to its smallest
+   child (the 68x48px play button) inside SummitVideos.vue's inline-block layout. */
+.lazy-youtube {
   margin: 0 0.75rem 0.75rem 0;
   width: 30rem;
   display: inline-block;
   vertical-align: bottom;
 }
 @media (max-width: 768px) {
-  .y-video {
+  .lazy-youtube {
     margin: 0 0.5rem 0.5rem 0;
     width: 70vw;
   }

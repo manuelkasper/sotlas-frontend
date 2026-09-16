@@ -52,10 +52,93 @@ export default {
   --bulma-link-s: 71%;
   --bulma-link-l: 53%;
   --bulma-link-on-scheme-l: 53%;
+  // 0.7's $link-invert was findColorInvert($blue) = #fff; 1.0's --bulma-link-invert-l
+  // resolves to a near-white tint (rgb(246,249,254) on .button.is-link). Pin it.
+  --bulma-link-invert-l: 100%;
   // Bulma 0.7.5's default $red (is-danger) was hsl(348, 100%, 61%); Bulma 1.0's default
   // --bulma-danger-l is 70%, which is what made the Clear button (type="is-danger")
   // look different after the migration. Hue/saturation already match (348deg/100%).
   --bulma-danger-l: 61%;
+  // Bulma 1.0's .button.is-danger takes its text color from --bulma-button-color-l,
+  // which resolves to --bulma-danger-invert-l — a FIXED 5% lightness (near-black),
+  // unrelated to --bulma-danger-l above (confirmed in bulma-no-dark-mode.css: every
+  // *-invert-l is a constant lookup into the same lightness scale, not a function of
+  // the base color). Bulma 0.7 always used white text on danger buttons; pin it back.
+  --bulma-danger-invert-l: 100%;
+  // Bulma 1.0 tints its whole greyscale (text, borders, backgrounds, shadows) with a
+  // blue cast: --bulma-scheme-h/-s = 221deg/14% and the same for --bulma-text-h/-s
+  // and --bulma-shadow-h/-s, giving body text rgb(64,70,84) and borders rgb(214,217,224).
+  // Bulma 0.7's greys were neutral ($grey-dark #4a4a4a, $grey-lighter #dbdbdb,
+  // $background whitesmoke...). The lightness stops already match 0.7 (text 29%,
+  // text-strong 21%, text-weak 48%, border 86%, background 96%), so zeroing the
+  // saturation is enough to restore the exact 0.7 values site-wide; hue is then moot.
+  // Measured on sotl.as (Vue2) vs. this branch before/after, see the PR.
+  --bulma-scheme-s: 0%;
+  --bulma-text-s: 0%;
+  --bulma-shadow-s: 0%;
+  // The four shade tokens carry their own copies of that 221deg/14% cast rather than
+  // deriving from --bulma-scheme-*, and .hero.is-light (every page header here, see
+  // PageLayout.vue) takes its background and title color from --bulma-light-*:
+  // 1.0 rendered the header hsl(221,14%,96%) with hsl(221,14%,21%) titles where 0.7
+  // had whitesmoke #f5f5f5 with #363636 (measured on sotl.as). Lightness stops match,
+  // so zero these too.
+  --bulma-white-s: 0%;
+  --bulma-black-s: 0%;
+  --bulma-light-s: 0%;
+  --bulma-dark-s: 0%;
+  // ...and their *-invert counterparts are literal hsl(221, 14%, L) values, not
+  // derived from the -s variables above: Buefy's light tooltip text and the
+  // snackbar body color read them (light-invert / dark-invert). Same lightness
+  // stops as 0.7's findColorInvert() results.
+  --bulma-white-invert: hsl(0, 0%, 4%);
+  --bulma-black-invert: hsl(0, 0%, 100%);
+  --bulma-light-invert: hsl(0, 0%, 21%);
+  --bulma-dark-invert: hsl(0, 0%, 96%);
+  // Same story as --bulma-danger-* above for the other Bulma color tokens this app
+  // uses: Bulma 1.0 changed their defaults. 0.7.5 (initial-variables.sass via
+  // `npm pack bulma@0.7.5`): $info = $cyan hsl(204, 86%, 53%) with white text
+  // (findColorInvert), $success = $green hsl(141, 71%, 48%) with white text,
+  // $warning = $yellow hsl(48, 100%, 67%). 1.0.4: info hsl(198, 100%, 70%) and
+  // success hsl(153, 53%, 53%), both with dark text, warning hsl(42, 100%, 53%).
+  // is-info is this app's main accent (Add/Login/Update buttons, tooltips, messages),
+  // so the lighter cyan + dark text read as a different design rather than a shade;
+  // is-success is the live-feed CONNECTED tag (LiveFeedIndicator.vue). $primary is
+  // unchanged between the versions.
+  --bulma-info-h: 204deg;
+  --bulma-info-s: 86%;
+  --bulma-info-l: 53%;
+  --bulma-info-invert-l: 100%;
+  --bulma-success-h: 141deg;
+  --bulma-success-s: 71%;
+  --bulma-success-l: 48%;
+  --bulma-success-invert-l: 100%;
+  --bulma-warning-h: 48deg;
+  --bulma-warning-s: 100%;
+  --bulma-warning-l: 67%;
+  // Bulma 1.0 also ships the classic grey palette as literal hsl(221, 14%, L) values
+  // that do NOT go through --bulma-scheme-*; Buefy 3 reads some of them directly
+  // (table.scss: sortable/current-sort header border via --bulma-grey, switch track,
+  // datepicker). Lightness stops equal 0.7's, so restate them neutral.
+  --bulma-black-bis: hsl(0, 0%, 7%);
+  --bulma-black-ter: hsl(0, 0%, 14%);
+  --bulma-grey-darker: hsl(0, 0%, 21%);
+  --bulma-grey-dark: hsl(0, 0%, 29%);
+  --bulma-grey: hsl(0, 0%, 48%);
+  --bulma-grey-light: hsl(0, 0%, 71%);
+  --bulma-grey-lighter: hsl(0, 0%, 86%);
+  --bulma-white-ter: hsl(0, 0%, 96%);
+  --bulma-white-bis: hsl(0, 0%, 98%);
+  // Geometry and type weights. A full-page computed-style diff against sotl.as
+  // showed every control, tag, table and section drifting by the same Bulma 1.0
+  // defaults. The globals that Bulma keeps on :root are restored here (0.7.5's
+  // initial-variables.sass / elements/title.sass values); the rest of that set lives
+  // in assets/global.css because Bulma declares them on the component selectors
+  // (.button, .title, .section, .hero, .input...) or Buefy's own stylesheet — which
+  // is bundled after this one — re-emits them (the --bulma-control-* block).
+  --bulma-radius-small: 2px;
+  --bulma-radius: 4px;
+  --bulma-radius-large: 6px;
+  --bulma-strong-weight: var(--bulma-weight-bold);
 }
 
 $fp-enable-1x1: false;

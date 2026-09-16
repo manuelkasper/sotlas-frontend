@@ -1,6 +1,7 @@
 import { defineComponent, inject, onBeforeUnmount, watch } from 'vue'
 import { AttributionControl, GeolocateControl, NavigationControl, ScaleControl } from '@maptiler/sdk'
 import { isInitializedSymbol, mapSymbol } from './keys.js'
+import { isDeepEqual } from './utils.js'
 
 // @indoorequal/vue-maplibre-gl's useControl only evaluates props once at
 // creation (no prop watcher besides position). This migration branch briefly
@@ -31,7 +32,17 @@ function useControl (createControl, props) {
 
   add()
 
-  watch(() => ({ ...props }), () => {
+  watch(() => ({ ...props }), (newProps, oldProps) => {
+    // The getter above always returns a brand-new plain object, so Vue's watch fires
+    // this callback on ANY reactive touch of `props`, not just an actual value change —
+    // including when a parent passes a structurally-identical object as a NEW literal on
+    // every re-render (e.g. Map.vue's `:positionOptions="{ enableHighAccuracy: true }"`,
+    // recreated whenever Map.vue itself re-renders, which happens on every map pan/zoom
+    // via its `bounds`/`center`/`zoom` data). Without this guard, a control gets removed
+    // and re-added on every such no-op change, which appends it at the END of its
+    // position group — observed as the geolocate button jumping from the top to the
+    // bottom of the top-right controls shortly after the map's first move/idle.
+    if (isDeepEqual(newProps, oldProps)) return
     remove()
     add()
   }, { deep: true })

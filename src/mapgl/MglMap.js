@@ -1,15 +1,12 @@
 import { defineComponent, h, markRaw, nextTick, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import { Map as MaptilerMap } from '@maptiler/sdk'
 import { isInitializedSymbol, isLoadedSymbol, mapSymbol } from './keys.js'
+import { isDeepEqual } from './utils.js'
 
 // Only the events SOTLAS actually listens to. Unlike the general-purpose
 // vue-maplibre-gl wrapper, this module isn't meant to forward the full
 // maplibre-gl event surface.
 const FORWARDED_EVENTS = ['load', 'click', 'contextmenu', 'moveend', 'idle']
-
-function isDeepEqual (a, b) {
-  return JSON.stringify(a) === JSON.stringify(b)
-}
 
 export default defineComponent({
   name: 'MglMap',
