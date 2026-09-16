@@ -618,7 +618,7 @@ export default {
 .photo .description {
   font-size: 9pt;
   line-height: 1.4;
-  padding: 0.5em 1em;
+  padding: .75em 1em .25em 1em;
 }
 .photo .description:last-child {
   margin-bottom: .5em;

@@ -133,8 +133,15 @@
 @media (max-width: 1023px) {
   /* Leave enough space so user can press outside menu to dismiss */
   .dropdown.is-mobile-modal .dropdown-menu {
-    width: calc(100vw - 120px);
+    width: calc(100vw - 120px) !important;
   }
+}
+/* Buefy 3's mobile dropdown overlay is z-index:10, below Bulma's
+   navbar-fixed-z of 30, so the dimming layer stops at the navbar.
+   Restore Buefy 0.8's z-index:40 so it sits between the navbar (30)
+   and the dropdown menu (50). */
+.dropdown .background {
+  z-index: 40;
 }
 h4 > .icon {
   margin-left: 0.3rem;
@@ -269,13 +276,6 @@ hr {
 
 .maplibregl-popup-close-button {
   right: 3px;
-}
-
-/* Fix Buefy bug */
-@media screen and (max-width: 1023px) {
-  .dropdown.is-mobile-modal>.dropdown-menu>.dropdown-content>div>a {
-    padding: 1rem 1.5rem;
-  }
 }
 
 .select select {

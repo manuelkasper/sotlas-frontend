@@ -2,9 +2,11 @@
   <PageLayout>
     <template v-slot:title>Spots</template>
     <template v-slot:title-right>
-      <LiveFeedIndicator v-if="$mq.mobile" />
-      <div class="action-button">
-        <b-button type="is-info" icon-left="plus" @click="addSpot()" :disabled="!authenticated">Add</b-button>
+      <div class="feed-add-wrapper">
+        <LiveFeedIndicator v-if="$mq.mobile" />
+        <div class="action-button">
+          <b-button type="is-info" icon-left="plus" @click="addSpot()" :disabled="!authenticated">Add</b-button>
+        </div>
       </div>
     </template>
 
@@ -63,5 +65,11 @@ export default {
 <style scoped>
 .action-button {
   margin-left: 1em;
+}
+.feed-add-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
+  align-items: center;
 }
 </style>
