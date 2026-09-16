@@ -1,34 +1,36 @@
 <template>
   <span class="wrapper">
-    <span class="coordinates">{{ latitude }}, {{ longitude }}</span>
-    <div class="actions">
-      <b-field>
-        <p class="control">
-          <b-dropdown aria-role="list">
-            <template v-slot:trigger>
-              <b-button type="is-link" outlined size="is-small" icon-right="angle-down">
-                Open
-              </b-button>
-            </template>
+    <span class="primary">
+      <span class="coordinates">{{ latitude }}, {{ longitude }}</span>
+      <div class="actions">
+        <b-field>
+          <p class="control">
+            <b-dropdown aria-role="list">
+              <template v-slot:trigger>
+                <b-button type="is-link" outlined size="is-small" icon-right="angle-down">
+                  Open
+                </b-button>
+              </template>
 
-            <b-dropdown-item v-for="action in filteredActions" :key="action.name" :has-link="true" aria-role="listitem"><a :href="action.url()" target="_blank">{{ action.name }}</a></b-dropdown-item>
-          </b-dropdown>
-        </p>
-        <p class="control">
-          <b-button type="is-link" outlined size="is-small" @click="copyCoordinates">Copy</b-button>
-        </p>
-        <p v-if="haveAz" class="control">
-          <b-dropdown>
-            <template v-slot:trigger>
-              <b-button type="is-link" outlined size="is-small" icon-left="file-download" icon-right="angle-down">AZ</b-button>
-            </template>
-            <b-dropdown-item custom disabled><b>Activation zone</b></b-dropdown-item>
-            <b-dropdown-item has-link><a :href="makeAzUrlForType('gpx')">GPX file</a></b-dropdown-item>
-            <b-dropdown-item has-link><a :href="makeAzUrlForType('geojson')">GeoJSON file</a></b-dropdown-item>
-          </b-dropdown>
-        </p>
-      </b-field>
-    </div>
+              <b-dropdown-item v-for="action in filteredActions" :key="action.name" :has-link="true" aria-role="listitem"><a :href="action.url()" target="_blank">{{ action.name }}</a></b-dropdown-item>
+            </b-dropdown>
+          </p>
+          <p class="control">
+            <b-button type="is-link" outlined size="is-small" @click="copyCoordinates">Copy</b-button>
+          </p>
+          <p v-if="haveAz" class="control">
+            <b-dropdown>
+              <template v-slot:trigger>
+                <b-button type="is-link" outlined size="is-small" icon-left="file-download" icon-right="angle-down">AZ</b-button>
+              </template>
+              <b-dropdown-item custom disabled><b>Activation zone</b></b-dropdown-item>
+              <b-dropdown-item has-link><a :href="makeAzUrlForType('gpx')">GPX file</a></b-dropdown-item>
+              <b-dropdown-item has-link><a :href="makeAzUrlForType('geojson')">GeoJSON file</a></b-dropdown-item>
+            </b-dropdown>
+          </p>
+        </b-field>
+      </div>
+    </span>
     <div v-if="showMaidenhead" class="locator">Locator: {{ maidenhead }}</div>
     <div v-if="showElevation" class="elevation">Elevation: <span v-if="elevation"><AltitudeLabel :altitude="elevation" /> (approx.)</span><font-awesome-icon v-else :icon="['far', 'spinner']" spin /></div>
   </span>
@@ -535,13 +537,19 @@ export default {
 .wrapper {
   display: inline-block;
 }
-.coordinates {
-  margin-right: 0.75em;
+.primary {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  white-space: nowrap;
+}
+.actions {
+  display: inline-flex;
+}
+.actions :deep(.field) {
+  margin-bottom: 0;
 }
 .locator {
   color: var(--bulma-text-weak);
-}
-.actions {
-  display: inline-block;
 }
 </style>

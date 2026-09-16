@@ -1,5 +1,5 @@
 <template>
-  <MglPopup :coordinates="[coordinates.longitude, coordinates.latitude]" @close="$emit('close')">
+  <MglPopup :coordinates="[coordinates.longitude, coordinates.latitude]" max-width="none" @close="$emit('close')">
     <div class="popup-content">
       <Coordinates :latitude="latitude" :longitude="longitude" show-maidenhead show-elevation />
     </div>

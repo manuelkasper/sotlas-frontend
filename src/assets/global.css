@@ -267,11 +267,19 @@ hr {
   padding-top: 10px;
 }
 
+.maplibregl-popup-close-button {
+  right: 3px;
+}
+
 /* Fix Buefy bug */
 @media screen and (max-width: 1023px) {
   .dropdown.is-mobile-modal>.dropdown-menu>.dropdown-content>div>a {
     padding: 1rem 1.5rem;
   }
+}
+
+.select select {
+  line-height: normal;
 }
 
 /* Snow depth scale (used in popup from MapOptionsControl, but cannot be defined there due to use of $buefy.dialog.alert) */

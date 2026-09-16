@@ -571,10 +571,6 @@ export default {
 :deep(.coordinates) {
   font-weight: bold;
 }
-:deep(.coordinates + .actions) {
-  margin-top: -0.375em;
-  margin-bottom: -0.375em;
-}
 .title.is-6 {
   margin-top: 1em;
   margin-bottom: 0;
