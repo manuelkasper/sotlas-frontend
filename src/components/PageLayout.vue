@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-light">
+    <section class="hero" :class="{ 'is-light': !$mq.dark }">
       <div class="hero-body">
         <div class="container">
           <div class="level is-mobile">
