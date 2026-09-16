@@ -259,7 +259,7 @@ export default {
 .card .actions {
   margin-top: 0.5em;
 }
-.date-change td {
+:deep(.date-change td) {
   border-top: 3px solid #dbdbdb;
 }
 :deep(.dropdown-item .icon) {

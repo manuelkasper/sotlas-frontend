@@ -224,7 +224,6 @@ export default {
   background-color: whitesmoke;
 }
 .navbar-item .icon {
-  margin-right: 0.25em !important;
   vertical-align: middle;
 }
 .clock {

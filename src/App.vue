@@ -139,6 +139,7 @@ export default {
   --bulma-radius: 4px;
   --bulma-radius-large: 6px;
   --bulma-strong-weight: var(--bulma-weight-bold);
+  --bulma-family-primary: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 $fp-enable-1x1: false;

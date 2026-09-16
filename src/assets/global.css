@@ -19,7 +19,6 @@
 }
 .subtitle {
   margin-top: 0.2em;
-  line-height: 1.5em;
 }
 .clickable {
   cursor: pointer;
@@ -308,18 +307,27 @@ hr {
     margin-left: 1rem;
     display: inline-block;
   }
-  .action-button button, .action-button a[type="button"] {
+  .action-button button, .action-button a {
     vertical-align: baseline;
+    bottom: 3px;
   }
+}
+.modal {
+  --bulma-modal-card-head-padding: 1rem;
+  --bulma-modal-card-body-padding: 1.2rem;
+  --bulma-modal-card-head-background-color: #f5f5f5;
 }
 .modal-card {
   max-height: calc(90vh - 80px);
 }
-.modal-card-head {
-  padding: 15px 30px 15px 15px;
-}
 .modal-card-foot {
   justify-content: flex-end;
+}
+.modal-card-foot .button:not(:last-child) {
+  margin-right: .5em;
+}
+.card {
+  --bulma-card-radius: 0;
 }
 
 /* Fix to keep Iceland flag from appearing in pagination buttons */
