@@ -201,6 +201,46 @@ hr {
     bottom: 3px;
   }
 }
+
+/* Stacked cards: square by default, rounded at the start/end of each day
+   group (or the whole list). Inner %card-item radii are reset so they
+   don't show as faint corners; spacing between days is on the card. */
+.card-list .card {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.card-list .card > *:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.card-list .card > *:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.card-list .card:first-child,
+.card-list .card:has(> .card-header) {
+  border-top-left-radius: var(--bulma-card-radius);
+  border-top-right-radius: var(--bulma-card-radius);
+}
+.card-list .card:first-child > *:first-child,
+.card-list .card:has(> .card-header) > *:first-child {
+  border-top-left-radius: var(--bulma-card-radius);
+  border-top-right-radius: var(--bulma-card-radius);
+}
+.card-list .card:has(> .card-header):not(:first-child) {
+  margin-top: 1em;
+}
+.card-list .card:last-child,
+.card-list .card:has(+ .card > .card-header) {
+  border-bottom-left-radius: var(--bulma-card-radius);
+  border-bottom-right-radius: var(--bulma-card-radius);
+}
+.card-list .card:last-child > *:last-child,
+.card-list .card:has(+ .card > .card-header) > *:last-child {
+  border-bottom-left-radius: var(--bulma-card-radius);
+  border-bottom-right-radius: var(--bulma-card-radius);
+}
+
 .modal {
   --bulma-modal-card-head-background-color: var(--bulma-scheme-main-ter);
 }

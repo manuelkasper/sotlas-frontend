@@ -1,7 +1,10 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <div class="freqmode"><span v-if="!spot.type || spot.type === 'NORMAL'">{{ formatFrequency(spot.frequency) }} </span><ModeLabel :mode="spot.mode" :type="spot.type" /></div>
+      <div class="freqmode">
+        <span v-if="!spot.type || spot.type === 'NORMAL'">{{ formatFrequency(spot.frequency) }}</span>
+        <ModeLabel :mode="spot.mode" :type="spot.type" />
+      </div>
       <div class="time" v-html="formatTimeDay(spot.timeStamp)" />
       <div class="callsign">
         <template v-if="callsignLink">
@@ -75,7 +78,7 @@ export default {
 }
 .card-content .tag {
   position: relative;
-  margin-left: 0.3em;
+  margin-left: 0.5em;
   top: -0.1em;
 }
 .card-content .summit {

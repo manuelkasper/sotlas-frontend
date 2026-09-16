@@ -56,7 +56,6 @@ export default {
 <style scoped>
 .card-header {
   background-color: var(--bulma-scheme-main-ter);
-  margin-top: 1em;
   font-size: 1rem;
 }
 .card-header-title {
