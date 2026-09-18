@@ -8,11 +8,11 @@
               <img :src="item.msrc" :width="thumbSize(item).w" :height="thumbSize(item).h" />
             </a>
             <div class="move-button" v-if="item.editable">
-              <b-button class="control handle" size="is-small" icon-left="arrows-alt" title="Drag to reorder"></b-button>
+              <b-button class="handle" size="is-small" icon-left="arrows-alt" title="Drag to reorder"></b-button>
             </div>
             <div class="edit-buttons" v-if="item.editable">
-              <b-button class="control" size="is-small" icon-left="edit" @click="$emit('editPicture', item, index)" title="Edit"></b-button>
-              <b-button class="control" size="is-small" type="is-danger" icon-left="trash-alt" @click="$emit('deletePicture', item, index)" title="Delete"></b-button>
+              <b-button size="is-small" icon-left="edit" @click="$emit('editPicture', item, index)" title="Edit"></b-button>
+              <b-button size="is-small" type="is-danger" icon-left="trash-alt" @click="$emit('deletePicture', item, index)" title="Delete"></b-button>
             </div>
             <font-awesome-icon v-if="item.thumbTitle" class="comment-icon" :icon="['far', 'comment']" />
           </figure>
