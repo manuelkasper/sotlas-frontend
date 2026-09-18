@@ -44,7 +44,7 @@
           </b-field>
         </b-field>
       </div>
-      <div v-if="!$mq.mobile" class="level-right">
+      <div v-if="$mq.desktop" class="level-right">
         <LiveFeedIndicator />
       </div>
     </div>

@@ -218,9 +218,17 @@ export default {
    colors on hover/focus (link-blue background), which would make the highlighted item
    behave differently from the plain router-link-active ones. Keep .router-link-active
    too for the routes that ARE nested (e.g. /spots), where vue-router's class already
-   applies and .is-current is merely redundant. */
-.router-link-active:not(:focus),
-.navbar-item.is-current:not(:focus) {
+   applies and .is-current is merely redundant.
+   :not(:focus-visible) rather than :not(:focus): Firefox (and Chrome) leave a
+   mouse-clicked link :focus'd, which would otherwise keep the current item on
+   Bulma's gray hover/focus fill until the user clicks elsewhere. Safari does
+   not apply :focus on mouse click, so it already looked correct. Keyboard
+   focus still drops the white fill so Bulma's focus background can show.
+   The has-dropdown.is-active rule uses the same fill for the More trigger
+   while its menu is open. */
+.router-link-active:not(:focus-visible),
+.navbar-item.is-current:not(:focus-visible),
+:deep(.navbar-item.has-dropdown.is-active > .navbar-link) {
   background-color: var(--bulma-scheme-main);
 }
 .navbar-item.more-link {

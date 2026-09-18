@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$mq.mobile" class="liveinfo">
+  <div v-if="!$mq.desktop" class="liveinfo">
     LIVE <span :class="{ indicator: true, connected: this.$store.state.socket.isConnected }">●</span>
   </div>
   <b-tooltip v-else class="liveinfo" type="is-info" label="New spots appear immediately, no need to refresh the page" position="is-left">

@@ -3,7 +3,7 @@
     <template v-slot:title>Spots</template>
     <template v-slot:title-right>
       <div class="feed-add-wrapper">
-        <LiveFeedIndicator v-if="$mq.mobile" />
+        <LiveFeedIndicator v-if="!$mq.desktop" />
         <div class="action-button">
           <b-button type="is-info" icon-left="plus" @click="addSpot()" :disabled="!authenticated">Add</b-button>
         </div>

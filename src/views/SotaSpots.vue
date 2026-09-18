@@ -38,7 +38,7 @@
           <b-button class="control" :class="unmuted ? 'unmuted' : ''" icon-pack="fas" :icon-right="unmuted ? 'volume' : 'volume-mute'" @click="unmuted = !unmuted" title="Play sound on new spot"></b-button>
         </b-field>
       </div>
-      <div v-if="!$mq.mobile" class="level-right">
+      <div v-if="$mq.desktop" class="level-right">
         <LiveFeedIndicator />
       </div>
     </div>

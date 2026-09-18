@@ -115,6 +115,6 @@ export default {
   margin-right: 0.75rem;
 }
 :deep(.filepond--panel-root) {
-  background-color: #f7f7f7;
+  background-color: var(--bulma-scheme-main);
 }
 </style>

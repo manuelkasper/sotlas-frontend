@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'maplibregl-ctrl-group': true, 'maplibregl-ctrl': true, 'maplibre-gl-filter-container': true }">
+  <div :class="{ 'maplibregl-ctrl-group': true, 'maplibregl-ctrl': true, 'maplibre-gl-filter-container': true }" data-theme="light">
     <button :class="{ 'maplibregl-ctrl-icon': true, 'maplibre-gl-filter': true, active: active }" type="button" title="Toggle filter" @click="toggleFilter" />
     <div v-if="open" class="filter-container">
       <div class="filter-criterion">
@@ -344,6 +344,11 @@ export default {
 </script>
 
 <style scoped>
+/* Overlay sits on the always-light map; keep native widgets (and Bulma via
+   data-theme="light" on the root) on the light scheme so they stay readable. */
+.maplibre-gl-filter-container {
+  color-scheme: light;
+}
 .maplibre-gl-filter {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M16.93 3.62C16.86 3.47 16.71 3.37 16.54 3.37H3.15c-0.17 0-0.32 0.1-0.39 0.25-0.07 0.15-0.05 0.33 0.06 0.46l5.15 6.24v5.76c0 0.15 0.08 0.29 0.2 0.37 0.07 0.04 0.15 0.06 0.23 0.06 0.07 0 0.13-0.01 0.19-0.04l2.89-1.43c0.15-0.07 0.24-0.22 0.24-0.39l0.01-4.32 5.15-6.24c0.11-0.13 0.13-0.31 0.06-0.46zm-5.97 6.27c-0.06 0.08-0.1 0.17-0.1 0.27l-0.01 4.21-2.03 1.01v-5.21c0-0.1-0.03-0.2-0.1-0.27L4.07 4.23H15.62Z' stroke-width='0.06'/%3E%3C/svg%3E%0A");
 }

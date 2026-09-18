@@ -597,6 +597,11 @@ export default {
   }
 }
 @media (min-width: 1900px) {
+  .photo-column {
+    width: 0;
+    padding: 0;
+    overflow: visible;
+  }
   .photo {
     max-width: calc(322px + 1.5rem);
     width: calc((100vw - 1344px) / 2 - 50px);
