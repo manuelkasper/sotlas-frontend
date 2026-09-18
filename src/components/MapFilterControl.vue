@@ -359,12 +359,18 @@ export default {
   font-size: 0.8rem;
 }
 .filter-criterion div.tlabel {
-  margin-right: 0.75rem;
   display: inline-block;
 }
 .filter-criterion .field {
   margin: 0.2rem 0.2rem 0.5rem 0.2rem;
   line-height: 1;
+  align-items: center;
+}
+/* Bulma/Buefy 3 fix: a non-horizontal `grouped` b-field now wraps its content in an
+   extra `.field-body > .field.is-grouped` layer. Scoped `align-items:center` on
+   `.field` only reaches the outer field's direct child (`.field-body`), so the
+   "to"/"m" labels stayed top-aligned against the min/max controls. */
+.filter-criterion .field :deep(.field-body .field) {
   align-items: center;
 }
 .filter-criterion .field:last-child {

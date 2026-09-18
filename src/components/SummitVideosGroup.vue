@@ -53,7 +53,6 @@ export default {
   margin-top: 0.2em;
 }
 .video-group.box {
-  background: var(--bulma-scheme-main-ter);
   padding: 0.25rem 0 0 0.75rem;
   display: inline-block;
   margin-right: 0.75rem;

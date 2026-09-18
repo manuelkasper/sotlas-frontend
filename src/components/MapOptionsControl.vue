@@ -297,10 +297,6 @@ export default {
 }
 .map-option div.tlabel {
   display: inline-block;
-  font-size: 0.75rem;
-}
-.map-option .alert-days .control {
-  margin-right: 0.5rem !important;
 }
 .map-option .alert-days .control :deep(input) {
   width: 5em;
