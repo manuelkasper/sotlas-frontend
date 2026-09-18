@@ -77,10 +77,12 @@ export default {
         return this.thumbnailEl(itemIndex) || thumbEl
       })
 
-      // Allow native text selection/copy in captions. PhotoSwipe otherwise
-      // preventDefault()s all pointermove events while the gallery is open.
+      // Allow native text selection/copy in captions with a mouse. Do not do
+      // this for touch: PhotoSwipe needs preventDefault on touchmove so
+      // horizontal swipes still change photos.
       gallery.addFilter('preventPointerEvent', (preventPointerEvent, originalEvent) => {
-        if (originalEvent.target && originalEvent.target.closest && originalEvent.target.closest('.pswp__custom-caption')) {
+        let isMouse = originalEvent.pointerType === 'mouse' || originalEvent.type === 'mousemove' || originalEvent.type === 'mousedown'
+        if (isMouse && originalEvent.target && originalEvent.target.closest && originalEvent.target.closest('.pswp__custom-caption')) {
           return false
         }
         return preventPointerEvent
@@ -229,8 +231,14 @@ export default {
   -webkit-backdrop-filter: blur(10px);
   user-select: text;
   -webkit-user-select: text;
-  touch-action: auto;
   cursor: text;
+}
+/* Let photo swipes start on the caption overlay; keep links tappable. */
+.pswp--touch:not(.pswp--has_mouse) .pswp__custom-caption {
+  pointer-events: none;
+}
+.pswp--touch:not(.pswp--has_mouse) .pswp__custom-caption a {
+  pointer-events: auto;
 }
 .pswp__custom-caption .photo-title {
   max-width: 90vw;
