@@ -1,6 +1,6 @@
 <template>
   <MglPopup v-if="summit" key="summitinfo" :coordinates="[summit.coordinates.longitude, summit.coordinates.latitude]" anchor="bottom" :closeButton="false" :focusAfterOpen="false" :max-width="maxWidth" @close="$emit('close')">
-    <div :class="{ summitPopup: true, minimize: minimizePopup }">
+    <div :class="{ summitPopup: true, minimize: minimizePopup }" data-theme="light">
       <div v-if="coverPhoto" class="photo">
         <div style="text-align: center"><a :href="coverPhoto.mediaLink" target="_blank"><img :src="coverPhoto.src" /></a></div>
         <div v-if="coverPhoto.description" class="description">{{ coverPhoto.description }}</div>
@@ -54,8 +54,12 @@ export default {
 </script>
 
 <style scoped>
+/* Overlay sits on the always-light map; keep native widgets (and Bulma via
+   data-theme="light" on the root) on the light scheme so they stay readable. */
 .summitPopup {
   padding: 0.3rem;
+  color-scheme: light;
+  color: var(--bulma-text);
 }
 .summitPopup h2 {
   margin: 0.2em 0 0.5em 0;
