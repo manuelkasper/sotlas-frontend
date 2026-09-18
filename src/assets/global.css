@@ -206,25 +206,31 @@ hr {
 }
 .action-button {
   font-weight: normal;
+  flex: 0 0 auto;
 }
-@media (max-width: 768px) {
-  .action-button {
-    margin-left: 1rem;
-    float: right;
-  }
-  .action-button a[type="button"] {
-    vertical-align: baseline;
-  }
+.action-button .field {
+  margin-bottom: 0;
 }
-@media (min-width: 768px) {
-  .action-button {
-    margin-left: 1rem;
-    display: inline-block;
-  }
-  .action-button button, .action-button a {
-    vertical-align: baseline;
-    bottom: 3px;
-  }
+/* Title + actions: sit on one line when they fit, otherwise wrap the
+   buttons onto a new left-aligned line instead of floating them right. */
+.title:has(> .action-button) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 1rem;
+  row-gap: 0.35em;
+}
+.title:has(> .action-button) > :not(.action-button) {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.action-button button, .action-button a {
+  vertical-align: baseline;
+}
+.title:has(> .action-button) .action-button button,
+.title:has(> .action-button) .action-button a {
+  position: relative;
+  bottom: var(--bulma-button-padding-vertical);
 }
 
 /* Stacked cards: square by default, rounded at the start/end of each day

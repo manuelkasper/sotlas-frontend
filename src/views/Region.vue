@@ -2,7 +2,7 @@
   <SummitDatabasePageLayout :association="association" :region="region">
     <template v-slot:title>
       <h1 v-if="region" class="title is-size-1 is-size-3-mobile">
-        {{ region.name }}
+        <span>{{ region.name }}</span>
 
         <DownloadButton :exportUrlPrefix="exportUrlPrefix" :exportUrlParams="exportUrlParams" />
       </h1>

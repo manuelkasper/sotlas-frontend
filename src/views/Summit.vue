@@ -2,7 +2,7 @@
   <SummitDatabasePageLayout :association="association" :region="region" :summit="summit">
     <template v-slot:title>
       <h1 class="title is-size-1 is-size-3-mobile">
-        {{ summit.name }}
+        <span>{{ summit.name }}</span>
 
         <div class="action-button">
           <b-field>

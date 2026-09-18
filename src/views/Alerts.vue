@@ -2,7 +2,7 @@
   <PageLayout>
     <template v-slot:title>
       <h1 class="title is-size-1 is-size-3-mobile">
-        Alerts
+        <span>Alerts</span>
 
         <div class="action-button">
           <b-button tag="a" :href="icalFeedUrl" type="is-link" size="is-small" outlined icon-left="calendar-day"

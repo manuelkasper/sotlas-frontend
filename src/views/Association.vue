@@ -2,7 +2,7 @@
   <SummitDatabasePageLayout :association="association">
     <template v-slot:title>
       <h1 class="title is-size-1 is-size-3-mobile">
-        <CountryFlag v-if="association.isoCode" :country="association.isoCode" class="flag" />{{ association.name }}
+        <span><CountryFlag v-if="association.isoCode" :country="association.isoCode" class="flag" />{{ association.name }}</span>
 
         <DownloadButton :exportUrlPrefix="exportUrlPrefix" />
       </h1>
