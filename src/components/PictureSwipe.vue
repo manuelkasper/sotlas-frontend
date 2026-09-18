@@ -190,6 +190,7 @@ export default {
 }
 .picture-swipe figure img {
   vertical-align: middle;
+  border-radius: 4px;
 }
 .move-button {
   position: absolute;

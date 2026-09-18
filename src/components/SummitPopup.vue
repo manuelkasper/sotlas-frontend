@@ -125,9 +125,9 @@ export default {
   margin-bottom: 1em;
 }
 .photo img {
-  border: 1px solid #aaa;
   vertical-align: top;
   text-align: center;
+  border-radius: 4px;
 }
 .photo .description {
   font-size: 9pt;
