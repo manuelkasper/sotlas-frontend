@@ -125,7 +125,7 @@ export default {
 
           if (this.activators.length === 1 && this.summits.length === 0 && this.places.length === 0) {
             this.$router.replace('/activators/' + this.activators[0].callsign)
-          } else if (this.summits.length === 1 && this.activators.length === 0 && this.places.length === 0) {
+          } else if (this.summits.length === 1 && this.activators.length === 0 && this.places.length <= 1) {
             this.$router.replace('/summits/' + this.summits[0].code)
           }
         })
