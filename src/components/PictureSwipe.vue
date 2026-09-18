@@ -77,6 +77,15 @@ export default {
         return this.thumbnailEl(itemIndex) || thumbEl
       })
 
+      // Allow native text selection/copy in captions. PhotoSwipe otherwise
+      // preventDefault()s all pointermove events while the gallery is open.
+      gallery.addFilter('preventPointerEvent', (preventPointerEvent, originalEvent) => {
+        if (originalEvent.target && originalEvent.target.closest && originalEvent.target.closest('.pswp__custom-caption')) {
+          return false
+        }
+        return preventPointerEvent
+      })
+
       gallery.on('uiRegister', () => {
         gallery.ui.registerElement({
           name: 'download-button',
@@ -207,6 +216,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 10;
   width: 100%;
   padding: .75em;
   color: #eee;
@@ -216,6 +226,10 @@ export default {
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  user-select: text;
+  -webkit-user-select: text;
+  touch-action: auto;
+  cursor: text;
 }
 .pswp__custom-caption .photo-title {
   max-width: 90vw;
@@ -231,5 +245,6 @@ export default {
 }
 .pswp__custom-caption a {
   color: #fff;
+  cursor: pointer;
 }
 </style>
