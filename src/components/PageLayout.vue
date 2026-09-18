@@ -5,12 +5,14 @@
         <div class="container">
           <div class="level is-mobile">
             <div class="level-left">
-              <h1 class="title is-size-1 is-size-3-mobile">
+              <h1 class="level-item title is-size-1 is-size-3-mobile">
                 <slot name="title"></slot>
               </h1>
             </div>
             <div class="level-right">
-              <slot name="title-right"></slot>
+              <div class="level-item">
+                <slot name="title-right"></slot>
+              </div>
             </div>
           </div>
         </div>

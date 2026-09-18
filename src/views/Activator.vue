@@ -82,7 +82,7 @@
             <MiniMap v-if="showMap" class="map" :bounds="activationsMapBounds" :filter="activationsMapFilter" zoom-warning show-inactive-summits />
 
             <b-field>
-              <FilterInput v-model="activationsFilter" :is-regex="true" />
+              <FilterInput v-model="activationsFilter" :size="$mq.mobile ? 'is-small' : ''" :is-regex="true" />
             </b-field>
 
             <ActivationsList v-if="activations !== null && activations.length > 0" :data="filteredActivations" :infinite="true" :ownCallsign="callsign" />

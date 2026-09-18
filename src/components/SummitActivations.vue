@@ -19,17 +19,13 @@
               <ChasesList :data="myChases" />
             </template>
 
-            <div class="level">
-              <div class="level-left">
-                <h4 class="title is-4">
-                  Logged activations
-                </h4>
-              </div>
-              <div class="level-right">
-                <b-field>
-                  <FilterInput v-model="filter" size="is-small" :is-regex="true" />
-                </b-field>
-              </div>
+            <div class="title-filter-header">
+              <h4 class="title is-4">
+                Logged activations
+              </h4>
+              <b-field>
+                <FilterInput v-model="filter" size="is-small" :is-regex="true" />
+              </b-field>
             </div>
 
             <LoggedActivationsList :data="filteredActivations" />
@@ -224,9 +220,6 @@ export default {
 </script>
 
 <style scoped>
-.filter {
-  width: 10em
-}
 .stats :deep(.chart-container) {
   margin-bottom: 1em
 }
