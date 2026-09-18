@@ -1,3 +1,15 @@
+/* iOS Safari still requires the -webkit prefix for text-size-adjust (Apple:
+   https://bugs.webkit.org/show_bug.cgi?id=309551). Bulma 1.0 only emits the
+   unprefixed property, and Vite does not run Autoprefixer the way the old
+   Vue CLI build did. Without this, rotating an iPhone to landscape inflates
+   small "body-like" text (spot comments, summit ref/altitude/points) while
+   leaving nearby larger text (summit name, frequency) alone — which desktop
+   responsive mode cannot reproduce. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .nowrap {
   white-space: nowrap;
 }
