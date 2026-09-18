@@ -101,6 +101,10 @@ export default {
       infoTooltipShown: false
     }
   },
+  created () {
+    // Load before first render so a previously dismissed tooltip never flashes.
+    this.loadPrefs()
+  },
   mounted () {
     if (sessionStorage.getItem('mapReloaded')) {
       sessionStorage.removeItem('mapReloaded')

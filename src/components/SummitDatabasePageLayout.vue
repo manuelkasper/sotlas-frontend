@@ -45,6 +45,7 @@ export default {
 <style scoped>
 .level {
   align-items: start;
+  --bulma-level-item-spacing: 0;
 }
 @media (max-width: 768px) {
   .level-left + .level-right {

@@ -35,6 +35,7 @@ export default {
 <style scoped>
 .breadcrumb {
   margin-top: 0.3em;
+  --bulma-breadcrumb-item-padding-horizontal: 0.5em;
 }
 .breadcrumb li.summit-number:before {
   content: "–";
