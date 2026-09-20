@@ -300,6 +300,9 @@ hr {
 .pagination .icon.is {
   background-image: none;
 }
+.pagination .info {
+  margin-left: .5em;
+}
 
 /* Fix for scale text selection */
 .maplibregl-ctrl-scale {

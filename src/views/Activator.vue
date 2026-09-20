@@ -23,13 +23,9 @@
       <section v-if="recentSpots.length > 0 || $store.state.spots.length === 0" class="section">
         <div class="container">
 
-          <div class="level is-mobile">
-            <div class="level-left">
-              <h4 class="title is-4">Recent SOTA spots</h4>
-            </div>
-            <div class="level-right">
-              <LiveFeedIndicator />
-            </div>
+          <div class="spots-header">
+            <h4 class="title is-4">Recent SOTA spots</h4>
+            <LiveFeedIndicator />
           </div>
 
           <SpotsList v-if="recentSpots.length > 0" class="auto-width" :data="recentSpots" :callsignLink="false" :paginated="recentSpots.length > 10" />
@@ -39,13 +35,9 @@
 
       <section v-if="(rbnSpots !== null && rbnSpots.length > 0) || rbnSpots === null" class="section">
         <div class="container">
-          <div class="level is-mobile">
-            <div class="level-left">
-              <h4 class="title is-4">Recent RBN spots</h4>
-            </div>
-            <div class="level-right">
-              <LiveFeedIndicator />
-            </div>
+          <div class="spots-header">
+            <h4 class="title is-4">Recent RBN spots</h4>
+            <LiveFeedIndicator />
           </div>
 
           <RBNSpotsList v-if="rbnSpots !== null && rbnSpots.length > 0" class="auto-width" :data="rbnSpots" :callsignLink="false" :paginated="rbnSpots.length > 10" />
@@ -458,5 +450,15 @@ export default {
   height: 70vh;
   border: 1px solid #ccc;
   margin-bottom: 2em;
+}
+.spots-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+.spots-header .title.is-4 {
+  margin-bottom: 0 !important;
 }
 </style>

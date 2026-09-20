@@ -30,9 +30,11 @@
       <b-table-column field="callsignUsed" label="Callsign used" sortable v-slot="props">
         {{ props.row.callsignUsed.toUpperCase() }}
       </b-table-column>
-      <b-table-column field="qsos" label="QSOs" sortable numeric v-slot="props">
-        <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
-        <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
+      <b-table-column field="qsos" label="QSOs" cell-class="qsos-cell" sortable numeric v-slot="props">
+        <button type="button" class="qsos" @click="openQsoList(props.row.id)">
+          {{ props.row.qsos }}
+          <font-awesome-icon :icon="['far', 'th-list']" class="faicon" />
+        </button>
       </b-table-column>
       <template v-slot:bottom-left>
         <b-select v-model="perPage">
@@ -120,9 +122,28 @@ export default {
 .qsos {
   color: #3273dc;
   cursor: pointer;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+.qsos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 .faicon {
   margin-left: 0.4em;
+}
+/* See LoggedActivationsList: stretch the QSO control across the <td> so iOS
+   taps on cell padding open the list instead of only highlighting the cell. */
+:deep(.qsos-cell) {
+  position: relative;
+  cursor: pointer;
 }
 .photos-icon {
   margin-left: 0.5em;

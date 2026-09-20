@@ -7,9 +7,11 @@
       <b-table-column field="ownCallsign" label="Activator" sortable v-slot="props">
         <router-link :to="makeActivatorLinkUserId(props.row.userId)">{{ props.row.ownCallsign.toUpperCase() }}</router-link>
       </b-table-column>
-      <b-table-column field="qsos" label="QSOs" sortable numeric v-slot="props">
-        <span class="qsos" @click="openQsoList(props.row.id)">{{ props.row.qsos }}</span>
-        <font-awesome-icon :icon="['far', 'th-list']" class="faicon qsos" @click="openQsoList(props.row.id)" />
+      <b-table-column field="qsos" label="QSOs" cell-class="qsos-cell" sortable numeric v-slot="props">
+        <button type="button" class="qsos" @click="openQsoList(props.row.id)">
+          {{ props.row.qsos }}
+          <font-awesome-icon :icon="['far', 'th-list']" class="faicon" />
+        </button>
       </b-table-column>
     </b-table>
 
@@ -47,10 +49,31 @@ export default {
 
 <style scoped>
 .faicon {
-  margin-left: 0.4em;
+  margin-left: 0.2em;
+}
+/* Buefy attaches a click listener to every <td>, so iOS treats the whole cell
+   as the tap target. Taps that miss the tiny number/icon then highlight the
+   cell without opening the QSO list. Cover the cell with the button instead.
+   :deep() is required because <td> is rendered by <b-table>, not this template. */
+:deep(.qsos-cell) {
+  position: relative;
+  cursor: pointer;
 }
 .qsos {
   color: #3273dc;
   cursor: pointer;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+.qsos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 </style>
