@@ -73,6 +73,17 @@ html {
 .b-table .table th.is-sortable .sort-icon {
   position: static;
   transform: none;
+  flex-shrink: 0;
+}
+/* Buefy 3's .th-wrap is `display:flex; flex-wrap:wrap` (and `white-space:normal`).
+   That wrap was harmless while the icon was position:absolute (it didn't take a
+   flex slot), but with the icon back in normal flow (above) a squeezed column —
+   Spots at ~1100px is the usual case: "Time" + arrow, "Posted By", "Summit Name"
+   — drops the arrow onto a second line. Keep heading and icon as one unbreakable
+   row so table-layout:auto sizes the column to both, matching Vue2. */
+.b-table .table th .th-wrap {
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 /* Buefy's own descending rule is `.b-table .sort-icon.icon.is-desc { transform:
    rotate(180deg) translateY(-50%) !important }` — the translateY half-height nudge
