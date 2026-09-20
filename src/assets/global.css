@@ -232,6 +232,7 @@ hr {
 .title:has(> .action-button) > :not(.action-button) {
   flex: 0 0 auto;
   max-width: 100%;
+  overflow-wrap: break-word;
 }
 .action-button button, .action-button a {
   vertical-align: baseline;
