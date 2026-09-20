@@ -2,7 +2,7 @@
   <b-modal v-model="active" :can-cancel="false">
     <div class="box content">
       <div class="has-text-centered">
-        <span class="fp at flag"></span>
+        <CountryFlag country="AT" class="flag" />
       </div>
       <h3>basemap.at-Karte jetzt verfügbar</h3>
       <p>Auf SOTLAS kann man auch die detailliertere basemap.at-Karte nutzen, inkl. Aktivierungszonen. Einfach den Kartentyp umstellen, fertig!</p>
@@ -23,9 +23,11 @@
 
 <script>
 import axios from 'axios'
+import CountryFlag from './CountryFlag.vue'
 
 export default {
   name: 'BasemapAtInfo',
+  components: { CountryFlag },
   mounted () {
     if (!localStorage.getItem('basemapAtInfoShown')) {
       // Check if we are in Austria

@@ -27,9 +27,5 @@
 
 @use "buefy/src/scss/buefy";
 
-$fp-enable-1x1: false;
-$fp-4x3-path: "../../node_modules/flagpack/flags/4x3/";
-
-@import "flagpack/src/flagpack.scss";
 @import "@maptiler/sdk/dist/maptiler-sdk.css";
 @import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";

@@ -30,7 +30,7 @@
     "cheap-ruler": "^2.5.1",
     "filepond": "^4.30.4",
     "filepond-plugin-file-validate-type": "^1.2.5",
-    "flagpack": "^1.0.5",
+    "flagpack-core": "^2.1.0",
     "frappe-charts": "github:manuelkasper/frappe-charts#line-chart-y-axis-intervals-based-on-range",
     "haversine-distance": "^1.2.1",
     "maidenhead": "^1.0.7",

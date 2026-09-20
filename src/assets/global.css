@@ -198,9 +198,6 @@ h4 > .icon {
     top: 0.15em;
   }
 }
-.fp.unknown {
-  background-color: var(--bulma-scheme-main-ter);
-}
 hr {
   margin: 0.75rem 0;
 }

@@ -2,7 +2,7 @@
   <b-modal v-model="active" :can-cancel="false">
     <div class="box content">
       <div class="has-text-centered">
-        <span class="fp ch flag"></span>
+        <CountryFlag country="CH" class="flag" />
       </div>
       <h3>swisstopo map available</h3>
       <p>The modern swisstopo map is much more accurate in Switzerland than the global map. Just switch the map type, done!</p>
@@ -32,9 +32,11 @@
 
 <script>
 import axios from 'axios'
+import CountryFlag from './CountryFlag.vue'
 
 export default {
   name: 'SwisstopoInfo',
+  components: { CountryFlag },
   mounted () {
     if (!localStorage.getItem('swisstopoInfoShown')) {
       // Check if we are in Switzerland

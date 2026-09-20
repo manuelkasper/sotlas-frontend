@@ -1,7 +1,7 @@
 <template>
   <nav class="breadcrumb is-small" aria-label="breadcrumbs">
     <ul>
-      <li v-if="association" :class="{'is-active': !region, association: true}"><CountryFlag v-if="association.isoCode" :country="association.isoCode" /> <router-link :to="'/summits/' + association.code">{{ association.code }} <span class="breadcrumb-label">&nbsp;{{ association.name }}</span></router-link></li>
+      <li v-if="association" :class="{'is-active': !region, association: true}"><CountryFlag v-if="association.isoCode" :country="association.isoCode" :shadow="false" /> <router-link :to="'/summits/' + association.code">{{ association.code }} <span class="breadcrumb-label">&nbsp;{{ association.name }}</span></router-link></li>
       <li v-if="region" :class="{'is-active': !summit}"><router-link :to="'/summits/' + association.code + '/' + region.code">{{ region.code }} <span class="breadcrumb-label">&nbsp;{{ region.name }}</span></router-link></li>
       <li v-if="summit &amp;&amp; summit.code" class="is-active summit-number"><router-link :to="'/summits/' + summit.code" aria-current="page">{{ summitNumber }}</router-link></li>
     </ul>
