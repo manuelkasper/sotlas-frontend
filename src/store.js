@@ -24,6 +24,13 @@ if (!mapType) {
   mapType = 'maptiler_outdoor'
 }
 
+// 'auto' follows prefers-color-scheme; 'light'/'dark' are applied as data-theme
+// on <html> (initially by the inline script in index.html, to avoid a flash)
+let theme = localStorage.getItem('theme')
+if (theme !== 'light' && theme !== 'dark') {
+  theme = 'auto'
+}
+
 let mapOptions = {
   regions: false,
   contours: true,
@@ -64,6 +71,7 @@ const store = createStore({
     alertPage: 1,
     activatorPage: 1,
     mapType,
+    theme,
     mapOptions,
     mapCenter: null,
     mapTilerApiKey: null,
@@ -152,6 +160,15 @@ const store = createStore({
       // Force a reload now to avoid problems with layers added by draw etc.
       sessionStorage.setItem('mapReloaded', true)
       window.location.reload()
+    },
+    setTheme (state, newTheme) {
+      state.theme = newTheme
+      localStorage.setItem('theme', newTheme)
+      if (newTheme === 'light' || newTheme === 'dark') {
+        document.documentElement.dataset.theme = newTheme
+      } else {
+        delete document.documentElement.dataset.theme
+      }
     },
     setMapOption (state, mutation) {
       state.mapOptions[mutation.option] = mutation.value

@@ -26,6 +26,17 @@
         <b-navbar-item v-for="link in moreLinks" tag="router-link" :key="link.target" :to="link.target" :title="link.title" :class="{ 'is-current': link.active, 'more-link': true }" @click="closeBurger">
           <b-icon v-if="link.icon" :pack="link.iconPack" :icon="link.icon" />{{ link.text }}
         </b-navbar-item>
+        <hr class="navbar-divider">
+        <b-navbar-item tag="div" class="theme-switch">
+          <!-- plain markup instead of <b-field>: BField's hasAddons() sees the v-for as a
+               single Fragment vnode and never adds has-addons (same as in EditSpot.vue) -->
+          <div class="field has-addons">
+            <b-radio-button v-for="option in themeOptions" :key="option.value" v-model="theme" :native-value="option.value" :size="$mq.desktop ? 'is-small' : ''" :title="option.title">
+              <b-icon pack="fas" :icon="option.icon" size="is-small" />
+              <span class="is-sr-only">{{ option.title }}</span>
+            </b-radio-button>
+          </div>
+        </b-navbar-item>
       </b-navbar-dropdown>
       <b-navbar-item tag="div">
         <LoginButton @linkClicked="closeBurger" />
@@ -144,6 +155,21 @@ export default {
           iconPack: 'fas'
         }
       ]
+    },
+    themeOptions () {
+      return [
+        { value: 'light', icon: 'sun', title: 'Light theme' },
+        { value: 'auto', icon: 'adjust', title: 'Automatic theme (follow device setting)' },
+        { value: 'dark', icon: 'moon', title: 'Dark theme' }
+      ]
+    },
+    theme: {
+      get () {
+        return this.$store.state.theme
+      },
+      set (newTheme) {
+        this.$store.commit('setTheme', newTheme)
+      }
     }
   },
   data () {
@@ -237,6 +263,12 @@ export default {
 .navbar-item .icon {
   vertical-align: middle;
   margin-right: .3em !important;
+}
+.theme-switch .field {
+  margin: 0 auto;
+}
+.theme-switch .icon {
+  margin-right: 0 !important;
 }
 .clock {
   opacity: 0.7;

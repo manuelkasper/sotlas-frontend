@@ -16,6 +16,7 @@ import { faMap, faCheckCircle as fasCheckCircle, faChevronCircleDown as fasChevr
   faLocationArrow as fasLocationArrow, faInfoCircle as fasInfoCircle,
   faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, faUser as fasUser, faMountains as fasMountains,
   faLocation as fasLocation, faWater, faTree, faRoad } from '@fortawesome/pro-solid-svg-icons'
+import { faSun, faMoon, faAdjust } from '@fortawesome/free-solid-svg-icons'
 import { faWikipediaW, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 import '@/assets/theme.scss'
@@ -33,6 +34,7 @@ library.add(faMap, fasCheckCircle, fasChevronCircleDown, fasChevronCircleUp, faP
   faCameraHome, faVolume, faVolumeMute, faCog, fasCaretDown, fasLocationArrow, fasInfoCircle,
   faFlag, faEnvelope, faLayerGroup, faCity, faBuilding, faHome, faLandmark, faMapMarkerAlt, fasUser, fasMountains,
   fasLocation, faWater, faTree, faRoad)
+library.add(faSun, faMoon, faAdjust)
 library.add(faWikipediaW, faGoogle, faGithub)
 
 const app = createApp(App)
