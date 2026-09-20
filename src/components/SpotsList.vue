@@ -13,7 +13,7 @@
         </SpotCard>
       </template>
     </CardPagination>
-    <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="data" :paginated="paginated" :per-page="perPage" v-model:current-page="curPage" :row-class="rowClass">
+    <b-table v-else :default-sort="['timeStamp', 'desc']" :narrowed="true" :striped="true" :data="tableData" :paginated="paginated" :per-page="perPage" v-model:current-page="curPage" :row-class="rowClass">
       <b-table-column field="timeStamp" cell-class="timestamp" label="Time" sortable v-slot="props">
         <span v-html="formatTimeDay(props.row.timeStamp)" />
       </b-table-column>
@@ -135,6 +135,11 @@ export default {
           return 0
         }
       })
+    },
+    tableData () {
+      // Buefy's table watches `data` by reference only. Copy so in-place Vuex
+      // updates (live SOTA spots) refresh the table, matching cardSpots / RBN.
+      return this.data.slice()
     },
     curPage: {
       get () {
