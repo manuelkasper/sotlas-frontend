@@ -12,6 +12,17 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <title>SOTLAS</title>
+    <script type="text/javascript">
+      // Apply a saved light/dark theme override before first paint to avoid a
+      // flash of the wrong theme (see setTheme in src/store.js). No attribute
+      // means "auto", i.e. follow prefers-color-scheme.
+      try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body class="has-navbar-fixed-top is-size-6 is-size-7-mobile">
     <noscript>
