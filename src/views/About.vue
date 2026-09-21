@@ -20,7 +20,8 @@
             <a href="https://gitlab.com/N0QLR">Shane N0QLR</a>,
             <a href="https://github.com/majkrzak">@majkrzak</a>,
             Mirek OK1CYC,
-            <a href="https://github.com/jj1xgo">@jj1xgo</a>
+            <a href="https://github.com/jj1xgo">@jj1xgo</a>,
+            <a href="https://github.com/jeffkowalski">@jeffkowalski</a>
           </p>
 
           <p>
