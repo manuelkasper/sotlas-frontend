@@ -268,6 +268,7 @@ export default {
   margin: 0 auto;
 }
 .theme-switch .icon {
+  margin-left: 0 !important;
   margin-right: 0 !important;
 }
 .clock {
