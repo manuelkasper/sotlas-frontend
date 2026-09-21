@@ -119,6 +119,8 @@ export default {
           isButton: false,
           appendTo: 'root',
           onInit: (el, pswp) => {
+            // Photo viewer is always dark; use dark-theme link colors even if the page is light
+            el.setAttribute('data-theme', 'dark')
             let updateCaption = () => {
               let title = pswp.currSlide && pswp.currSlide.data.title
               el.innerHTML = title || ''
@@ -223,6 +225,7 @@ export default {
   width: 100%;
   padding: .75em;
   color: #eee;
+  color-scheme: dark;
   text-align: center;
   font-size: 13px;
   line-height: 20px;
@@ -253,7 +256,6 @@ export default {
   color: #ddd;
 }
 .pswp__custom-caption a {
-  color: #fff;
   cursor: pointer;
 }
 </style>
