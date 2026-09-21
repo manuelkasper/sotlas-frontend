@@ -8,9 +8,9 @@
           </template>
           <template v-if="canEditAlert(row)" v-slot:actions>
             <div class="actions">
-              <b-button class="control" size="is-small" outlined icon-left="edit" @click="editAlert(row)">Edit</b-button>
-              <b-button class="control" size="is-small" outlined icon-left="plus" @click="makeSpot(row)">Spot</b-button>
-              <b-button class="control" size="is-small" type="is-danger" outlined icon-left="trash-alt" @click="deleteAlert(row)">Delete</b-button>
+              <b-button size="is-small" outlined icon-left="edit" @click="editAlert(row)">Edit</b-button>
+              <b-button size="is-small" outlined icon-left="plus" @click="makeSpot(row)">Spot</b-button>
+              <b-button size="is-small" type="is-danger" outlined icon-left="trash-alt" @click="deleteAlert(row)">Delete</b-button>
             </div>
           </template>
         </AlertCard>

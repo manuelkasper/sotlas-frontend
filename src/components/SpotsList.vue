@@ -5,9 +5,9 @@
         <SpotCard :class="recentClass(row.timeStamp)" :spot="row" :callsignLink="callsignLink" :showSummitInfo="showSummitInfo">
           <template v-slot:actions>
             <div v-if="canEditSpot(row)" class="actions">
-              <b-button class="control" size="is-small" outlined icon-left="edit" @click="editSpot(row)">Edit</b-button>
-              <b-button class="control" size="is-small" outlined icon-left="clone" @click="cloneSpot(row)">Clone</b-button>
-              <b-button class="control" size="is-small" type="is-danger" outlined icon-left="trash-alt" @click="deleteSpot(row)">Delete</b-button>
+              <b-button size="is-small" outlined icon-left="edit" @click="editSpot(row)">Edit</b-button>
+              <b-button size="is-small" outlined icon-left="clone" @click="cloneSpot(row)">Clone</b-button>
+              <b-button size="is-small" type="is-danger" outlined icon-left="trash-alt" @click="deleteSpot(row)">Delete</b-button>
             </div>
           </template>
         </SpotCard>
