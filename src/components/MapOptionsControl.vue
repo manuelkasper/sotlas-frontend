@@ -35,6 +35,12 @@
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click="showSnowDepthInfo" />
           </b-checkbox>
         </b-field>
+        <b-field grouped>
+          <b-checkbox v-model="mapOptions.terminator" size="is-small" @update:model-value="setMapOption('terminator', $event)">
+            Day/night terminator
+            <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click="showTerminatorInfo" />
+          </b-checkbox>
+        </b-field>
       </div>
       <div class="map-option" v-if="mapTypes[mapType].difficulty">
         <b-field grouped>
@@ -258,6 +264,17 @@ export default {
           <div class="csunit">cm </div>
         </div>
         <svg role="img" class="svg-inline--fa fa-grid-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="margin-right: 0.2em;"><path fill="currentColor" d="M128 96A64 64 0 1 1 0 96a64 64 0 1 1 128 0zm0 160A64 64 0 1 1 0 256a64 64 0 1 1 128 0zM64 480a64 64 0 1 1 0-128 64 64 0 1 1 0 128zM288 96A64 64 0 1 1 160 96a64 64 0 1 1 128 0zM224 320a64 64 0 1 1 0-128 64 64 0 1 1 0 128zm64 96a64 64 0 1 1 -128 0 64 64 0 1 1 128 0zm96-256a64 64 0 1 1 0-128 64 64 0 1 1 0 128zm64 96a64 64 0 1 1 -128 0 64 64 0 1 1 128 0zM384 480a64 64 0 1 1 0-128 64 64 0 1 1 0 128z"></path></svg> partially snow-covered`,
+        type: 'is-info',
+        hasIcon: true,
+        icon: 'info-circle',
+        iconPack: 'fas'
+      })
+    },
+    showTerminatorInfo (event) {
+      event.preventDefault()
+      this.$buefy.dialog.alert({
+        title: 'Day/night terminator',
+        message: '<p style="margin-bottom: 0.5em">The shading shows where the sun is currently below the horizon (updated every minute). The night side is drawn in four steps from light to dark:</p><ul><li><strong>Civil twilight</strong>: sun 0° – 6° below the horizon</li><li><strong>Nautical twilight</strong>: 6° – 12° below the horizon</li><li><strong>Astronomical twilight</strong>: 12° – 18° below the horizon</li><li><strong>Night</strong>: sun more than 18° below the horizon</li></ul><p style="margin-top: 0.5em">HF propagation is often enhanced along the terminator (greyline).</p>',
         type: 'is-info',
         hasIcon: true,
         icon: 'info-circle',

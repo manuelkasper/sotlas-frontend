@@ -29,6 +29,8 @@
       <MapDraw ref="draw" />
 
       <MapWebcams v-if="mapOptions.webcams" />
+
+      <MapTerminator v-if="mapOptions.terminator" />
     </MglMap>
     <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
     <SwisstopoInfo />
@@ -57,6 +59,7 @@ import MapRoute from '../components/MapRoute.vue'
 import MapInfoPopup from '../components/MapInfoPopup.vue'
 import MapDraw from '../components/MapDraw.vue'
 import MapWebcams from '../components/MapWebcams.vue'
+import MapTerminator from '../components/MapTerminator.vue'
 import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 import BasemapAtInfo from '../components/BasemapAtInfo.vue'
 import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
@@ -64,7 +67,7 @@ import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, MapTerminator, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   mounted () {
