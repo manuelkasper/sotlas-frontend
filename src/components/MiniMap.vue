@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative;">
+  <div class="mini-map">
     <MglMap v-if="(mapCenter || bounds) && mapStyle" :key="mapKey"
       :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5"
       :attributionControl="false" :apiKey="mapTilerApiKey" @map:load="onMapLoaded" @map:click="onMapClicked" @map:contextmenu="onMapRightClicked"
@@ -261,6 +261,11 @@ export default {
 </script>
 
 <style scoped>
+/* Class rather than an inline style so a parent can set position:fixed
+   when the map is enlarged. An inline position would win that override. */
+.mini-map {
+  position: relative;
+}
 :deep(.maplibregl-canvas-container.maplibregl-interactive) {
   cursor: auto;
 }

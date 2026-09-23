@@ -357,6 +357,7 @@ export default {
   },
   unmounted () {
     EventBus.off('navbarMenuOpened', this.navbarMenuOpened)
+    document.documentElement.style.removeProperty('--enlarged-map-top')
   },
   methods: {
     updateSummit (force = false) {
@@ -492,6 +493,10 @@ export default {
       }
     },
     toggleEnlargeMap () {
+      const navbar = document.querySelector('.navbar')
+      if (navbar) {
+        document.documentElement.style.setProperty('--enlarged-map-top', `${navbar.getBoundingClientRect().height}px`)
+      }
       this.enlargeMap = !this.enlargeMap
       this.$refs.map.resize()
     },
@@ -536,12 +541,22 @@ export default {
   .map.enlarge {
     position: fixed;
     touch-action: manipulation;
-    top: 3.25rem;
+    /* Navbar min-height is 3.25rem, but its content (and border) can make
+       the bar taller. --enlarged-map-top is that measured height. */
+    top: var(--enlarged-map-top, 3.25rem);
     right: 0;
-    bottom: 0;
+    bottom: auto;
     left: 0;
     z-index: 100;
-    height: calc(100vh - 3.25rem);
+    width: auto;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* 100vh is the large viewport and extends behind Safari's bottom
+       toolbar, so the map slides under it. 100dvh follows the visible
+       viewport and keeps the map between the navbar and that toolbar. */
+    height: calc(100vh - var(--enlarged-map-top, 3.25rem));
+    height: calc(100dvh - var(--enlarged-map-top, 3.25rem));
   }
 }
 .summit-info {
