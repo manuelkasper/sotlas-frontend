@@ -55,7 +55,14 @@ export default {
   color: #fff;
 }
 @media (max-width: 1216px) {
+  /* Extra height reveals the association legend that Frappe draws below the
+     250px view. Set width too: iOS Safari will otherwise keep the SVG's
+     intrinsic aspect ratio and grow wider than the column, which expands
+     the page scroll width into blank space on the right. Desktop Safari's
+     responsive design mode does not do that. */
   :deep(svg.chart) {
+    width: 100%;
+    max-width: 100%;
     height: 300px;
   }
 }
