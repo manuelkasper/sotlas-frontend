@@ -147,7 +147,7 @@ implements the props/emits/slots SOTLAS actually uses:
   `MglAttributionControl`: the subset of props SOTLAS passes (see
   `controls.js`).
 - `MglGeoJsonSource`: `sourceId`, `data`.
-- `MglLineLayer`, `MglSymbolLayer`: `layerId`, `layout`, `paint`, `before`.
+- `MglFillLayer`, `MglLineLayer`, `MglSymbolLayer`: `layerId`, `layout`, `paint`, `before`.
 
 Adding a new prop/emit/component should follow the same pattern as the
 existing ones (read the corresponding `@indoorequal/vue-maplibre-gl` source
