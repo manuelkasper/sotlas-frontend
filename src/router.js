@@ -58,7 +58,7 @@ let router = createRouter({
       }
     },
     {
-      path: '/map/coordinates/:coordinates(-?\\d+\\.\\d+,-?\\d+\\.\\d+)/:zoom(\\d+\\.?\\d*)',
+      path: '/map/coordinates/:coordinates(-?\\d+\\.\\d+,-?\\d+\\.\\d+)/:zoom(-?\\d+\\.?\\d*)',
       component: Map,
       meta: { savePath: '/map' }
     },
