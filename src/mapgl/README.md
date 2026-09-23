@@ -122,7 +122,7 @@ Relied on, not configured:
   `telemetry` needs to be explicitly disabled and the other two are fine
   left at their defaults.
 - The maplibre-gl version the SDK pins in its own `dependencies`
-  (currently `~5.21.1`, nested under `node_modules/@maptiler/sdk/`) — this
+  (currently `5.24`, hoisted to `node_modules/maplibre-gl`) — this
   module imports `Map`, `Marker`, `Popup`, and the controls exclusively
   from `@maptiler/sdk`, never from a direct `maplibre-gl` dependency, to
   avoid bundling two copies.

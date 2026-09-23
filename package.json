@@ -22,7 +22,7 @@
     "@fortawesome/vue-fontawesome": "^3.3.0",
     "@gaviti/vue-turnstile": "^1.1.4",
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas2",
-    "@maptiler/sdk": "^4.0.2",
+    "@maptiler/sdk": "^4.1.0",
     "@tmcw/togeojson": "^3.2.0",
     "axios": "^1.16.0",
     "buefy": "^3.0.8",
