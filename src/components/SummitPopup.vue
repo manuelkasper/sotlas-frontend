@@ -8,12 +8,14 @@
       </div>
       <h2>{{ summit.name }}<span class="summitCode"><router-link :to="'/summits/' + summit.code">{{ summit.code }}</router-link></span></h2>
       <table class="summitinfo">
-        <tr><th>Altitude</th><td><AltitudeLabel :altitude="summit.altitude" /></td></tr>
-        <tr class="points"><th>Points</th><td><SummitPointsLabel :points="summit.points" :bonus="summit.bonusPoints" /></td></tr>
-        <tr><th>Activations</th><td>{{ summit.activationCount }}</td></tr>
-        <tr v-if="summit.activationDate"><th>Last activation</th><td>{{ formatActivationDate(summit.activationDate) }} (<router-link :to="makeActivatorLink(summit.activationCall)">{{ summit.activationCall }}</router-link>)</td></tr>
-        <tr v-if="lastSpot"><th>Last spot</th><td><span v-html="formatTimeDay(lastSpot.timeStamp)" />: <router-link :to="makeActivatorLink(lastSpot.activatorCallsign)">{{ lastSpot.activatorCallsign }}</router-link><span v-if="lastSpot.frequency">, {{ lastSpot.frequency }}</span> <ModeLabel :mode="lastSpot.mode" :type="lastSpot.type" /></td></tr>
-        <tr v-if="nextAlert" class="nextAlert"><th>Next alert</th><td><span v-html="formatDateTimeRelative(nextAlert.dateActivated)" />: <router-link :to="makeActivatorLink(nextAlert.activatorCallsign)">{{ nextAlert.activatorCallsign }}</router-link><div v-if="nextAlert.frequency" class="alertFrequencies">{{ nextAlert.frequency }}</div><div v-if="nextAlert.comments" class="alertComments">{{ nextAlert.comments }}</div></td></tr>
+        <tbody>
+          <tr><th>Altitude</th><td><AltitudeLabel :altitude="summit.altitude" /></td></tr>
+          <tr class="points"><th>Points</th><td><SummitPointsLabel :points="summit.points" :bonus="summit.bonusPoints" /></td></tr>
+          <tr><th>Activations</th><td>{{ summit.activationCount }}</td></tr>
+          <tr v-if="summit.activationDate"><th>Last activation</th><td>{{ formatActivationDate(summit.activationDate) }} (<router-link :to="makeActivatorLink(summit.activationCall)">{{ summit.activationCall }}</router-link>)</td></tr>
+          <tr v-if="lastSpot"><th>Last spot</th><td><span v-html="formatTimeDay(lastSpot.timeStamp)" />: <router-link :to="makeActivatorLink(lastSpot.activatorCallsign)">{{ lastSpot.activatorCallsign }}</router-link><span v-if="lastSpot.frequency">, {{ lastSpot.frequency }}</span> <ModeLabel :mode="lastSpot.mode" :type="lastSpot.type" /></td></tr>
+          <tr v-if="nextAlert" class="nextAlert"><th>Next alert</th><td><span v-html="formatDateTimeRelative(nextAlert.dateActivated)" />: <router-link :to="makeActivatorLink(nextAlert.activatorCallsign)">{{ nextAlert.activatorCallsign }}</router-link><div v-if="nextAlert.frequency" class="alertFrequencies">{{ nextAlert.frequency }}</div><div v-if="nextAlert.comments" class="alertComments">{{ nextAlert.comments }}</div></td></tr>
+        </tbody>
       </table>
       <div class="buttons">
         <b-button v-if="!minimizePopup" size="is-small" icon-left="window-close" @click="$emit('close')">Close</b-button>
