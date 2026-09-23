@@ -19,13 +19,13 @@ function createLayerComponent (type, name) {
 
       function addLayer () {
         if (!isLoaded.value || !sourceRef.value) return
-        map.value.addLayer({
-          id: props.layerId,
-          type,
-          source: sourceId,
-          layout: props.layout,
-          paint: props.paint
-        }, props.before)
+        // MapLibre's style validator rejects a present `layout`/`paint` key
+        // whose value is `undefined` ("object expected, undefined found"),
+        // so omit each key entirely rather than setting it to undefined.
+        const layer = { id: props.layerId, type, source: sourceId }
+        if (props.layout) layer.layout = props.layout
+        if (props.paint) layer.paint = props.paint
+        map.value.addLayer(layer, props.before)
       }
 
       function removeLayer () {
@@ -66,3 +66,4 @@ function createLayerComponent (type, name) {
 
 export const MglLineLayer = createLayerComponent('line', 'MglLineLayer')
 export const MglSymbolLayer = createLayerComponent('symbol', 'MglSymbolLayer')
+export const MglFillLayer = createLayerComponent('fill', 'MglFillLayer')
