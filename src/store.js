@@ -1,10 +1,10 @@
 import { createStore } from 'vuex'
+import { createSocketClient } from 'vue-native-websocket'
 import EventBus from './event-bus'
 import { decompressKeys } from './keyzipper'
 import axios from 'axios'
-import { connectWebSocket } from './websocket'
 
-let socket = null
+let socketClient = null
 
 const MAX_SPOT_AGE = 86400000
 const ALERT_UPDATE_INTERVAL = 300000
@@ -80,10 +80,9 @@ const store = createStore({
     turnstileToken: null
   },
   mutations: {
-    SOCKET_ONOPEN (state, event) {
-      socket = event.currentTarget
+    SOCKET_ONOPEN (state) {
       state.socket.isConnected = true
-      event.currentTarget.sendObj({ rbnFilter: state.rbnFilter })
+      socketClient.sendJson({ rbnFilter: state.rbnFilter })
     },
     SOCKET_ONCLOSE (state, event) {
       state.socket.isConnected = false
@@ -114,7 +113,7 @@ const store = createStore({
     setRbnFilter (state, newRbnFilter) {
       state.rbnFilter = newRbnFilter
       if (state.socket.isConnected) {
-        socket.sendObj({ rbnFilter: state.rbnFilter })
+        socketClient.sendJson({ rbnFilter: state.rbnFilter })
       }
     },
     setAlerts (state, newAlerts) {
@@ -243,6 +242,22 @@ function loadAlerts (noCache) {
 loadAlerts(false)
 setInterval(loadAlerts, ALERT_UPDATE_INTERVAL)
 
-connectWebSocket(import.meta.env.VITE_WSS_URL + '/ws', store, { reconnectionDelay: 1000 })
+socketClient = createSocketClient({
+  url: import.meta.env.VITE_WSS_URL + '/ws',
+  reconnection: true,
+  reconnectionDelay: 1000,
+  onOpen: event => store.commit('SOCKET_ONOPEN', event),
+  onClose: event => store.commit('SOCKET_ONCLOSE', event),
+  onError: event => store.commit('SOCKET_ONERROR', event),
+  onMessage: (event, client, json) => {
+    if (json !== null) {
+      store.commit('SOCKET_ONMESSAGE', json)
+    }
+  },
+  onReconnect: count => store.commit('SOCKET_RECONNECT', count),
+  onReconnectError: () => store.commit('SOCKET_RECONNECT_ERROR')
+})
+
+socketClient.connect()
 
 export default store
