@@ -137,7 +137,7 @@ export default {
   inset: 0;
 }
 .faicon {
-  margin-left: 0.4em;
+  margin-left: 0.2em;
 }
 /* See LoggedActivationsList: stretch the QSO control across the <td> so iOS
    taps on cell padding open the list instead of only highlighting the cell. */
