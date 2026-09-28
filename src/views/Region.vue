@@ -20,7 +20,7 @@
             <SummitList :data="filteredSummits" :myActivatedSummits="myActivatedSummits" :myActivatedSummitsThisYear="myActivatedSummitsThisYear" :myChasedSummits="myChasedSummits" />
           </div>
           <div class="column">
-            <MiniMap v-if="region" class="map" :bounds="region.bounds" :filter="mapFilter" :show-inactive-summits="showInactive" :overviewMap="true" />
+            <MiniMap v-if="region" class="map box" :bounds="region.bounds" :filter="mapFilter" :show-inactive-summits="showInactive" :overviewMap="true" />
           </div>
         </div>
       </div>
@@ -182,6 +182,7 @@ export default {
   width: 100%;
   height: 40vh;
   min-height: 20em;
-  border: 1px solid #ccc;
+  overflow: hidden;
+  padding: 0;
 }
 </style>

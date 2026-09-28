@@ -31,7 +31,7 @@
             </b-table>
           </div>
           <div class="column">
-            <MiniMap v-if="association.code" class="map" :bounds="association.bounds" :filter="mapFilter" :overviewMap="true" />
+            <MiniMap v-if="association.code" class="map box" :bounds="association.bounds" :filter="mapFilter" :overviewMap="true" />
           </div>
         </div>
       </div>
@@ -147,6 +147,7 @@ h1 .flag {
   width: 100%;
   height: 40vh;
   min-height: 20em;
-  border: 1px solid #ccc;
+  overflow: hidden;
+  padding: 0;
 }
 </style>

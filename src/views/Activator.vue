@@ -71,7 +71,7 @@
           <h4 class="title is-4 logged-act"><span>Logged activations</span><b-button v-if="!notFound" size="is-small" icon-left="map" icon-pack="fas" type="is-info" @click="showMap = !showMap">{{ showMap ? 'Hide' : 'Show' }} Map</b-button></h4>
 
           <template v-if="activations !== null && activations.length > 0">
-            <MiniMap v-if="showMap" class="map" :bounds="activationsMapBounds" :filter="activationsMapFilter" zoom-warning show-inactive-summits />
+            <MiniMap v-if="showMap" class="map box" :bounds="activationsMapBounds" :filter="activationsMapFilter" zoom-warning show-inactive-summits />
 
             <b-field>
               <FilterInput v-model="activationsFilter" :size="$mq.mobile ? 'is-small' : ''" :is-regex="true" />
@@ -448,8 +448,9 @@ export default {
 .map {
   width: 100%;
   height: 70vh;
-  border: 1px solid #ccc;
   margin-bottom: 2em;
+  overflow: hidden;
+  padding: 0;
 }
 .spots-header {
   display: flex;
