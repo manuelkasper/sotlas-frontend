@@ -49,7 +49,7 @@
           <div v-if="coverPhoto && !enlargeMap" class="photo-column column is-narrow">
             <div class="photo box">
               <div class="photo-image">
-                <a v-if="coverPhoto.photo" href="#" @click="photoClicked(coverPhoto.photo)"><img :src="coverPhoto.src" /></a>
+                <a v-if="coverPhoto.photo" href="#" @click="photoClicked(coverPhoto.photo)"><img :src="photoSrc(coverPhoto.photo, 'large')" /></a>
                 <a v-else :href="coverPhoto.mediaLink" target="_blank"><img :src="coverPhoto.src" /></a>
               </div>
               <div v-if="coverPhoto.description" class="description">{{ coverPhoto.description }}</div>
