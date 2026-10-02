@@ -67,7 +67,7 @@ export default {
 .flag {
   margin-right: 0.4em;
 }
-.qso-table table {
+:deep(.qso-table table) {
   background-color: transparent;
 }
 /* :deep() is required because <td> is rendered by Buefy's <b-table>, not by this
