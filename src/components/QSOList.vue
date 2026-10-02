@@ -1,5 +1,5 @@
 <template>
-  <b-table class="auto-width" :narrowed="true" :striped="true" :data="data" :mobile-cards="false">
+  <b-table class="auto-width qso-table" :narrowed="true" :striped="true" :data="data" :mobile-cards="false">
     <b-table-column field="TimeOfDay" label="Time" cell-class="nowrap" sortable v-slot="props">
       {{ props.row.TimeOfDay }}
     </b-table-column>
@@ -66,6 +66,9 @@ export default {
 <style scoped>
 .flag {
   margin-right: 0.4em;
+}
+.qso-table {
+  background-color: none;
 }
 /* :deep() is required because <td> is rendered by Buefy's <b-table>, not by this
    component's template, so Vue's scoped-CSS data-v-* attribute is never applied to
