@@ -137,9 +137,6 @@ export default {
   color: #3273dc;
   float: right;
 }
-.delete {
-  left: 10px;
-}
 .activation-date {
   white-space: nowrap;
 }
