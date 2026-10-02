@@ -251,11 +251,33 @@ export default {
    not apply :focus on mouse click, so it already looked correct. Keyboard
    focus still drops the white fill so Bulma's focus background can show.
    The has-dropdown.is-active rule uses the same fill for the More trigger
-   while its menu is open. */
+   while its menu is open. On desktop the open menu hangs below the navbar's
+   bottom border, and the dropdown's own top border sits on that same edge.
+   The ::before paints the trigger fill over both, only as wide as the More
+   link, so the open menu meets the link with no gray line between them.
+   Bulma fades background-color on every link, but the menu toggles with
+   display and does not fade — keep the trigger fill in step by not
+   transitioning it. */
 .router-link-active:not(:focus-visible),
 .navbar-item.is-current:not(:focus-visible),
 :deep(.navbar-item.has-dropdown.is-active > .navbar-link) {
   background-color: var(--bulma-scheme-main);
+}
+:deep(.navbar-item.has-dropdown > .navbar-link) {
+  transition-property: color, border-color;
+}
+@media screen and (min-width: 1024px) {
+  :deep(.navbar-item.has-dropdown.is-active > .navbar-link)::before {
+    content: "";
+    position: absolute;
+    z-index: calc(var(--bulma-navbar-dropdown-z) + 1);
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: calc(var(--bulma-navbar-dropdown-border-width) + 1px);
+    background-color: var(--bulma-scheme-main);
+    pointer-events: none;
+  }
 }
 .navbar-item.more-link {
   gap: 0;

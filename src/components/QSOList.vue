@@ -67,8 +67,8 @@ export default {
 .flag {
   margin-right: 0.4em;
 }
-.qso-table {
-  background-color: none;
+.qso-table table {
+  background-color: transparent;
 }
 /* :deep() is required because <td> is rendered by Buefy's <b-table>, not by this
    component's template, so Vue's scoped-CSS data-v-* attribute is never applied to
