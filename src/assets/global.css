@@ -224,6 +224,10 @@ hr {
   color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l));
   border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-border-l));
 }
+.button.is-outlined.is-info {
+  color: hsl(198, 83%, 54%);
+  border-color: hsl(198, 83%, 54%);
+}
 .action-button {
   font-weight: normal;
   flex: 0 0 auto;
