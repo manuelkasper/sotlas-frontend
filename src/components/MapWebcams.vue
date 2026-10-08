@@ -72,10 +72,10 @@ export default {
       this.loadWebcams()
       this.setup = true
     },
-    loadWebcams (force = false) {
+    loadWebcams (isRetry = false) {
       // Check if changes are significant enough to warrant loading new webcams.
-      // A rate-limit retry passes force so it still runs if the map has not moved.
-      if (!force && !this.hasSignificantChanges()) {
+      // The single rate-limit retry passes isRetry so it still runs if the map has not moved.
+      if (!isRetry && !this.hasSignificantChanges()) {
         return
       }
       
@@ -126,15 +126,17 @@ export default {
       })
         .then(response => {
           if (response.status === 429) {
-            this.scheduleRateLimitRetry()
+            // Remember this view so idle events do not request again until the map moves.
+            // Only the first 429 is retried; a second one stops until that move.
+            this.rememberView()
+            if (!isRetry) {
+              this.scheduleRateLimitRetry()
+            }
             return
           }
 
           this.webcams = response.data.filter(webcam => { return webcam.status === 'active' })
-          
-          // Update stored values after successful load
-          this.lastZoom = Math.floor(this.map.getZoom())
-          this.lastBounds = this.map.getBounds()
+          this.rememberView()
         })
         .catch(error => {
           console.error('Error loading webcams:', error)
@@ -142,6 +144,10 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    rememberView () {
+      this.lastZoom = Math.floor(this.map.getZoom())
+      this.lastBounds = this.map.getBounds()
     },
     scheduleRateLimitRetry () {
       if (!this.setup) {
