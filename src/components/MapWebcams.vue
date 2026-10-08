@@ -72,9 +72,10 @@ export default {
       this.loadWebcams()
       this.setup = true
     },
-    loadWebcams () {
-      // Check if changes are significant enough to warrant loading new webcams
-      if (!this.hasSignificantChanges()) {
+    loadWebcams (force = false) {
+      // Check if changes are significant enough to warrant loading new webcams.
+      // A rate-limit retry passes force so it still runs if the map has not moved.
+      if (!force && !this.hasSignificantChanges()) {
         return
       }
       
@@ -82,7 +83,8 @@ export default {
       if (this.loading) {
         return
       }
-      
+
+      this.clearRateLimitRetry()
       this.loading = true
       
       // Convert MapBox zoom level to Google Maps like zoom level
@@ -118,9 +120,16 @@ export default {
           westLon: this.map.getBounds().getSouthWest().lng,
           zoom: mapZoom,
           include: 'location,images,urls'
-        }
+        },
+        // Treat 429 as a resolved response so the global error snackbar stays hidden.
+        validateStatus: status => (status >= 200 && status < 300) || status === 429
       })
         .then(response => {
+          if (response.status === 429) {
+            this.scheduleRateLimitRetry()
+            return
+          }
+
           this.webcams = response.data.filter(webcam => { return webcam.status === 'active' })
           
           // Update stored values after successful load
@@ -134,7 +143,25 @@ export default {
           this.loading = false
         })
     },
+    scheduleRateLimitRetry () {
+      if (!this.setup) {
+        return
+      }
+
+      this.clearRateLimitRetry()
+      this.rateLimitRetryTimer = setTimeout(() => {
+        this.rateLimitRetryTimer = null
+        this.loadWebcams(true)
+      }, 5000)
+    },
+    clearRateLimitRetry () {
+      if (this.rateLimitRetryTimer) {
+        clearTimeout(this.rateLimitRetryTimer)
+        this.rateLimitRetryTimer = null
+      }
+    },
     cleanup() {
+      this.clearRateLimitRetry()
       if (this.map && this.idleListener) {
         this.map.off('idle', this.idleListener)
         this.idleListener = null
@@ -153,6 +180,7 @@ export default {
           oldMap.off('idle', this.idleListener)
           this.idleListener = null
         }
+        this.clearRateLimitRetry()
         this.setup = false
         this.lastZoom = null
         this.lastBounds = null
@@ -172,7 +200,8 @@ export default {
       idleListener: null,
       lastZoom: null,
       lastBounds: null,
-      loading: false
+      loading: false,
+      rateLimitRetryTimer: null
     }
   }
 }
