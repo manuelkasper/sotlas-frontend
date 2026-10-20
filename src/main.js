@@ -80,12 +80,12 @@ if (sessionStorage.getItem('wantSso') || localStorage.getItem('wantSso')) {
         sessionStorage.removeItem('wantSsoLogin')
         keycloak.login()
       } else {
-        mountApp()
+        clearSsoFragment().finally(mountApp)
       }
     },
     onInitError: error => {
       console.error('Keycloak error: ' + error)
-      mountApp()
+      clearSsoFragment().finally(mountApp)
     },
     autoUpdateToken: false
   })
@@ -112,6 +112,36 @@ axios.interceptors.response.use(response => {
 
   return Promise.reject(error)
 })
+
+// Keycloak removes the SSO fragment with history.replaceState, but Vue Router
+// has already captured that fragment for its first navigation and writes it
+// back when the navigation settles. Drop it once Keycloak has consumed the
+// callback, so state/session_state do not stay in the address bar.
+function isSsoCallbackHash (hash) {
+  if (!hash || hash.charAt(0) !== '#') {
+    return false
+  }
+  const params = new URLSearchParams(hash.slice(1))
+  return params.has('state') && (params.has('code') || params.has('error') || params.has('session_state'))
+}
+
+function stripSsoHashFromLocation () {
+  if (!isSsoCallbackHash(window.location.hash)) {
+    return
+  }
+  window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search)
+}
+
+function clearSsoFragment () {
+  const clean = () => {
+    const route = router.currentRoute.value
+    if (route && isSsoCallbackHash(route.hash)) {
+      return router.replace({ path: route.path, query: route.query, hash: '' }).catch(stripSsoHashFromLocation)
+    }
+    stripSsoHashFromLocation()
+  }
+  return router.isReady().then(clean, clean)
+}
 
 function mountApp () {
   app.mount('#app')
