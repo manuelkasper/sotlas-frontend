@@ -52,8 +52,11 @@ export default {
       return prefix.isoCodeForCallsign(callsign)
     },
     formatNotes (notes) {
+      if (notes == null) {
+        return ''
+      }
       // Detect summit references and link them
-      let doc = new DOMParser().parseFromString(notes, 'text/html')
+      let doc = new DOMParser().parseFromString(String(notes), 'text/html')
       let notesText = doc.body.textContent || ''
       return notesText.replace(/[A-Z0-9]{1,8}\/[A-Z]{2}-[0-9]{3}/gi, match => {
         return '<a href="/summits/' + match.toUpperCase() + '">' + match.toUpperCase() + '</a>'

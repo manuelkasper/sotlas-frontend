@@ -12,7 +12,7 @@ export default {
         })
     },
     loadActivationDetails (activationId) {
-      return this.axiosAuth.get('https://api-db2.sota.org.uk/logs/activation/detailed/' + this.activationId)
+      return this.axiosAuth.get('https://api-db2.sota.org.uk/logs/activation/detailed/' + activationId)
         .then(response => {
           return response.data[0]
         })
