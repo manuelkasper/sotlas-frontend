@@ -190,7 +190,7 @@ let router = createRouter({
           resolve(savedPosition)
         }
       } else {
-        resolve({ x: 0, y: 0 })
+        resolve({ left: 0, top: 0 })
       }
     })
   }

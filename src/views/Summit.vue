@@ -171,6 +171,7 @@ export default {
   components: {
     SummitDatabasePageLayout, MiniMap, SummitActivations, SummitAttributes, ResourceList, SummitRoutes, SummitPhotos, SummitVideos, PhotosUploader, Coordinates, Bearing, SummitPointsLabel, AltitudeLabel, SpotsList, AlertsList, EditAlert, EditSpot, FirstActivator
   },
+  delayScroll: true,
   mixins: [utils, api, smptracks, coverphoto],
   computed: {
     locator () {
@@ -447,6 +448,7 @@ export default {
       Promise.all(loads)
         .finally(() => {
           this.loadingComponent.close()
+          EventBus.emit('triggerScroll')
         })
     },
     reloadPhotos () {
