@@ -12,7 +12,7 @@
         </template>
       </SummitPhotosGroup>
     </div>
-    <b-modal v-model="isEditorActive" has-modal-card trap-focus aria-role="dialog" aria-modal>
+    <b-modal v-model="isEditorActive" has-modal-card trap-focus aria-role="dialog" aria-modal :can-cancel="['escape']">
       <EditPhoto v-if="editingPhoto" :photo="editingPhoto" :summitCode="summit.code" @photoEdited="$emit('photoEdited')" @close="isEditorActive = false" />
     </b-modal>
   </div>
