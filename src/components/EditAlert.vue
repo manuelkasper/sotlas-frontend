@@ -126,7 +126,7 @@ export default {
       return /^[a-zA-Z0-9/]{3,}$/.test(this.callsign) &&
         (this.summitCodeXxx || (this.summit !== null && this.isSummitValid(this.summit))) &&
         this.date && /^\d\d:\d\d$/.test(this.time) &&
-        this.freqMode.length > 0 && (this.freqMode.join(', ').length <= 40 || this.freqMode.join(',').length <= 40)
+        this.freqMode.length > 0 && (this.freqMode.join(', ').length <= 255 || this.freqMode.join(',').length <= 255)
     },
     summitLabelClass () {
       if (!this.summit || this.isSummitValid(this.summit)) {
@@ -230,7 +230,7 @@ export default {
     postAlert () {
       this.lastCallsign = this.callsign.toUpperCase()
       let freqMode = this.freqMode.join(', ')
-      if (freqMode.length > 40) {
+      if (freqMode.length > 255) {
         freqMode = this.freqMode.join(',')
       }
       let utcDate = this.date
