@@ -24,7 +24,7 @@
     "@mapbox/mapbox-gl-draw": "github:manuelkasper/mapbox-gl-draw#sotlas2",
     "@maptiler/sdk": "^4.2.1",
     "@tmcw/togeojson": "^3.2.0",
-    "axios": "^1.16.0",
+    "axios": "^1.21.0",
     "buefy": "^3.0.8",
     "bulma": "^1.0.4",
     "cheap-ruler": "^2.5.1",
