@@ -165,10 +165,10 @@ export default {
       haveAz: false,
       actions: [
         {
-          name: 'Geoportail (FR)',
+          name: 'cartes.gouv.fr',
           url: () => {
             if (this.reference && this.reference.match('^F[LKR]*/')) {
-              return `https://www.geoportail.gouv.fr/carte?c=${this.longitude},${this.latitude}&z=15&l0=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD::GEOPORTAIL:OGC:WMTS(1)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGN::GEOPORTAIL:OGC:WMTS(1)&l2=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR::GEOPORTAIL:OGC:WMTS(1)&l3=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(1)&l4=GEOGRAPHICALGRIDSYSTEMS.MAPS::GEOPORTAIL:OGC:WMTS(1)&permalink=yes`
+              return `https://cartes.gouv.fr/explorer-les-cartes/?c=${this.longitude},${this.latitude}&z=15&l=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2$GEOPORTAIL:OGC:WMTS(4;1;1;0),GEOGRAPHICALGRIDSYSTEMS.MAPS$GEOPORTAIL:OGC:WMTS(5;1;1;0),GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR$GEOPORTAIL:OGC:WMTS(3;1;1;0)&permalink=yes`
             }
           }
         },
