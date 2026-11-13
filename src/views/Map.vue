@@ -11,6 +11,7 @@
       <div v-if="map" class="maplibregl-ctrl-top-left">
         <MapFilterControl ref="filterControl" position="top-left" @startFiltering="filtering = true" @stopFiltering="filtering = false" />
         <MapOptionsControl ref="optionsControl" position="top-left" />
+        <MapSentinelControl ref="sentinelControl" />
         <MapDownloadControl position="top-left" />
       </div>
 
@@ -31,8 +32,13 @@
       <MapWebcams v-if="mapOptions.webcams" />
 
       <MapTerminator v-if="mapOptions.terminator" />
+
+      <MapSentinel2 v-if="map && $store.state.sentinel2" :map="map" />
     </MglMap>
-    <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
+    <div v-if="zoomWarning || sentinelZoomWarning" class="zoom-warnings">
+      <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
+      <div v-if="sentinelZoomWarning" class="zoom-warning">Zoom in to see Sentinel-2 imagery</div>
+    </div>
     <SwisstopoInfo />
     <BasemapAtInfo />
     <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
@@ -48,10 +54,12 @@ import smptracks from '../mixins/smptracks.js'
 import mapstyle from '../mixins/mapstyle.js'
 import longtouch from '../mixins/longtouch.js'
 import reportMapSession from '../mapsession.js'
+import { MIN_ZOOM as SENTINEL2_MIN_ZOOM } from '../sentinel2.js'
 
 import { MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl } from '../mapgl'
 import MapFilterControl from '../components/MapFilterControl.vue'
 import MapOptionsControl from '../components/MapOptionsControl.vue'
+import MapSentinelControl from '../components/MapSentinelControl.vue'
 import MapDownloadControl from '../components/MapDownloadControl.vue'
 import LoadingRing from '../components/LoadingRing.vue'
 import SummitPopup from '../components/SummitPopup.vue'
@@ -60,6 +68,7 @@ import MapInfoPopup from '../components/MapInfoPopup.vue'
 import MapDraw from '../components/MapDraw.vue'
 import MapWebcams from '../components/MapWebcams.vue'
 import MapTerminator from '../components/MapTerminator.vue'
+import MapSentinel2 from '../components/MapSentinel2.vue'
 import SwisstopoInfo from '../components/SwisstopoInfo.vue'
 import BasemapAtInfo from '../components/BasemapAtInfo.vue'
 import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
@@ -67,7 +76,7 @@ import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, MapTerminator, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapSentinelControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, MapTerminator, MapSentinel2, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   mounted () {
@@ -134,6 +143,7 @@ export default {
       summit: null,
       leavingRoute: false,
       zoomWarning: false,
+      sentinelZoomWarning: false,
       filtering: false,
       infoCoordinates: null,
       persistentRoutes: []
@@ -162,6 +172,11 @@ export default {
         this.updateLayers(this.map)
       },
       deep: true
+    },
+    '$store.state.sentinel2' () {
+      if (this.map) {
+        this.updateZoomWarnings(this.map.getZoom())
+      }
     }
   },
   computed: {
@@ -240,6 +255,7 @@ export default {
       this.updateRoute()
 
       reportMapSession('map', this.map.getMaptilerSessionId())
+      this.updateZoomWarnings(this.map.getZoom())
     },
     onMapMoveEnd (event) {
       localStorage.setItem('bounds', JSON.stringify(event.map.getBounds().toArray()))
@@ -248,7 +264,11 @@ export default {
       const center = event.map.getCenter()
       this.$store.commit('setMapCenter', { latitude: center.lat, longitude: center.lng })
 
-      this.zoomWarning = (event.map.getZoom() < 3 && (this.$refs.filterControl?.isActive() || this.$refs.optionsControl?.spotsShown()))
+      this.updateZoomWarnings(event.map.getZoom())
+    },
+    updateZoomWarnings (zoom) {
+      this.zoomWarning = (zoom < 3 && (this.$refs.filterControl?.isActive() || this.$refs.optionsControl?.spotsShown()))
+      this.sentinelZoomWarning = this.$store.state.sentinel2 && zoom < SENTINEL2_MIN_ZOOM
     },
     onMapClicked (event) {
       if (this.$refs.draw.isDrawing() || event.event.originalEvent.hitMarker) {
@@ -264,6 +284,7 @@ export default {
         // User probably clicked outside any features; close any controls
         this.$refs.filterControl.close()
         this.$refs.optionsControl.close()
+        this.$refs.sentinelControl.close()
         if (!this.summit) {
           this.persistentRoutes = []
         }
@@ -452,11 +473,18 @@ export default {
 .loading-ring-wrapper {
   margin: 1rem 0.5rem 0.5rem 0.5rem;
 }
-.zoom-warning {
+.zoom-warnings {
   position: absolute;
   left: 50%;
   top: 1.5rem;
   transform: translate(-50%, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  pointer-events: none;
+}
+.zoom-warning {
   background-color: #feffd2;
   padding: 0.2em 0.5em;
   border-radius: 0.5em;

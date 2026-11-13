@@ -24,6 +24,12 @@ if (!mapType) {
   mapType = 'maptiler_outdoor'
 }
 
+let sentinel2 = localStorage.getItem('sentinel2') === '1'
+let sentinel2Date = localStorage.getItem('sentinel2Date')
+if (!/^\d{4}-\d{2}-\d{2}$/.test(sentinel2Date || '')) {
+  sentinel2Date = null
+}
+
 // 'auto' follows prefers-color-scheme; 'light'/'dark' are applied as data-theme
 // on <html> (initially by the inline script in index.html, to avoid a flash)
 let theme = localStorage.getItem('theme')
@@ -72,6 +78,10 @@ const store = createStore({
     alertPage: 1,
     activatorPage: 1,
     mapType,
+    sentinel2,
+    sentinel2Date,
+    sentinel2Loading: false,
+    sentinel2Error: null,
     theme,
     mapOptions,
     mapCenter: null,
@@ -160,6 +170,31 @@ const store = createStore({
       // Force a reload now to avoid problems with layers added by draw etc.
       sessionStorage.setItem('mapReloaded', true)
       window.location.reload()
+    },
+    setSentinel2 (state, shown) {
+      state.sentinel2 = !!shown
+      if (state.sentinel2) {
+        localStorage.setItem('sentinel2', '1')
+      } else {
+        localStorage.removeItem('sentinel2')
+      }
+    },
+    setSentinel2Date (state, date) {
+      if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return
+      }
+      state.sentinel2Date = date || null
+      if (state.sentinel2Date) {
+        localStorage.setItem('sentinel2Date', state.sentinel2Date)
+      } else {
+        localStorage.removeItem('sentinel2Date')
+      }
+    },
+    setSentinel2Loading (state, loading) {
+      state.sentinel2Loading = loading
+    },
+    setSentinel2Error (state, error) {
+      state.sentinel2Error = error
     },
     setTheme (state, newTheme) {
       state.theme = newTheme
