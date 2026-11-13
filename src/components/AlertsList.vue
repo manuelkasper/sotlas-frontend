@@ -134,15 +134,22 @@ export default {
       return (!prevRow || !moment.utc(prevRow.dateActivated).isSame(moment.utc(row.dateActivated), 'day'))
     },
     rowClass (row, index) {
-      let realIndex = (this.curPage - 1) * this.perPage + index
-      if (index === 0 || realIndex === 0 || realIndex === this.data.length) {
+      if (index === 0) {
         return ''
       }
-      if (!moment.utc(this.data[realIndex - 1].dateActivated).isSame(moment.utc(row.dateActivated), 'day')) {
+      const perPage = Number(this.perPage)
+      // Once the list fits on one page, Buefy renders every row and ignores
+      // currentPage. Indexing with the stored page then reads off the end.
+      const paged = this.paginated && this.data.length > perPage
+      const realIndex = paged ? (this.curPage - 1) * perPage + index : index
+      const prev = this.data[realIndex - 1]
+      if (!prev) {
+        return ''
+      }
+      if (!moment.utc(prev.dateActivated).isSame(moment.utc(row.dateActivated), 'day')) {
         return 'date-change'
-      } else {
-        return ''
       }
+      return ''
     },
     canEditAlert (alert) {
       if (!this.myUserId) {
