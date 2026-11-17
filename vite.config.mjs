@@ -74,13 +74,28 @@ export default defineConfig(async ({ mode }) => {
       ...customPlugins
     ],
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src'),
-        ...(useProIcons ? {} : {
-          '@fortawesome/pro-regular-svg-icons': path.resolve(__dirname, 'src/fa-pro-fallback/regular.js'),
-          '@fortawesome/pro-solid-svg-icons': path.resolve(__dirname, 'src/fa-pro-fallback/solid.js')
-        })
-      },
+      alias: [
+        { find: '@', replacement: path.resolve(__dirname, 'src') },
+        // vuedraggable's UMD build calls require('vue'). Vue's CJS entry is
+        // the full build (vue/dist/vue.cjs.prod.js), which pulls in the
+        // template compiler. Every template here is compiled from an SFC, so
+        // the bare specifier resolves to the runtime-only build. Exact match
+        // so vue/compiler-sfc, used by @vitejs/plugin-vue, is left alone.
+        {
+          find: /^vue$/,
+          replacement: path.resolve(__dirname, 'node_modules/vue/dist/vue.runtime.esm-bundler.js')
+        },
+        ...(useProIcons ? [] : [
+          {
+            find: '@fortawesome/pro-regular-svg-icons',
+            replacement: path.resolve(__dirname, 'src/fa-pro-fallback/regular.js')
+          },
+          {
+            find: '@fortawesome/pro-solid-svg-icons',
+            replacement: path.resolve(__dirname, 'src/fa-pro-fallback/solid.js')
+          }
+        ])
+      ],
     },
     optimizeDeps: {
       include: [
