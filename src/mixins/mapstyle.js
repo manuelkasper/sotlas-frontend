@@ -1,18 +1,47 @@
 import api from './api.js'
-import basemapatStyle from '../assets/basemapat.json'
-import caltopoStyle from '../assets/caltopo.json'
-import norkartStyle from '../assets/norkart.json'
-import swisstopoStyle from '../assets/swisstopo.json'
-import swisstopoAerialStyle from '../assets/swisstopo_aerial.json'
-import swisstopoRasterStyle from '../assets/swisstopo_raster.json'
-import toposvalbardStyle from '../assets/toposvalbard.json'
 import partialSnowcoverDots from '../assets/partial-snowcover-dots.png'
+
+// Dynamic imports so Vite emits one chunk per style. The map views fetch
+// only the style that is actually selected.
+const localStyleLoaders = {
+  basemapat: () => import('../assets/basemapat.json'),
+  caltopo: () => import('../assets/caltopo.json'),
+  norkart: () => import('../assets/norkart.json'),
+  os_outdoor: () => import('../assets/os_outdoor.json'),
+  os_road: () => import('../assets/os_road.json'),
+  swisstopo: () => import('../assets/swisstopo.json'),
+  swisstopo_aerial: () => import('../assets/swisstopo_aerial.json'),
+  swisstopo_raster: () => import('../assets/swisstopo_raster.json'),
+  toposvalbard: () => import('../assets/toposvalbard.json')
+}
+
+const localStyleCache = {}
+const localStylePromises = {}
+
+function loadLocalStyle (type) {
+  if (!localStyleLoaders[type]) {
+    return Promise.resolve(null)
+  }
+  if (!localStylePromises[type]) {
+    localStylePromises[type] = localStyleLoaders[type]().then(module => {
+      localStyleCache[type] = module.default
+      return module.default
+    }).catch(error => {
+      localStylePromises[type] = null
+      throw error
+    })
+  }
+  return localStylePromises[type]
+}
 
 export default {
   mixins: [api],
   mounted () {
     this.initialMapOptions = { ...this.mapOptions }
     this.updateMapTilerApiKey()
+  },
+  beforeUnmount () {
+    this._mapStyleUnmounted = true
   },
   computed: {
     mapLanguage () {
@@ -42,8 +71,11 @@ export default {
         }
       }
 
-      // Local styles: deep clone and patch (no post-load flash)
-      let style = JSON.parse(JSON.stringify(this.mapTypes[this.mapType].style))
+      // Local styles: fetched as their own chunk, then cloned and patched.
+      if (this.localMapStyleType !== this.mapType || !this.localMapStyle) {
+        return null
+      }
+      let style = JSON.parse(JSON.stringify(this.localMapStyle))
 
       // Show/hide layers according to map options for initial render to save time
       style.layers.forEach(layer => {
@@ -56,13 +88,25 @@ export default {
         }
       })
 
-      // Patch MapTiler key
+      // {key} is the MapTiler key. {oskey} is the Ordnance Survey Data Hub key,
+      // used by the local OS Outdoor / Road styles (sprite, glyphs and tiles).
+      const osApiKey = import.meta.env.VITE_OS_API_KEY || ''
+      const applyPlaceholders = (value) => {
+        if (typeof value !== 'string') return value
+        return value.replace('{key}', this.mapTilerApiKey).replace('{oskey}', osApiKey)
+      }
       Object.values(style.sources).forEach(source => {
         if (source.url) {
-          source.url = source.url.replace('{key}', this.mapTilerApiKey)
+          source.url = applyPlaceholders(source.url)
+        }
+        if (source.tiles) {
+          source.tiles = source.tiles.map(applyPlaceholders)
         }
       })
-      style.glyphs = style.glyphs.replace('{key}', this.mapTilerApiKey)
+      style.glyphs = applyPlaceholders(style.glyphs)
+      if (style.sprite) {
+        style.sprite = applyPlaceholders(style.sprite)
+      }
 
       // Patch units for SOTLAS summit labels
       if (this.$store.state.altitudeUnits === 'ft') {
@@ -96,6 +140,17 @@ export default {
     }
   },
   methods: {
+    requestLocalStyle (type) {
+      loadLocalStyle(type).then(style => {
+        if (this._mapStyleUnmounted || !style || this.mapType !== type) {
+          return
+        }
+        this.localMapStyle = style
+        this.localMapStyleType = type
+      }).catch(error => {
+        console.error(error)
+      })
+    },
     updateMapTilerApiKey () {
       if (this.$store.state.mapTilerApiKey || this.$store.state.mapTilerApiKeyLoading) {
         return
@@ -318,6 +373,15 @@ export default {
       handler () {
         this.updateMapTilerApiKey()
       }
+    },
+    mapType: {
+      immediate: true,
+      handler (type) {
+        if (!this.loadMapStyle || !localStyleLoaders[type]) {
+          return
+        }
+        this.requestLocalStyle(type)
+      }
     }
   },
   data () {
@@ -343,8 +407,7 @@ export default {
           snowshoe: true,
           slope_classes: true,
           wildlife: true,
-          snow_depth: true,
-          style: swisstopoStyle
+          snow_depth: true
         },
         'swisstopo_raster': {
           name: 'swisstopo (Raster)',
@@ -352,8 +415,7 @@ export default {
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true,
-          style: swisstopoRasterStyle
+          wildlife: true
         },
         'swisstopo_aerial': {
           name: 'swisstopo (Aerial)',
@@ -361,29 +423,37 @@ export default {
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true,
-          style: swisstopoAerialStyle
+          wildlife: true
+        },
+        'os_outdoor': {
+          name: 'OS Outdoor',
+          contours: true
+        },
+        'os_road': {
+          name: 'OS Road',
+          contours: true
         },
         'basemapat': {
-          name: 'basemap.at',
-          style: basemapatStyle
+          name: 'basemap.at'
         },
         'caltopo': {
-          name: 'CalTopo',
-          style: caltopoStyle
+          name: 'CalTopo'
         },
         'toposvalbard': {
-          name: 'TopoSvalbard',
-          style: toposvalbardStyle
+          name: 'TopoSvalbard'
         },
         'norkart': {
           name: 'Kartverket.no',
-          slope_classes: true,
-          style: norkartStyle
+          slope_classes: true
         }
       },
       initialMapOptions: null,
-      mapTilerApiKeyFailed: false
+      mapTilerApiKeyFailed: false,
+      // Map and MiniMap set this so the other mixin users (the app shell,
+      // settings, the layer menu) do not download a style.
+      loadMapStyle: false,
+      localMapStyle: null,
+      localMapStyleType: null
     }
   }
 }

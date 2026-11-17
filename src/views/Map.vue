@@ -146,7 +146,8 @@ export default {
       sentinelZoomWarning: false,
       filtering: false,
       infoCoordinates: null,
-      persistentRoutes: []
+      persistentRoutes: [],
+      loadMapStyle: true
     }
   },
   watch: {

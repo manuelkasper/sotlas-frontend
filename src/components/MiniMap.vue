@@ -254,7 +254,8 @@ export default {
     return {
       map: null,
       infoCoordinates: null,
-      zoomWarningVisible: false
+      zoomWarningVisible: false,
+      loadMapStyle: true
     }
   }
 }
