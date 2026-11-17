@@ -506,14 +506,6 @@ export default {
           }
         },
         {
-          name: 'SOTA Map',
-          url: () => {
-            if (this.reference) {
-              return `https://www.sotamaps.org/summit/${this.reference}`
-            }
-          }
-        },
-        {
           name: 'pota-map.fr',
           url: () => {
             if (this.reference) {

@@ -6,7 +6,7 @@ export default {
       immediate: true,
       handler () {
         if (this.summit && this.summit.code) {
-          axios.get('https://api-db.sota.org.uk/smp/gpx/summit/' + this.summit.code)
+          axios.get('https://api-db2.sota.org.uk/smp/gpx/summit/' + this.summit.code)
             .then(response => {
               if (Array.isArray(response.data)) {
                 this.smpTracks = response.data
@@ -65,7 +65,7 @@ export default {
           routes.push({
             id: track.hdr_id,
             title: track.track_title,
-            htmlDescription: '<p>' + this.escapeHtml(track.track_notes).replace(/\n/g, '<br />') + '</p><p><small>Track imported from <a href="https://www.sotamaps.org" target="_blank">SMP</a></small></p>',
+            htmlDescription: '<p>' + this.escapeHtml(track.track_notes).replace(/\n/g, '<br />') + '</p><p><small>Track imported from <a href="https://www.sotadata.org.uk/en/tracks" target="_blank">SOTAData</a></small></p>',
             description: track.track_notes,
             author: track.callsign,
             postedDate: track.posted_date,

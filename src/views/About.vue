@@ -37,7 +37,6 @@
           <ul>
             <li><a href="https://www.sotadata.org.uk">SOTA Database</a></li>
             <li><a href="https://sotawatch.sota.org.uk">SOTAwatch</a></li>
-            <li><a href="https://www.sotamaps.org">SOTA Maps</a></li>
             <li><a href="https://en.wikipedia.org">Wikipedia</a></li>
             <li><a href="http://reversebeacon.net">Reverse Beacon Network</a></li>
           </ul>

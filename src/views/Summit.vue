@@ -71,7 +71,7 @@
             <SummitAttributes :summit-code="summit.code" />
 
             <template v-if="resources.length > 0">
-              <h6 class="title is-6">Resources<span v-if="authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotamaps.org. They will then automatically appear on SOTLAS as well. Click OK to go to sotamaps.org now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
+              <h6 class="title is-6">Resources<span v-if="authenticated" class="add-article is-size-7-mobile">(<a :href="addArticleLink">+ Article</a> | <a :href="addRouteLink" target="_blank" onclick="return confirm('Routes can be added by uploading tracks on sotadata.org.uk. They will then automatically appear on SOTLAS as well. Click OK to go to sotadata.org.uk now.')">+ Route</a>)</span><span v-else class="add-article is-size-7-mobile">(<span class="disabled" title="Log in to add an article">+ Article</span> | <span class="disabled" title="Log in to add a route">+ Route</span>)</span></h6>
               <ResourceList :resources="resources" />
             </template>
           </div>
@@ -344,7 +344,7 @@ export default {
       return 'https://www.sotadata.org.uk/en/summits/article/new/' + this.summit.code
     },
     addRouteLink () {
-      return 'https://www.sotamaps.org/tracks'
+      return 'https://www.sotadata.org.uk/en/tracks'
     }
   },
   watch: {

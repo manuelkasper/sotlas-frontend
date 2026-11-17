@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     filename () {
-      return this.summit.code.replace('/', '_') + '_' + this.route.id.substr(-8) + '.gpx'
+      return this.summit.code.replace('/', '_') + '_' + this.route.id + '.gpx'
     },
     href () {
       if (this.route.track.filename) {
