@@ -452,6 +452,12 @@ export default {
           }
         },
         {
+          name: 'FieldQTH',
+          url: () => {
+            return `https://fieldqth.app/#map=12/${this.longitude}/${this.latitude}`
+          }
+        },
+        {
           name: 'OpenStreetMap',
           url: () => {
             return `https://www.openstreetmap.org/#map=16/${this.latitude}/${this.longitude}`
