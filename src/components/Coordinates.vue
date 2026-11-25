@@ -452,12 +452,6 @@ export default {
           }
         },
         {
-          name: 'FieldQTH',
-          url: () => {
-            return `https://fieldqth.app/#map=12/${this.longitude}/${this.latitude}`
-          }
-        },
-        {
           name: 'OpenStreetMap',
           url: () => {
             return `https://www.openstreetmap.org/#map=16/${this.latitude}/${this.longitude}`
@@ -495,6 +489,12 @@ export default {
             if (this.reference) {
               return `https://www.sotadata.org.uk/en/summit/${this.reference}`
             }
+          }
+        },
+        {
+          name: 'FieldQTH',
+          url: () => {
+            return `https://fieldqth.app/#map=12/${this.longitude}/${this.latitude}`
           }
         },
         {
