@@ -494,7 +494,7 @@ export default {
         {
           name: 'FieldQTH',
           url: () => {
-            return `https://fieldqth.app/#map=12/${this.latitude}/${this.longitude}`
+            return `https://fieldqth.app/#map=15/${this.latitude}/${this.longitude}&park=${this.reference}`
           }
         },
         {
