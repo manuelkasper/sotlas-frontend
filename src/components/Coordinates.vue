@@ -241,10 +241,10 @@ export default {
           }
         },
         {
-          name: 'UK OS Map (Bing)',
+          name: 'OS Maps',
           url: () => {
             if (this.reference && this.reference.match('^G$|^G[^IJU]+')) {
-              return `https://www.bing.com/maps?osid=93955629-66b5-4407-9864-aff11618f451&cp=${this.latitude}~${this.longitude}&lvl=15&style=s&v=2&sV=2&form=S00027`
+              return `https://explore.osmaps.com/?lat=${this.latitude}&lon=${this.longitude}&zoom=15&style=Standard&type=2d  `
             }
           }
         },
