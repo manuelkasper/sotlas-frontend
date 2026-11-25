@@ -478,20 +478,6 @@ export default {
           }
         },
         {
-          name: 'Activation Zone Estimator',
-          url: () => {
-            if (this.reference) {
-              return `https://activation.zone/?summitRef=${this.reference}`
-            }
-          }
-        },
-        {
-          name: 'SummitPost',
-          url: () => {
-            return `https://www.summitpost.org/object_list.php?object_type=1&distance_lat_1=${this.latitude}&distance_lon_1=${this.longitude}&map_1=1`
-          }
-        },
-        {
           name: 'Peakbagger.com',
           url: () => {
             return `https://peakbagger.com/search.aspx?tid=R&lat=${this.latitude}&lon=${this.longitude}&ss=`
@@ -502,14 +488,6 @@ export default {
           url: () => {
             if (this.reference) {
               return `https://www.sotadata.org.uk/en/summit/${this.reference}`
-            }
-          }
-        },
-        {
-          name: 'pota-map.fr',
-          url: () => {
-            if (this.reference) {
-              return `https://pota-map.fr/?sota=${this.reference}`
             }
           }
         },
