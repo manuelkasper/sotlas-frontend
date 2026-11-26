@@ -120,7 +120,9 @@ export default {
       notActivatedByThisYear: false,
       completeCandidateEnabled: false,
       points: [1, 2, 4, 6, 8, 10],
-      filterLoadingCount: 0
+      filterLoadingCount: 0,
+      summitFilter: null,
+      summitFilterReady: false
     }
   },
   mounted () {
@@ -141,6 +143,10 @@ export default {
       this.$router.replace({ path: this.$route.path })
     }
     this.updateFilter()
+    this.map.on('style.load', this.applySummitFilter)
+  },
+  beforeUnmount () {
+    this.map?.off('style.load', this.applySummitFilter)
   },
   watch: {
     filterLoadingCount (newFilterLoadingCount) {
@@ -253,11 +259,15 @@ export default {
       this.updateFilter()
     },
     setSummitFilter (filter) {
-      this.map.setFilter('summits_circles', filter)
-      this.map.setFilter('summits_names', filter)
-      this.map.setFilter('summits_activations', filter)
-      this.map.setFilter('summits_inactive_circles', filter)
-      this.map.setFilter('summits_inactive_names', filter)
+      this.summitFilter = filter
+      this.summitFilterReady = true
+      this.applySummitFilter()
+    },
+    applySummitFilter () {
+      if (!this.summitFilterReady || !this.map) return
+      for (const id of ['summits_circles', 'summits_names', 'summits_activations', 'summits_inactive_circles', 'summits_inactive_names']) {
+        if (this.map.getLayer(id)) this.map.setFilter(id, this.summitFilter)
+      }
     },
     makeActivationsFilter (paramField, filterTemplate) {
       if (!this[paramField + 'Enabled'] || !this[paramField]) {

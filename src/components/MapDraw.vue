@@ -40,6 +40,9 @@ export default {
   mounted () {
     this.setupDraw()
   },
+  beforeUnmount () {
+    this.map?.off('style.load', this.restoreDrawLayers)
+  },
   watch: {
     map () {
       this.setupDraw()
@@ -53,6 +56,20 @@ export default {
   methods: {
     isDrawing () {
       return (this.draw && this.draw.getMode() !== 'simple_select')
+    },
+    // setStyle removes draw's sources. The control stays mounted and keeps the
+    // features; put its layers back once the replacement style is in place.
+    // The first style.load happens before draw has connected, so skip that one.
+    restoreDrawLayers () {
+      if (!this.drawReady || !this.draw || !this.map?.getStyle()) return
+      if (this.map.getSource('mapbox-gl-draw-cold')) return
+      for (const id of ['mapbox-gl-draw-cold', 'mapbox-gl-draw-hot']) {
+        this.map.addSource(id, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      }
+      this.draw.options.styles.forEach(layer => {
+        if (!this.map.getLayer(layer.id)) this.map.addLayer(layer)
+      })
+      this.draw.set(this.draw.getAll())
     },
     setupDraw () {
       if (!this.map || this.draw) {
@@ -163,6 +180,8 @@ export default {
         ]
       })
       this.map.addControl(this.draw, 'top-right')
+      this.map.on('style.load', this.restoreDrawLayers)
+      this.map.once('load', () => { this.drawReady = true })
 
       this.map.on('draw.open', e => {
         this.input = document.createElement('input')

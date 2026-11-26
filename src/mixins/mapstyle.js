@@ -226,9 +226,11 @@ export default {
             let snowcoverPattern = new Image()
             snowcoverPattern.src = partialSnowcoverDots
             snowcoverPattern.onload = () => {
-              map.addImage('partial-snowcover-pattern', snowcoverPattern, {
-                pixelRatio: 2
-              })
+              // The style may have changed while the pattern image was loading.
+              if (!map.getSource('snowcover') || !map.getLayer('scree_z17') || map.getLayer('snowcover')) return
+              if (!map.hasImage('partial-snowcover-pattern')) {
+                map.addImage('partial-snowcover-pattern', snowcoverPattern, { pixelRatio: 2 })
+              }
               map.addLayer({
                 id: 'snowcover-partial-background',
                 type: 'fill',
@@ -388,6 +390,14 @@ export default {
     }
   },
   watch: {
+    // Keep the last ready style so a local style that is still loading does
+    // not drop mapStyle to null and unmount the map.
+    mapStyle: {
+      immediate: true,
+      handler (style) {
+        if (style) this.activeMapStyle = style
+      }
+    },
     '$store.state.turnstileToken': {
       handler () {
         this.updateMapTilerApiKey()
@@ -531,6 +541,7 @@ export default {
         }
       },
       initialMapOptions: null,
+      activeMapStyle: null,
       mapTilerApiKeyFailed: false,
       // Map and MiniMap set this so the other mixin users (the app shell,
       // settings, the layer menu) do not download a style.

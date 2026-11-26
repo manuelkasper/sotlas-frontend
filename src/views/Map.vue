@@ -1,6 +1,6 @@
 <template>
   <div class="map-layout" ref="mapLayout">
-    <MglMap v-if="showMap && mapStyle" :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" :apiKey="mapTilerApiKey" @map:load="onMapLoaded" @map:click="onMapClicked" @map:contextmenu="onMapRightClicked" @map:moveend="onMapMoveEnd">
+    <MglMap v-if="showMap && activeMapStyle" :mapStyle="activeMapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="center" :zoom="zoom" :dragRotate="false" :attributionControl="false" :apiKey="mapTilerApiKey" @map:load="onMapLoaded" @map:click="onMapClicked" @map:contextmenu="onMapRightClicked" @map:moveend="onMapMoveEnd">
       <MglGeolocateControl :positionOptions="{ enableHighAccuracy: true }" :fitBoundsOptions="{ maxZoom: 12.5 }" :trackUserLocation="true" position="top-right" />
       <MglNavigationControl position="top-right" :showCompass="false" />
       <MglScaleControl position="bottom-left" :unit="mapUnits" />
@@ -42,7 +42,7 @@
     <SwisstopoInfo />
     <BasemapAtInfo />
     <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
-    <b-loading :is-full-page="false" :model-value="(filtering || !showMap || !mapStyle) && !mapTilerApiKeyFailed" />
+    <b-loading :is-full-page="false" :model-value="(filtering || !showMap || !activeMapStyle) && !mapTilerApiKeyFailed" />
   </div>
 </template>
 
@@ -230,6 +230,14 @@ export default {
     }
   },
   methods: {
+    applyStyleOverrides () {
+      if (!this.map?.getStyle()) return
+      this.updateLayers(this.map)
+      // Invisible in the style; shown so summit circles stay clickable at every zoom.
+      if (this.map.getLayer('summits_circles_all')) {
+        this.map.setLayoutProperty('summits_circles_all', 'visibility', 'visible')
+      }
+    },
     onMapLoaded (event) {
       this.map = event.map
       this.map.touchZoomRotate.disableRotation();
@@ -244,8 +252,8 @@ export default {
         })
       })
 
-      this.updateLayers(this.map)
-      this.map.setLayoutProperty('summits_circles_all', 'visibility', 'visible')
+      this.applyStyleOverrides()
+      this.map.on('style.load', this.applyStyleOverrides)
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -458,6 +466,9 @@ export default {
       this.leavingRoute = true
     }
     next()
+  },
+  beforeUnmount () {
+    this.map?.off('style.load', this.applyStyleOverrides)
   }
 }
 </script>

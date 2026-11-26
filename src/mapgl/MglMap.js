@@ -32,8 +32,16 @@ export default defineComponent({
     provide(isLoadedSymbol, isLoaded)
     provide(isInitializedSymbol, isInitialized)
 
-    watch(() => props.mapStyle, v => {
-      if (v) map.value?.setStyle(v)
+    watch(() => props.mapStyle, style => {
+      if (!style || !map.value) return
+      if (typeof style === 'string') {
+        map.value.setStyle(style, { diff: false })
+        return
+      }
+      // MapTiler's setStyle forces a diff for style objects, which patches the
+      // current style and drops overlays. MapLibre's setStyle rebuilds it,
+      // so style.load can put those overlays back.
+      Object.getPrototypeOf(MaptilerMap.prototype).setStyle.call(map.value, style, { diff: false })
     })
     watch(() => props.bounds, (v, old) => {
       if (v && !isDeepEqual(v, old)) {

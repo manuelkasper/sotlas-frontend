@@ -22,6 +22,7 @@ function createLayerComponent (type, name) {
         // MapLibre's style validator rejects a present `layout`/`paint` key
         // whose value is `undefined` ("object expected, undefined found"),
         // so omit each key entirely rather than setting it to undefined.
+        if (map.value.getLayer(props.layerId)) map.value.removeLayer(props.layerId)
         const layer = { id: props.layerId, type, source: sourceId }
         if (props.layout) layer.layout = props.layout
         if (props.paint) layer.paint = props.paint

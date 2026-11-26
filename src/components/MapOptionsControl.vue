@@ -114,10 +114,14 @@ export default {
     this.loadPrefs()
   },
   mounted () {
-    if (sessionStorage.getItem('mapReloaded')) {
-      sessionStorage.removeItem('mapReloaded')
-      this.open = true
-    }
+    // setStyle wipes runtime filters. This control mounts only after the
+    // first load, so the listener covers later style changes.
+    this.map.on('style.load', this.updateRecentSpots)
+    this.map.on('style.load', this.updateAlerts)
+  },
+  beforeUnmount () {
+    this.map?.off('style.load', this.updateRecentSpots)
+    this.map?.off('style.load', this.updateAlerts)
   },
   computed: {
     recentSpots () {
@@ -187,6 +191,7 @@ export default {
       this.open = false
     },
     updateRecentSpots () {
+      if (!this.map?.getLayer('summits_highlight')) return
       if (this.mapOptions.spots) {
         this.map.setFilter('summits_highlight', ['in', 'code', ...this.recentSpots])
       } else {
@@ -194,6 +199,7 @@ export default {
       }
     },
     updateAlerts () {
+      if (!this.map?.getLayer('summits_highlight_alerts')) return
       if (this.mapOptions.alerts) {
         this.map.setFilter('summits_highlight_alerts', ['in', 'code', ...this.alerts])
       } else {

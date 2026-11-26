@@ -1,7 +1,7 @@
 <template>
   <div class="mini-map">
-    <MglMap v-if="(mapCenter || bounds) && mapStyle" :key="mapKey"
-      :mapStyle="mapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5"
+    <MglMap v-if="(mapCenter || bounds) && activeMapStyle" :key="mapKey"
+      :mapStyle="activeMapStyle" :bounds="bounds" :fitBoundsOptions="fitBoundsOptions" :center="mapCenter" :zoom="12.5"
       :attributionControl="false" :apiKey="mapTilerApiKey" @map:load="onMapLoaded" @map:click="onMapClicked" @map:contextmenu="onMapRightClicked"
       @map:idle="onMapIdle">
       <MglGeolocateControl v-if="!$mq.mobile || isEnlarged" :positionOptions="{ enableHighAccuracy: true }"
@@ -21,7 +21,7 @@
       <div v-if="zoomWarningVisible" class="zoom-warning">Zoom in to see all activations</div>
     </MglMap>
     <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
-    <b-loading class="mini-map-loading" :is-full-page="false" :model-value="!mapStyle && !mapTilerApiKeyFailed" />
+    <b-loading class="mini-map-loading" :is-full-page="false" :model-value="!activeMapStyle && !mapTilerApiKeyFailed" />
   </div>
 </template>
 
@@ -128,8 +128,16 @@ export default {
     }
   },
   methods: {
+    applyStyleOverrides () {
+      if (!this.map?.getStyle()) return
+      for (const id of ['summits_circles', 'summits_names', 'summits_activations', 'summits_inactive_circles', 'summits_inactive_names']) {
+        if (this.map.getLayer(id)) this.map.setFilter(id, this.filter)
+      }
+      this.updateLayers(this.map)
+      this.highlightCurrentSummit()
+    },
     highlightCurrentSummit () {
-      if (!this.map || !this.summit || !this.summit.code) {
+      if (!this.map?.getLayer('summits_selected') || !this.summit || !this.summit.code) {
         return
       }
 
@@ -150,13 +158,8 @@ export default {
         })
       })
 
-      this.map.setFilter('summits_circles', this.filter)
-      this.map.setFilter('summits_names', this.filter)
-      this.map.setFilter('summits_activations', this.filter)
-      this.map.setFilter('summits_inactive_circles', this.filter)
-      this.map.setFilter('summits_inactive_names', this.filter)
-
-      this.updateLayers(this.map)
+      this.applyStyleOverrides()
+      this.map.on('style.load', this.applyStyleOverrides)
 
       this.installLongTouchHandler(this.map, (e) => {
         this.infoCoordinates = {
@@ -249,6 +252,9 @@ export default {
         })
       }
     }
+  },
+  beforeUnmount () {
+    this.map?.off('style.load', this.applyStyleOverrides)
   },
   data () {
     return {

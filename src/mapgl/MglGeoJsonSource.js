@@ -23,12 +23,26 @@ export default defineComponent({
 
     function addSource () {
       if (!isLoaded.value) return
-      map.value.addSource(props.sourceId, { type: 'geojson', data: props.data })
-      source.value = map.value.getSource(props.sourceId)
+      // A style swap clears sources before the new style has loaded. Adding
+      // during that gap throws; the style.load listener below retries.
+      try {
+        if (!map.value.getSource(props.sourceId)) {
+          map.value.addSource(props.sourceId, { type: 'geojson', data: props.data })
+        }
+      } catch (e) {
+        if (!/not done loading/i.test(e && e.message)) throw e
+        return
+      }
+      const next = map.value.getSource(props.sourceId)
+      // Same instance means the style diff kept this source; assigning it
+      // again would not re-run the layer watchers.
+      if (next && source.value !== next) source.value = next
     }
 
-    watch(isLoaded, addSource, { immediate: true })
+    // Register before the immediate watch so a failed first attempt still
+    // retries when the style finishes loading.
     map.value.on('style.load', addSource)
+    watch(isLoaded, addSource, { immediate: true })
 
     watch(() => props.data, data => {
       source.value?.setData(data)

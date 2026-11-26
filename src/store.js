@@ -132,9 +132,6 @@ const store = createStore({
     changeAltitudeUnits (state, newAltitudeUnits) {
       state.altitudeUnits = newAltitudeUnits
       localStorage.setItem('altitudeUnits', newAltitudeUnits)
-
-      // Force a reload now to avoid problems with layers added by draw etc.
-      window.location.reload()
     },
     updateSpot (state, spot) {
       updateSpot(state, spot)
@@ -166,10 +163,6 @@ const store = createStore({
     setMapType (state, newMapType) {
       state.mapType = newMapType
       localStorage.setItem('mapType', newMapType)
-
-      // Force a reload now to avoid problems with layers added by draw etc.
-      sessionStorage.setItem('mapReloaded', true)
-      window.location.reload()
     },
     setSentinel2 (state, shown) {
       state.sentinel2 = !!shown
