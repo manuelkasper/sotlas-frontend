@@ -16,22 +16,22 @@
     },
     "summits": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/d6ccc3ec-a677-4fcd-a211-2f2da36965cb/tiles.json?key={key}"
+      "url": "https://api.maptiler.com/tiles/d6ccc3ec-a677-4fcd-a211-2f2da36965cb/tiles.json?key={maptilerkey}"
     },
     "summits_inactive": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/ac4e1bc3-fbfb-4830-8279-675cc18f86f0/tiles.json?key={key}"
+      "url": "https://api.maptiler.com/tiles/ac4e1bc3-fbfb-4830-8279-675cc18f86f0/tiles.json?key={maptilerkey}"
     },
     "regions": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={key}"
+      "url": "https://api.maptiler.com/tiles/2d324268-fe52-4875-96ca-bc5692fc1225/tiles.json?key={maptilerkey}"
     },
     "az": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={key}"
+      "url": "https://api.maptiler.com/tiles/e3f0b69a-1a14-4a8c-933a-4c4e134fdaa3/tiles.json?key={maptilerkey}"
     },
     "v3": {
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}",
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={maptilerkey}",
       "type": "vector",
       "maxzoom": 10
     },
@@ -46,7 +46,7 @@
     }
   },
   "sprite": "https://sotl.as/sprites",
-  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key={key}",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key={maptilerkey}",
   "transition": {},
   "layers": [
     {

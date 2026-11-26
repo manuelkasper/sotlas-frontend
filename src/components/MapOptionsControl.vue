@@ -7,7 +7,9 @@
       <div class="map-option">
         <b-field grouped>
           <b-select v-model="mapType" size="is-small">
-            <option v-for="(attrs, type) in mapTypes" :key="type" :value="type">{{ attrs.name }}</option>
+            <optgroup v-for="group in mapTypeGroups" :key="group.label" :label="group.label">
+              <option v-for="entry in group.types" :key="entry.type" :value="entry.type">{{ entry.attrs.name }}</option>
+            </optgroup>
           </b-select>
         </b-field>
       </div>

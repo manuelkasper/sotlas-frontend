@@ -12,7 +12,11 @@ const localStyleLoaders = {
   swisstopo: () => import('../assets/swisstopo.json'),
   swisstopo_aerial: () => import('../assets/swisstopo_aerial.json'),
   swisstopo_raster: () => import('../assets/swisstopo_raster.json'),
-  toposvalbard: () => import('../assets/toposvalbard.json')
+  toposvalbard: () => import('../assets/toposvalbard.json'),
+  ign_fr: () => import('../assets/ign_fr.json'),
+  ign_scan25: () => import('../assets/ign_scan25.json'),
+  ign_es: () => import('../assets/ign_es.json'),
+  mml: () => import('../assets/mml.json')
 }
 
 const localStyleCache = {}
@@ -47,6 +51,20 @@ export default {
     mapLanguage () {
       // Primary language subtag, e.g. 'ja' from 'ja-JP', 'en' from 'en-US'
       return navigator.language.split('-')[0]
+    },
+    // Styles declare their group. World stays first; the rest follow the group name.
+    mapTypeGroups () {
+      const buckets = new Map()
+      for (const [type, attrs] of Object.entries(this.mapTypes)) {
+        const label = attrs.group || 'World'
+        if (!buckets.has(label)) buckets.set(label, [])
+        buckets.get(label).push({ type, attrs })
+      }
+      return [...buckets.keys()].sort((a, b) => {
+        if (a === 'World') return -1
+        if (b === 'World') return 1
+        return a.localeCompare(b)
+      }).map(label => ({ label, types: buckets.get(label) }))
     },
     mapStyle () {
       if (!this.mapTilerApiKey) {
@@ -88,12 +106,13 @@ export default {
         }
       })
 
-      // {key} is the MapTiler key. {oskey} is the Ordnance Survey Data Hub key,
-      // used by the local OS Outdoor / Road styles (sprite, glyphs and tiles).
-      const osApiKey = import.meta.env.VITE_OS_API_KEY || ''
+      const apiKeys = this.mapTypes[this.mapType].apiKeys || {}
       const applyPlaceholders = (value) => {
         if (typeof value !== 'string') return value
-        return value.replace('{key}', this.mapTilerApiKey).replace('{oskey}', osApiKey)
+        return Object.entries(apiKeys).reduce((text, [token, key]) => {
+          const resolved = typeof key === 'function' ? key() : key
+          return text.replaceAll(token, () => resolved ?? '')
+        }, value)
       }
       Object.values(style.sources).forEach(source => {
         if (source.url) {
@@ -385,21 +404,82 @@ export default {
     }
   },
   data () {
+    // Placeholder tokens in local style JSON, resolved when the style is applied.
+    // MapTiler is read at apply time because it arrives after Turnstile or SSO.
+    const mapTilerKeys = {
+      '{maptilerkey}': () => this.mapTilerApiKey
+    }
+    const osKeys = {
+      ...mapTilerKeys,
+      '{oskey}': import.meta.env.VITE_OS_API_KEY || ''
+    }
+    const mmlKeys = {
+      ...mapTilerKeys,
+      '{nlskey}': import.meta.env.VITE_MML_API_KEY || ''
+    }
     return {
       mapTypes: {
+        // World
         'maptiler_outdoor': {
           name: 'MapTiler Outdoor',
+          group: 'World',
           difficulty: true,
           contours: true,
           hillshading: true
         },
         'maptiler_winter': {
           name: 'MapTiler Winter',
+          group: 'World',
           contours: true,
           hillshading: true
         },
+        // Austria
+        'basemapat': {
+          name: 'basemap.at',
+          group: 'Austria',
+          apiKeys: mapTilerKeys
+        },
+        // Finland
+        'mml': {
+          name: 'MML Topo',
+          group: 'Finland',
+          apiKeys: mmlKeys
+        },
+        // France
+        'ign_fr': {
+          name: 'IGN Topo',
+          group: 'France',
+          slope_classes: true,
+          apiKeys: mapTilerKeys
+        },
+        'ign_scan25': {
+          name: 'IGN Scan 25',
+          group: 'France',
+          slope_classes: true,
+          apiKeys: mapTilerKeys
+        },
+        // Norway
+        'norkart': {
+          name: 'Kartverket.no',
+          group: 'Norway',
+          slope_classes: true,
+          apiKeys: mapTilerKeys
+        },
+        'toposvalbard': {
+          name: 'TopoSvalbard',
+          group: 'Norway',
+          apiKeys: mapTilerKeys
+        },
+        // Spain
+        'ign_es': {
+          name: 'IGN Spain',
+          group: 'Spain',
+          apiKeys: mapTilerKeys
+        },
+        // Switzerland
         'swisstopo': {
           name: 'swisstopo (Vector)',
+          group: 'Switzerland',
           difficulty: true,
           contours: true,
           hillshading: true,
@@ -407,44 +487,47 @@ export default {
           snowshoe: true,
           slope_classes: true,
           wildlife: true,
-          snow_depth: true
+          snow_depth: true,
+          apiKeys: mapTilerKeys
         },
         'swisstopo_raster': {
           name: 'swisstopo (Raster)',
+          group: 'Switzerland',
           difficulty: true,
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true
+          wildlife: true,
+          apiKeys: mapTilerKeys
         },
         'swisstopo_aerial': {
           name: 'swisstopo (Aerial)',
+          group: 'Switzerland',
           difficulty: true,
           skiing: true,
           snowshoe: true,
           slope_classes: true,
-          wildlife: true
+          wildlife: true,
+          apiKeys: mapTilerKeys
         },
+        // United Kingdom
         'os_outdoor': {
           name: 'OS Outdoor',
-          contours: true
+          group: 'United Kingdom',
+          contours: true,
+          apiKeys: osKeys
         },
         'os_road': {
           name: 'OS Road',
-          contours: true
+          group: 'United Kingdom',
+          contours: true,
+          apiKeys: osKeys
         },
-        'basemapat': {
-          name: 'basemap.at'
-        },
+        // United States
         'caltopo': {
-          name: 'CalTopo'
-        },
-        'toposvalbard': {
-          name: 'TopoSvalbard'
-        },
-        'norkart': {
-          name: 'Kartverket.no',
-          slope_classes: true
+          name: 'CalTopo',
+          group: 'United States',
+          apiKeys: mapTilerKeys
         }
       },
       initialMapOptions: null,
