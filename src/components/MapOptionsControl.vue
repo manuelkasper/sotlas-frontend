@@ -44,8 +44,8 @@
           </b-checkbox>
         </b-field>
       </div>
-      <div class="map-option" v-if="mapTypes[mapType].difficulty">
-        <b-field grouped>
+      <div class="map-option" v-if="mapTypes[mapType].difficulty || mapTypes[mapType].skiing || mapTypes[mapType].snowshoe || mapTypes[mapType].wildlife">
+        <b-field v-if="mapTypes[mapType].difficulty" grouped>
           <b-checkbox v-model="mapOptions.difficulty" size="is-small" @update:model-value="setMapOption('difficulty', $event)">
             Hiking difficulty
             <b-icon pack="fas" icon="info-circle" size="is-small" type="is-info" @click="showHikingDifficultyInfo" />

@@ -43,6 +43,21 @@
         51.5
       ],
       "attribution": "© <a target=\"_blank\" href=\"https://geoservices.ign.fr/\">IGN</a>"
+    },
+    "skiing_trails_raster": {
+      "type": "raster",
+      "tiles": [
+        "https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&TileMatrixSet=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&Layer=TRACES.RANDO.HIVERNALE&FORMAT=image/png&Style=normal"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16,
+      "bounds": [
+        -5.5,
+        41.0,
+        10.0,
+        51.5
+      ],
+      "attribution": "© <a target=\"_blank\" href=\"https://geoservices.ign.fr/\">IGN</a>"
     }
   },
   "transition": {
@@ -16332,6 +16347,21 @@
       },
       "paint": {
         "raster-opacity": 0.4,
+        "raster-resampling": "linear"
+      }
+    },
+    {
+      "id": "skiing_trails_raster",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "skiing"
+      },
+      "source": "skiing_trails_raster",
+      "layout": {
+        "visibility": "none"
+      },
+      "paint": {
+        "raster-opacity": 1,
         "raster-resampling": "linear"
       }
     },

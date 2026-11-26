@@ -473,6 +473,7 @@ export default {
           name: 'IGN Topo',
           group: 'France',
           slope_classes: true,
+          skiing: true,
           apiKeys: mapTilerKeys
         },
         'ign_scan25': {
