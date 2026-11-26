@@ -16,7 +16,10 @@ const localStyleLoaders = {
   ign_fr: () => import('../assets/ign_fr.json'),
   ign_scan25: () => import('../assets/ign_scan25.json'),
   ign_es: () => import('../assets/ign_es.json'),
-  mml: () => import('../assets/mml.json')
+  ign_be: () => import('../assets/ign_be.json'),
+  mml: () => import('../assets/mml.json'),
+  linz: () => import('../assets/linz.json'),
+  linz_topo50: () => import('../assets/linz_topo50.json')
 }
 
 const localStyleCache = {}
@@ -427,6 +430,10 @@ export default {
       ...mapTilerKeys,
       '{nlskey}': import.meta.env.VITE_MML_API_KEY || ''
     }
+    const linzKeys = {
+      ...mapTilerKeys,
+      '{linzkey}': import.meta.env.VITE_LINZ_API_KEY || ''
+    }
     return {
       mapTypes: {
         // World
@@ -449,6 +456,12 @@ export default {
           group: 'Austria',
           apiKeys: mapTilerKeys
         },
+        // Belgium
+        'ign_be': {
+          name: 'IGN Topo Belgium',
+          group: 'Belgium',
+          apiKeys: mapTilerKeys
+        },
         // Finland
         'mml': {
           name: 'MML Topo',
@@ -467,6 +480,17 @@ export default {
           group: 'France',
           slope_classes: true,
           apiKeys: mapTilerKeys
+        },
+        // New Zealand
+        'linz': {
+          name: 'LINZ Topo',
+          group: 'New Zealand',
+          apiKeys: linzKeys
+        },
+        'linz_topo50': {
+          name: 'LINZ Topo50',
+          group: 'New Zealand',
+          apiKeys: linzKeys
         },
         // Norway
         'norkart': {
