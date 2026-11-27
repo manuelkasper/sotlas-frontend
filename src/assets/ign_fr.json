@@ -16311,6 +16311,21 @@
       }
     },
     {
+      "id": "slope_classes",
+      "type": "raster",
+      "metadata": {
+        "sotlas-map-option": "slope_classes"
+      },
+      "source": "slope_classes",
+      "layout": {
+        "visibility": "none"
+      },
+      "paint": {
+        "raster-opacity": 0.4,
+        "raster-resampling": "linear"
+      }
+    },
+    {
       "id": "summits_az",
       "type": "fill",
       "metadata": {
@@ -16381,21 +16396,6 @@
           1,
           1
         ]
-      }
-    },
-    {
-      "id": "slope_classes",
-      "type": "raster",
-      "metadata": {
-        "sotlas-map-option": "slope_classes"
-      },
-      "source": "slope_classes",
-      "layout": {
-        "visibility": "none"
-      },
-      "paint": {
-        "raster-opacity": 0.4,
-        "raster-resampling": "linear"
       }
     },
     {
