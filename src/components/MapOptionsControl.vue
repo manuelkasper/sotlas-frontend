@@ -1,17 +1,42 @@
 <template>
   <div :class="{ 'maplibregl-ctrl-group': true, 'maplibregl-ctrl': true, 'maplibre-gl-map-options-container': true }" data-theme="light">
-    <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined label="Webcams and more available – open map options to see!">
+    <b-tooltip class="info-tooltip" type="is-info" position="is-right" :active="!infoTooltipShown" always animated multilined>
+      <template #content>
+        <p class="tip-title">Maps from these countries</p>
+        <div class="tip-flags">
+          <CountryFlag v-for="code in tipCountries" :key="code" :country="code" :shadow="false" />
+        </div>
+        <p class="tip-body">Plus webcams and other layers.</p>
+      </template>
       <button :class="{ 'maplibregl-ctrl-icon': true, 'maplibre-gl-map-options': true }" type="button" title="Map options" @click="openCloseMapOptions" />
     </b-tooltip>
     <div v-if="open" class="map-options-container">
-      <div class="map-option">
-        <b-field grouped>
-          <b-select v-model="mapType" size="is-small">
-            <optgroup v-for="group in mapTypeGroups" :key="group.label" :label="group.label">
-              <option v-for="entry in group.types" :key="entry.type" :value="entry.type">{{ entry.attrs.name }}</option>
-            </optgroup>
-          </b-select>
-        </b-field>
+      <div class="map-option map-type-option">
+        <b-dropdown v-model="mapType" class="map-type-menu" aria-role="list" scrollable max-height="70vh" position="is-bottom-right" :mobile-modal="menuCoversScreen" @active-change="scrollMapTypeIntoView">
+          <template #trigger>
+            <b-button class="map-type-trigger">
+              <span class="map-type-mark">
+                <CountryFlag v-if="currentMapGroupCode" :country="currentMapGroupCode" :shadow="false" />
+                <font-awesome-icon v-else :icon="['far', 'globe']" class="map-type-globe" aria-label="World" />
+              </span>
+              <span class="map-type-name">{{ mapTypes[mapType].name }}</span>
+              <b-icon class="map-type-caret" icon="angle-down" size="is-small" />
+            </b-button>
+          </template>
+          <template v-for="group in mapTypeGroups" :key="group.label">
+            <b-dropdown-item custom disabled :focusable="false" class="map-type-row map-type-group">
+              <span class="map-type-mark">
+                <CountryFlag v-if="group.code" :country="group.code" :shadow="false" />
+                <font-awesome-icon v-else :icon="['far', 'globe']" class="map-type-globe" aria-label="World" />
+              </span>
+              <span>{{ group.label }}</span>
+            </b-dropdown-item>
+            <b-dropdown-item v-for="entry in group.types" :key="entry.type" :value="entry.type" class="map-type-row" aria-role="listitem">
+              <span class="map-type-mark" aria-hidden="true"></span>
+              <span>{{ entry.attrs.name }}</span>
+            </b-dropdown-item>
+          </template>
+        </b-dropdown>
       </div>
       <div class="map-option">
         <b-field grouped>
@@ -91,12 +116,14 @@
 import moment from 'moment'
 import mapstyle from '../mixins/mapstyle.js'
 import prefs from '../mixins/prefs.js'
+import CountryFlag from './CountryFlag.vue'
 
 const RECENT_SPOT_AGE = 30 * 60 * 1000
 const MAX_ALERT_AGE = 3 * 60 * 60 * 1000
 
 export default {
   name: 'MapOptionsControl',
+  components: { CountryFlag },
   inject: ['map'],
   mixins: [mapstyle, prefs],
   prefs: {
@@ -106,7 +133,9 @@ export default {
   data () {
     return {
       open: false,
-      infoTooltipShown: false
+      infoTooltipShown: false,
+      // A literal false is dropped on the dropdown, which would reopen the full-screen phone menu.
+      menuCoversScreen: false
     }
   },
   created () {
@@ -155,6 +184,12 @@ export default {
     },
     mapOptions () {
       return this.$store.state.mapOptions
+    },
+    tipCountries () {
+      return this.mapTypeGroups.map(group => group.code).filter(Boolean)
+    },
+    currentMapGroupCode () {
+      return this.mapTypes[this.mapType].groupCode || null
     }
   },
   watch: {
@@ -214,6 +249,18 @@ export default {
     },
     openCloseMapOptions () {
       this.open = !this.open
+    },
+    scrollMapTypeIntoView (active) {
+      if (!active) return
+      this.$nextTick(() => {
+        const item = this.$el.querySelector('.map-type-menu .dropdown-item.is-active')
+        const menu = item && item.closest('.dropdown-content')
+        if (!item || !menu) return
+        const itemRect = item.getBoundingClientRect()
+        const menuRect = menu.getBoundingClientRect()
+        if (itemRect.top < menuRect.top) menu.scrollTop += itemRect.top - menuRect.top
+        else if (itemRect.bottom > menuRect.bottom) menu.scrollTop += itemRect.bottom - menuRect.bottom
+      })
     },
     setMapOption (option, value) {
       this.$store.commit('setMapOption', { option, value })
@@ -303,6 +350,90 @@ export default {
 .maplibre-gl-map-options {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' stroke-linejoin='round' stroke-miterlimit='2'%3E%3Cpath d='M16.847 2.863c-.049 0-.1.009-.15.029l-4.28 1.582-4.33-1.529a1.602 1.602 0 00-1.008-.003L3.257 4.271a.808.808 0 00-.507.748v8.718a.404.404 0 00.553.374l4.28-1.582 4.33 1.528c.327.109.681.11 1.008.004l3.822-1.33a.807.807 0 00.507-.747V3.266a.403.403 0 00-.403-.403zm-8.458 1.47l3.222 1.138v7.198l-3.222-1.137V4.333zm-4.43 8.247V5.306l3.222-1.121v7.204l-.016.006-3.206 1.185zm12.082-.884l-3.222 1.121V5.613l.016-.006 3.206-1.185v7.274zM16.975 15.625H7.7v-.412a.276.276 0 00-.275-.275h-.55a.275.275 0 00-.275.275v.412H3.025a.276.276 0 00-.275.275v.275c0 .151.124.275.275.275H6.6v.412c0 .152.123.275.275.275h.55a.275.275 0 00.275-.275v-.412h9.275a.276.276 0 00.275-.275V15.9a.276.276 0 00-.275-.275z' /%3E%3C/svg%3E");
 }
+.map-type-option {
+  min-width: 13rem;
+  background-color: #fff;
+  padding: 0;
+}
+.map-type-menu {
+  display: block;
+}
+.map-type-menu :deep(.dropdown-trigger),
+.map-type-menu :deep(.map-type-trigger) {
+  width: 100%;
+}
+.map-type-menu :deep(.map-type-trigger) {
+  display: flex;
+  align-items: center;
+  height: auto;
+  padding: .375rem .6rem;
+  background-color: #fff;
+  border-color: #e0e0e0;
+  border-radius: 6px;
+  box-shadow: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: inherit;
+}
+.map-type-menu :deep(.map-type-trigger:hover),
+.map-type-menu :deep(.map-type-trigger:focus) {
+  background-color: #fff;
+  border-color: #e0e0e0;
+  color: inherit;
+}
+.map-type-menu :deep(.map-type-trigger > span) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+}
+.map-type-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+.map-type-menu :deep(.map-type-caret) {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.map-type-menu :deep(.dropdown-menu) {
+  min-width: 100%;
+}
+.map-type-menu :deep(.dropdown-item.map-type-row) {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.map-type-menu :deep(.dropdown-item.is-disabled.map-type-group) {
+  opacity: 1;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: default;
+  pointer-events: none;
+  background-color: #f3f3f3;
+}
+.map-type-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 calc(0.95rem * 4 / 3);
+  width: calc(0.95rem * 4 / 3);
+  height: 0.95rem;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.map-type-globe {
+  color: #b0b0b0;
+  height: 1em;
+  width: 1em;
+}
 .map-option {
   margin: 0.3em 0 0.3em 0.5em;
   border: 1px solid #e0e0e0;
@@ -319,14 +450,6 @@ export default {
   line-height: 1;
   align-items: center;
 }
-/* Bulma/Buefy 3 fix: a non-horizontal `grouped` b-field now wraps its content in an
-   extra `.field-body > .field.is-grouped` layer (Field.vue's `hasInnerField` branch;
-   Buefy 0.8/Vue2 rendered a single flat `.field.is-grouped`). The checkbox/input/label
-   here are children of that INNER field, not of `.field.alert-days` above, so the
-   align-items:center on the outer element (which only affects its own direct children,
-   `.field-body` here) never reached them — .tlabel's box stayed as tall as its sibling
-   checkbox and top-aligned its text instead of centering it, visually offsetting
-   "day(s)" from the input's vertical center. */
 .map-option .field.alert-days :deep(.field-body .field) {
   align-items: center;
 }
@@ -342,7 +465,7 @@ export default {
   padding: 0 0.5em 0.5em 0;
   display: inline-block;
 }
-.maplibre-gl-map-options-container button {
+.maplibre-gl-map-options-container button:not(.map-type-trigger) {
   display: inline-block;
   vertical-align: top;
 }
@@ -351,5 +474,28 @@ export default {
 }
 .b-tooltip {
   vertical-align: top;
+}
+.tip-title,
+.tip-body {
+  margin: 0;
+  text-align: center;
+}
+.tip-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+.tip-flags {
+  text-align: center;
+  font-size: 1.35rem;
+  line-height: 1;
+  margin-bottom: 0.45rem;
+}
+.tip-flags :deep(.fp) {
+  margin: 0.12rem 0.14rem;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+.info-tooltip :deep(.tooltip-content) {
+  line-height: 1.35;
 }
 </style>

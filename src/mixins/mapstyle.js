@@ -67,7 +67,10 @@ export default {
         if (a === 'World') return -1
         if (b === 'World') return 1
         return a.localeCompare(b)
-      }).map(label => ({ label, types: buckets.get(label) }))
+      }).map(label => {
+        const types = buckets.get(label)
+        return { label, code: types[0].attrs.groupCode || null, types }
+      })
     },
     mapStyle () {
       if (!this.mapTilerApiKey) {
@@ -454,24 +457,28 @@ export default {
         'basemapat': {
           name: 'basemap.at',
           group: 'Austria',
+          groupCode: 'AT',
           apiKeys: mapTilerKeys
         },
         // Belgium
         'ign_be': {
           name: 'IGN Topo Belgium',
           group: 'Belgium',
+          groupCode: 'BE',
           apiKeys: mapTilerKeys
         },
         // Finland
         'mml': {
           name: 'MML Topo',
           group: 'Finland',
+          groupCode: 'FI',
           apiKeys: mmlKeys
         },
         // France
         'ign_fr': {
           name: 'IGN Topo',
           group: 'France',
+          groupCode: 'FR',
           contours: true,
           slope_classes: true,
           skiing: true,
@@ -480,6 +487,7 @@ export default {
         'ign_scan25': {
           name: 'IGN Scan 25',
           group: 'France',
+          groupCode: 'FR',
           slope_classes: true,
           apiKeys: mapTilerKeys
         },
@@ -487,6 +495,7 @@ export default {
         'linz': {
           name: 'LINZ Topo',
           group: 'New Zealand',
+          groupCode: 'NZ',
           contours: true,
           hillshading: true,
           apiKeys: linzKeys
@@ -494,30 +503,35 @@ export default {
         'linz_topo50': {
           name: 'LINZ Topo50',
           group: 'New Zealand',
+          groupCode: 'NZ',
           apiKeys: linzKeys
         },
         // Norway
         'norkart': {
           name: 'Kartverket.no',
           group: 'Norway',
+          groupCode: 'NO',
           slope_classes: true,
           apiKeys: mapTilerKeys
         },
         'toposvalbard': {
           name: 'TopoSvalbard',
           group: 'Norway',
+          groupCode: 'NO',
           apiKeys: mapTilerKeys
         },
         // Spain
         'ign_es': {
           name: 'IGN Spain',
           group: 'Spain',
+          groupCode: 'ES',
           apiKeys: mapTilerKeys
         },
         // Switzerland
         'swisstopo': {
           name: 'swisstopo (Vector)',
           group: 'Switzerland',
+          groupCode: 'CH',
           difficulty: true,
           contours: true,
           hillshading: true,
@@ -531,6 +545,7 @@ export default {
         'swisstopo_raster': {
           name: 'swisstopo (Raster)',
           group: 'Switzerland',
+          groupCode: 'CH',
           difficulty: true,
           skiing: true,
           snowshoe: true,
@@ -541,6 +556,7 @@ export default {
         'swisstopo_aerial': {
           name: 'swisstopo (Aerial)',
           group: 'Switzerland',
+          groupCode: 'CH',
           difficulty: true,
           skiing: true,
           snowshoe: true,
@@ -552,12 +568,14 @@ export default {
         'os_outdoor': {
           name: 'OS Outdoor',
           group: 'United Kingdom',
+          groupCode: 'GB',
           contours: true,
           apiKeys: osKeys
         },
         'os_road': {
           name: 'OS Road',
           group: 'United Kingdom',
+          groupCode: 'GB',
           contours: true,
           apiKeys: osKeys
         },
@@ -565,6 +583,7 @@ export default {
         'caltopo': {
           name: 'CalTopo',
           group: 'United States',
+          groupCode: 'US',
           apiKeys: mapTilerKeys
         }
       },

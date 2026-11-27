@@ -39,8 +39,6 @@
       <div v-if="zoomWarning" class="zoom-warning">Zoom in to see all filtered/spotted summits</div>
       <div v-if="sentinelZoomWarning" class="zoom-warning">Zoom in to see Sentinel-2 imagery</div>
     </div>
-    <SwisstopoInfo />
-    <BasemapAtInfo />
     <MapKeyFailedInfo v-if="mapTilerApiKeyFailed" />
     <b-loading :is-full-page="false" :model-value="(filtering || !showMap || !activeMapStyle) && !mapTilerApiKeyFailed" />
   </div>
@@ -69,14 +67,12 @@ import MapDraw from '../components/MapDraw.vue'
 import MapWebcams from '../components/MapWebcams.vue'
 import MapTerminator from '../components/MapTerminator.vue'
 import MapSentinel2 from '../components/MapSentinel2.vue'
-import SwisstopoInfo from '../components/SwisstopoInfo.vue'
-import BasemapAtInfo from '../components/BasemapAtInfo.vue'
 import MapKeyFailedInfo from '../components/MapKeyFailedInfo.vue'
 
 export default {
   name: 'Map',
   components: {
-    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapSentinelControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, MapTerminator, MapSentinel2, SwisstopoInfo, BasemapAtInfo, MapKeyFailedInfo
+    MglMap, MglPopup, MglNavigationControl, MglGeolocateControl, MglScaleControl, MglAttributionControl, MapFilterControl, MapOptionsControl, MapSentinelControl, MapDownloadControl, LoadingRing, SummitPopup, MapRoute, MapInfoPopup, MapDraw, MapWebcams, MapTerminator, MapSentinel2, MapKeyFailedInfo
   },
   mixins: [utils, smptracks, mapstyle, longtouch],
   mounted () {
