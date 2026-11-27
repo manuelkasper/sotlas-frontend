@@ -404,6 +404,13 @@ export default {
 .map-type-menu :deep(.dropdown-menu) {
   min-width: 100%;
 }
+/* Buefy shifts the phone menu up by a quarter of its height, under the navbar. */
+@media screen and (max-width: 1023px) {
+  .map-type-menu.is-mobile-modal:not(.is-hoverable):deep(> .dropdown-menu) {
+    top: 4.25rem !important;
+    transform: translateX(-50%) !important;
+  }
+}
 .map-type-menu :deep(.dropdown-item.map-type-row) {
   display: flex;
   align-items: center;

@@ -492,7 +492,7 @@ export default {
         },
         // Belgium
         'ign_be': {
-          name: 'IGN Topo Belgium',
+          name: 'IGN Topo',
           group: 'Belgium',
           groupCode: 'BE',
           apiKeys: mapTilerKeys
