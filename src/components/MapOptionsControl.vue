@@ -421,12 +421,12 @@ export default {
   gap: 0.4rem;
 }
 .map-type-menu :deep(.dropdown-item.is-disabled.map-type-group) {
-  opacity: 1;
+  opacity: 1 !important;
   font-weight: 600;
   font-size: 0.75rem;
   cursor: default;
   pointer-events: none;
-  background-color: #f3f3f3;
+  background-color: #f3f4f6;
 }
 .map-type-mark {
   display: inline-flex;
