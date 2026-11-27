@@ -12,7 +12,7 @@
     </b-tooltip>
     <div v-if="open" class="map-options-container">
       <div class="map-option map-type-option">
-        <b-dropdown v-model="mapType" class="map-type-menu" aria-role="list" scrollable max-height="70vh" position="is-bottom-right" :mobile-modal="menuCoversScreen" @active-change="scrollMapTypeIntoView">
+        <b-dropdown v-model="mapType" class="map-type-menu" aria-role="list" scrollable max-height="70vh" position="is-bottom-right" mobile-modal @active-change="scrollMapTypeIntoView">
           <template #trigger>
             <b-button class="map-type-trigger">
               <span class="map-type-mark">
@@ -133,9 +133,7 @@ export default {
   data () {
     return {
       open: false,
-      infoTooltipShown: false,
-      // A literal false is dropped on the dropdown, which would reopen the full-screen phone menu.
-      menuCoversScreen: false
+      infoTooltipShown: false
     }
   },
   created () {
@@ -213,9 +211,7 @@ export default {
       deep: true
     },
     open () {
-      if (this.open) {
-        this.infoTooltipShown = true
-      }
+      if (this.open) this.infoTooltipShown = true
     }
   },
   methods: {
@@ -346,6 +342,8 @@ export default {
 .maplibre-gl-map-options-container {
   color-scheme: light;
   color: var(--bulma-text);
+  /* MapLibre's translate(0) would trap the phone modal inside this control. */
+  transform: none !important;
 }
 .maplibre-gl-map-options {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' stroke-linejoin='round' stroke-miterlimit='2'%3E%3Cpath d='M16.847 2.863c-.049 0-.1.009-.15.029l-4.28 1.582-4.33-1.529a1.602 1.602 0 00-1.008-.003L3.257 4.271a.808.808 0 00-.507.748v8.718a.404.404 0 00.553.374l4.28-1.582 4.33 1.528c.327.109.681.11 1.008.004l3.822-1.33a.807.807 0 00.507-.747V3.266a.403.403 0 00-.403-.403zm-8.458 1.47l3.222 1.138v7.198l-3.222-1.137V4.333zm-4.43 8.247V5.306l3.222-1.121v7.204l-.016.006-3.206 1.185zm12.082-.884l-3.222 1.121V5.613l.016-.006 3.206-1.185v7.274zM16.975 15.625H7.7v-.412a.276.276 0 00-.275-.275h-.55a.275.275 0 00-.275.275v.412H3.025a.276.276 0 00-.275.275v.275c0 .151.124.275.275.275H6.6v.412c0 .152.123.275.275.275h.55a.275.275 0 00.275-.275v-.412h9.275a.276.276 0 00.275-.275V15.9a.276.276 0 00-.275-.275z' /%3E%3C/svg%3E");
