@@ -404,11 +404,15 @@ export default {
 .map-type-menu :deep(.dropdown-menu) {
   min-width: 100%;
 }
-/* Buefy shifts the phone menu up by a quarter of its height, under the navbar. */
+/* Buefy shifts the phone menu up under the navbar, and 100vh runs behind the Safari toolbar. */
 @media screen and (max-width: 1023px) {
   .map-type-menu.is-mobile-modal:not(.is-hoverable):deep(> .dropdown-menu) {
     top: 4.25rem !important;
     transform: translateX(-50%) !important;
+    max-height: calc(100dvh - 4.25rem - 0.75rem) !important;
+  }
+  .map-type-menu.is-mobile-modal:deep(.dropdown-content) {
+    max-height: none !important;
   }
 }
 .map-type-menu :deep(.dropdown-item.map-type-row) {
