@@ -1,5 +1,23 @@
+import axios from 'axios'
 import api from './api.js'
 import partialSnowcoverDots from '../assets/partial-snowcover-dots.png'
+
+// One lookup per page load, shared by every component that uses this mixin.
+let detectedCountry = null
+let detectedCountryPromise = null
+
+function detectCountry () {
+  if (!detectedCountryPromise) {
+    detectedCountryPromise = axios.get(import.meta.env.VITE_API_URL + '/my_country', { ignoreError: true })
+      .then(response => {
+        const country = response.data && response.data.country
+        detectedCountry = country ? String(country).trim().toUpperCase() : null
+        return detectedCountry
+      })
+      .catch(() => null)
+  }
+  return detectedCountryPromise
+}
 
 // Dynamic imports so Vite emits one chunk per style. The map views fetch
 // only the style that is actually selected.
@@ -43,6 +61,12 @@ function loadLocalStyle (type) {
 
 export default {
   mixins: [api],
+  created () {
+    if (this.userCountry) return
+    detectCountry().then(country => {
+      if (!this._mapStyleUnmounted) this.userCountry = country
+    })
+  },
   mounted () {
     this.initialMapOptions = { ...this.mapOptions }
     this.updateMapTilerApiKey()
@@ -55,7 +79,8 @@ export default {
       // Primary language subtag, e.g. 'ja' from 'ja-JP', 'en' from 'en-US'
       return navigator.language.split('-')[0]
     },
-    // Styles declare their group. World stays first; the rest follow the group name.
+    // Styles declare their group. World stays first, then the visitor's country
+    // when it has its own styles, then the remaining groups by name.
     mapTypeGroups () {
       const buckets = new Map()
       for (const [type, attrs] of Object.entries(this.mapTypes)) {
@@ -63,9 +88,14 @@ export default {
         if (!buckets.has(label)) buckets.set(label, [])
         buckets.get(label).push({ type, attrs })
       }
+      const localCode = this.userCountry
+      const isLocal = label => buckets.get(label)[0].attrs.groupCode === localCode
       return [...buckets.keys()].sort((a, b) => {
         if (a === 'World') return -1
         if (b === 'World') return 1
+        const aLocal = isLocal(a)
+        const bLocal = isLocal(b)
+        if (aLocal !== bLocal) return aLocal ? -1 : 1
         return a.localeCompare(b)
       }).map(label => {
         const types = buckets.get(label)
@@ -594,7 +624,8 @@ export default {
       // settings, the layer menu) do not download a style.
       loadMapStyle: false,
       localMapStyle: null,
-      localMapStyleType: null
+      localMapStyleType: null,
+      userCountry: detectedCountry
     }
   }
 }
