@@ -843,6 +843,9 @@
     },
     {
       "id": "oro - courbe et cuvette maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -877,6 +880,9 @@
     },
     {
       "id": "oro - courbe et cuvette normale",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -911,6 +917,9 @@
     },
     {
       "id": "oro - courbe et cuvette intercalaire",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -939,6 +948,9 @@
     },
     {
       "id": "oro - courbe et cuvette glacier maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -973,6 +985,9 @@
     },
     {
       "id": "oro - courbe et cuvette glacier normale",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1007,6 +1022,9 @@
     },
     {
       "id": "oro - courbe et cuvette glacier intercalaire",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1045,6 +1063,9 @@
     },
     {
       "id": "oro - courbe et cuvette rocher maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1068,6 +1089,9 @@
     },
     {
       "id": "oro - courbe et cuvette rocher normale",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1091,6 +1115,9 @@
     },
     {
       "id": "oro - courbe et cuvette rocher intercalaire",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1129,6 +1156,9 @@
     },
     {
       "id": "oro - courbe et cuvette bathymetrique",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1210,6 +1240,9 @@
     },
     {
       "id": "toponyme - cote de courbe normale",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1267,6 +1300,9 @@
     },
     {
       "id": "toponyme - cote de courbe rocher",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -1324,6 +1360,9 @@
     },
     {
       "id": "toponyme - cote de courbe glacier",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
@@ -11624,6 +11663,9 @@
     },
     {
       "id": "toponyme - courbe rocher maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_oro_ponc",
@@ -11655,6 +11697,9 @@
     },
     {
       "id": "toponyme - courbe glacier maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_oro_ponc",
@@ -11686,6 +11731,9 @@
     },
     {
       "id": "toponyme - courbe maitresse",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_oro_ponc",

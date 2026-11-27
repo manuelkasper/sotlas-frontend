@@ -9,7 +9,7 @@
   "glyphs": "https://basemaps.linz.govt.nz/v1/fonts/{fontstack}/{range}.pbf",
   "sources": {
     "LINZ Basemaps": {
-      "attribution": "© <a target=\"_blank\" href=\"https://www.linz.govt.nz/\">Toitū Te Whenua LINZ</a> CC BY 4.0",
+      "attribution": "© <a href=\"//www.linz.govt.nz/linz-copyright\">LINZ CC BY 4.0</a> © <a href=\"//www.linz.govt.nz/data/linz-data/linz-basemaps/data-attribution\">Topographic Basemap contributors</a>",
       "type": "vector",
       "url": "https://basemaps.linz.govt.nz/v1/tiles/topographic-v2/WebMercatorQuad/tile.json?api={linzkey}"
     },
@@ -749,6 +749,9 @@
         ]
       ],
       "id": "Contours-Index-Halo",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "visibility": "visible"
       },
@@ -797,6 +800,9 @@
         ]
       ],
       "id": "Contours-All",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "visibility": "visible"
       },
@@ -841,6 +847,9 @@
         ]
       ],
       "id": "Contours-Designated",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "visibility": "visible"
       },
@@ -867,6 +876,9 @@
         ]
       ],
       "id": "Contours-Index",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "visibility": "visible"
       },
@@ -926,6 +938,9 @@
         ]
       ],
       "id": "Contours-Natural",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "visibility": "visible"
       },
@@ -958,6 +973,9 @@
         ]
       ],
       "id": "Contours-Label",
+      "metadata": {
+        "sotlas-map-option": "contours"
+      },
       "layout": {
         "symbol-placement": "line",
         "symbol-spacing": {
@@ -1056,6 +1074,9 @@
     },
     {
       "id": "hillshade",
+      "metadata": {
+        "sotlas-map-option": "hillshading"
+      },
       "layout": {
         "visibility": "visible"
       },

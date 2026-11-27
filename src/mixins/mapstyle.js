@@ -472,6 +472,7 @@ export default {
         'ign_fr': {
           name: 'IGN Topo',
           group: 'France',
+          contours: true,
           slope_classes: true,
           skiing: true,
           apiKeys: mapTilerKeys
@@ -486,6 +487,8 @@ export default {
         'linz': {
           name: 'LINZ Topo',
           group: 'New Zealand',
+          contours: true,
+          hillshading: true,
           apiKeys: linzKeys
         },
         'linz_topo50': {
